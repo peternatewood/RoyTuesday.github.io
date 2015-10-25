@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Arrays and Hashes</title>
+		<link rel="stylesheet" href="../stylesheets/default.css"/>
+	</head>
+	<body>
+<header class="c-nearblack container p-lg bgc-fog debug">
+			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
+				<p class="fz-md mg-sm d-in">by Peter N Wood</p>
+		</header>
+
+		<nav class="container pos-sy t-n debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-drk-green debug">
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../blog/index.html">Blog</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Projects</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">About Me</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Resume</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Contact Info</a></li>
+			</ul>
+		</nav>
+			
+		
+		<section class="container c-nearblack debug">
+			<article class="h-sm debug">
+				<!--change the image to a drawing of a solar panel-->
+				<img class="fl-r t-min mg-sm bdc-softblue bdw-sm bds-solid bdrds-sm myblg--pic" src="../imgs/profile.jpg"/ alttext="my face">
+			</article>
+			<article class="bgc-lightblue">
+				<h1 class="p-md w-lg fz-md mt-sm mb-xs debug">Arrays and Hashes</h1>
+				<h2 class="p-md fz-sm mt-xs mb-sm">25 Oct 2015</h2>
+				<p class="p-md pl-lg mt-sm mb-sm">Like solar arrays and twitter tags? Not really...</p>
+			</article>
+			<article class="p-lg bdw-sm bdc-softblue bgc-lightblue">
+				<p class="mb-sm mt-xs debug">So what are Arrays and Hashes? Well, they're both Ruby objects that we use to store multiple things. Imagine that you want a list of related items, like a catalogue of your favorite movies. You could store each one in its own string variable, adding a new variable whenever a new great movie comes out or you remember an old favorite. That's no good: it's messy, time consuming, and your code will be rife with unique variables. You should be using either an array or hash.</p>
+				<p class="mb-sm debug">Let's continue with the example of our favorite movie catalogue; you really could use either array or hash depending on how you want to sort your movies. Arrays and hashes work in almost the same way except for one simple but crucial difference: an array assigns an index number to each of it's objects, starting with 0, but a hash requires you to specify a unique "key" for each object. Maybe all you need is a simple list: an array is the way to go, because all you want is the name of each movie. But maybe you want to be able to sort your movies by genre: then you want a hash.</p>
+				<p>Here's our example using some of my favorite movies:</p>
+				<h2 class="fz-xs ff-serif">An array might look like this if we "puts" each object:</h2>
+				<ul>
+					<li>Gattaca</li>
+					<li>What We Do in the Shadows</li>
+					<li>Mad Max: Fury Road</li>
+					<li>Young Frankenstein</li>
+				</ul>
+				<h2 class="fz-xs ff-serif">While a hash would have more information for us:</h2>
+				<ul>
+					<li>Gattaca, Sci-fi</li>
+					<li>What We Do in the Shadows, Comedy</li>
+					<li>Mad Max: Fury Road, Action</li>
+					<li>Young Frankenstein, Comedy</li>
+				</ul>
+				<p>You see, in the array, we just have a list: nice and simple. In the hash, we have a "key-value" relationship. The the "key" in a hash is like the index number in an array: each key is unique so that we can use it to refer to one and only one value in the hash. In our example, you'll see that I used the movie titles as keys and stored their genres in the values. Each movie title is unique, but the values can repeat; both "What We Do in the Shadows" and "Young Frankenstein" are comedies, for example.</p>
+				<p>There are many other reasons to use hashes or arrays, like storing usernames and passwords, and you'll find that in different situations one will be more useful than the other. Go out there and meddle with hashes and arrays, get a feel for how each one is best utilized.</p>
+			</article>
+		</section>
+
+		<footer class="l-sm b-n c-nearblack debug">
+			<h6 class="container debug">Last Updated: 25 Oct 2015</h6>
+		</footer>
+	</body>
+</html>
