@@ -26,10 +26,6 @@ a:active {
 	color: #000000;
 }
 
-li {
-	border-style: solid;
-}
-
 .lss-n { list-style-type: none; }
 
 .d-in { display: inline; }
@@ -59,9 +55,11 @@ li {
 .h-xl { height: 200em; }
 
 .w-sm { width: 6.25em; }
-.w-lg { width: 10%; }
+.w-lg { width: 45%; }
 
-.fz-xs { font-size: 0.5em; }
+.ff-serif { font-family: serif; }
+
+.fz-xs { font-size: 1em; }
 .fz-sm { font-size: 1.25em; }
 .fz-md { font-size: 1.5em; }
 .fz-lg { font-size: 2.5em; }
@@ -75,8 +73,12 @@ li {
 
 .mg-sm { margin: 0.185em; }
 .mg-lg { margin: 0.725em; }
+
+.mt-xs { margin-top: 0.0625em; }
 .mt-sm { margin-top: 0.185em; }
+.mb-xs { margin-bottom: 0.0625em; }
 .mb-sm { margin-bottom: 0.185em; }
+.mb-lg { margin-bottom: 0.2475em; }
 .ml-lg { margin-left: 1em; }
 
 .bgc-fog { background-color: #f9f8fe; }
