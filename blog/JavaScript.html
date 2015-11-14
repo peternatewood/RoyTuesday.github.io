@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../stylesheets/default.css"/>
+		<title>
+			Pete's Blog
+		</title>
+	</head>
+	<body class="ff-trebuchet">
+		<header class="c-nearblack container p-lg bgc-fog debug">
+			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
+				<p class="fz-md mg-sm d-in">by Peter N Wood</p>
+		</header>
+		
+		<nav class="container pos-sy t-n debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-drk-green debug">
+				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
+				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../blog/index.html">Blog</a></li>
+				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../projects/index.html">Projects</a></li>
+				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../about/index.html">About Me</a></li>
+				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../resume/index.html">Resume</a></li>
+				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../contact/index.html">Contact Info</a></li>
+			</ul>
+		</nav>
+		
+		<main class="container bgc-lightblue debug">
+			<section class="p-md pl-lg">
+				<h1 class="debug">Ruby vs JavaScript</h1>
+				<article>
+					<p class="debug">Posted: 14 Nov 2015</p>
+					<p class="p-md pl-lg mt-sm mb-sm debug">Punctuation Terror</p>
+				</article>
+			</section>
+			<section class="d-b w-md p-lg debug">
+				<p>
+					Coding languages are fussy when it comes to punctuation. The older the language the worse it gets. C++, for example, requires a semicolon after every expression, every variable must be declared with a type name ( integer, character, etc ), curly braces around every code block, and parentheses at the end of every function call even if the function takes no arguments.
+				</p>
+				<p>
+					Be warned! What follows is valid C++ code that I have tested. It will look intimidating if you've never worked in it before, and it's actually a really convoluted program designed purely as an example. Any viewer with a weak heart is advised to look away.
+				</p>
+<pre class="bgc-fog p-lg debug">
+<span class="c-olive">#include &ltcstring&gt
+#include &ltiostream&gt
+#include &ltstdio.h&gt</span>
+
+<span class="c-drk-blue fw-bold">int</span> myNum <span class="c-softred">=</span> 0<span class="c-softred">;</span>
+<span class="c-drk-blue fw-bold">char</span> myCharacter <span class="c-softred">=</span> <span class="c-drk-orange">'!'</span><span class="c-softred">;</span>
+<span class="c-olive">std<span class="c-softred">::</span>string</span> myWord <span class="c-softred">=</span> <span class="c-drk-blue">"world"</span><span class="c-softred">;</span>
+
+<span class="c-drk-blue fw-bold">int</span> incrementNumber<span class="c-softred">(</span> <span class="c-drk-blue fw-bold">int</span> numIn <span class="c-softred">)
+{</span>
+  <span class="c-drk-blue fw-bold">return</span> numIn<span class="c-softred">++;
+}</span>
+
+<span class="c-drk-blue fw-bold">void</span> sayHello<span class="c-softred">()
+{</span>
+  <span class="c-olive">std<span class="c-softred">::</span>cout</span> <span class="c-softred"><<</span> <span class="c-drk-blue">"Hello, "</span> <span class="c-softred"><<</span> myWord <span class="c-softred"><<</span> myCharacter<span class="c-softred">;</span>
+  <span class="c-olive">std<span class="c-softred">::</span>cout <span class="c-softred"><<</span> std<span class="c-softred">::</span>endl</span><span class="c-softred">;</span>
+  myNum <span class="c-softred">=</span> incrementNumber<span class="c-softred">(</span> myNum <span class="c-softred">)</span><span class="c-softred">;</span>
+  <span class="c-olive">std<span class="c-softred">::</span>cout <span class="c-softred"><<</span> myNum <span class="c-softred"><<</span> " greeting."<span class="c-softred">;</span>
+  std<span class="c-softred">::</span>cout <span class="c-softred"><<</span> std<span class="c-softred">::</span>endl</span><span class="c-softred">;</span>
+<span class="c-softred"></span>
+
+<span class="c-drk-blue fw-bold">int</span> main<span class="c-softred">()
+{</span>
+  sayHello<span class="c-softred">();</span>
+  sayHello<span class="c-softred">();</span>
+  <span class="c-drk-blue fw-bold">return</span> 0<span class="c-softred">;
+}</span>
+
+=> Hello, world!
+=> 1 greeting.
+=> Hello, world!
+=> 2 greeting.
+</pre>
+				<p>
+					Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.
+				</p>
+<pre class="bgc-fog p-lg debug">
+<span class="c-softblue">$myNum</span> <span class="c-olive">=</span> 0
+<span class="c-softblue">$myCharacter</span> <span class="c-olive">=</span> <span class="c-softred">'<span class="c-olive">!</span>'</span>
+<span class="c-softblue">$myWord</span> <span class="c-olive">=</span> <span class="c-softred">'<span class="c-olive">world</span>'</span>
+
+<span class="c-olive fw-bold">def</span> <span class="c-softblue">incrementNumber</span>( numIn )
+
+  numIn <span class="c-olive">+=</span> 1
+
+<span class="c-olive fw-bold">end</span>
+
+<span class="c-olive fw-bold">def</span> <span class="c-softblue">sayHello</span>
+
+  puts <span class="c-softred">"<span class="c-olive">Hello, </span>"</span> <span class="c-olive">+</span> <span class="c-softblue">$myWord</span> <span class="c-olive">+</span> <span class="c-softblue">$myCharacter</span>
+  <span class="c-softblue">$myNum <span class="c-olive">=</span> incrementNumber</span>( <span class="c-softblue">$myNum</span> )
+  puts <span class="c-softblue">$myNum</span>.to_s <span class="c-olive">+</span> <span class="c-softred">"<span class="c-olive"> greeting.</span>"</span>
+
+<span class="c-olive fw-bold">end</span>
+
+sayHello
+sayHello
+
+=> Hello, world!
+=> 1 greeting.
+=> Hello, world!
+=> 2 greeting.
+</pre>
+				<p>
+					JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.
+				</p>
+<pre class="bgc-fog p-lg debug">
+<span class="c-softblue">var</span> myNum <span class="c-olive">=</span> <span class="c-drk-green">0</span>
+<span class="c-softblue">var</span> myCharacter <span class="c-olive">=</span> '<span class="c-drk-green">!</span>'
+<span class="c-softblue">var</span> myWord <span class="c-olive">=</span> '<span class="c-drk-green">world</span>'
+
+<span class="c-softblue">function</span> <span class="c-drk-orange">incrementNumber</span>( <span class="c-drk-orange">numIn</span> )
+<span class="c-softblue">{</span>
+  <span class="c-olive">return</span> numIn<span class="c-olive">++</span>;
+<span class="c-softblue">}</span>
+<span class="c-softblue">function</span> <span class="c-drk-orange">sayHello</span>()
+<span class="c-softblue">{</span>
+  console.<span class="c-softblue">log</span>( "<span class="c-drk-green">Hello, </span>" <span class="c-olive">+</span> myWord <span class="c-olive">+</span> myCharacter );
+  myNum <span class="c-olive">=</span> incrementNumber( numIn );
+  console.<span class="c-softblue">log</span>( myNum.<span class="c-softblue">toString</span>() <span class="c-olive">+</span> "<span class="c-drk-green"> greeting.</span>" );
+<span class="c-softblue">}</span>
+
+sayHello()
+sayHello()
+
+=> Hello, world!
+=> 1 greeting.
+=> Hello, world!
+=> 2 greeting.
+</pre>
+				<p>
+					I err on the side of caution; JavaScript is intended for a web environment, so your code should be easily manipulable by other programmers. For example: you do not need to terminate the last expression in a code block with a semicolon. However, if someone ever needs to add another expression to that block, they have to add a semicolon to the end of your expression. This leaves a lot of opportunities for simple errors that are hard to spot. JavaScript won't throw an error if there is a semicolon at the end of your block, so put it there just to be safe.
+				</p>
+			</section>
+		</main>
+		<footer class="l-sm mg-lg b-n c-nearblack debug">
+			<h6 class="container debug">Last Updated: 14 Nov 2015</h6>
+		</footer>
+		<!--
+			<script></script>
+			Write a script to color all keywords in the code samples: <pre> tags
+		-->
+  </body>
+</html>

@@ -57,6 +57,8 @@ a:active {
 .ff-serif { font-family: serif; }
 .ff-courier { font-family: "Courier New"; courier; monospace;}
 
+.fw-bold{ font-weight: bold; }
+
 .fz-xs { font-size: 1em; }
 .fz-sm { font-size: 1.25em; }
 .fz-md { font-size: 1.5em; }
@@ -75,6 +77,9 @@ a:active {
 .c-softblue { color: #40a0ca; }
 .c-plywood { color: #efebd6;}
 .c-oak { color: #8f4b36; }
+.c-softred { color: #cd0000; }
+.c-drk-blue { color: #0000cd; }
+.c-drk-orange { color: #b36504; }
 
 .mg-sm { margin: 0.185em; }
 .mg-lg { margin: 0.725em; }
