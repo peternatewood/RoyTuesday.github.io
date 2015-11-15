@@ -59,13 +59,12 @@ a:active {
 .ff-serif { font-family: serif; }
 .ff-courier { font-family: "Courier New"; courier; monospace;}
 
-.fw-bold{ font-weight: bold; }
-
 .fz-xs { font-size: 1em; }
 .fz-sm { font-size: 1.25em; }
 .fz-md { font-size: 1.5em; }
 .fz-lg { font-size: 2.5em; }
 .fz-xl { font-size: 3em; }
+.fz-xxxl { font-size: 8em; }
 
 .tal-c { text-align: center;}
 .td-n { text-decoration: none; }
@@ -79,9 +78,6 @@ a:active {
 .c-softblue { color: #40a0ca; }
 .c-plywood { color: #efebd6;}
 .c-oak { color: #8f4b36; }
-.c-softred { color: #cd0000; }
-.c-drk-blue { color: #0000cd; }
-.c-drk-orange { color: #b36504; }
 
 .mg-sm { margin: 0.185em; }
 .mg-lg { margin: 0.725em; }
@@ -99,7 +95,8 @@ a:active {
 .bgc-drk-green { background-color: #204926 }
 .bgc-olive { background-color: #41924b; }
 .bgc-lightblue { background-color: #e5f6ff; }
-.bgc-plywood { background-color: #efebd6;}
+.bgc-plywood { background-color: #efebd6; }
+.bgc-black { background-color: black; }
 
 .bdc-softblue { border-color: #40a0ca; }
 .bdc-drk-green { border-color: #204926 }
