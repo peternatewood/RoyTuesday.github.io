@@ -7,7 +7,7 @@
 			Pete's Blog
 		</title>
 	</head>
-	<body>
+	<body class="ff-trebuchet">
 		<header class="c-nearblack container p-lg bgc-fog debug">
 			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
 				<p class="fz-md mg-sm d-in">by Peter N Wood</p>
@@ -22,45 +22,45 @@
 				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Contact Info</a></li>
 			</ul>
 		</nav>
-		<main class="container debug">
-			<section>
+		<main class="container bgc-lightblue debug">
+			<section class="p-md pl-lg debug">
 				<h2 class="debug">An Enumerable method: cycle</h2>
 				<article>
 					<p class="debug">Posted: 01 Nov 2015</p>
 				</article>
 			</section>
-			<section class="d-b w-md debug">
+			<section class="d-b p-lg debug">
 				<p>
 					Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
 				</p>
-				<pre class="bgc-fog p-lg debug">
-					a = [ "a", "b", "c" ]
-					a.cycle( 3 ) { |x| puts x }
+				<pre class="p-lg bgc-fog debug">
+a = [ "a", "b", "c" ]
+a.cycle( 3 ) { |x| puts x }
 
-					#=> a
-					#=> b
-					#=> c
+#=> a
+#=> b
+#=> c
 				</pre>
 				<p>
 					That's pretty straightforward, but I wanted to get a little more complicated:
 				</p>
 				<pre class="bgc-fog p-lg debug">
-					a.cycle( 6 ) { |x| puts x + " thing" }
+a.cycle( 6 ) { |x| puts x + " thing" }
 
-					#=> a thing
-					#=> b thing
-					#=> c thing
-					# First cycle
+#=> a thing
+#=> b thing
+#=> c thing
+# First cycle
 
-					#=> a thing thing
-					#=> b thing thing
-					#=> c thing thing
-					# Second cycle
-					...
-					#=> a thing thing thing thing thing thing
-					#=> b thing thing thing thing thing thing
-					#=> c thing thing thing thing thing thing
-					# Sixth cycle
+#=> a thing thing
+#=> b thing thing
+#=> c thing thing
+# Second cycle
+...
+#=> a thing thing thing thing thing thing
+#=> b thing thing thing thing thing thing
+#=> c thing thing thing thing thing thing
+# Sixth cycle
 				</pre>
 				<p>
 					That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.

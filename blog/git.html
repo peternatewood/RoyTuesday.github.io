@@ -1,42 +1,67 @@
 <!DOCTYPE html>
-<head>
- <title>Pete's Phase 0 Blog</title>
- <meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="your-stylsheet-link-here.css">
-</head>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../stylesheets/default.css"/>
+    <title>
+      Pete's Blog
+    </title>
+  </head>
+  <body class="ff-trebuchet">
+    <header class="c-nearblack container p-lg bgc-fog debug">
+      <h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
+        <p class="fz-md mg-sm d-in">by Peter N Wood</p>
+    </header>
+    
+    <nav class="container pos-sy t-n debug">
+      <ul class="c-nearblack p-md lss-n tal-c bgc-drk-green debug">
+        <li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
+        <li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../blog/index.html">Blog</a></li>
+        <li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../projects/index.html">Projects</a></li>
+        <li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../about/index.html">About Me</a></li>
+        <li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../resume/index.html">Resume</a></li>
+        <li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../contact/index.html">Contact Info</a></li>
+      </ul>
+    </nav>
 
-<main>
- <h1>Phase 0 Blog</h1>
- <h2>Peter Wood</h2>
- <h4>04 October, 2015</h4>
- 
- <section>
-  <p>
-    <ul>
-      <li>What are the benefits of version control?</li>
-    </ul>
-  Version control allows you to keep track of changes you make to your files. To go back and review each change in detail is really handy for fixing problems; for example, if the most recent changes to an application aren't working properly, you can revert to an older one and figure out what went wrong. The full changelog is useful to understand how you built the end product, which is a great way to communicate your process to other programmers and facilitate group programming.
-  </p>
-  <p>
-    <ul>
-      <li>How does git help you keep track of changes?</li>
-    </ul>
-  Git can create a new "branch" of development, allowing you to make changes to your files while storing the last version of it in a master branch. Whenever a change has been committed, it's added without overwriting the old changes, and each time you commit, you're prompted to leave a note about it; git keeps a running history of your work with notes so that anyone (including you) can review and understand the process.
-  </p>
-  <p>
-    <ul>
-      <li>Why use GitHub to store your code?</li>
-    </ul>
-  GitHub has limited use for solo programming; if you don't always have access to the same computer, you can syncronize your work with GitHub and do that work from nearly anywhere. GitHub is designed for group programming and sharing code. You can work in GitHub with other programmers to update in real time, you can regularly push changes from a remote location to keep everyone up-to-date, and you can leave your work "public" for anyone to use, review, or contribute.
-  </p>
-  <h3>
-    Further Reflections
-  </h3>
-  <p>
-    I've been having some trouble setting up an internet connection for my Xubuntu laptop, so I'm using Windows until I can rectify that problem. The standard Windows command line is the Command Prompt, but Powershell is far better. It's not as good as a Unix shell, though, and it insists on using vim to add notes for commits. So, I've been researching how to make Powershell behave while learning Unix through my web-isolated laptop.
-  </p>
-  <p>
-    TIL: Always close single and double quotes in Powershell. If you forget, you'll get a ">>" prompt that seems to be impossible to escape! Just remember that if this happens, use ctrl-c to get out.
-  </p>
- </section>
-</main>
+    <main class="container bgc-lightblue debug">
+      <section class="p-md pl-lg debug">
+       <h1>Phase 0 Blog</h1>
+       <h2>Peter Wood</h2>
+       <h4>04 October, 2015</h4>
+     </section>
+     <section class="p-lg debug">
+      <p>
+        <ul>
+          <li>What are the benefits of version control?</li>
+        </ul>
+      Version control allows you to keep track of changes you make to your files. To go back and review each change in detail is really handy for fixing problems; for example, if the most recent changes to an application aren't working properly, you can revert to an older one and figure out what went wrong. The full changelog is useful to understand how you built the end product, which is a great way to communicate your process to other programmers and facilitate group programming.
+      </p>
+      <p>
+        <ul>
+          <li>How does git help you keep track of changes?</li>
+        </ul>
+      Git can create a new "branch" of development, allowing you to make changes to your files while storing the last version of it in a master branch. Whenever a change has been committed, it's added without overwriting the old changes, and each time you commit, you're prompted to leave a note about it; git keeps a running history of your work with notes so that anyone (including you) can review and understand the process.
+      </p>
+      <p>
+        <ul>
+          <li>Why use GitHub to store your code?</li>
+        </ul>
+      GitHub has limited use for solo programming; if you don't always have access to the same computer, you can syncronize your work with GitHub and do that work from nearly anywhere. GitHub is designed for group programming and sharing code. You can work in GitHub with other programmers to update in real time, you can regularly push changes from a remote location to keep everyone up-to-date, and you can leave your work "public" for anyone to use, review, or contribute.
+      </p>
+      <h3>
+        Further Reflections
+      </h3>
+      <p>
+        I've been having some trouble setting up an internet connection for my Xubuntu laptop, so I'm using Windows until I can rectify that problem. The standard Windows command line is the Command Prompt, but Powershell is far better. It's not as good as a Unix shell, though, and it insists on using vim to add notes for commits. So, I've been researching how to make Powershell behave while learning Unix through my web-isolated laptop.
+      </p>
+      <p>
+        TIL: Always close single and double quotes in Powershell. If you forget, you'll get a ">>" prompt that seems to be impossible to escape! Just remember that if this happens, use ctrl-c to get out.
+      </p>
+     </section>
+    </main>
+    <footer class="l-sm mg-lg b-n c-nearblack debug">
+      <h6 class="container debug">Last Updated: 21 Nov 2015</h6>
+    </footer>
+</body>
+</html>
