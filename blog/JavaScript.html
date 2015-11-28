@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="../stylesheets/default.css"/>
@@ -7,14 +8,16 @@
 			Pete's Blog
 		</title>
 	</head>
+
 	<body class="ff-trebuchet">
+
 		<header class="c-nearblack container p-lg bgc-fog debug">
 			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
-				<p class="fz-md mg-sm d-in">by Peter N Wood</p>
+				<p class="fz-md mg-sm d-in">Peter N Wood</p>
 		</header>
 		
 		<nav class="container pos-sy t-n debug">
-			<ul class="c-nearblack p-md lss-n tal-c bgc-drk-green debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../blog/index.html">Blog</a></li>
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../projects/index.html">Projects</a></li>
@@ -24,7 +27,7 @@
 			</ul>
 		</nav>
 		
-		<main class="container bgc-lightblue debug">
+		<main class="container bgc-skyblue debug">
 			<section class="p-md pl-lg">
 				<h1 class="debug">Ruby vs JavaScript</h1>
 				<article>
@@ -39,8 +42,10 @@
 				<p>
 					Be warned! What follows is valid C++ code that I have tested. It will look intimidating if you've never worked in it before, and it's actually a really convoluted program designed purely as an example. Any viewer with a weak heart is advised to look away.
 				</p>
-<pre class="bgc-fog p-lg debug">
-<span class="c-olive">#include &ltcstring&gt
+<pre class="columns-3 bgc-fog p-lg debug">
+<span class="c-drk-grey">//C++</span>
+<span class="c-olive">
+#include &ltcstring&gt
 #include &ltiostream&gt
 #include &ltstdio.h&gt</span>
 
@@ -74,10 +79,12 @@
 => Hello, world!
 => 2 greeting.
 </pre>
-				<p>
-					Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.
-				</p>
-<pre class="bgc-fog p-lg debug">
+<pre class="columns-3 bgc-fog p-lg debug">
+<span class="c-drk-grey"># Ruby</span>
+
+[ no need to '#include' here ]
+
+
 <span class="c-softblue">$myNum</span> <span class="c-olive">=</span> 0
 <span class="c-softblue">$myCharacter</span> <span class="c-olive">=</span> <span class="c-softred">'<span class="c-olive">!</span>'</span>
 <span class="c-softblue">$myWord</span> <span class="c-olive">=</span> <span class="c-softred">'<span class="c-olive">world</span>'</span>
@@ -96,18 +103,25 @@
 
 <span class="c-olive fw-bold">end</span>
 
+
+
+
 sayHello
 sayHello
+
+
 
 => Hello, world!
 => 1 greeting.
 => Hello, world!
 => 2 greeting.
 </pre>
-				<p>
-					JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.
-				</p>
-<pre class="bgc-fog p-lg debug">
+<pre class="columns-3 bgc-fog p-lg debug">
+<span class="c-drk-grey">//JavaScript</span>
+
+[ no need to '#include' here ]
+
+
 <span class="c-softblue">var</span> myNum <span class="c-olive">=</span> <span class="c-drk-green">0</span>
 <span class="c-softblue">var</span> myCharacter <span class="c-olive">=</span> '<span class="c-drk-green">!</span>'
 <span class="c-softblue">var</span> myWord <span class="c-olive">=</span> '<span class="c-drk-green">world</span>'
@@ -116,6 +130,8 @@ sayHello
 <span class="c-softblue">{</span>
   <span class="c-olive">return</span> numIn<span class="c-olive">++</span>;
 <span class="c-softblue">}</span>
+
+
 <span class="c-softblue">function</span> <span class="c-drk-orange">sayHello</span>()
 <span class="c-softblue">{</span>
   console.<span class="c-softblue">log</span>( "<span class="c-drk-green">Hello, </span>" <span class="c-olive">+</span> myWord <span class="c-olive">+</span> myCharacter );
@@ -123,25 +139,39 @@ sayHello
   console.<span class="c-softblue">log</span>( myNum.<span class="c-softblue">toString</span>() <span class="c-olive">+</span> "<span class="c-drk-green"> greeting.</span>" );
 <span class="c-softblue">}</span>
 
+
+
+
+
 sayHello()
 sayHello()
+
+
 
 => Hello, world!
 => 1 greeting.
 => Hello, world!
 => 2 greeting.
 </pre>
-				<p>
+				<p class="debug">
+					Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.
+				</p>
+				<p class="debug">
+					JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.
+				</p>
+				<p class="debug">
 					I err on the side of caution; JavaScript is intended for a web environment, so your code should be easily manipulable by other programmers. For example: you do not need to terminate the last expression in a code block with a semicolon. However, if someone ever needs to add another expression to that block, they have to add a semicolon to the end of your expression. This leaves a lot of opportunities for simple errors that are hard to spot. JavaScript won't throw an error if there is a semicolon at the end of your block, so put it there just to be safe.
 				</p>
 			</section>
 		</main>
+
 		<footer class="l-sm mg-lg b-n c-nearblack debug">
-			<h6 class="container debug">Last Updated: 14 Nov 2015</h6>
+			<h6 class="container debug">Last Updated: 28 Nov 2015</h6>
 		</footer>
 		<!--
 			<script></script>
 			Write a script to color all keywords in the code samples: <pre> tags
 		-->
   </body>
+
 </html>
