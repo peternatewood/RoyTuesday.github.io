@@ -162,7 +162,7 @@ stationRoom[ "hibernation" ].roomObject = {
 	"control panel": { descrip: "Control Panel: ", isItem: false },
 };
 
-function checkAdjacent ( room )
+function checkAdjacent( room )
 {
 	for( var i = 0; i < player.room.adjRoom.length; i++ )
 	{
