@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="../stylesheets/default.css"/>
@@ -7,13 +8,16 @@
 			Pete's Blog
 		</title>
 	</head>
-	<body class="ff-trebuchet">
+
+	<body class="ff-trebuchet debug">
+
 		<header class="c-nearblack container p-lg bgc-fog debug">
 			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
-				<p class="fz-md mg-sm d-in">by Peter N Wood</p>
+				<p class="fz-md mg-sm d-in">Peter N Wood</p>
 		</header>
+
 		<nav class="container pos-sy t-n debug">
-			<ul class="c-nearblack p-md lss-n tal-c bgc-drk-green debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
 				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
 				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="index.html">Blog</a></li>
 				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Projects</a></li>
@@ -22,15 +26,14 @@
 				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Contact Info</a></li>
 			</ul>
 		</nav>
-		<main class="container bgc-lightblue debug">
+
+		<main class="container bgc-skyblue debug">
 			<section class="p-md pl-lg debug">
 				<h2 class="debug">An Enumerable method: cycle</h2>
-				<article>
-					<p class="debug">Posted: 01 Nov 2015</p>
-				</article>
+				<p class="debug">Posted: 01 Nov 2015</p>
 			</section>
 			<section class="d-b p-lg debug">
-				<p>
+				<p class="debug">
 					Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
 				</p>
 				<pre class="p-lg bgc-fog debug">
@@ -41,7 +44,7 @@ a.cycle( 3 ) { |x| puts x }
 #=> b
 #=> c
 				</pre>
-				<p>
+				<p class="debug">
 					That's pretty straightforward, but I wanted to get a little more complicated:
 				</p>
 				<pre class="bgc-fog p-lg debug">
@@ -62,19 +65,22 @@ a.cycle( 6 ) { |x| puts x + " thing" }
 #=> c thing thing thing thing thing thing
 # Sixth cycle
 				</pre>
-				<p>
+				<p class="debug">
 					That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.
-				</p>
+				</p class="debug">
 				<p>
 					Be careful! If you don't pass an argument to cycle, it will go on forever!
-				</p>
+				</p class="debug">
 				<p>
 					Cycle is very basic, like 'times' for enumerables. I imagine that other other methods may be better for specific instances, but cycle may be good to know for those times when you just need to repeat a code block.
 				</p>
 			</section>
 		</main>
+
 		<footer class="l-sm mg-lg b-n c-nearblack debug">
-			<h6 class="container debug">Last Updated: 01 Nov 2015</h6>
+			<h6 class="container debug">Last Updated: 28 Nov 2015</h6>
 		</footer>
+
     </body>
+
 </html>
