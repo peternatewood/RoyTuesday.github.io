@@ -25,13 +25,11 @@ a:link {
 a:hover {
 	color: #8f4b36;
 }
-a:active {
-	color: #888;
-}
 
 .style-dos {
 	background-color: black;
 	color: #f9f8fe;
+	border: 3px inset grey;
 }
 .style-c64 {
 	font-weight: bold;
@@ -42,6 +40,7 @@ a:active {
 .style-tandy {
 	background-color: #062606;
 	color: #13F013;
+	border: 4px double;
 }
 .style-blood {
 	background-color: #230000;

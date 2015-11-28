@@ -162,7 +162,7 @@ stationRoom[ "hibernation" ].roomObject = {
 	"control panel": { descrip: "Control Panel: ", isItem: false },
 };
 
-function checkAdjacent( room )
+function checkAdjacent ( room )
 {
 	for( var i = 0; i < player.room.adjRoom.length; i++ )
 	{
@@ -552,17 +552,17 @@ function passMessage( stringIn )
 {
 	var msgWords = stringIn.split( " " );
 	var splitMsg = [ ": " + msgWords[ 0 ] ];
-	var currentIndex = 0;
+	var lineNum = 0;
 	for( var i = 1; i < msgWords.length; i++ )
 	{
-		if( ( splitMsg[ currentIndex ] + " " + msgWords[ i ] ).length < 68 )
+		if( splitMsg[ lineNum ].length + msgWords[ i ].length + 1 > 68 )
 		{
-			splitMsg[ currentIndex ] += " " + msgWords[ i ];
+			lineNum += 1;
+			splitMsg[ lineNum ] = msgWords[ i ];
 		}
 		else
 		{
-			currentIndex += 1;
-			splitMsg[ currentIndex ] = msgWords[ i ];
+			splitMsg[ lineNum ] += " " + msgWords[ i ];
 		}
 	}
 	for( var y = 0; y < splitMsg.length; y++ )
@@ -573,9 +573,58 @@ function passMessage( stringIn )
 		}
 		msgLog[ 14 ] = splitMsg[ y ];
 	}
-	for( var i = 0; i <= 14; i++ )
+	var newMsgLine = 15 - splitMsg.length;
+	for( var i = 0; i < msgLog.length; i++ )
 	{
-		consoleDisplay.childNodes[ i ].innerHTML = msgLog[ i ];
+		if( i < newMsgLine )
+		{
+			consoleDisplay.childNodes[ i ].innerHTML = msgLog[ i ];
+		}
+		else
+		{
+			consoleDisplay.childNodes[ i ].innerHTML = " ";
+		}
+	}
+	isDrawingMsg = true;
+	drawMessage( 0, newMsgLine );
+}
+var isDrawingMsg = false;
+var messageTimeout = null;
+function drawMessage( charNumIn, lineNumIn )
+{
+	var charNum = charNumIn;
+	var lineNum = lineNumIn;
+
+	if( charNum == 0 )
+	{
+		consoleDisplay.childNodes[ lineNum ].innerHTML = msgLog[ lineNum ][ charNum ];
+		messageTimeout = setTimeout( function() { drawMessage( charNum + 1, lineNum ) }, 20 );
+	}
+	else if( lineNum <= 14 )
+	{
+		consoleDisplay.childNodes[ lineNum ].innerHTML += msgLog[ lineNum ][ charNum ];
+		if( charNum == msgLog[ lineNum ].length - 1 )
+		{
+			if( lineNum < 14 )
+			{
+				charNum = 0;
+				messageTimeout = setTimeout( function() { drawMessage( charNum, lineNum + 1 ) }, 20 );
+			}
+			else
+			{
+				isDrawingMsg = false;
+				clearTimeout( messageTimeout );
+			}
+		}
+		else
+		{
+			messageTimeout = setTimeout( function() { drawMessage( charNum + 1, lineNum ) }, 20 );
+		}
+	}
+	else
+	{
+		isDrawingMsg = false;
+		clearTimeout( messageTimeout );
 	}
 }
 
@@ -587,54 +636,57 @@ function drawDisplay()
 	}
 }
 
-consoleInput.addEventListener( "keypress", function( event )
+
+function setConsoleListener( event )
+{
+	if( event.defaultPrevented )
+	{
+	}
+	else if( !isDrawingMsg )
+	{
+		switch( event.key )
 		{
-			if( event.defaultPrevented )
-			{
-			}
-			else
-			{
-				switch( event.key )
+			case "Enter": 
+				inputLog.unshift( consoleInput.value );
+				consoleInput.value = "";
+				lastInputIndex = 0;
+				if( storyStage == "title" )
 				{
-					case "Enter": 
-						inputLog.unshift( consoleInput.value );
-						consoleInput.value = "";
-						lastInputIndex = 0;
-						if( storyStage == "title" )
-						{
-							clearPicture()
-							storyStage = "name entry";
-							passMessage( storyMsgs[ 0 ] );
-						}
-						else if( storyStage == "name entry" )
-						{
-							storyStage = "game";
-							storePlayerName( inputLog[ 0 ] );
-							storyMsgs[ 1 ] = storyMsgs[ 1 ].replace( "[name]", playerName[ playerName.length - 1 ] );
-							passMessage( storyMsgs[ 1 ] );
-						}
-						else
-						{
-							handleInput();
-						}
-					break;
-					case "ArrowUp":
-						consoleInput.value = inputLog[ lastInputIndex ];
-						if( lastInputIndex < inputLog.length - 1 )
-						{
-							lastInputIndex += 1;
-						}
-					break;
-					case "ArrowDown":
-						consoleInput.value = inputLog[ lastInputIndex ];
-						if( lastInputIndex > 0 )
-						{
-							lastInputIndex -= 1;
-						}
-					break;
-					case "Escape":
-						consoleInput.value = "";
-					break;
+					clearPicture()
+					storyStage = "name entry";
+					passMessage( storyMsgs[ 0 ] );
 				}
-			}
-		});
+				else if( storyStage == "name entry" )
+				{
+					storyStage = "game";
+					storePlayerName( inputLog[ 0 ] );
+					storyMsgs[ 1 ] = storyMsgs[ 1 ].replace( "[name]", playerName[ playerName.length - 1 ] );
+					passMessage( storyMsgs[ 1 ] );
+				}
+				else
+				{
+					handleInput();
+				}
+			break;
+			case "ArrowUp":
+				consoleInput.value = inputLog[ lastInputIndex ];
+				if( lastInputIndex < inputLog.length - 1 )
+				{
+					lastInputIndex += 1;
+				}
+			break;
+			case "ArrowDown":
+				consoleInput.value = inputLog[ lastInputIndex ];
+				if( lastInputIndex > 0 )
+				{
+					lastInputIndex -= 1;
+				}
+			break;
+			case "Escape":
+				consoleInput.value = "";
+			break;
+		}
+	}
+}
+
+consoleInput.addEventListener( "keypress", function( event ){ setConsoleListener( event ) } );

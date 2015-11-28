@@ -10,11 +10,11 @@
 	<body class="ff-trebuchet">
 		<header class="c-nearblack container p-lg bgc-fog debug">
 			<h1 class="fz-lg p-md d-in mt-sm mb-sm">Programmer's Cheat Sheet</h1>
-				<p class="fz-md mg-sm d-in">compiled by Peter N Wood</p>
+				<p class="fz-md mg-sm d-in">Peter N Wood</p>
 		</header>
 		
 		<nav class="container pos-sy t-n debug">
-			<ul class="c-nearblack p-md lss-n tal-c bgc-drk-green debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../blog/index.html">Blog</a></li>
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../projects/index.html">Projects</a></li>
@@ -23,13 +23,13 @@
 				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../contact/index.html">Contact Info</a></li>
 			</ul>
 		</nav>
-
+<!-- This table of contents needs fixed width and a smaller profile to work on mobile devices
 		<aside class="pos-f w-10 debug">
 			<ul class="lss-n mg-n mt-sm p-md bdw-sm bds-s bdc-oak bgc-plywood debug">
 				<li class="mg-lg c-olive debug">
 					Git [WIP]
 				</li>
-				<li class="mg-lg fw-bold c-oak debug">
+				<li class="mg-lg fw-bold c-drk-green debug">
 					Ruby
 				</li>
 				<li class="mg-lg debug">
@@ -73,9 +73,9 @@
 				</li>
 			</ul>
 		</aside>
-
-		<main class="container-85 ml-xl bgc-lightblue debug">
-			<section class="p-md pl-lg">
+-->
+		<main class="container bgc-skyblue debug">
+			<section class="p-md pl-lg debug">
 				<article class="d-ib fl-r h-sm debug">
 					<img class="fl-r t-min mg-sm p-md bgc-fog bdc-softblue bdw-sm bds-solid bdrds-sm" src="../imgs/ruby-logo.png"/ alttext="Ruby Logo">
 				</article>
@@ -98,7 +98,7 @@
 					Semicolon insertion is the most visually obvious difference between Ruby and other C-derived languages. Expressions in Ruby are typically separated by starting a new line: the compiler knows to add in semicolons at the end of each line, where appropriate.
 				</p>
 				<pre class="columns-2 p-lg bgc-fog c-softblue debug">
-<span class="c-softred"># Ruby</span>
+<span class="c-softred debug"># Ruby</span>
 
 my_num = 3346
 
@@ -146,7 +146,7 @@ end
 					<a name="sect2"></a>
 					Ruby Objects
 				</h2>
-				<p>
+				<p class="debug">
 					Ruby has many of the objects you'll find in related languages: the string, integer, float, and array. Ruby also has a unique object: the hash. A hash is much like an array, but instead of predetermined indexes, you use a unique 'key' and assign it a 'value', creating a 'key-value pair'. Ruby also has two different integer objects: 'Fixnum' and 'Bignum'; 'Fixnum' is the default, but if your integer is too big, Ruby will convert it to a 'Bignum', alotting more memory to store it.
 				</p>
 				<pre class="columns-2 p-lg bgc-fog c-softblue debug">
@@ -348,7 +348,7 @@ Will execute the following block four times:
 					<a name="sect4"></a>
 					Built-in Methods
 				</h2>
-				<p>
+				<p class="debug">
 					Ruby has a lot of useful built-in methods. Your best bet for learning about them is to <a href="http://ruby-doc.org/">read up on the latest documentation</a>, but I'll provide a list of the ones that I found handy, or that are otherwise worth knowing.
 				</p>
 <pre class="columns-2 tal-r p-lg bgc-fog c-softblue debug">
@@ -526,8 +526,10 @@ returns a new hash containing the key-value pairs
 			</section>
 		</main>
 
-		<footer class="container-85 ml-xl l-sm mg-lg b-n c-nearblack debug">
-			<h6 class="p-lg debug">Last Updated: 22 Nov 2015</h6>
+		<footer class="container p-md debug">
+			<h6 class="debug">Last Updated: 28 Nov 2015</h6>
 		</footer>
+
   </body>
+
 </html>

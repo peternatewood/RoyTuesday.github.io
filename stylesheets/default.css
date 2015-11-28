@@ -61,6 +61,20 @@ nav a:hover {
 nav a:active {
 	color: #8f4b36;
 }
+aside a:link {
+	text-decoration: none;
+	font-weight: bold;
+	color: #8f4b36;
+}
+aside a:visited {
+	color: #8f4b36;
+}
+aside a:hover {
+	color: #204926;
+}
+aside a:active {
+	color: #8f4b36;
+}
 
 pre {
 	white-space: pre-wrap;
@@ -113,6 +127,7 @@ pre {
 .bdw-sm { border-width: 4px; }
 
 .bds-solid { border-style: solid; }
+.bds-inset { border-style: inset; }
 
 .bdrds-sm { border-radius: 0.25em; }
 .bdrds-md { border-radius: 0.5em; }
@@ -188,3 +203,7 @@ pre {
 .c-softred { color: #cd0000; }
 .c-drk-blue { color: #0000cd; }
 .c-drk-orange { color: #b36504; }
+.c-moss-green { color: #6C8938; }
+.c-pale-green { color: #A8BC85; }
+.c-lt-indigo { color: #868BF1; }
+.c-skyblue { color: #C4DDFF; }
