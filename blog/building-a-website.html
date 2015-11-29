@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="../stylesheets/default.css"/>
+		<title>
+			Building a Website
+		</title>
+	</head>
+
+	<body class="ff-trebuchet debug">
+
+		<header class="container mt-lg bgc-fog debug">
+			<section class="p-lg debug">
+				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
+					My Blog
+				</h1>
+				<p class="d-in mg-sm fz-md">
+					Peter N Wood
+				</p>
+			</section>
+		</header>
+
+		<nav class="container pos-sy t-n debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../index.html">
+						Home
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../blog/index.html">
+						Blog
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../project/index.html">
+						Projects
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../about/index.html">
+						About Me
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../resume/index.html">
+						Resume
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../contact/index.html">
+						Contact Info
+					</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<main class="container debug">
+			<section class="bgc-skyblue debug">
+				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
+					Building a Website
+				</h1>
+				<h2 class="mt-xs mb-sm p-md fz-sm debug">
+					29 Nov 2015
+				</h2>
+				<p class="mt-sm mb-sm p-md pl-lg fz-sm debug">
+					How I learned to start worrying about the DOM
+				</p>
+			</section>
+			<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
+				<p class="mb-sm mt-xs debug">
+					After eight weeks of designing, updating, and maintaining a website, I still have a long way to go. When I started, I had no knowledge of HTML 5 or CSS, and my initial site was very plain. I've added color and what I think is a user-friendly layout, but I expect I'll never be done making improvements on my site; even as I write, I can see a lot of clumsy formatting in both my HTML and CSS that needs fixing.
+				</p>
+				<p class="debug">
+					Looking back, I can remember a lot of the steps I took to get here. Several weeks ago, I struggled to implement "sticky" positioning. I wanted a navigation bar that remained at the top of the window when the user scrolled down, but at the top of the page, would sit below my page title. I found two possible solutions: implement a script to change the positioning attribute as the page scrolls, or use a position attribute new CSS: "sticky".
+				</p>
+				<p class="debug">
+					I could write a fairly short JavaScript file to accomplish the same task; all I need is to set the position of my &ltnav&gt element to "fixed", and create an event listener to update its position whenever the user scrolls the page. However, this involves a lot of testing to implement and requires that I make sure it still works on all browsers whenever there is an update to anything. 
+				</p>
+				<p class="debug">
+					On the other hand, "position: sticky" works exactly as I wanted; while the HTML element is positioned below the top edge of the client window, it behaves like the "relative" position, but when the element would otherwise scroll off screen, it behaves like the "fixed" position.
+				</p>
+				<p class="debug">
+					I like the way this works; unlike the JavaScript solution, this is designed to have a specific function within CSS, and as CSS is updated, this attribute should maintain that function. Unless you have a very large monitor, you can see it in action as you scroll down this page. This was as much a triumph as it is an example of how I need to continue updating my site; "position: sticky" is not yet supported by all browsers, and a more inclusive solution would involve writing that script to ensure that my site looks the same across all browsers.
+				</p>
+				<p class="debug">
+					I have yet to implemenet JavaScript on my site, and have encountered a major roadblock on the way to doing so. In my spare time, I've been working on two browser games using JavaScript: a text adventure and a Tetris clone (at the time of writing, an <a href="../projects/space_fear.html">early version of my text adventure</a> is available on my <a href="../projects/index.html">Projects</a> page). They both work as intended FireFox 42 and Internet Explorer 11, but not in Chrome 46 and Opera 33. I suspect that I could work around the issue by using JQuery, but I hesitate to do so until I understand why the games don't yet work in JavaScript alone.
+				</p>
+				<p class="debug">
+					I have a lot of work yet to do on my site; making the layout more friendly for mobile devices, adding JavaScript, making the different pages more distinct from eachother, and probably many things I can't yet predict. Working with the dev tools has been a very fulfilling process; I love to see the results of my work so quickly and to change it so easily. I'm looking forward to taking care of my site, writing new blog posts, and creating something I feel proud to share with the world.
+				</p>
+			</section>
+		</main>
+
+		<footer class="container p-md debug">
+			<h6 class="debug">Last Updated: 29 Nov 2015</h6>
+		</footer>
+
+	</body>
+	
+</html>

@@ -7,32 +7,67 @@
 		<link rel="stylesheet" href="../stylesheets/default.css"/>
 	</head>
 
-	<body class="ff-trebuchet debug">
-		<header class="c-nearblack container p-lg bgc-fog debug">
-			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
-			<p class="fz-md mg-sm d-in">Peter N Wood</p>
+	<body class="debug ff-trebuchet">
+		
+		<header class="container mt-lg bgc-fog debug">
+			<section class="p-lg debug">
+				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
+					My Blog
+				</h1>
+				<p class="d-in mg-sm fz-md">
+					Peter N Wood
+				</p>
+			</section>
 		</header>
 
 		<nav class="container pos-sy t-n debug">
 			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../blog/index.html">Blog</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Projects</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">About Me</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Resume</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Contact Info</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../index.html">
+						Home
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../blog/index.html">
+						Blog
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../project/index.html">
+						Projects
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../about/index.html">
+						About Me
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../resume/index.html">
+						Resume
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../contact/index.html">
+						Contact Info
+					</a>
+				</li>
 			</ul>
 		</nav>
 		
-		<main class="container bgc-skyblue debug">
-			<section class="debug">
-				<h1 class="p-md w-lg fz-md mt-sm mb-xs debug">Arrays and Hashes</h1>
-				<h2 class="p-md fz-sm mt-xs mb-sm">25 Oct 2015</h2>
-				<p class="p-md pl-lg mt-sm mb-sm">
+		<main class="container debug">
+			<section class="bgc-skyblue debug">
+				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
+					Arrays and Hashes
+				</h1>
+				<h2 class="mt-xs mb-sm p-md fz-sm debug">
+					25 Oct 2015
+				</h2>
+				<p class="p-md pl-lg fz-sm mt-sm mb-sm debug">
 					Like solar arrays and twitter tags? Not really...
 				</p>
 			</section>
-			<section class="p-lg debug">
+			<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
 				<p class="mb-sm mt-xs debug">
 					So what are Arrays and Hashes? Well, they're both Ruby objects that we use to store multiple things. Imagine that you want a list of related items, like a catalogue of your favorite movies. You could store each one in its own string variable, adding a new variable whenever a new great movie comes out or you remember an old favorite. That's no good: it's messy, time consuming, and your code will be rife with unique variables. You should be using either an array or hash.
 				</p>
@@ -40,7 +75,7 @@
 					Let's continue with the example of our favorite movie catalogue; you really could use either array or hash depending on how you want to sort your movies. Arrays and hashes work in almost the same way except for one simple but crucial difference: an array assigns an index number to each of it's objects, starting with 0, but a hash requires you to specify a unique "key" for each object. Maybe all you need is a simple list: an array is the way to go, because all you want is the name of each movie. But maybe you want to be able to sort your movies by genre: then you want a hash.
 				</p>
 				<p>Here's our example using some of my favorite movies:</p>
-				<h2 class="fz-xs">
+				<h2 class="fz-xs debug">
 					An array might look like this if we "puts" each object:
 				</h2>
 				<ul class="container p-md bgc-fog debug">
@@ -49,7 +84,9 @@
 					<li>Mad Max: Fury Road</li>
 					<li>Young Frankenstein</li>
 				</ul>
-				<h2 class="fz-xs">While a hash would have more information for us:</h2>
+				<h2 class="fz-xs debug">
+					While a hash would have more information for us:
+				</h2>
 				<ul class="container p-md bgc-fog debug">
 					<li>Gattaca => Sci-fi</li>
 					<li>What We Do in the Shadows => Comedy</li>
@@ -65,8 +102,8 @@
 			</section>
 		</main>
 
-		<footer class="l-sm b-n c-nearblack debug">
-			<h6 class="container debug">Last Updated: 28 Nov 2015</h6>
+		<footer class="container p-md debug">
+			<h6 class="debug">Last Updated: 29 Nov 2015</h6>
 		</footer>
 
 	</body>

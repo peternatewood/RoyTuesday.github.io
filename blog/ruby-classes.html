@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="../stylesheets/default.css"/>
@@ -7,33 +8,73 @@
 			Pete's Blog
 		</title>
 	</head>
-	<body class="ff-trebuchet">
-		<header class="c-nearblack container p-lg bgc-fog debug">
-			<h1 class="fz-lg p-md d-in mt-sm mb-sm">My Blog</h1>
-				<p class="fz-md mg-sm d-in">Peter N Wood</p>
+	
+	<body class="ff-trebuchet debug">
+		
+		<header class="container mt-lg bgc-fog debug">
+			<section class="p-lg debug">
+				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
+					My Blog
+				</h1>
+				<p class="d-in mg-sm fz-md">
+					Peter N Wood
+				</p>
+			</section>
 		</header>
 
 		<nav class="container pos-sy t-n debug">
 			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="../index.html">Home</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="index.html">Blog</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Projects</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">About Me</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Resume</a></li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug"><a href="#">Contact Info</a></li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../index.html">
+						Home
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../blog/index.html">
+						Blog
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../project/index.html">
+						Projects
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../about/index.html">
+						About Me
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../resume/index.html">
+						Resume
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../contact/index.html">
+						Contact Info
+					</a>
+				</li>
 			</ul>
 		</nav>
 
-		<main class="container bgc-skyblue debug">
-			<section class ="p-md pl-lg">
-				<h1 class="debug">Ruby's So Classy</h2>
-				<p class="debug">Posted: 08 Nov 2015</p>
-				<p class="p-md pl-lg mt-sm mb-sm">Classes and game design.</p>
+		<main class="container debug">
+			<section class="bgc-skyblue debug">
+				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
+					Ruby's So Classy
+				</h1>
+				<h2 class="mt-xs mb-sm p-md fz-sm debug">
+					Posted: 08 Nov 2015
+				</h2>
+				<p class="p-md pl-lg fz-sm mt-sm mb-sm debug">
+					Classes and game design
+				</p>
 			</section>
-			<section class="d-b p-lg debug">
-				<p>I've spent a lot of time developing small video games in my spare time ( and I have two unfinished games to show for it ). Up until now, I've only ever used C++ and some extension libraries to make that happen, but in Ruby as in C++ classes are key to many types of games. I'm going to create an Actor class to demonstrate how Ruby classes work, and how they can be used in a larger program. We use the term "actor" to describe any thing in the game space that moves and interacts with the environment.</p>
+			<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
+				<p>
+					I've spent a lot of time developing small video games in my spare time ( and I have two unfinished games to show for it ). Up until now, I've only ever used C++ and some extension libraries to make that happen, but in Ruby as in C++ classes are key to many types of games. I'm going to create an Actor class to demonstrate how Ruby classes work, and how they can be used in a larger program. We use the term "actor" to describe any thing in the game space that moves and interacts with the environment.
+				</p>
 				<aside class="mg-md debug">
-<pre class="ff-courier bgc-fog p-lg debug">
+<pre class="p-lg bgc-fog fz-xs debug">
 <span class="c-olive">class</span> <span class="c-oak">Actor</span>
 
   <span class="c-olive">def</span> <span class="c-softblue">initialize</span>( x <span class="c-olive">=</span> 0, y <span class="c-olive">=</span> 0 )
@@ -50,10 +91,16 @@ end</span>
 				</aside>
 			<p class="debug">
 				Here we begin our class definition. There are a lot of things going on here, so I'll break them down into steps:
-				<ol>
-					<li>We define our class "Actor"</li>
-					<li>We define the "initialize" method with parameters</li>
-					<li>We declare several instance variables</li>
+				<ol class="debug">
+					<li class="debug">
+						We define our class "Actor"
+					</li>
+					<li class="debug">
+						We define the "initialize" method with parameters
+					</li>
+					<li class="debug">
+						We declare several instance variables
+					</li>
 				</ol>
 			</p>
 			<p class="debug">
@@ -71,7 +118,7 @@ end</span>
 			<p class="debug">
 				This is a good start, but our class doesn't do anything. So far, we can make an object that stores four variables, inaccessible to anything outside of that object. So, we write more methods.
 			</p>
-<pre class="ff-courier bgc-fog p-lg debug">
+<pre class="p-lg bgc-fog fz-xs debug">
   <span class="c-olive">def</span> <span class="c-softblue">collide?</span>
     
     <span class="c-olive">if</span> <span class="c-softblue">@xPos</span> <span class="c-olive"><</span> 0
@@ -119,7 +166,7 @@ end</span>
 			<p class="debug">
 				I won't go into all the details here, because we still need to draw our Actor and give it some other things to do besides moving. Instead, I'll show you what the rest of our code would look like to generate the game.
 			</p>
-<pre class="ff-courier bgc-fog p-lg debug">
+<pre class="p-lg bgc-fog fz-xs debug">
   pac <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 304, 480 )
   blinky <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 304, 282 )
   pinky <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 282, 304 )
@@ -152,8 +199,8 @@ end</span>
 			</p>
 		</main>
 
-		<footer class="l-sm mg-lg b-n c-nearblack debug">
-			<h6 class="container debug">Last Updated: 28 Nov 2015</h6>
+		<footer class="container p-md debug">
+			<h6 class="debug">Last Updated: 29 Nov 2015</h6>
 		</footer>
 
   </body>
