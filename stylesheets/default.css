@@ -152,6 +152,7 @@ pre {
 
 .w-10 { width: 10%; }
 .w-90 { width: 90%; }
+.w-full { width:100%; }
 
 .w-sm { width: 6.25em; }
 .w-md { width: 20%; }
