@@ -78,11 +78,72 @@
         </p>
 				<p class="debug">
         </p>
-          I spent over a month researching Dev Bootcamp before I applied: reading over the official website, comparing with competitors, and talking with an alumnus. I was still apprehensive going into Phase 0; the nine weeks of this Phase were encouraging, but I wouldn't find real peace until I began the on-site course. In the meantime, I found that the modern programmer is expected to enact version control,  and engage in pair programming.
+          I spent over a month researching Dev Bootcamp before I applied: reading over the official website, comparing with competitors, and talking with an alumnus. I was still apprehensive going into Phase 0; the nine weeks of this Phase were encouraging, but I wouldn't find real peace until I began the on-site course. In the meantime, I learned about Ruby, HTML, JavaScript, SQL, and several things crucial to modern programming: version control, emotional intelligence, and pair programming.
         <p class="debug">
-					[second paragraph]
+					I could go on for hundreds of lines about just one of the three programming languages I learned. Instead, I'll summarize each and describe how they work together. Ruby is a language designed to read like English and be easy to learn: this language is used for processing data and dealing with things in the background, a.k.a. the back-end.
 				</p>
-			</section>
+
+<pre class="bgc-fog p-lg fz-xs debug">
+<span class="c-drk-grey">Ruby often reads like English</span>
+<span class="c-olive">
+user_input = ""
+
+until user_input == "exit" do
+  puts 'Type "exit" to exit.'
+  user_input = gets.chomp
+  puts "You typed #{user_input}."
+end
+</span>
+<span class="c-drk-grey">Well...broken English, maybe</span>
+</pre>
+
+        <p class="debug">
+          Hyper-Text Markup Language (HTML) is the language used to organize a web page, 'marking up' the text with tags to define how it looks: we usually add a Cascading StyleSheet (CSS) to make the page look nice and modern.
+        </p>
+
+<pre class="bgc-fog p-lg fz-xs debug">
+<span class="c-drk-grey">A sample of HTML from this very page!</span>
+
+&lt<span class="c-softblue">header</span> class=<span class="c-olive">"container mt-lg bgc-fog debug"</span>&gt
+  &lt<span class="c-softblue">section</span> class=<span class="c-olive">"p-lg debug"</span>&gt
+    &lt<span class="c-softblue">h1</span> class=<span class="c-olive">"d-in mt-sm mb-sm p-md fz-lg"</span>&gt
+      My Blog
+    &lt/<span class="c-softblue">h1</span>&gt
+    &lt<span class="c-softblue">p</span> class=<span class="c-olive">"d-in mg-sm fz-md"</span>&gt
+      Peter N Wood
+    &lt/<span class="c-softblue">p</span>&gt
+  &lt/<span class="c-softblue">section</span>&gt
+&lt/<span class="c-softblue">header</span>&gt
+</span>
+<span class="c-drk-grey">The "class=" is part of CSS styling</span>
+</pre>
+        <p class="debug">
+          JavaScript gives life to the web page: moving, resizing, re-coloring, or otherwise altering the HTML to make the page more interactive. SQL (pronounced like the word 'sequel') is the most boring: we just use this to get information from a database into our Ruby code.
+        </p>
+<pre class="bgc-fog p-lg fz-xs debug">
+<span class="c-drk-grey">JavaScript is dense but powerful</span>
+<span class="c-olive">
+body = document.body;
+bodyElements = document.body.childNodes;
+
+function turnBlue(element)
+{
+  element.style = "background-color:blue";
+}
+
+turnBlue(body);
+
+for(var i = 0; i < bodyElements.length; i++)
+{
+  turnBlue(bodyElements[i]);
+}
+</span>
+<span class="c-drk-grey">This script turns most of a page blue!</span>
+</pre>
+        <p class="debug">
+          .
+        </p>
+      </section>
 		</main>
 
 		<footer class="container p-md debug">
