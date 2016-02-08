@@ -7,8 +7,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$.ajax(event.target.href)
 		.done(function(response) {
-			window.htmlString = response;
-			console.log("regex'd!", getMain(htmlString));
+			$('main').html(getMain(response));
 		})
 		.fail(function(response) {
 			console.log('failure?', response);
