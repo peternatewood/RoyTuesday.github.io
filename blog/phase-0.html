@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="../stylesheets/default.css"/>
+		<title>
+			Dev Bootcamp Phase 0
+		</title>
+	</head>
+
+	<body class="ff-trebuchet debug">
+
+		<header class="container mt-lg bgc-fog debug">
+			<section class="p-lg debug">
+				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
+					My Blog
+				</h1>
+				<p class="d-in mg-sm fz-md">
+					Peter N Wood
+				</p>
+			</section>
+		</header>
+
+		<nav class="container pos-sy t-n debug">
+			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../index.html">
+						Home
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../blog/index.html">
+						Blog
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../projects/index.html">
+						Projects
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../about/index.html">
+						About Me
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../resume/index.html">
+						Resume
+					</a>
+				</li>
+				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
+					<a href="../contact/index.html">
+						Contact Info
+					</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<main class="container debug">
+			<section class="bgc-skyblue debug">
+				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
+					Dev Bootcamp Phase 0
+				</h1>
+				<h2 class="mt-xs mb-sm p-md fz-sm debug">
+					26 Dec 2015
+				</h2>
+				<p class="mt-sm mb-sm p-md pl-lg fz-sm debug">
+					Nine weeks to learn new languages and skills
+				</p>
+			</section>
+			<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
+        <p class="mb-sm mt-xs debug">
+          When it was created in San Francisco in 2012, Dev Bootcamp (DBC) featured a course segmented into three phases, numbering one through three. The program was intended for those with some experience in web-related programming languages, but many students began Phase 1 with no prior programming knowledge. For some time, DBC suffered a significant drop-out rate. Phase 0 was introduced to remedy the issue: nine weeks of basic training to prepare for the bootcamp proper.
+        </p>
+        <p class="debug">
+          Phase 0 requires much less time per week than the subsequent Phases: I kept my 40-hour-per-week day job and had no trouble keeping up with the coursework. This part of the program reminded me of my time at college. I only needed to spend a few hours each day learning new skills and completing challenges. Even as I write, DBC is working to improve Phase 0 based on feedback from the students. Future students are likely to have a much different experience from mine, so describing the details of my Phase 0 would be distracting and unhelpful. Instead, I'll focus on the core concepts of this Phase.
+        </p>
+				<p class="debug">
+        </p>
+          I spent over a month researching Dev Bootcamp before I applied: reading over the official website, comparing with competitors, and talking with an alumnus. I was still apprehensive going into Phase 0; the nine weeks of this Phase were encouraging, but I wouldn't find real peace until I began the on-site course. In the meantime, I learned about Ruby, HTML, JavaScript, SQL, and several things crucial to modern programming: version control, emotional intelligence, and pair programming.
+        <p class="debug">
+					I could go on for hundreds of lines about just one of the three programming languages I learned. Instead, I'll summarize each and describe how they work together. Ruby is a language designed to read like English and be easy to learn: this language is used for processing data and dealing with things in the background, a.k.a. the back-end.
+				</p>
+
+<pre class="bgc-fog p-lg fz-xs debug">
+<span class="c-drk-grey">Ruby often reads like English</span>
+<span class="c-olive">
+user_input = ""
+
+until user_input == "exit" do
+
+  puts 'Type "exit" to exit.'
+  user_input = gets.chomp
+
+  puts "You typed #{user_input}."
+
+end
+</span>
+<span class="c-drk-grey">Well...broken English, maybe</span>
+</pre>
+
+        <p class="debug">
+          Hyper-Text Markup Language (HTML) is the language used to organize a web page, 'marking up' the text with tags to define how it looks: we usually add a Cascading StyleSheet (CSS) to make the page look nice and modern.
+        </p>
+
+<pre class="bgc-fog p-lg fz-xs debug">
+<span class="c-drk-grey">A sample of HTML from this very page!</span>
+
+&lt<span class="c-softblue">header</span> class=<span class="c-olive">"container mt-lg bgc-fog debug"</span>&gt
+  &lt<span class="c-softblue">section</span> class=<span class="c-olive">"p-lg debug"</span>&gt
+    &lt<span class="c-softblue">h1</span> class=<span class="c-olive">"d-in mt-sm mb-sm p-md fz-lg"</span>&gt
+      My Blog
+    &lt/<span class="c-softblue">h1</span>&gt
+    &lt<span class="c-softblue">p</span> class=<span class="c-olive">"d-in mg-sm fz-md"</span>&gt
+      Peter N Wood
+    &lt/<span class="c-softblue">p</span>&gt
+  &lt/<span class="c-softblue">section</span>&gt
+&lt/<span class="c-softblue">header</span>&gt
+</span>
+<span class="c-drk-grey">The "class=" is part of CSS styling</span>
+</pre>
+        <p class="debug">
+          JavaScript gives life to the web page: moving, resizing, re-coloring, or otherwise altering the HTML to make the page more interactive. SQL (pronounced like the word 'sequel') is the most boring: we just use this to get information from a database into our Ruby code.
+        </p>
+<pre class="bgc-fog p-lg fz-xs debug">
+<span class="c-drk-grey">JavaScript is dense but powerful</span>
+<span class="c-olive">
+body = document.body;
+bodyElements = document.body.childNodes;
+
+function turnBlue(element)
+{
+  element.style = "background-color:blue";
+}
+
+turnBlue(body);
+
+for(var i = 0; i < bodyElements.length; i++)
+{
+  turnBlue(bodyElements[i]);
+}
+</span>
+<span class="c-drk-grey">This script turns most of a page blue!</span>
+</pre>
+        <p class="debug">
+          Could I have learned these languages myself? Maybe, but I wouldn't think to use them in the ways I've been challenged to do, and I would not have nearly as comprehensive an understanding of them. Before taking DBC, I spent a little over one year teaching myself C++; I learned more about Ruby, HTML, CSS, JavaScript, and SQL in nine weeks than a year of self-taught C++.
+        </p>
+        <p class="debug">
+          But enough of languages, a lot of the program at DBC is devoted to the process of programming. Version Control is a powerful programming tool. Most word processors allow you to 'undo' something you typed or deleted, going back as far as the first word you typed: version control is a lot like this. Working on a project, you do best to keep a working version (called the 'master') of it at all times. If you want to make a change to the program, you create a new 'branch': you effectively make a copy of the master so you can tinker with it and leave the working version intact.
+        </p>
+        <img src="https://guides.github.com/activities/hello-world/branching.png" alttext="github branching diagram" class="mg-a w-full debug"/>
+      </section>
+		</main>
+
+		<footer class="container p-md debug">
+			<h6 class="debug">Last Updated: 26 Dec 2015</h6>
+		</footer>
+
+	</body>
+	
+</html>
