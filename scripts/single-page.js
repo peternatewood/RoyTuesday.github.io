@@ -11,4 +11,9 @@ $(document).on('ready', function() {
     });
   });
 
+  $('a.blog-link').on('click', function(event) {
+    event.preventDefault();
+    console.log("I'm a blog link!");
+  });
+
 });
