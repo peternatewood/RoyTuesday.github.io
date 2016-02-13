@@ -4,7 +4,7 @@ $(document).on('ready', function() {
   $('a').on('click', function(event) {
     event.preventDefault();
     console.log('links have been bound!', event.target);
-    var targetURI = event.target.href;
+    var targetURI = event.target['data-json-target'];
     console.log('targetURI', targetURI)
     $.ajax({
       cache: false,
