@@ -1,0 +1,54 @@
+<section class="bgc-skyblue debug">
+	<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
+		An Enumerable method: cycle
+	</h2>
+	<h2 class="mt-xs mb-sm p-md fz-sm debug">
+		01 Nov 2015
+	</h2>
+	<p class="p-md pl-lg fz-sm mt-sm mb-sm debug">
+		Ever wanted to iterate using times?
+	</p>
+</section>
+<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
+	<p class="debug">
+		Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
+	</p>
+	<pre class="p-lg bgc-fog fz-xs debug">
+a = [ "a", "b", "c" ]
+a.cycle( 3 ) { |x| puts x }
+
+#=> a
+#=> b
+#=> c
+	</pre>
+	<p class="debug">
+		That's pretty straightforward, but I wanted to get a little more complicated:
+	</p>
+	<pre class="bgc-fog p-lg fz-xs debug">
+a.cycle( 6 ) { |x| puts x + " thing" }
+
+#=> a thing
+#=> b thing
+#=> c thing
+# First cycle
+
+#=> a thing thing
+#=> b thing thing
+#=> c thing thing
+# Second cycle
+...
+#=> a thing thing thing thing thing thing
+#=> b thing thing thing thing thing thing
+#=> c thing thing thing thing thing thing
+# Sixth cycle
+	</pre>
+	<p class="debug">
+		That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.
+	</p class="debug">
+	<p>
+		Be careful! If you don't pass an argument to cycle, it will go on forever!
+	</p class="debug">
+	<p>
+		Cycle is very basic, like 'times' for enumerables. I imagine that other other methods may be better for specific instances, but cycle may be good to know for those times when you just need to repeat a code block.
+	</p>
+</section>
