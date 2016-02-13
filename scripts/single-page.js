@@ -11,7 +11,7 @@ $(document).on('ready', function() {
     });
   });
 
-  $('a.blog-link').on('click', function(event) {
+  $('body').on('click', 'a.blog-link', function(event) {
     event.preventDefault();
     var targetURI = event.target.dataset.pagePartial;
     $.ajax({
