@@ -13,7 +13,16 @@ $(document).on('ready', function() {
 
   $('a.blog-link').on('click', function(event) {
     event.preventDefault();
-    console.log("I'm a blog link!");
+    var targetURI = event.target.dataset.pagePartial;
+    console.log("I'm a blog link!", targetURI);
+    $.ajax({
+      cache: false,
+      url: targetURI
+    }).done(function(response) {
+      console.log('success!', response);
+    }).fail(function(response) {
+      console.log('failure?', response);
+    });
   });
 
 });
