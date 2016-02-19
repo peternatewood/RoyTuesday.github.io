@@ -18,7 +18,7 @@ $(document).on('ready', function() {
       cache: false,
       url: targetURI
     }).done(function(response) {
-      $('main').html(response);
+      $('.main-container').html(response);
     });
   });
 
