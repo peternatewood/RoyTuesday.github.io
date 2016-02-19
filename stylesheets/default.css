@@ -122,43 +122,4 @@ pre {
 	width: 95%;
 }
 
-.bgc-fog { background-color: #f9f8fe; }
-.bgc-pink { background-color: #ffdddd; }
-.bgc-drk-green { background-color: #204926 }
-.bgc-olive { background-color: #41924b; }
-.bgc-lightblue { background-color: #e5f6ff; }
-.bgc-plywood { background-color: #EFEAC1; }
-.bgc-moss-green { background-color: #6C8938; }
-.bgc-pale-green { background-color: #A8BC85; }
-.bgc-lt-indigo { background-color: #868BF1; }
-.bgc-skyblue { background-color: #C4DDFF; }
-.bgc-black { background-color: black; }
-
-.bdc-softblue { border-color: #3080ca; }
-.bdc-drk-green { border-color: #204926; }
-.bdc-olive { border-color: #41924b; }
-.bdc-oak { border-color: #8f4b36; }
-
-.c-drk-grey { color: #555; }
-.c-red { color: #D43D3A; }
-.c-nearblack { color: #2b2a36; }
-.c-fog { color: #f9f8fe; }
-.c-pink { color: #ffdddd; }
-.c-drk-green { color: #204926 }
-.c-olive { color: #41924b; }
-.c-softblue { color: #40a0ca; }
-.c-plywood { color: #EFEAC1;}
-.c-oak { color: #8f4b36; }
-.c-softred { color: #cd0000; }
-.c-drk-blue { color: #0000cd; }
-.c-drk-orange { color: #b36504; }
-.c-moss-green { color: #6C8938; }
-.c-pale-green { color: #A8BC85; }
-.c-lt-indigo { color: #868BF1; }
-.c-skyblue { color: #C4DDFF; }
-
-.ff-trebuchet { font-family: Trebuchet MS, sans-serif; }
-.ff-serif { font-family: serif; }
-.ff-courier { font-family: "Courier New"; courier; monospace;}
-
 @media (max-width: 480px) {}
