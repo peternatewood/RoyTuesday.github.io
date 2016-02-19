@@ -1,3 +1,7 @@
+* {
+	font-family: 'Trebuchet MS', trebuchet, sans-serif;
+}
+
 footer {
 	text-align: center;
 }
@@ -134,7 +138,6 @@ pre {
 }
 .nav-name {
 	display: initial;
-	font-family: 'Trebuchet MS', trebuchet, sans-serif;
 	font-weight: bold;
 }
 
