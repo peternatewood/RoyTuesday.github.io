@@ -32,10 +32,10 @@ main section li {
 nav {
 	background-color: #A8BC85;
 	border-color: #6C8938;
-	border-radius: 0.5em;
+	border-radius: 0 0.5em;
 	border-style: solid;
 	border-width: 0.25em 1px 1px 0.375em;
-	padding: 0.25em;
+	padding: 0.25em 1em;
 	text-align: center;
 	width: 10em;
 }
