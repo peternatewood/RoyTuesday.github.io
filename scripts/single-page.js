@@ -7,11 +7,11 @@ $(document).on('ready', function() {
       cache: false,
       url: targetURI
     }).done(function(response) {
-      $('main').html(response);
+      $('.main-container').html(response);
     });
   });
 
-  $('body').on('click', 'a.blog-link', function(event) {
+  $('.main-container').on('click', 'a.blog-link', function(event) {
     event.preventDefault();
     var targetURI = event.target.dataset.pagePartial;
     $.ajax({
