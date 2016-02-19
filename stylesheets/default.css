@@ -56,30 +56,30 @@ ol, ul {
 a:link {
 	text-decoration: none;
 	font-weight: bold;
-	color: #565Bb1;
+	color: #565BB1;
 }
 a:visited {
-	color: #565Bb1;
+	color: #565BB1;
 }
 a:hover {
 	color: #868BF1;
 }
-a:active {
+a:visited:hover {
 	color: #868BF1;
 }
 nav a:link {
 	text-decoration: none;
 	font-weight: bold;
-	color: #8f4b36;
+	color: #8F4B36;
 }
 nav a:visited {
-	color: #8f4b36;
+	color: #8F4B36;
 }
 nav a:hover {
 	color: #204926;
 }
-nav a:active {
-	color: #8f4b36;
+nav a:visited:hover {
+	color: #204926;
 }
 
 pre {
@@ -94,6 +94,26 @@ pre {
 	align-content: center;
 	margin: 0 auto;
 	width: 85%;
+}
+
+.footer-links {
+	color: #336;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 0.5em;
+}
+.footer-links a {
+	color: #336;
+	vertical-align: middle;
+}
+.footer-links a:hover {
+	color: #88A;
+}
+.footer-links a:visited {
+	color: #336;
+}
+.footer-links a:visited:hover {
+	color: #88A;
 }
 
 .headshot {
