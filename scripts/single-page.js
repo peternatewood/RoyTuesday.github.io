@@ -2,7 +2,7 @@ $(document).on('ready', function() {
 
   $('nav a').on('click', function(event) {
     event.preventDefault();
-    var targetURI = event.target.dataset.pagePartial;
+    var targetURI = event.currentTarget.dataset.pagePartial;
     $.ajax({
       cache: false,
       url: targetURI
