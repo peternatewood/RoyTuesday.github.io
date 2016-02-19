@@ -95,6 +95,15 @@ pre {
 	margin: 0 auto;
 	width: 85%;
 }
+
+.headshot {
+	border-radius: 0 10px;
+	border-style: solid;
+	border-width: 0.375em 0 0 0.25em;
+	margin-top: 0.5em;
+	width: 130px;
+}
+
 .main-container {
 	height: 30em;
 	margin-right: 1em;
@@ -103,15 +112,14 @@ pre {
 	width: -moz-available;
 	width: -webkit-fill-available;
 }
+.nav-name { display: initial; }
 
-#headshot {
+#web-headshot {
 	border-color: #6C8938;
-	border-radius: 0 10px;
-	border-style: solid;
-	border-width: 0.375em 0 0 0.25em;
-	margin-top: 0.5em;
-	width: 130px;
+	display: initial;
 }
+#mobile-headshot { display: none; }
+
 #end-message {}
 #console-display {}
 #console-input {
@@ -124,10 +132,25 @@ pre {
 	main {
 		display: initial;
 	}
+	nav {
+		width: auto;
+	}
+	nav li {
+		display: inline-block;
+		width: 2em;
+	}
 
 	.main-container {
 		height: auto;
 		overflow-y: initial;
 		width: auto;
+	}
+	.nav-name { display: none; }
+
+	#web-headshot { display: none; }
+	#mobile-headshot {
+		border-color: #AAB;
+		display: block;
+		margin: 0 auto;
 	}
 }
