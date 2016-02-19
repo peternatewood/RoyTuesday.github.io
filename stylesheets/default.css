@@ -54,9 +54,9 @@ ol, ul {
 }
 
 a:link {
-	text-decoration: none;
-	font-weight: bold;
 	color: #565BB1;
+	font-weight: bold;
+	text-decoration: none;
 }
 a:visited {
 	color: #565BB1;
@@ -68,9 +68,9 @@ a:visited:hover {
 	color: #868BF1;
 }
 nav a:link {
-	text-decoration: none;
-	font-weight: bold;
 	color: #8F4B36;
+	font-weight: initial;
+	text-decoration: none;
 }
 nav a:visited {
 	color: #8F4B36;
@@ -135,6 +135,7 @@ pre {
 .nav-name {
 	display: initial;
 	font-family: 'Trebuchet MS', trebuchet, sans-serif;
+	font-weight: bold;
 }
 
 #web-headshot {
