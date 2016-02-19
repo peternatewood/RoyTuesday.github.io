@@ -37,7 +37,6 @@ nav {
 	border-width: 0.25em 1px 1px 0.375em;
 	padding: 0.25em;
 	text-align: center;
-	vertical-align: top;
 	width: 10em;
 }
 nav li {
@@ -121,4 +120,14 @@ pre {
 	width: 95%;
 }
 
-@media (max-width: 480px) {}
+@media (max-width: 480px) {
+	main {
+		display: initial;
+	}
+
+	.main-container {
+		height: auto;
+		overflow-y: initial;
+		width: auto;
+	}
+}
