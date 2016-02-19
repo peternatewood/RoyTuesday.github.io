@@ -112,7 +112,10 @@ pre {
 	width: -moz-available;
 	width: -webkit-fill-available;
 }
-.nav-name { display: initial; }
+.nav-name {
+	display: initial;
+	font-family: 'Trebuchet MS', trebuchet, sans-serif;
+}
 
 #web-headshot {
 	border-color: #6C8938;
