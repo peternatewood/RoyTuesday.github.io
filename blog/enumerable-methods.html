@@ -1,136 +1,136 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		
-		<link rel="stylesheet" href="../stylesheets/normalize.css"/>
-		<link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
-		<link rel="stylesheet" href="../stylesheets/default.css"/>
+  <head>
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" href="../stylesheets/normalize.css"/>
+    <link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../stylesheets/default.css"/>
 
-		<title>
-			Peter N Wood
-		</title>
-	</head>
+    <title>
+      Peter N Wood
+    </title>
+  </head>
 
-	<body class="container">
+  <body class="container">
 
-		<header>
-			<h1>
-				Peter N Wood
-			</h1>
-			<p>
-				programmer, pianist, video gamer
-			</p>
-			<img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-		</header>
+    <header>
+      <h1>
+        Peter N Wood
+      </h1>
+      <p>
+        programmer, pianist, video gamer
+      </p>
+      <img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+    </header>
 
-		<main>
-			<nav>
-				<img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-				<ul>
-					<li>
-						<a class="fa fa-home" href="../index.html" title="Home">
-							<span class="nav-name">Home</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-pencil" href="./index.html" title="My Blog">
-							<span class="nav-name">Blog</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-book" href="../projects/index.html" title="Projects">
-							<span class="nav-name">Projects</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-user" href="../about/index.html" title="About Me">
-							<span class="nav-name">About Me</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
-							<span class="nav-name">Resume</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+    <main>
+      <nav>
+        <img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+        <ul>
+          <li>
+            <a class="fa fa-home" href="../index.html" title="Home">
+              <span class="nav-name">Home</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-pencil" href="./index.html" title="My Blog">
+              <span class="nav-name">Blog</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-book" href="../projects/index.html" title="Projects">
+              <span class="nav-name">Projects</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-user" href="../about/index.html" title="About Me">
+              <span class="nav-name">About Me</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
+              <span class="nav-name">Resume</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
-			<section class="main-container">
-				<article>
-					<h1>
-						An Enumerable method: cycle
-					</h2>
-					<h2>
-						01 Nov 2015
-					</h2>
-					<p>
-						Ever wanted to iterate using times?
-					</p>
-				</article>
-				<article>
-					<p>
-						Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
-					</p>
-					<pre>
-				a = [ "a", "b", "c" ]
-				a.cycle( 3 ) { |x| puts x }
+      <section class="main-container">
+        <article>
+          <h1>
+            An Enumerable method: cycle
+          </h2>
+          <h2>
+            01 Nov 2015
+          </h2>
+          <p>
+            Ever wanted to iterate using times?
+          </p>
+        </article>
+        <article>
+          <p>
+            Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
+          </p>
+          <pre>
+        a = [ "a", "b", "c" ]
+        a.cycle( 3 ) { |x| puts x }
 
-				#=> a
-				#=> b
-				#=> c
-					</pre>
-					<p>
-						That's pretty straightforward, but I wanted to get a little more complicated:
-					</p>
-					<pre>
-				a.cycle( 6 ) { |x| puts x + " thing" }
+        #=> a
+        #=> b
+        #=> c
+          </pre>
+          <p>
+            That's pretty straightforward, but I wanted to get a little more complicated:
+          </p>
+          <pre>
+        a.cycle( 6 ) { |x| puts x + " thing" }
 
-				#=> a thing
-				#=> b thing
-				#=> c thing
-				# First cycle
+        #=> a thing
+        #=> b thing
+        #=> c thing
+        # First cycle
 
-				#=> a thing thing
-				#=> b thing thing
-				#=> c thing thing
-				# Second cycle
-				...
-				#=> a thing thing thing thing thing thing
-				#=> b thing thing thing thing thing thing
-				#=> c thing thing thing thing thing thing
-				# Sixth cycle
-					</pre>
-					<p>
-						That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.
-					</p>
-					<p>
-						Be careful! If you don't pass an argument to cycle, it will go on forever!
-					</p>
-					<p>
-						Cycle is very basic, like 'times' for enumerables. I imagine that other other methods may be better for specific instances, but cycle may be good to know for those times when you just need to repeat a code block.
-					</p>
-				</article>
-			</section>
-		</main>
+        #=> a thing thing
+        #=> b thing thing
+        #=> c thing thing
+        # Second cycle
+        ...
+        #=> a thing thing thing thing thing thing
+        #=> b thing thing thing thing thing thing
+        #=> c thing thing thing thing thing thing
+        # Sixth cycle
+          </pre>
+          <p>
+            That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.
+          </p>
+          <p>
+            Be careful! If you don't pass an argument to cycle, it will go on forever!
+          </p>
+          <p>
+            Cycle is very basic, like 'times' for enumerables. I imagine that other other methods may be better for specific instances, but cycle may be good to know for those times when you just need to repeat a code block.
+          </p>
+        </article>
+      </section>
+    </main>
 
-		<footer>
-			<p class="footer-links">
-				<a href="https://github.com/roytuesday" target="_blank">
-					<span class="fa fa-github" title="GitHub"></span>
-				</a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
-					<span class="fa fa-linkedin-square" title="LinkedIn"></span>
-				</a> | <a href="https://twitter.com/programmingpete" target="_blank">
-					<span class="fa fa-twitter-square" title="Twitter"></span>
-				</a>
-			</p>
-			<p>
-				peternatewood@gmail.com
-			</p>
-			<h6>Last Updated: 29 Nov 2015</h6>
-		</footer>
+    <footer>
+      <p class="footer-links">
+        <a href="https://github.com/roytuesday" target="_blank">
+          <span class="fa fa-github" title="GitHub"></span>
+        </a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
+          <span class="fa fa-linkedin-square" title="LinkedIn"></span>
+        </a> | <a href="https://twitter.com/programmingpete" target="_blank">
+          <span class="fa fa-twitter-square" title="Twitter"></span>
+        </a>
+      </p>
+      <p>
+        peternatewood@gmail.com
+      </p>
+      <h6>Last Updated: 29 Nov 2015</h6>
+    </footer>
 
-	</body>
+  </body>
 
 </html>
