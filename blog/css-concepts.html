@@ -3,119 +3,132 @@
 
 	<head>
 		<meta charset="UTF-8">
+		
+		<link rel="stylesheet" href="../stylesheets/normalize.css"/>
+		<link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
 		<link rel="stylesheet" href="../stylesheets/default.css"/>
+
 		<title>
-			Pete's Blog
+			Peter N Wood
 		</title>
 	</head>
 
-	<body class="debug ff-trebuchet">
-		
-		<header class="container mt-lg bgc-fog debug">
-			<section class="p-lg debug">
-				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
-					My Blog
-				</h1>
-				<p class="d-in mg-sm fz-md">
-					Peter N Wood
-				</p>
-			</section>
+	<body class="container">
+
+		<header>
+			<h1>
+				Peter N Wood
+			</h1>
+			<p>
+				programmer, pianist, video gamer
+			</p>
+			<img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
 		</header>
 
-		<nav class="container pos-sy t-n debug">
-			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../index.html">
-						Home
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../blog/index.html">
-						Blog
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../projects/index.html">
-						Projects
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../about/index.html">
-						About Me
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../resume/index.html">
-						Resume
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../contact/index.html">
-						Contact Info
-					</a>
-				</li>
-			</ul>
-		</nav>
+		<main>
+			<nav>
+				<img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+				<ul>
+					<li>
+						<a class="fa fa-home" href="../index.html" title="Home">
+							<span class="nav-name">Home</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-pencil" href="./index.html" title="My Blog">
+							<span class="nav-name">Blog</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-book" href="../projects/index.html" title="Projects">
+							<span class="nav-name">Projects</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-user" href="../about/index.html" title="About Me">
+							<span class="nav-name">About Me</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
+							<span class="nav-name">Resume</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 
-		<main class="container debug">
-			<section class="bgc-skyblue debug">
-				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
-					Margins, Borders, and Padding
-				</h1>
-				<h2 class="mt-xs mb-sm p-md fz-sm debug">
-					18 Oct 2015
-				</h2>
-				<p class="p-md pl-lg fz-sm mt-sm mb-sm debug">
-					The differences between margin, border, and padding 
-				</p>
-			</section>
-			<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
-				Every element in an HTML document has three attributes that determine it's profile on a web page: margin, border, and padding. These three attributes are typically understood as if each one is a box nested within another.
-				<aside class="mt-sm mg-md debug">
-					<img class="bds-solid bdw-xs bdc-drk-green" src="../imgs/margin-box-model.jpg" alttext="dev-box"/>
-				</aside>The standard model as used in Chrome and Firefox dev tools.
-			</section>
-			<section class="p-lg bgc-skyblue fz-sm debug">
-				<h2 class="debug">Margin</h2>
-				<article class="debug">
-					The margin is the outermost box; the margin itself is invisible, but its edges can be seen where it meets the edge of the browser window or other elements. Margins are best for keeping elements a minimum distance apart.
-					<aside class="mt-sm mg-md debug">
-						<img class="columns-2 bds-solid bdw-xs bdc-drk-green" src="../imgs/margin-lg-ex.jpg" alttext="margin-lg"/>
-						<img class="columns-2 bds-solid bdw-xs bdc-drk-green" src="../imgs/margin-sm-ex.jpg" alttext="margin-sm"/>
-					</aside>Here, we can see how the element's position changes from large margins to small.
-				</article>
-			</section>
-			<section class="p-lg bgc-skyblue fz-sm debug">
-				<h2 class="mt-sm debug">Border</h2>
-				<article class="debug">
-					The border lines the inner edges of the margin, and outer edges of the padding. Borders are invisible by default ( technically at a width of 0 ), but can be set to any width and color. Good borders can really make a page more pop or make a page flow better.
-					<aside class="mt-sm mg-md debug">
-						<img class="columns-2 bds-solid bdw-xs bdc-drk-green" src="../imgs/border-lg-ex.jpg" alttext="border-lg"/>
-						<img class="columns-2 bds-solid bdw-xs bdc-drk-green" src="../imgs/border-sm-ex.jpg" alttext="border-sm"/>
-					</aside>Remember that the border has its own size, and it will affect elements' positioning.
-				</article>
-			</section>
-			<section class="p-lg bgc-skyblue fz-sm debug">
-				<h2 class="debug">Padding</h2>
-				<article class="debug">
-					The padding is the innermost of these three attributes. Padding separates the content of an element from the border, like insulation in the walls of a building. Padding and borders go hand-in-hand, and you'll find yourself adjusting one for the benefit of the other.
-					<aside class="mt-sm mg-md debug">
-						<img class="columns-2 bds-solid bdw-xs bdc-drk-green" src="../imgs/pad-lg-ex.jpg" alttext="pad-lg"/>
-						<img class="columns-2 bds-solid bdw-xs bdc-drk-green" src="../imgs/pad-sm-ex.jpg" alttext="pad-sm"/>
-					</aside>Here's a big difference in padding sizes.
-				</article>
-			</section>
-			<section class="p-lg bgc-skyblue fz-sm debug">
-				<article>
-					Remember that each side of an element has its own margin, and padding, while the border is the same all around. The examples above show padding and margins that are equal on all sides, but that isn't always the best layout. Once you work with these attributes, you'll better understand how to adjust them and achieve the look you want.
-				</article>
+			<section class="main-container">
+				<section>
+					<h1>
+						Margins, Borders, and Padding
+					</h1>
+					<h2>
+						18 Oct 2015
+					</h2>
+					<p>
+						The differences between margin, border, and padding 
+					</p>
+				</section>
+				<section>
+					Every element in an HTML document has three attributes that determine it's profile on a web page: margin, border, and padding. These three attributes are typically understood as if each one is a box nested within another.
+					<aside>
+						<img src="../imgs/margin-box-model.jpg" alttext="dev-box"/>
+					</aside>The standard model as used in Chrome and Firefox dev tools.
+				</section>
+				<section>
+					<h2>Margin</h2>
+					<article>
+						The margin is the outermost box; the margin itself is invisible, but its edges can be seen where it meets the edge of the browser window or other elements. Margins are best for keeping elements a minimum distance apart.
+						<aside>
+							<img src="../imgs/margin-lg-ex.jpg" alttext="margin-lg"/>
+							<img src="../imgs/margin-sm-ex.jpg" alttext="margin-sm"/>
+						</aside>Here, we can see how the element's position changes from large margins to small.
+					</article>
+				</section>
+				<section>
+					<h2>Border</h2>
+					<article>
+						The border lines the inner edges of the margin, and outer edges of the padding. Borders are invisible by default ( technically at a width of 0 ), but can be set to any width and color. Good borders can really make a page more pop or make a page flow better.
+						<aside>
+							<img src="../imgs/border-lg-ex.jpg" alttext="border-lg"/>
+							<img src="../imgs/border-sm-ex.jpg" alttext="border-sm"/>
+						</aside>Remember that the border has its own size, and it will affect elements' positioning.
+					</article>
+				</section>
+				<section>
+					<h2>Padding</h2>
+					<article>
+						The padding is the innermost of these three attributes. Padding separates the content of an element from the border, like insulation in the walls of a building. Padding and borders go hand-in-hand, and you'll find yourself adjusting one for the benefit of the other.
+						<aside>
+							<img src="../imgs/pad-lg-ex.jpg" alttext="pad-lg"/>
+							<img src="../imgs/pad-sm-ex.jpg" alttext="pad-sm"/>
+						</aside>Here's a big difference in padding sizes.
+					</article>
+				</section>
+				<section>
+					<article>
+						Remember that each side of an element has its own margin, and padding, while the border is the same all around. The examples above show padding and margins that are equal on all sides, but that isn't always the best layout. Once you work with these attributes, you'll better understand how to adjust them and achieve the look you want.
+					</article>
+				</section>
 			</section>
 		</main>
 
-		<footer class="container p-md debug">
-			<h6 class="debug">Last Updated: 22 Dec 2015</h6>
+		<footer>
+			<p class="footer-links">
+				<a href="https://github.com/roytuesday" target="_blank">
+					<span class="fa fa-github" title="GitHub"></span>
+				</a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
+					<span class="fa fa-linkedin-square" title="LinkedIn"></span>
+				</a> | <a href="https://twitter.com/programmingpete" target="_blank">
+					<span class="fa fa-twitter-square" title="Twitter"></span>
+				</a>
+			</p>
+			<p>
+				peternatewood@gmail.com
+			</p>
+			<h6>Last Updated: 29 Nov 2015</h6>
 		</footer>
 
-  </body>
+	</body>
 
 </html>
