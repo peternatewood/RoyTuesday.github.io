@@ -148,6 +148,12 @@ pre {
 	font-family: 'Trebuchet MS', trebuchet, sans-serif;
 	font-weight: bold;
 }
+.quote-container {
+	background-color: #DDD;
+	border: 3px double #222;
+	font-family: 'Georgia', serif;
+	padding: 0 1em;
+}
 
 #web-headshot {
 	border-color: #6C8938;
