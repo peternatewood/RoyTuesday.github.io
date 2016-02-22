@@ -3,209 +3,200 @@
 
 	<head>
 		<meta charset="UTF-8">
+		
+		<link rel="stylesheet" href="../stylesheets/normalize.css"/>
+		<link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
 		<link rel="stylesheet" href="../stylesheets/default.css"/>
+
 		<title>
-			Pete's Blog
+			Peter N Wood
 		</title>
 	</head>
 
-	<body class="ff-trebuchet debug">
-		
-		<header class="container mt-lg bgc-fog debug">
-			<section class="p-lg debug">
-				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
-					My Blog
-				</h1>
-				<p class="d-in mg-sm fz-md">
-					Peter N Wood
-				</p>
-			</section>
+	<body class="container">
+
+		<header>
+			<h1>
+				Peter N Wood
+			</h1>
+			<p>
+				programmer, pianist, video gamer
+			</p>
+			<img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
 		</header>
 
-		<nav class="container pos-sy t-n debug">
-			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../index.html">
-						Home
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../blog/index.html">
-						Blog
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../projects/index.html">
-						Projects
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../about/index.html">
-						About Me
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../resume/index.html">
-						Resume
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../contact/index.html">
-						Contact Info
-					</a>
-				</li>
-			</ul>
-		</nav>
-		
-		<main class="container debug">
-			<section class="bgc-skyblue debug">
-				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
-					Ruby vs JavaScript
-				</h1>
-				<h2 class="mt-xs mb-sm p-md fz-sm debug">
-					Posted: 14 Nov 2015
-				</h2>
-				<p class="p-md pl-lg fz-sm mt-sm mb-sm debug">
-					Punctuation Terror
-				</p>
-			</section>
-			<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
-				<p class="debug">
-					Coding languages are fussy when it comes to punctuation. The older the language the worse it gets. C++, for example, requires a semicolon after every expression, every variable must be declared with a type name ( integer, character, etc ), curly braces around every code block, and parentheses at the end of every function call even if the function takes no arguments.
-				</p>
-				<p class="debug">
-					Be warned! What follows is valid C++ code that I have tested. It will look intimidating if you've never worked in it before, and it's actually a really convoluted program designed purely as an example. Any viewer with a weak heart is advised to look away.
-				</p>
-<pre class="columns-3 bgc-fog p-lg fz-xs debug">
-<span class="c-drk-grey">//C++</span>
-<span class="c-olive">
+		<main>
+			<nav>
+				<img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+				<ul>
+					<li>
+						<a class="fa fa-home" href="../index.html" title="Home">
+							<span class="nav-name">Home</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-pencil" href="./index.html" title="My Blog">
+							<span class="nav-name">Blog</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-book" href="../projects/index.html" title="Projects">
+							<span class="nav-name">Projects</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-user" href="../about/index.html" title="About Me">
+							<span class="nav-name">About Me</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
+							<span class="nav-name">Resume</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+			<section class="main-container">
+				<article>
+					<h1>
+						Ruby vs JavaScript
+					</h1>
+					<h2>
+						Posted: 14 Nov 2015
+					</h2>
+					<p>
+						Punctuation Terror
+					</p>
+				</article>
+				<article>
+					<p>
+						Coding languages are fussy when it comes to punctuation. The older the language the worse it gets. C++, for example, requires a semicolon after every expression, every variable must be declared with a type name ( integer, character, etc ), curly braces around every code block, and parentheses at the end of every function call even if the function takes no arguments.
+					</p>
+					<p>
+						Be warned! What follows is valid C++ code that I have tested. It will look intimidating if you've never worked in it before, and it's actually a really convoluted program designed purely as an example. Any viewer with a weak heart is advised to look away.
+					</p>
+<pre>
+//C++
+
 #include &ltcstring&gt
 #include &ltiostream&gt
-#include &ltstdio.h&gt</span>
+#include &ltstdio.h&gt
 
-<span class="c-drk-blue fw-bold">int</span> myNum <span class="c-softred">=</span> 0<span class="c-softred">;</span>
-<span class="c-drk-blue fw-bold">char</span> myCharacter <span class="c-softred">=</span> <span class="c-drk-orange">'!'</span><span class="c-softred">;</span>
-<span class="c-olive">std<span class="c-softred">::</span>string</span> myWord <span class="c-softred">=</span> <span class="c-drk-blue">"world"</span><span class="c-softred">;</span>
+int myNum = 0;
+char myCharacter = '!';
+std::string myWord = "world";
 
-<span class="c-drk-blue fw-bold">int</span> incrementNumber<span class="c-softred">(</span> <span class="c-drk-blue fw-bold">int</span> numIn <span class="c-softred">)
-{</span>
-  <span class="c-drk-blue fw-bold">return</span> numIn<span class="c-softred">++;
-}</span>
+int incrementNumber( int numIn ) {
+  return numIn++;
+}
 
-<span class="c-drk-blue fw-bold">void</span> sayHello<span class="c-softred">()
-{</span>
-  <span class="c-olive">std<span class="c-softred">::</span>cout</span> <span class="c-softred"><<</span> <span class="c-drk-blue">"Hello, "</span> <span class="c-softred"><<</span> myWord <span class="c-softred"><<</span> myCharacter<span class="c-softred">;</span>
-  <span class="c-olive">std<span class="c-softred">::</span>cout <span class="c-softred"><<</span> std<span class="c-softred">::</span>endl</span><span class="c-softred">;</span>
-  myNum <span class="c-softred">=</span> incrementNumber<span class="c-softred">(</span> myNum <span class="c-softred">)</span><span class="c-softred">;</span>
-  <span class="c-olive">std<span class="c-softred">::</span>cout <span class="c-softred"><<</span> myNum <span class="c-softred"><<</span> " greeting."<span class="c-softred">;</span>
-  std<span class="c-softred">::</span>cout <span class="c-softred"><<</span> std<span class="c-softred">::</span>endl</span><span class="c-softred">;</span>
-<span class="c-softred"></span>
+void sayHello() {
+  std::cout << "Hello, " << myWord << myCharacter;
+  std::cout << std::endl;
+  myNum = incrementNumber( myNum );
+  std::cout << myNum << " greeting.";
+  std::cout << std::endl;
 
-<span class="c-drk-blue fw-bold">int</span> main<span class="c-softred">()
-{</span>
-  sayHello<span class="c-softred">();</span>
-  sayHello<span class="c-softred">();</span>
-  <span class="c-drk-blue fw-bold">return</span> 0<span class="c-softred">;
-}</span>
+int main() {
+  sayHello();
+  sayHello();
+  return 0;
+}
 
 => Hello, world!
 => 1 greeting.
 => Hello, world!
 => 2 greeting.
 </pre>
-<pre class="columns-3 bgc-fog p-lg fz-xs debug">
-<span class="c-drk-grey"># Ruby</span>
+<pre>
+# Ruby
 
 [ no need to '#include' here ]
 
+$myNum = 0
+$myCharacter = '!'
+$myWord = 'world'
 
-<span class="c-softblue">$myNum</span> <span class="c-olive">=</span> 0
-<span class="c-softblue">$myCharacter</span> <span class="c-olive">=</span> <span class="c-softred">'<span class="c-olive">!</span>'</span>
-<span class="c-softblue">$myWord</span> <span class="c-olive">=</span> <span class="c-softred">'<span class="c-olive">world</span>'</span>
+def incrementNumber( numIn )
 
-<span class="c-olive fw-bold">def</span> <span class="c-softblue">incrementNumber</span>( numIn )
+  numIn += 1
 
-  numIn <span class="c-olive">+=</span> 1
+end
 
-<span class="c-olive fw-bold">end</span>
+def sayHello
 
-<span class="c-olive fw-bold">def</span> <span class="c-softblue">sayHello</span>
+  puts "Hello, " + $myWord + $myCharacter
+  $myNum = incrementNumber( $myNum )
+  puts $myNum.to_s + " greeting."
 
-  puts <span class="c-softred">"<span class="c-olive">Hello, </span>"</span> <span class="c-olive">+</span> <span class="c-softblue">$myWord</span> <span class="c-olive">+</span> <span class="c-softblue">$myCharacter</span>
-  <span class="c-softblue">$myNum <span class="c-olive">=</span> incrementNumber</span>( <span class="c-softblue">$myNum</span> )
-  puts <span class="c-softblue">$myNum</span>.to_s <span class="c-olive">+</span> <span class="c-softred">"<span class="c-olive"> greeting.</span>"</span>
-
-<span class="c-olive fw-bold">end</span>
-
-
-
+end
 
 sayHello
 sayHello
 
-
-
 => Hello, world!
 => 1 greeting.
 => Hello, world!
 => 2 greeting.
 </pre>
-<pre class="columns-3 bgc-fog p-lg fz-xs debug">
-<span class="c-drk-grey">//JavaScript</span>
+<pre>
+//JavaScript
 
 [ no need to '#include' here ]
 
+var myNum = 0
+var myCharacter = '!'
+var myWord = 'world'
 
-<span class="c-softblue">var</span> myNum <span class="c-olive">=</span> <span class="c-drk-green">0</span>
-<span class="c-softblue">var</span> myCharacter <span class="c-olive">=</span> '<span class="c-drk-green">!</span>'
-<span class="c-softblue">var</span> myWord <span class="c-olive">=</span> '<span class="c-drk-green">world</span>'
-
-<span class="c-softblue">function</span> <span class="c-drk-orange">incrementNumber</span>( <span class="c-drk-orange">numIn</span> )
-<span class="c-softblue">{</span>
-  <span class="c-olive">return</span> numIn<span class="c-olive">++</span>;
-<span class="c-softblue">}</span>
+function incrementNumber( numIn ) {
+  return numIn++;
+}
 
 
-<span class="c-softblue">function</span> <span class="c-drk-orange">sayHello</span>()
-<span class="c-softblue">{</span>
-  console.<span class="c-softblue">log</span>( "<span class="c-drk-green">Hello, </span>" <span class="c-olive">+</span> myWord <span class="c-olive">+</span> myCharacter );
-  myNum <span class="c-olive">=</span> incrementNumber( numIn );
-  console.<span class="c-softblue">log</span>( myNum.<span class="c-softblue">toString</span>() <span class="c-olive">+</span> "<span class="c-drk-green"> greeting.</span>" );
-<span class="c-softblue">}</span>
-
-
-
-
+function sayHello() {
+  console.log( "Hello, " + myWord + myCharacter );
+  myNum = incrementNumber( numIn );
+  console.log( myNum.toString() + " greeting." );
+}
 
 sayHello()
 sayHello()
-
-
 
 => Hello, world!
 => 1 greeting.
 => Hello, world!
 => 2 greeting.
 </pre>
-				<p class="debug">
-					Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.
-				</p>
-				<p class="debug">
-					JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.
-				</p>
-				<p class="debug">
-					I err on the side of caution; JavaScript is intended for a web environment, so your code should be easily manipulable by other programmers. For example: you do not need to terminate the last expression in a code block with a semicolon. However, if someone ever needs to add another expression to that block, they have to add a semicolon to the end of your expression. This leaves a lot of opportunities for simple errors that are hard to spot. JavaScript won't throw an error if there is a semicolon at the end of your block, so put it there just to be safe.
-				</p>
+					<p>
+						Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.
+					</p>
+					<p>
+						JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.
+					</p>
+					<p>
+						I err on the side of caution; JavaScript is intended for a web environment, so your code should be easily manipulable by other programmers. For example: you do not need to terminate the last expression in a code block with a semicolon. However, if someone ever needs to add another expression to that block, they have to add a semicolon to the end of your expression. This leaves a lot of opportunities for simple errors that are hard to spot. JavaScript won't throw an error if there is a semicolon at the end of your block, so put it there just to be safe.
+					</p>
+				</article>
 			</section>
 		</main>
 
-		<footer class="container p-md debug">
-			<h6 class="debug">Last Updated: 22 Dec 2015</h6>
+		<footer>
+			<p class="footer-links">
+				<a href="https://github.com/roytuesday" target="_blank">
+					<span class="fa fa-github" title="GitHub"></span>
+				</a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
+					<span class="fa fa-linkedin-square" title="LinkedIn"></span>
+				</a> | <a href="https://twitter.com/programmingpete" target="_blank">
+					<span class="fa fa-twitter-square" title="Twitter"></span>
+				</a>
+			</p>
+			<p>
+				peternatewood@gmail.com
+			</p>
+			<h6>Last Updated: 29 Nov 2015</h6>
 		</footer>
-		<!--
-			<script></script>
-			Write a script to color all keywords in the code samples: <pre> tags
-		-->
-  </body>
+
+	</body>
 
 </html>
