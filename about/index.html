@@ -1,98 +1,113 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="../stylesheets/default.css">
+		
+		<link rel="stylesheet" href="./stylesheets/normalize.css"/>
+		<link rel="stylesheet" href="./stylesheets/font-awesome.min.css"/>
+		<link rel="stylesheet" href="./stylesheets/default.css"/>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.js"></script>
+		<script src="./scripts/single-page.js"></script>
+
 		<title>
-			About Me
+			Peter N Wood
 		</title>
 	</head>
-	
-	<body class="ff-trebuchet debug">
-		
-		<header class="container mt-lg bgc-fog debug">
-			<section class="p-lg debug">
-				<h1 class="d-in mt-sm mb-sm p-md fz-lg">
-					About Me
-				</h1>
-				<p class="d-in mg-sm fz-md">
-					Peter N Wood
-				</p>
-			</section>
+
+	<body class="container">
+
+		<header>
+			<h1>
+				Peter N Wood
+			</h1>
+			<p>
+				programmer, pianist, video gamer
+			</p>
+			<img class="headshot" id="mobile-headshot" src="imgs/dbc-headshot-2015-11-13.png" alttext="my face">
 		</header>
 
-		<nav class="container pos-sy t-n debug">
-			<ul class="c-nearblack p-md lss-n tal-c bgc-moss-green debug">
-				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../index.html">
-						Home
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../blog/index.html">
-						Blog
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../projects/index.html">
-						Projects
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../about/index.html">
-						About Me
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../resume/index.html">
-						Resume
-					</a>
-				</li>
-				<li class="d-ib w-sm p-md bds-solid bdw-xs bdc-oak bdrds-md bgc-plywood debug">
-					<a href="../contact/index.html">
-						Contact Info
-					</a>
-				</li>
-			</ul>
-		</nav>
-			
-		<main class="container debug">
-			<section class="h-sm debug">
-				<img class="fl-r t-min mg-sm bdc-softblue bdw-sm bds-solid bdrds-sm myblg--pic" src="../imgs/profile.jpg"/ alttext="my face">
-			</section>
-			<section class="bgc-skyblue debug">
-				<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
-					Peter Nathaniel Wood
-				</h1>
-				<h2 class="mt-xs mb-sm p-md fz-sm debug">
-					Amateur pianist, budding programmer
-				</h2>
-				<p class="mt-sm mb-sm p-md pl-lg fz-sm debug">
-					I love programming as much as I love Classical music.
-				</p>
-			</section>
-			<section class="mt-lg p-md bgc-skyblue fz-sm debug">
-				<h2 class="mb-sm pl-lg">Who am I?</h2>
-				<article class="p-lg debug">
-					<p class="debug">
-						I began studying piano at the age of 7, and have been playing ever since. I went to Stony Brook University to study music for four years, and graduated with a Bachelor of Arts. However, I couldn't imagine myself in a musical career without many more years of schooling, and even then I had no idea what such a career would look like.
+		<main>
+			<nav>
+				<img class="headshot" id="web-headshot" src="imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+				<ul>
+					<li>
+						<a class="fa fa-home" data-page-partial="./partial-index.html" href="./" title="Home">
+							<span class="nav-name">Home</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-pencil" data-page-partial="./blog/partial-index.html" href="./blog/index.html" title="My Blog">
+							<span class="nav-name">Blog</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-book" data-page-partial="./projects/partial-index.html" href="./projects/index.html" title="Projects">
+							<span class="nav-name">Projects</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-user" data-page-partial="./about/partial-index.html" href="./about/index.html" title="About Me">
+							<span class="nav-name">About Me</span>
+						</a>
+					</li>
+					<li>
+						<a class="fa fa-briefcase" data-page-partial="./resume/partial-index.html" href="./resume/index.html" title="Resume">
+							<span class="nav-name">Resume</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+			<section class="main-container">
+				<section>
+					<h1>
+						Peter Nathaniel Wood
+					</h1>
+					<h2>
+						Amateur pianist, budding programmer
+					</h2>
+					<p>
+						I love programming as much as I love Classical music.
 					</p>
-					<p class="debug">
-						It wasn't until some time late in 2014 that I realized I had a passion for programming. Logic puzzles, creativity, and mathematics were all things that I loved, but I had never realized they all existed in programming. I first tried my hand at writing code because I wanted to get involved with making video games. I tried making a simple top-down shooter in Flash using ActionScript ( back when Flash was owned by Macromedia, that's how long ago! ). I hadn't realized just how much I'd need to know to make it work properly. Despite reading several online tutorials and buying a heavy book on ActionScript, I never managed to make that game.
-					</p>
-					<p class="debug">
-						Many years later I came back to the idea of programming and started working from as low-level as I could rationalize: C++. I chose C++ for two reasons: it's one of the oldest coding languages that is still widely used and respected, and many of the most popular high-level languages are based in C ( like Ruby and Javascript ). I wanted to experience some of the history of the language without replicating it exactly, so I enslisted some open source libraries to help me along.
-					</p>
-					<p class="debug">
-						Working with C++ to make a game ignited my passion for programming, and when I knew I could set programming as a career goal, I leapt at the opportunity.
-					</p>
-				</article>
+				</section>
+				<section>
+					<h2>Who am I?</h2>
+					<article>
+						<p>
+							I began studying piano at the age of 7, and have been playing ever since. I went to Stony Brook University to study music for four years, and graduated with a Bachelor of Arts. However, I couldn't imagine myself in a musical career without many more years of schooling, and even then I had no idea what such a career would look like.
+						</p>
+						<p>
+							It wasn't until some time late in 2014 that I realized I had a passion for programming. Logic puzzles, creativity, and mathematics were all things that I loved, but I had never realized they all existed in programming. I first tried my hand at writing code because I wanted to get involved with making video games. I tried making a simple top-down shooter in Flash using ActionScript ( back when Flash was owned by Macromedia, that's how long ago! ). I hadn't realized just how much I'd need to know to make it work properly. Despite reading several online tutorials and buying a heavy book on ActionScript, I never managed to make that game.
+						</p>
+						<p>
+							Many years later I came back to the idea of programming and started working from as low-level as I could rationalize: C++. I chose C++ for two reasons: it's one of the oldest coding languages that is still widely used and respected, and many of the most popular high-level languages are based in C ( like Ruby and Javascript ). I wanted to experience some of the history of the language without replicating it exactly, so I enslisted some open source libraries to help me along.
+						</p>
+						<p>
+							Working with C++ to make a game ignited my passion for programming, and when I knew I could set programming as a career goal, I leapt at the opportunity.
+						</p>
+					</article>
+				</section>
 			</section>
 		</main>
 
-		<footer class="container p-md debug">
-			<h6 class="debug">Last Updated: 29 Nov 2015</h6>
+		<footer>
+			<p class="footer-links">
+				<a href="https://github.com/roytuesday" target="_blank">
+					<span class="fa fa-github" title="GitHub"></span>
+				</a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
+					<span class="fa fa-linkedin-square" title="LinkedIn"></span>
+				</a> | <a href="https://twitter.com/programmingpete" target="_blank">
+					<span class="fa fa-twitter-square" title="Twitter"></span>
+				</a>
+			</p>
+			<p>
+				peternatewood@gmail.com
+			</p>
+			<h6>Last Updated: 29 Nov 2015</h6>
 		</footer>
 
 	</body>
+
 </html>
