@@ -73,35 +73,35 @@
           <p>
             Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
           </p>
-          <pre>
-        a = [ "a", "b", "c" ]
-        a.cycle( 3 ) { |x| puts x }
+<pre>
+a = [ "a", "b", "c" ]
+a.cycle( 3 ) { |x| puts x }
 
-        #=> a
-        #=> b
-        #=> c
-          </pre>
+#=> a
+#=> b
+#=> c
+</pre>
           <p>
             That's pretty straightforward, but I wanted to get a little more complicated:
           </p>
-          <pre>
-        a.cycle( 6 ) { |x| puts x + " thing" }
+<pre>
+a.cycle( 6 ) { |x| puts x + " thing" }
 
-        #=> a thing
-        #=> b thing
-        #=> c thing
-        # First cycle
+#=> a thing
+#=> b thing
+#=> c thing
+# First cycle
 
-        #=> a thing thing
-        #=> b thing thing
-        #=> c thing thing
-        # Second cycle
-        ...
-        #=> a thing thing thing thing thing thing
-        #=> b thing thing thing thing thing thing
-        #=> c thing thing thing thing thing thing
-        # Sixth cycle
-          </pre>
+#=> a thing thing
+#=> b thing thing
+#=> c thing thing
+# Second cycle
+...
+#=> a thing thing thing thing thing thing
+#=> b thing thing thing thing thing thing
+#=> c thing thing thing thing thing thing
+# Sixth cycle
+</pre>
           <p>
             That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.
           </p>
