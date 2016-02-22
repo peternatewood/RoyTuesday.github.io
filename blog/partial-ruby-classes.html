@@ -1,139 +1,139 @@
-<section class="bgc-skyblue debug">
-	<h1 class="mt-sm mb-xs p-md w-lg fz-md debug">
-		Ruby's So Classy
-	</h1>
-	<h2 class="mt-xs mb-sm p-md fz-sm debug">
-		Posted: 08 Nov 2015
-	</h2>
-	<p class="p-md pl-lg fz-sm mt-sm mb-sm debug">
-		Classes and game design
-	</p>
+<section>
+  <h1>
+    Ruby's So Classy
+  </h1>
+  <h2>
+    Posted: 08 Nov 2015
+  </h2>
+  <p>
+    Classes and game design
+  </p>
 </section>
-<section class="mt-lg p-lg bgc-skyblue fz-sm debug">
-	<p>
-		I've spent a lot of time developing small video games in my spare time ( and I have two unfinished games to show for it ). Up until now, I've only ever used C++ and some extension libraries to make that happen, but in Ruby as in C++ classes are key to many types of games. I'm going to create an Actor class to demonstrate how Ruby classes work, and how they can be used in a larger program. We use the term "actor" to describe any thing in the game space that moves and interacts with the environment.
-	</p>
-	<aside class="mg-md debug">
-<pre class="p-lg bgc-fog fz-xs debug">
-<span class="c-olive">class</span> <span class="c-oak">Actor</span>
+<section>
+  <p>
+    I've spent a lot of time developing small video games in my spare time ( and I have two unfinished games to show for it ). Up until now, I've only ever used C++ and some extension libraries to make that happen, but in Ruby as in C++ classes are key to many types of games. I'm going to create an Actor class to demonstrate how Ruby classes work, and how they can be used in a larger program. We use the term "actor" to describe any thing in the game space that moves and interacts with the environment.
+  </p>
+  <aside>
+<pre>
+class Actor
 
-<span class="c-olive">def</span> <span class="c-softblue">initialize</span>( x <span class="c-olive">=</span> 0, y <span class="c-olive">=</span> 0 )
+  def initialize( x = 0, y = 0 )
 
-<span class="c-softblue">@posX</span> <span class="c-olive">=</span> x
-<span class="c-softblue">@posY</span> <span class="c-olive">=</span> y
-<span class="c-softblue">@width</span> <span class="c-olive">=</span> 16
-<span class="c-softblue">@height</span> <span class="c-olive">=</span> 16
+    @posX = x
+    @posY = y
+    @width = 16
+    @height = 16
 
-<span class="c-olive">end
+  end
 
-end</span>
+end
 </pre>
-	</aside>
-<p class="debug">
-	Here we begin our class definition. There are a lot of things going on here, so I'll break them down into steps:
-	<ol class="debug">
-		<li class="debug">
-			We define our class "Actor"
-		</li>
-		<li class="debug">
-			We define the "initialize" method with parameters
-		</li>
-		<li class="debug">
-			We declare several instance variables
-		</li>
-	</ol>
+  </aside>
+<p>
+  Here we begin our class definition. There are a lot of things going on here, so I'll break them down into steps:
+  <ol>
+    <li>
+      We define our class "Actor"
+    </li>
+    <li>
+      We define the "initialize" method with parameters
+    </li>
+    <li>
+      We declare several instance variables
+    </li>
+  </ol>
 </p>
-<p class="debug">
-	Defining our class is simple, we just write "class" to let Ruby know we're about to name a new class, then write the name we would like to use. In Ruby, common practice is to begin the class name with a captial letter, and to begin subsequent words with a captial and without a space like this: CamelCase.
+<p>
+  Defining our class is simple, we just write "class" to let Ruby know we're about to name a new class, then write the name we would like to use. In Ruby, common practice is to begin the class name with a captial letter, and to begin subsequent words with a captial and without a space like this: CamelCase.
 </p>
-<p class="debug">
-	Every class needs a class constructor, the method which creates a new object using our class; a class isn't any good if we don't make an object to use it! It's always best to start with this method, because it's easier to read and this is where we create any variables we need for the rest of the class. ALWAYS name your constructor "initialize", this is just how Ruby works; when we call "my_actor = Actor.new" later, Ruby will look for the method called "initialize" in the class "Actor" in order to create the new object.
+<p>
+  Every class needs a class constructor, the method which creates a new object using our class; a class isn't any good if we don't make an object to use it! It's always best to start with this method, because it's easier to read and this is where we create any variables we need for the rest of the class. ALWAYS name your constructor "initialize", this is just how Ruby works; when we call "my_actor = Actor.new" later, Ruby will look for the method called "initialize" in the class "Actor" in order to create the new object.
 </p>
-<p class="debug">
-	Now we fill in our constructor with some things we want. The constructor is only called once, so we only include things that we don't need to repeat later. Our Actor needs at least four variables: x and y coordinates, width, and height. We declare each of these variables by preceding each name with an "@" to specify that the entire class needs access to these variables; were we to omit the "@", these variables would be local to our constructor, and unavailable to any other method in the code.
+<p>
+  Now we fill in our constructor with some things we want. The constructor is only called once, so we only include things that we don't need to repeat later. Our Actor needs at least four variables: x and y coordinates, width, and height. We declare each of these variables by preceding each name with an "@" to specify that the entire class needs access to these variables; were we to omit the "@", these variables would be local to our constructor, and unavailable to any other method in the code.
 </p>
-<p class="debug">
-	You'll notice that our "initialize" method has some parentheses and variables following it. These are our parameters; when we create a new "Actor" object, we want to be able to place it in a different spot in the game space, rather than piling up all of our Actors on top of each other ( well, maybe you want to do that, but I'm not making that type of game here ). I've written "x = 0, y = 0" so that if the new Actor is created with no arguments, we pass 0 to our posX and posY variables instead. For the sake of simplicity, our Actors are always 16 by 16 pixels in size
+<p>
+  You'll notice that our "initialize" method has some parentheses and variables following it. These are our parameters; when we create a new "Actor" object, we want to be able to place it in a different spot in the game space, rather than piling up all of our Actors on top of each other ( well, maybe you want to do that, but I'm not making that type of game here ). I've written "x = 0, y = 0" so that if the new Actor is created with no arguments, we pass 0 to our posX and posY variables instead. For the sake of simplicity, our Actors are always 16 by 16 pixels in size
 </p>
-<p class="debug">
-	This is a good start, but our class doesn't do anything. So far, we can make an object that stores four variables, inaccessible to anything outside of that object. So, we write more methods.
+<p>
+  This is a good start, but our class doesn't do anything. So far, we can make an object that stores four variables, inaccessible to anything outside of that object. So, we write more methods.
 </p>
-<pre class="p-lg bgc-fog fz-xs debug">
-<span class="c-olive">def</span> <span class="c-softblue">collide?</span>
+<pre>
+def collide?
 
-<span class="c-olive">if</span> <span class="c-softblue">@xPos</span> <span class="c-olive"><</span> 0
-true
-<span class="c-olive">elsif</span> <span class="c-softblue">@yPos</span> <span class="c-olive"><</span> 0
-true
-<span class="c-olive">elsif</span> <span class="c-softblue">@xPos</span> + width <span class="c-olive">></span> 640
-true
-<span class="c-olive">elsif</span> <span class="c-softblue">@yPos</span> + height <span class="c-olive">></span> 640
-true
-<span class="c-olive">else</span>
-false
-<span class="c-olive">end
+  if @xPos < 0
+    true
+  elsif @yPos < 0
+    true
+  elsif @xPos + width > 640
+    true
+  elsif @yPos + height > 640
+    true
+  else
+    false
+  end
 
 end
 
-def</span> <span class="c-softblue">move</span>
+def move
 
-xMove <span class="c-olive">=</span> rand( 2 ) <span class="c-olive">-</span> 1
-yMove <span class="c-olive">=</span> rand( 2 ) <span class="c-olive">-</span> 1
+  xMove = rand( 2 ) - 1
+  yMove = rand( 2 ) - 1
 
-<span class="c-softblue">@xPos</span> <span class="c-olive">+=</span> xMove
+  @xPos += xMove
 
-<span class="c-olive">if</span> collide?
-<span class="c-softblue">@xPos</span> <span class="c-olive">-=</span> xMove
-<span class="c-olive">end</span>
+  if collide?
+    @xPos -= xMove
+  end
 
-<span class="c-softblue">@yPox</span> <span class="c-olive">+=</span> yMove
+  @yPox += yMove
 
-<span class="c-olive">if</span> collide?
-<span class="c-softblue">@yPos</span> <span class="c-olive">-=</span> yMove
-<span class="c-olive">end
+  if collide?
+    @yPos -= yMove
+  end
 
-end</span>
+end
 </pre>
-<p class="debug">
-	A fully realized Actor class would look more complicated than this, and may accept player input, but for now, we're just defining random movement. We've got two new methods here that will move our Actor: "collide?" and "move". We use "collide?" to check whether our Actor has moved outside of the game space, if it has "collided" with the boundaries. For our purposes, our game space is 640 by 640 pixels in size; to check whether the actor goes out of bounds, we have to add it's width to its x position, and height to its height coordinate, otherwise, our Actor will only stop once it goes all the way off the edge of the game space.
+<p>
+  A fully realized Actor class would look more complicated than this, and may accept player input, but for now, we're just defining random movement. We've got two new methods here that will move our Actor: "collide?" and "move". We use "collide?" to check whether our Actor has moved outside of the game space, if it has "collided" with the boundaries. For our purposes, our game space is 640 by 640 pixels in size; to check whether the actor goes out of bounds, we have to add it's width to its x position, and height to its height coordinate, otherwise, our Actor will only stop once it goes all the way off the edge of the game space.
 </p>
-<p class="debug">
-	Now for our "move" method. Here we generate two random numbers between -1 and 1 ( actually get 0, 1, or 2, and subtract 1 ). Then, we pass those numbers to our Actor's coordinates, @xPos and @yPos. Immediately after we change our Actor's coordinates, we check to see whether it moved outside the game space. If it did, we subtract the same number we just added to get our Actor back within the boundaries. This is a very simple way to do what we call "collision detection"; this all happens within the method, and before we even draw our Actor to the screen, so the end user doesn't actually see the Actor move out of bounds and jump back, even though that's what the program does.
+<p>
+  Now for our "move" method. Here we generate two random numbers between -1 and 1 ( actually get 0, 1, or 2, and subtract 1 ). Then, we pass those numbers to our Actor's coordinates, @xPos and @yPos. Immediately after we change our Actor's coordinates, we check to see whether it moved outside the game space. If it did, we subtract the same number we just added to get our Actor back within the boundaries. This is a very simple way to do what we call "collision detection"; this all happens within the method, and before we even draw our Actor to the screen, so the end user doesn't actually see the Actor move out of bounds and jump back, even though that's what the program does.
 </p>
-<p class="debug">
-	Notice that I used both instance and local variables in the "move" method. I called our Actor's x and y coordinates, which are instance variables, and created two local variables within the method to store the random numbers. We only need those random numbers within the "move" method, so it's best to make them local, but we need the coordinates we declared earlier in order to execute the method, so we needed to be sure we declared them as instance variables.
+<p>
+  Notice that I used both instance and local variables in the "move" method. I called our Actor's x and y coordinates, which are instance variables, and created two local variables within the method to store the random numbers. We only need those random numbers within the "move" method, so it's best to make them local, but we need the coordinates we declared earlier in order to execute the method, so we needed to be sure we declared them as instance variables.
 </p>
-<p class="debug">
-	I won't go into all the details here, because we still need to draw our Actor and give it some other things to do besides moving. Instead, I'll show you what the rest of our code would look like to generate the game.
+<p>
+  I won't go into all the details here, because we still need to draw our Actor and give it some other things to do besides moving. Instead, I'll show you what the rest of our code would look like to generate the game.
 </p>
-<pre class="p-lg bgc-fog fz-xs debug">
-pac <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 304, 480 )
-blinky <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 304, 282 )
-pinky <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 282, 304 )
-inky <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 304, 304 )
-clyde <span class="c-olive">=</span> <span class="c-oak">Actor</span>.<span class="c-red">new</span>( 320, 304 )
+<pre>
+pac = Actor.new( 304, 480 )
+blinky = Actor.new( 304, 282 )
+pinky = Actor.new( 282, 304 )
+inky = Actor.new( 304, 304 )
+clyde = Actor.new( 320, 304 )
 
-quit <span class="c-olive">=</span> false
+quit = false
 
-<span class="c-olive">while</span>( quit <span class="c-olive">==</span> false )
+while( quit == false )
 
-pac.move
-blinky.move
-pinky.move
-inky.move
-clyde.move
+  pac.move
+  blinky.move
+  pinky.move
+  inky.move
+  clyde.move
 
-pac.draw
-blinky.draw
-pinky.draw
-inky.draw
-clyde.draw
+  pac.draw
+  blinky.draw
+  pinky.draw
+  inky.draw
+  clyde.draw
 
-<span class="c-olive">end</span>
+end
 </pre>
-<p class="debug">
-	First we create our five Actors: pac, blinky, pinky, inky, and clyde. Then, we set up a game loop ( which should provide a way to break in practice ) by creating a boolean "quit". Finally, each time our loop executes, we call the "move" method on each of our Actors once. I've added a "draw" method to illustrate how we would "move" each actor first, then "draw" them on the screen.
+<p>
+  First we create our five Actors: pac, blinky, pinky, inky, and clyde. Then, we set up a game loop ( which should provide a way to break in practice ) by creating a boolean "quit". Finally, each time our loop executes, we call the "move" method on each of our Actors once. I've added a "draw" method to illustrate how we would "move" each actor first, then "draw" them on the screen.
 </p>
-<p class="debug">
-	This is a totally simplified, inaccurate recreation of Pac-Man, especially since the player's movements should be controlled, not random, but this should give you an idea of how video games can use classes, and how best to use a class in your own programs.
+<p>
+  This is a totally simplified, inaccurate recreation of Pac-Man, especially since the player's movements should be controlled, not random, but this should give you an idea of how video games can use classes, and how best to use a class in your own programs.
 </p>
