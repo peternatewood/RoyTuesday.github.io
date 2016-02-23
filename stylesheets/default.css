@@ -160,6 +160,35 @@ pre {
 	padding: 0 1em;
 }
 
+.resume {
+	font-family: Helvetica, sans-serif;
+}
+.resume li {
+	border: none;
+	box-shadow: none;
+	list-style: inside;
+	margin: 0.125em;
+	padding: 0;
+}
+.resume article {
+	margin: 1em 0;
+}
+.resume-dates {
+	display: inline-block;
+	float: right;
+}
+.resume-jobs {
+	display: inline-block;
+}
+.resume-title {
+	border-bottom: 2px solid #444;
+	padding-bottom: 0.125em;
+}
+.resume-header {
+	border-bottom: 1px solid #444;
+	padding-bottom: 0.125em;
+}
+
 #web-headshot {
 	border-color: #6C8938;
 	display: initial;
