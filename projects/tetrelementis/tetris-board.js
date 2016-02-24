@@ -1,6 +1,14 @@
 var TetrisBoard = function(args) {
+  this.score = 0;
   this.board = new Array;
-  this.tetrinimo = args.tetrinimo;
+  this.randElements = generateRandomElements();
+  this.tetrinimo = args.tetrinimo || new Tetrinimo({
+    element: 1,
+    shape: TETRINIMO_SHAPES.line
+  });
+  this.createNextTetrinimo = args.createNextTetrinimo;
+  this.showGameOver = args.showGameOver;
+
   this.dropInterval = new Number;
 
   for(var row = 0; row < 20; row++) {
@@ -40,12 +48,6 @@ TetrisBoard.prototype.detectCollision = function() {
   }
   return 'clear';
 };
-TetrisBoard.prototype.cycleDropBlock = function(args = {}) {
-  var dropDelay = args.quickly ? FAST_DROP : DROP_DELAY;
-  this.blit();
-  if(this.dropInterval) clearInterval(this.dropInterval);
-  this.dropInterval = setInterval(this.dropBlock.bind(this), dropDelay);
-}
 TetrisBoard.prototype.dropBlock = function() {
   this.blit(true);
   this.tetrinimo.drop();
@@ -54,8 +56,14 @@ TetrisBoard.prototype.dropBlock = function() {
     this.tetrinimo.raise();
     this.blit();
     this.tetrinimo = null;
-    clearInterval(this.dropInterval);
-    return;
+    this.createNextTetrinimo();
+    if(this.isOutOfSpace()) {
+      clearInterval(this.dropInterval);
+      this.blit();
+      this.showGameOver();
+      return;
+    }
+    this.handleFullLines();
   }
   this.blit();
 };
@@ -78,4 +86,29 @@ TetrisBoard.prototype.rotateBlock = function(direction) {
     this.tetrinimo.rotate(reverseDirection);
   }
   this.blit();
-}
+};
+TetrisBoard.prototype.handleFullLines = function() {
+  var lines = 0;
+  this.board.forEach(function(row, rIndex, board) {
+    var filled = true;
+    row.forEach(function(block) {
+      if(block == 0) filled = false;
+    });
+    if(filled) {
+      lines++;
+      for(var i = rIndex; i > 0; i--) {
+        board[i] = board[i - 1].map(function(col) {
+          return col;
+        });
+      }
+      board[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+  });
+  if(lines > 0) this.score += Math.pow(2, lines) / 2;
+};
+TetrisBoard.prototype.isOutOfSpace = function() {
+  if(this.detectCollision() == 'clear') {
+    return false;
+  }
+  return true;
+};

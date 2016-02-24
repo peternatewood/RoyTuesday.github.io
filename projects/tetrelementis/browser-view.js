@@ -8,6 +8,9 @@ var BrowserView = function(args) {
   BLOCK_HEIGHT = BLOCK_SPACING_HEIGHT - 10;
   BLOCK_WIDTH = BLOCK_SPACING_WIDTH - 10;
 
+  this.elementDescrip = document.querySelector('#element-description');
+  this.playerScore = document.getElementById('player-score');
+
   this.gridContext = gridCanvas.getContext('2d');
   this.previewContext = previewCanvas.getContext('2d');
   this.tableContext = tableCanvas.getContext('2d');
@@ -116,7 +119,7 @@ BrowserView.prototype.drawBoard = function(board, context) {
     });
   });
 };
-BrowserView.prototype.animate = function() {
+BrowserView.prototype.animateGame = function() {
   var lastTime = null;
   var progress = true;
 
@@ -129,9 +132,21 @@ BrowserView.prototype.animate = function() {
     this.drawBoard(this.gameBoard.board, this.gridContext);
     this.drawBoard(this.previewBoard.board, this.previewContext);
     this.drawBoard(this.tableBoard.board, this.tableContext);
+
+    this.updatePlayerScore(this.gameBoard.score);
     if(progress) {
       requestAnimationFrame(animate.bind(this));
     }
   }
   requestAnimationFrame(animate.bind(this));
 };
+BrowserView.prototype.updateElementDescrip = function() {
+  var element = this.previewBoard.tetrinimo.element;
+  this.elementDescrip.innerHTML = '<h2>' + CHEMICAL_ELEMENTS[element].name
+  + ' [' + CHEMICAL_ELEMENTS[element].symbol + "]</h2>"
+  + '<p>Atomic Number: ' + element + '</p>'
+  + '<p>' + CHEMICAL_ELEMENTS[element].descrip + '</p>';
+}
+BrowserView.prototype.updatePlayerScore = function(score) {
+  this.playerScore.innerHTML = score;
+}
