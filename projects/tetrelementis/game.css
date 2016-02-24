@@ -2,23 +2,50 @@ body {
   background-color: #F9F5FC;
 }
 
-.container {
+#container {
   background-color: #F1EEFA;
   border: 0.5em solid #AAF;
   box-shadow: 0.25em 0.25em 0.25em #444;
   margin: 0 auto;
   padding: 2em;
   text-align: center;
-  width: 60em;
+  width: 860px;
+}
+#right-container {
+  display: inline-block;
+  vertical-align: top;
 }
 
+#element-description {
+  border: 1px solid #DDA;
+  height: 182px;
+  padding: 12px;
+  text-align: left;
+  width: 516px;
+}
+#element-description h2 {
+  margin: 0;
+}
+#element-description p {
+  margin: 8px 0 0 0;
+}
+#level-display {
+  border: 1px solid #DAD;
+  display: inline-block;
+  height: 104px;
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+  width: 397px;
+}
+#level-display p {
+  margin: 0;
+}
 #tetris-grid {
   border: 1px solid #DAA;
 }
 #tetris-preview {
   border: 1px solid #AAD;
-  display: block;
-  margin-bottom: 29px;
 }
 #tetris-table {
   border: 1px solid #ADA;

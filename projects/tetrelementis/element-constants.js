@@ -5,29 +5,29 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#F1EEFA',
     'border-color': '#AAA',
     'color': '#F1EEFA',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   1: {
-    'name': 'hydrogen',
+    'name': 'Hydrogen',
     'symbol': 'H',
     'background-color': '#DBC3DB',
     'border-color': '#A971A9',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   2: {
-    'name': 'helium',
+    'name': 'Helium',
     'symbol': 'He',
     'background-color': '#EFE09F',
     'border-color': '#FF9830',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   3: {
-    'name': 'lithium',
+    'name': 'Lithium',
     'symbol': 'Li',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
@@ -36,25 +36,25 @@ var CHEMICAL_ELEMENTS = {
   },
 
   4: {
-    'name': 'beryllium',
+    'name': 'Beryllium',
     'symbol': 'Be',
     'background-color': '#DEDEDA',
     'border-color': '#50506A',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   5: {
-    'name': 'boron',
+    'name': 'Boron',
     'symbol': 'B',
     'background-color': '#ACAFA0',
     'border-color': '#876750',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   6: {
-    'name': 'carbon',
+    'name': 'Carbon',
     'symbol': 'C',
     'background-color': '#625858',
     'border-color': '#121212',
@@ -63,7 +63,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   7: {
-    'name': 'nitrogen',
+    'name': 'Nitrogen',
     'symbol': 'N',
     'background-color': '#FFF',
     'border-color': '#999',
@@ -72,7 +72,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   8: {
-    'name': 'oxygen',
+    'name': 'Oxygen',
     'symbol': 'O',
     'background-color': '#C1C5DB',
     'border-color': '#9093A9',
@@ -81,7 +81,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   9: {
-    'name': 'fluorine',
+    'name': 'Fluorine',
     'symbol': 'F',
     'background-color': '#FFEF82',
     'border-color': '#B8B870',
@@ -90,7 +90,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   10: {
-    'name': 'neon',
+    'name': 'Neon',
     'symbol': 'Ne',
     'background-color': '#EFE09F',
     'border-color': '#EFB830',
@@ -99,7 +99,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   11: {
-    'name': 'sodium',
+    'name': 'Sodium',
     'symbol': 'Na',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -108,16 +108,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   12: {
-    'name': 'magnesium',
+    'name': 'Magnesium',
     'symbol': 'Mg',
     'background-color': '#EFEFFF',
     'border-color': '#656478',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   13: {
-    'name': 'aluminum',
+    'name': 'Aluminum',
     'symbol': 'Al',
     'background-color': '#E0E0F3',
     'border-color': '#656070',
@@ -126,7 +126,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   14: {
-    'name': 'silicon',
+    'name': 'Silicon',
     'symbol': 'Si',
     'background-color': '#DEDEDA',
     'border-color': '#50506A',
@@ -135,16 +135,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   15: {
-    'name': 'phosphorus',
+    'name': 'Phosphorus',
     'symbol': 'P',
     'background-color': '#F5D311',
     'border-color': '#877040',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   16: {
-    'name': 'sulfur',
+    'name': 'Sulfur',
     'symbol': 'S',
     'background-color': '#F5D311',
     'border-color': '#877040',
@@ -153,25 +153,25 @@ var CHEMICAL_ELEMENTS = {
   },
 
   17: {
-    'name': 'chlorine',
+    'name': 'Chlorine',
     'symbol': 'Cl',
     'background-color': '#EFDF82',
     'border-color': '#989840',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   18: {
-    'name': 'argon',
+    'name': 'Argon',
     'symbol': 'Ar',
     'background-color': '#BBA3BB',
     'border-color': '#A971A9',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   19: {
-    'name': 'potassium',
+    'name': 'Potassium',
     'symbol': 'K',
     'background-color': '#FFDFEF',
     'border-color': '#818083',
@@ -180,7 +180,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   20: {
-    'name': 'calcium',
+    'name': 'Calcium',
     'symbol': 'Ca',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
@@ -189,7 +189,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   21: {
-    'name': 'scandium',
+    'name': 'Scandium',
     'symbol': 'Sc',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -198,34 +198,34 @@ var CHEMICAL_ELEMENTS = {
   },
 
   22: {
-    'name': 'titanium',
+    'name': 'Titanium',
     'symbol': 'Ti',
     'background-color': '#E4E4DA',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   23: {
-    'name': 'vanadium',
+    'name': 'Vanadium',
     'symbol': 'V',
     'background-color': '#C1C5DB',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   24: {
-    'name': 'chromium',
+    'name': 'Chromium',
     'symbol': 'Cr',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   25: {
-    'name': 'manganese',
+    'name': 'Manganese',
     'symbol': 'Mn',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
@@ -234,34 +234,34 @@ var CHEMICAL_ELEMENTS = {
   },
 
   26: {
-    'name': 'iron',
+    'name': 'Iron',
     'symbol': 'Fe',
     'background-color': '#E4E4DA',
     'border-color': '#BF9270',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   27: {
-    'name': 'cobalt',
+    'name': 'Cobalt',
     'symbol': 'Co',
     'background-color': '#9EA3BB',
     'border-color': '#6871A9',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   28: {
-    'name': 'nickel',
+    'name': 'Nickel',
     'symbol': 'Ni',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   29: {
-    'name': 'copper',
+    'name': 'Copper',
     'symbol': 'Cu',
     'background-color': '#DFCE8F',
     'border-color': '#BF8230',
@@ -270,16 +270,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   30: {
-    'name': 'zinc',
+    'name': 'Zinc',
     'symbol': 'Zn',
     'background-color': '#C1C5DB',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   31: {
-    'name': 'gallium',
+    'name': 'Gallium',
     'symbol': 'Ga',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -288,7 +288,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   32: {
-    'name': 'germanium',
+    'name': 'Germanium',
     'symbol': 'Ge',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -297,7 +297,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   33: {
-    'name': 'arsenic',
+    'name': 'Arsenic',
     'symbol': 'As',
     'background-color': '#EFDF82',
     'border-color': '#989840',
@@ -306,16 +306,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   34: {
-    'name': 'selenium',
+    'name': 'Selenium',
     'symbol': 'Se',
     'background-color': '#EF9F9F',
     'border-color': '#EF5C30',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   35: {
-    'name': 'bromine',
+    'name': 'Bromine',
     'symbol': 'Br',
     'background-color': '#EF8F8F',
     'border-color': '#CF3C20',
@@ -324,7 +324,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   36: {
-    'name': 'krypton',
+    'name': 'Krypton',
     'symbol': 'Kr',
     'background-color': '#FFDFEF',
     'border-color': '#9093A9',
@@ -333,7 +333,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   37: {
-    'name': 'rubidium',
+    'name': 'Rubidium',
     'symbol': 'Rb',
     'background-color': '#E4C4DA',
     'border-color': '#505057',
@@ -342,16 +342,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   38: {
-    'name': 'strontium',
+    'name': 'Strontium',
     'symbol': 'Sr',
     'background-color': '#EFEFB2',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   39: {
-    'name': 'yttrium',
+    'name': 'Yttrium',
     'symbol': 'Y',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -360,16 +360,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   40: {
-    'name': 'zirconium',
+    'name': 'Zirconium',
     'symbol': 'Zr',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   41: {
-    'name': 'niobium',
+    'name': 'Niobium',
     'symbol': 'Nb',
     'background-color': '#C1C5DB',
     'border-color': '#707389',
@@ -378,7 +378,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   42: {
-    'name': 'molybdenum',
+    'name': 'Molybdenum',
     'symbol': 'Mo',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -387,25 +387,25 @@ var CHEMICAL_ELEMENTS = {
   },
 
   43: {
-    'name': 'technetium',
+    'name': 'Technetium',
     'symbol': 'Tc',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   44: {
-    'name': 'ruthenium',
+    'name': 'Ruthenium',
     'symbol': 'Ru',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   45: {
-    'name': 'rhodium',
+    'name': 'Rhodium',
     'symbol': 'Rh',
     'background-color': '#FFDFEF',
     'border-color': '#616063',
@@ -414,16 +414,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   46: {
-    'name': 'palladium',
+    'name': 'Palladium',
     'symbol': 'Pd',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   47: {
-    'name': 'silver',
+    'name': 'Silver',
     'symbol': 'Ag',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -432,16 +432,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   48: {
-    'name': 'cadmium',
+    'name': 'Cadmium',
     'symbol': 'Cd',
     'background-color': '#C1C5DB',
     'border-color': '#707399',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   49: {
-    'name': 'indium',
+    'name': 'Indium',
     'symbol': 'In',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -450,16 +450,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   50: {
-    'name': 'tin',
+    'name': 'Tin',
     'symbol': 'Sn',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   51: {
-    'name': 'antimony',
+    'name': 'Antimony',
     'symbol': 'Sb',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -468,16 +468,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   52: {
-    'name': 'tellurium',
+    'name': 'Tellurium',
     'symbol': 'Te',
     'background-color': '#C7A770',
     'border-color': '#876730',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   53: {
-    'name': 'iodine',
+    'name': 'Iodine',
     'symbol': 'I',
     'background-color': '#DF8F9F',
     'border-color': '#876730',
@@ -486,16 +486,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   54: {
-    'name': 'xenon',
+    'name': 'Xenon',
     'symbol': 'Xe',
     'background-color': '#EFDFEF',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   55: {
-    'name': 'caesium',
+    'name': 'Caesium',
     'symbol': 'Cs',
     'background-color': '#F5F391',
     'border-color': '#838260',
@@ -504,7 +504,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   56: {
-    'name': 'barium',
+    'name': 'Barium',
     'symbol': 'Ba',
     'background-color': '#EFEFB2',
     'border-color': '#656463',
@@ -513,16 +513,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   57: {
-    'name': 'lanthanum',
+    'name': 'Lanthanum',
     'symbol': 'La',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   58: {
-    'name': 'cerium',
+    'name': 'Cerium',
     'symbol': 'Ce',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -531,25 +531,25 @@ var CHEMICAL_ELEMENTS = {
   },
 
   59: {
-    'name': 'praseodymium',
+    'name': 'Praseodymium',
     'symbol': 'Pr',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   60: {
-    'name': 'neodymium',
+    'name': 'Neodymium',
     'symbol': 'Nd',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   61: {
-    'name': 'promethium',
+    'name': 'Promethium',
     'symbol': 'Pm',
     'background-color': '#EFEFFF',
     'border-color': '#656478',
@@ -558,16 +558,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   62: {
-    'name': 'samarium',
+    'name': 'Samarium',
     'symbol': 'Sm',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   63: {
-    'name': 'europium',
+    'name': 'Europium',
     'symbol': 'Eu',
     'background-color': '#EFEFB2',
     'border-color': '#656463',
@@ -576,16 +576,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   64: {
-    'name': 'gadolinium',
+    'name': 'Gadolinium',
     'symbol': 'Gd',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   65: {
-    'name': 'terbium',
+    'name': 'Terbium',
     'symbol': 'Tb',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -594,7 +594,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   66: {
-    'name': 'dysprosium',
+    'name': 'Dysprosium',
     'symbol': 'Dy',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -603,7 +603,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   67: {
-    'name': 'holmium',
+    'name': 'Holmium',
     'symbol': 'Ho',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -612,7 +612,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   68: {
-    'name': 'erbium',
+    'name': 'Erbium',
     'symbol': 'Er',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -621,7 +621,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   69: {
-    'name': 'thulium',
+    'name': 'Thulium',
     'symbol': 'Tm',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
@@ -630,7 +630,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   70: {
-    'name': 'ytterbium',
+    'name': 'Ytterbium',
     'symbol': 'Yb',
     'background-color': '#EFEFB2',
     'border-color': '#656463',
@@ -639,7 +639,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   71: {
-    'name': 'lutetium',
+    'name': 'Lutetium',
     'symbol': 'Lu',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -648,7 +648,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   72: {
-    'name': 'hafnum',
+    'name': 'Hafnum',
     'symbol': 'Hf',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
@@ -657,7 +657,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   73: {
-    'name': 'tantalum',
+    'name': 'Tantalum',
     'symbol': 'Ta',
     'background-color': '#C1C5DB',
     'border-color': '#707389',
@@ -666,7 +666,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   74: {
-    'name': 'tungsten',
+    'name': 'Tungsten',
     'symbol': 'W',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -675,7 +675,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   75: {
-    'name': 'rhenium',
+    'name': 'Rhenium',
     'symbol': 'Re',
     'background-color': '#DEDEDA',
     'border-color': '#50506A',
@@ -684,7 +684,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   76: {
-    'name': 'osmium',
+    'name': 'Osmium',
     'symbol': 'Os',
     'background-color': '#DEDEDA',
     'border-color': '#50508A',
@@ -693,16 +693,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   77: {
-    'name': 'iridium',
+    'name': 'Iridium',
     'symbol': 'Ir',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   78: {
-    'name': 'platinum',
+    'name': 'Platinum',
     'symbol': 'Pt',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -711,16 +711,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   79: {
-    'name': 'gold',
+    'name': 'Gold',
     'symbol': 'Au',
     'background-color': '#EFEF62',
     'border-color': '#A89840',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   80: {
-    'name': 'mercury',
+    'name': 'Mercury',
     'symbol': 'Hg',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -729,34 +729,34 @@ var CHEMICAL_ELEMENTS = {
   },
 
   81: {
-    'name': 'thallium',
+    'name': 'Thallium',
     'symbol': 'Tl',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   82: {
-    'name': 'lead',
+    'name': 'Lead',
     'symbol': 'Pb',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   83: {
-    'name': 'bismuth',
+    'name': 'Bismuth',
     'symbol': 'Bi',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   84: {
-    'name': 'polonium',
+    'name': 'Polonium',
     'symbol': 'Po',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -765,16 +765,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   85: {
-    'name': 'astatine',
+    'name': 'Astatine',
     'symbol': 'At',
     'background-color': '#CDCDC0',
     'border-color': '#9D9D90',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   86: {
-    'name': 'radon',
+    'name': 'Radon',
     'symbol': 'Rn',
     'background-color': '#FFF',
     'border-color': '#999',
@@ -783,7 +783,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   87: {
-    'name': 'francium',
+    'name': 'Francium',
     'symbol': 'Fr',
     'background-color': '#EFEFEF',
     'border-color': '#656463',
@@ -792,7 +792,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   88: {
-    'name': 'radium',
+    'name': 'Radium',
     'symbol': 'Ra',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -801,16 +801,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   89: {
-    'name': 'actinium',
+    'name': 'Actinium',
     'symbol': 'Ac',
     'background-color': '#DEDEDD',
     'border-color': '#50508A',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   90: {
-    'name': 'thorium',
+    'name': 'Thorium',
     'symbol': 'Th',
     'background-color': '#EFEFEF',
     'border-color': '#555',
@@ -819,16 +819,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   91: {
-    'name': 'proactinium',
+    'name': 'Proactinium',
     'symbol': 'Pa',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   92: {
-    'name': 'uranium',
+    'name': 'Uranium',
     'symbol': 'U',
     'background-color': '#EFEFEF',
     'border-color': '#555',
@@ -837,7 +837,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   93: {
-    'name': 'neptunium',
+    'name': 'Neptunium',
     'symbol': 'Np',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -846,7 +846,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   94: {
-    'name': 'plutonium',
+    'name': 'Plutonium',
     'symbol': 'Pu',
     'background-color': '#FAFAFA',
     'border-color': '#818083',
@@ -855,7 +855,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   95: {
-    'name': 'americanium',
+    'name': 'Americanium',
     'symbol': 'Am',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -864,7 +864,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   96: {
-    'name': 'curium',
+    'name': 'Curium',
     'symbol': 'Cm',
     'background-color': '#FAFAFA',
     'border-color': '#A971A9',
@@ -873,7 +873,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   97: {
-    'name': 'berkelium',
+    'name': 'Berkelium',
     'symbol': 'Bk',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -882,7 +882,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   98: {
-    'name': 'californium',
+    'name': 'Californium',
     'symbol': 'Cf',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -891,7 +891,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   99: {
-    'name': 'einsteinium',
+    'name': 'Einsteinium',
     'symbol': 'Es',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -900,7 +900,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   100: {
-    'name': 'fermium',
+    'name': 'Fermium',
     'symbol': 'Fm',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -909,7 +909,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   101: {
-    'name': 'mendelevium',
+    'name': 'Mendelevium',
     'symbol': 'Md',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -918,7 +918,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   102: {
-    'name': 'nobelium',
+    'name': 'Nobelium',
     'symbol': 'No',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -927,7 +927,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   103: {
-    'name': 'lawrencium',
+    'name': 'Lawrencium',
     'symbol': 'Lr',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -936,7 +936,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   104: {
-    'name': 'rutherford',
+    'name': 'Rutherford',
     'symbol': 'Rf',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -945,16 +945,16 @@ var CHEMICAL_ELEMENTS = {
   },
 
   105: {
-    'name': 'dubnium',
+    'name': 'Dubnium',
     'symbol': 'Db',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   106: {
-    'name': 'seaborgium',
+    'name': 'Seaborgium',
     'symbol': 'Sg',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -963,7 +963,7 @@ var CHEMICAL_ELEMENTS = {
   },
 
   107: {
-    'name': 'bohrium',
+    'name': 'Bohrium',
     'symbol': 'Bh',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -972,43 +972,43 @@ var CHEMICAL_ELEMENTS = {
   },
 
   108: {
-    'name': 'hassium',
+    'name': 'Hassium',
     'symbol': 'Hs',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   109: {
-    'name': 'meitnerium',
+    'name': 'Meitnerium',
     'symbol': 'Mt',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   110: {
-    'name': 'darmstadtium',
+    'name': 'Darmstadtium',
     'symbol': 'Ds',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   111: {
-    'name': 'roentgenium',
+    'name': 'Roentgenium',
     'symbol': 'Rg',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   112: {
-    'name': 'copernicium',
+    'name': 'Copernicium',
     'symbol': 'Cn',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
@@ -1017,56 +1017,56 @@ var CHEMICAL_ELEMENTS = {
   },
 
   113: {
-    'name': 'ununtrium',
+    'name': 'Ununtrium',
     'symbol': 'Uut',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   114: {
-    'name': 'flerovium',
+    'name': 'Flerovium',
     'symbol': 'Fl',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   115: {
-    'name': 'ununpentium',
+    'name': 'Ununpentium',
     'symbol': 'Uup',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   116: {
-    'name': 'livermorium',
+    'name': 'Livermorium',
     'symbol': 'Lv',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   117: {
-    'name': 'ununseptium',
+    'name': 'Ununseptium',
     'symbol': 'Uus',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 
   118: {
-    'name': 'ununoctium',
+    'name': 'Ununoctium',
     'symbol': 'Uuo',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': ""
+    'descrip': "n/a"
   },
 };
