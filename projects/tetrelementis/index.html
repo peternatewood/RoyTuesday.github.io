@@ -3,20 +3,34 @@
   <head>
     <meta charset="UTF-8"/>
 
-    <link href="../../stylesheets/normalize.css" rel="stylesheet" type="text/css"/>
+    <link href="./stylesheets/normalize.css" rel="stylesheet" type="text/css"/>
     <link href="./game.css" rel="stylesheet" type="text/css"/>
 
+    <script src="./element-constants.js"></script>
     <script src="./constants.js"></script>
+    <script src="./periodic-table.js"></script>
     <script src="./tetrinimo.js"></script>
-    <script src="./tetrisBoard.js"></script>
-    <script src="./browserView.js"></script>
+    <script src="./tetris-board.js"></script>
+    <script src="./preview-board.js"></script>
+    <script src="./browser-view.js"></script>
+    <script src="./controller.js"></script>
     <script src="./tetris.js"></script>
 
     <title>Tetrelementis</title>
   </head>
   <body>
     <main class="container">
-      <canvas height="600" width="300">Please update your browser to view this content.</canvas>
+      <canvas id="tetris-grid" height="600" width="300">
+        Main Game View
+      </canvas>
+      <div style="display:inline-block; vertical-align:top">
+        <canvas id="tetris-preview" height="300" width="200">
+          Block Preview
+        </canvas>
+        <canvas id="tetris-table" height="270" width="540">
+          Table of Elements
+        </canvas>
+      </div>
     </main>
   </body>
 </html>

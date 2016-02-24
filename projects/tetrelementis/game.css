@@ -1,9 +1,6 @@
 body {
   background-color: #F9F5FC;
 }
-canvas {
-  border: 1px solid #888;
-}
 
 .container {
   background-color: #F1EEFA;
@@ -12,5 +9,18 @@ canvas {
   margin: 0 auto;
   padding: 2em;
   text-align: center;
-  width: 30em;
+  width: 60em;
+}
+
+#tetris-grid {
+  border: 1px solid #DAA;
+}
+#tetris-preview {
+  border: 1px solid #AAD;
+  display: block;
+  margin-bottom: 29px;
+}
+#tetris-table {
+  border: 1px solid #ADA;
+  display: block;
 }
