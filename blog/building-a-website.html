@@ -1,116 +1,116 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		
-		<link rel="stylesheet" href="../stylesheets/normalize.css"/>
-		<link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
-		<link rel="stylesheet" href="../stylesheets/default.css"/>
+  <head>
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" href="../stylesheets/normalize.css"/>
+    <link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../stylesheets/default.css"/>
 
-		<title>
-			Peter N Wood
-		</title>
-	</head>
+    <title>
+      Peter N Wood
+    </title>
+  </head>
 
-	<body class="container">
+  <body class="container">
 
-		<header>
-			<h1>
-				Peter N Wood
-			</h1>
-			<p>
-				programmer, pianist, video gamer
-			</p>
-			<img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-		</header>
+    <header>
+      <h1>
+        Peter N Wood
+      </h1>
+      <p>
+        programmer, pianist, video gamer
+      </p>
+      <img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+    </header>
 
-		<main>
-			<nav>
-				<img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-				<ul>
-					<li>
-						<a class="fa fa-home" href="../index.html" title="Home">
-							<span class="nav-name">Home</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-pencil" href="./index.html" title="My Blog">
-							<span class="nav-name">Blog</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-book" href="../projects/index.html" title="Projects">
-							<span class="nav-name">Projects</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-user" href="../about/index.html" title="About Me">
-							<span class="nav-name">About Me</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
-							<span class="nav-name">Resume</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+    <main>
+      <nav>
+        <img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+        <ul>
+          <li>
+            <a class="fa fa-home" href="../index.html" title="Home">
+              <span class="nav-name">Home</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-pencil" href="./index.html" title="My Blog">
+              <span class="nav-name">Blog</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-book" href="../projects/index.html" title="Projects">
+              <span class="nav-name">Projects</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-user" href="../about/index.html" title="About Me">
+              <span class="nav-name">About Me</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
+              <span class="nav-name">Resume</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
-			<section class="main-container">
-				<article>
-					<h1>
-						Building a Website
-					</h1>
-					<h2>
-						29 Nov 2015
-					</h2>
-					<p>
-						How I learned to start worrying about the DOM
-					</p>
-				</article>
-				<article>
-					<p>
-						After eight weeks of designing, updating, and maintaining a website, I still have a long way to go. When I started, I had no knowledge of HTML 5 or CSS, and my initial site was very plain. I've added color and what I think is a user-friendly layout, but I expect I'll never be done making improvements on my site; even as I write, I can see a lot of clumsy formatting in both my HTML and CSS that needs fixing.
-					</p>
-					<p>
-						Looking back, I can remember a lot of the steps I took to get here. Several weeks ago, I struggled to implement "sticky" positioning. I wanted a navigation bar that remained at the top of the window when the user scrolled down, but at the top of the page, would sit below my page title. I found two possible solutions: implement a script to change the positioning attribute as the page scrolls, or use a position attribute new CSS: "sticky".
-					</p>
-					<p>
-						I could write a fairly short JavaScript file to accomplish the same task; all I need is to set the position of my &ltnav&gt element to "fixed", and create an event listener to update its position whenever the user scrolls the page. However, this involves a lot of testing to implement and requires that I make sure it still works on all browsers whenever there is an update to anything. 
-					</p>
-					<p>
-						On the other hand, "position: sticky" works exactly as I wanted; while the HTML element is positioned below the top edge of the client window, it behaves like the "relative" position, but when the element would otherwise scroll off screen, it behaves like the "fixed" position.
-					</p>
-					<p>
-						I like the way this works; unlike the JavaScript solution, this is designed to have a specific function within CSS, and as CSS is updated, this attribute should maintain that function. Unless you have a very large monitor, you can see it in action as you scroll down this page. This was as much a triumph as it is an example of how I need to continue updating my site; "position: sticky" is not yet supported by all browsers, and a more inclusive solution would involve writing that script to ensure that my site looks the same across all browsers.
-					</p>
-					<p>
-						I have yet to implemenet JavaScript on my site, and have encountered a major roadblock on the way to doing so. In my spare time, I've been working on two browser games using JavaScript: a text adventure and a Tetris clone (at the time of writing, an <a href="../projects/space_fear.html">early version of my text adventure</a> is available on my <a href="../projects/index.html">Projects</a> page). They both work as intended FireFox 42 and Internet Explorer 11, but not in Chrome 46 and Opera 33. I suspect that I could work around the issue by using JQuery, but I hesitate to do so until I understand why the games don't yet work in JavaScript alone.
-					</p>
-					<p>
-						I have a lot of work yet to do on my site; making the layout more friendly for mobile devices, adding JavaScript, making the different pages more distinct from eachother, and probably many things I can't yet predict. Working with the dev tools has been a very fulfilling process; I love to see the results of my work so quickly and to change it so easily. I'm looking forward to taking care of my site, writing new blog posts, and creating something I feel proud to share with the world.
-					</p>
-				</article>
-			</section>
-		</main>
+      <section class="main-container">
+        <article>
+          <h1>
+            Building a Website
+          </h1>
+          <h2>
+            29 Nov 2015
+          </h2>
+          <p>
+            How I learned to start worrying about the DOM
+          </p>
+        </article>
+        <article>
+          <p>
+            After eight weeks of designing, updating, and maintaining a website, I still have a long way to go. When I started, I had no knowledge of HTML 5 or CSS, and my initial site was very plain. I've added color and what I think is a user-friendly layout, but I expect I'll never be done making improvements on my site; even as I write, I can see a lot of clumsy formatting in both my HTML and CSS that needs fixing.
+          </p>
+          <p>
+            Looking back, I can remember a lot of the steps I took to get here. Several weeks ago, I struggled to implement "sticky" positioning. I wanted a navigation bar that remained at the top of the window when the user scrolled down, but at the top of the page, would sit below my page title. I found two possible solutions: implement a script to change the positioning attribute as the page scrolls, or use a position attribute new CSS: "sticky".
+          </p>
+          <p>
+            I could write a fairly short JavaScript file to accomplish the same task; all I need is to set the position of my &ltnav&gt element to "fixed", and create an event listener to update its position whenever the user scrolls the page. However, this involves a lot of testing to implement and requires that I make sure it still works on all browsers whenever there is an update to anything. 
+          </p>
+          <p>
+            On the other hand, "position: sticky" works exactly as I wanted; while the HTML element is positioned below the top edge of the client window, it behaves like the "relative" position, but when the element would otherwise scroll off screen, it behaves like the "fixed" position.
+          </p>
+          <p>
+            I like the way this works; unlike the JavaScript solution, this is designed to have a specific function within CSS, and as CSS is updated, this attribute should maintain that function. Unless you have a very large monitor, you can see it in action as you scroll down this page. This was as much a triumph as it is an example of how I need to continue updating my site; "position: sticky" is not yet supported by all browsers, and a more inclusive solution would involve writing that script to ensure that my site looks the same across all browsers.
+          </p>
+          <p>
+            I have yet to implemenet JavaScript on my site, and have encountered a major roadblock on the way to doing so. In my spare time, I've been working on two browser games using JavaScript: a text adventure and a Tetris clone (at the time of writing, an <a href="../projects/space_fear.html">early version of my text adventure</a> is available on my <a href="../projects/index.html">Projects</a> page). They both work as intended FireFox 42 and Internet Explorer 11, but not in Chrome 46 and Opera 33. I suspect that I could work around the issue by using JQuery, but I hesitate to do so until I understand why the games don't yet work in JavaScript alone.
+          </p>
+          <p>
+            I have a lot of work yet to do on my site; making the layout more friendly for mobile devices, adding JavaScript, making the different pages more distinct from eachother, and probably many things I can't yet predict. Working with the dev tools has been a very fulfilling process; I love to see the results of my work so quickly and to change it so easily. I'm looking forward to taking care of my site, writing new blog posts, and creating something I feel proud to share with the world.
+          </p>
+        </article>
+      </section>
+    </main>
 
-		<footer>
-			<p class="footer-links">
-				<a href="https://github.com/roytuesday" target="_blank">
-					<span class="fa fa-github" title="GitHub"></span>
-				</a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
-					<span class="fa fa-linkedin-square" title="LinkedIn"></span>
-				</a> | <a href="https://twitter.com/programmingpete" target="_blank">
-					<span class="fa fa-twitter-square" title="Twitter"></span>
-				</a>
-			</p>
-			<p>
-				peternatewood@gmail.com
-			</p>
-			<h6>Last Updated: 29 Nov 2015</h6>
-		</footer>
+    <footer>
+      <p class="footer-links">
+        <a href="https://github.com/roytuesday" target="_blank">
+          <span class="fa fa-github" title="GitHub"></span>
+        </a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
+          <span class="fa fa-linkedin-square" title="LinkedIn"></span>
+        </a> | <a href="https://twitter.com/programmingpete" target="_blank">
+          <span class="fa fa-twitter-square" title="Twitter"></span>
+        </a>
+      </p>
+      <p>
+        peternatewood@gmail.com
+      </p>
+      <h6>Last Updated: 29 Nov 2015</h6>
+    </footer>
 
-	</body>
+  </body>
 
 </html>

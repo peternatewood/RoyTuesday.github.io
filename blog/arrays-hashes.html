@@ -1,126 +1,126 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		
-		<link rel="stylesheet" href="../stylesheets/normalize.css"/>
-		<link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
-		<link rel="stylesheet" href="../stylesheets/default.css"/>
+  <head>
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" href="../stylesheets/normalize.css"/>
+    <link rel="stylesheet" href="../stylesheets/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../stylesheets/default.css"/>
 
-		<title>
-			Peter N Wood
-		</title>
-	</head>
+    <title>
+      Peter N Wood
+    </title>
+  </head>
 
-	<body class="container">
+  <body class="container">
 
-		<header>
-			<h1>
-				Peter N Wood
-			</h1>
-			<p>
-				programmer, pianist, video gamer
-			</p>
-			<img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-		</header>
+    <header>
+      <h1>
+        Peter N Wood
+      </h1>
+      <p>
+        programmer, pianist, video gamer
+      </p>
+      <img class="headshot" id="mobile-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+    </header>
 
-		<main>
-			<nav>
-				<img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-				<ul>
-					<li>
-						<a class="fa fa-home" href="../index.html" title="Home">
-							<span class="nav-name">Home</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-pencil" href="./index.html" title="My Blog">
-							<span class="nav-name">Blog</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-book" href="../projects/index.html" title="Projects">
-							<span class="nav-name">Projects</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-user" href="../about/index.html" title="About Me">
-							<span class="nav-name">About Me</span>
-						</a>
-					</li>
-					<li>
-						<a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
-							<span class="nav-name">Resume</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+    <main>
+      <nav>
+        <img class="headshot" id="web-headshot" src="../imgs/dbc-headshot-2015-11-13.png" alttext="my face">
+        <ul>
+          <li>
+            <a class="fa fa-home" href="../index.html" title="Home">
+              <span class="nav-name">Home</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-pencil" href="./index.html" title="My Blog">
+              <span class="nav-name">Blog</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-book" href="../projects/index.html" title="Projects">
+              <span class="nav-name">Projects</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-user" href="../about/index.html" title="About Me">
+              <span class="nav-name">About Me</span>
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-briefcase" href="../resume/index.html" title="Resume">
+              <span class="nav-name">Resume</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
-			<section class="main-container">
-				<article>
-					<h1>
-						Arrays and Hashes
-					</h1>
-					<h2>
-						25 Oct 2015
-					</h2>
-					<p>
-						Like solar arrays and twitter tags? Not really...
-					</p>
-				</article>
-				<article>
-					<p>
-						So what are Arrays and Hashes? Well, they're both Ruby objects that we use to store multiple things. Imagine that you want a list of related items, like a catalogue of your favorite movies. You could store each one in its own string variable, adding a new variable whenever a new great movie comes out or you remember an old favorite. That's no good: it's messy, time consuming, and your code will be rife with unique variables. You should be using either an array or hash.
-					</p>
-					<p>
-						Let's continue with the example of our favorite movie catalogue; you really could use either array or hash depending on how you want to sort your movies. Arrays and hashes work in almost the same way except for one simple but crucial difference: an array assigns an index number to each of it's objects, starting with 0, but a hash requires you to specify a unique "key" for each object. Maybe all you need is a simple list: an array is the way to go, because all you want is the name of each movie. But maybe you want to be able to sort your movies by genre: then you want a hash.
-					</p>
-					<p>Here's our example using some of my favorite movies:</p>
-					<h2>
-						An array might look like this if we "puts" each object:
-					</h2>
-					<ul>
-						<li>Gattaca</li>
-						<li>What We Do in the Shadows</li>
-						<li>Mad Max: Fury Road</li>
-						<li>Young Frankenstein</li>
-					</ul>
-					<h2>
-						While a hash would have more information for us:
-					</h2>
-					<ul>
-						<li>Gattaca => Sci-fi</li>
-						<li>What We Do in the Shadows => Comedy</li>
-						<li>Mad Max: Fury Road => Action</li>
-						<li>Young Frankenstein => Comedy</li>
-					</ul>
-					<p>
-						You see, in the array, we just have a list: nice and simple. In the hash, we have a "key-value" relationship. The the "key" in a hash is like the index number in an array: each key is unique so that we can use it to refer to one and only one value in the hash. In our example, you'll see that I used the movie titles as keys and stored their genres in the values. Each movie title is unique, but the values can repeat; both "What We Do in the Shadows" and "Young Frankenstein" are comedies, for example.
-					</p>
-					<p>
-						There are many other reasons to use hashes or arrays, like storing usernames and passwords, and you'll find that in different situations one will be more useful than the other. Go out there and meddle with hashes and arrays, get a feel for how each one is best utilized.
-					</p>
-				</article>
-			</section>
-		</main>
+      <section class="main-container">
+        <article>
+          <h1>
+            Arrays and Hashes
+          </h1>
+          <h2>
+            25 Oct 2015
+          </h2>
+          <p>
+            Like solar arrays and twitter tags? Not really...
+          </p>
+        </article>
+        <article>
+          <p>
+            So what are Arrays and Hashes? Well, they're both Ruby objects that we use to store multiple things. Imagine that you want a list of related items, like a catalogue of your favorite movies. You could store each one in its own string variable, adding a new variable whenever a new great movie comes out or you remember an old favorite. That's no good: it's messy, time consuming, and your code will be rife with unique variables. You should be using either an array or hash.
+          </p>
+          <p>
+            Let's continue with the example of our favorite movie catalogue; you really could use either array or hash depending on how you want to sort your movies. Arrays and hashes work in almost the same way except for one simple but crucial difference: an array assigns an index number to each of it's objects, starting with 0, but a hash requires you to specify a unique "key" for each object. Maybe all you need is a simple list: an array is the way to go, because all you want is the name of each movie. But maybe you want to be able to sort your movies by genre: then you want a hash.
+          </p>
+          <p>Here's our example using some of my favorite movies:</p>
+          <h2>
+            An array might look like this if we "puts" each object:
+          </h2>
+          <ul>
+            <li>Gattaca</li>
+            <li>What We Do in the Shadows</li>
+            <li>Mad Max: Fury Road</li>
+            <li>Young Frankenstein</li>
+          </ul>
+          <h2>
+            While a hash would have more information for us:
+          </h2>
+          <ul>
+            <li>Gattaca => Sci-fi</li>
+            <li>What We Do in the Shadows => Comedy</li>
+            <li>Mad Max: Fury Road => Action</li>
+            <li>Young Frankenstein => Comedy</li>
+          </ul>
+          <p>
+            You see, in the array, we just have a list: nice and simple. In the hash, we have a "key-value" relationship. The the "key" in a hash is like the index number in an array: each key is unique so that we can use it to refer to one and only one value in the hash. In our example, you'll see that I used the movie titles as keys and stored their genres in the values. Each movie title is unique, but the values can repeat; both "What We Do in the Shadows" and "Young Frankenstein" are comedies, for example.
+          </p>
+          <p>
+            There are many other reasons to use hashes or arrays, like storing usernames and passwords, and you'll find that in different situations one will be more useful than the other. Go out there and meddle with hashes and arrays, get a feel for how each one is best utilized.
+          </p>
+        </article>
+      </section>
+    </main>
 
-		<footer>
-			<p class="footer-links">
-				<a href="https://github.com/roytuesday" target="_blank">
-					<span class="fa fa-github" title="GitHub"></span>
-				</a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
-					<span class="fa fa-linkedin-square" title="LinkedIn"></span>
-				</a> | <a href="https://twitter.com/programmingpete" target="_blank">
-					<span class="fa fa-twitter-square" title="Twitter"></span>
-				</a>
-			</p>
-			<p>
-				peternatewood@gmail.com
-			</p>
-			<h6>Last Updated: 29 Nov 2015</h6>
-		</footer>
+    <footer>
+      <p class="footer-links">
+        <a href="https://github.com/roytuesday" target="_blank">
+          <span class="fa fa-github" title="GitHub"></span>
+        </a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
+          <span class="fa fa-linkedin-square" title="LinkedIn"></span>
+        </a> | <a href="https://twitter.com/programmingpete" target="_blank">
+          <span class="fa fa-twitter-square" title="Twitter"></span>
+        </a>
+      </p>
+      <p>
+        peternatewood@gmail.com
+      </p>
+      <h6>Last Updated: 29 Nov 2015</h6>
+    </footer>
 
-	</body>
+  </body>
 
 </html>

@@ -1,27 +1,27 @@
 .debug {
-	border: 0px solid red
+  border: 0px solid red
 }
 
 .container {
-	width: 90%;
-	margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 }
 
 #end-message {}
 
 a:link {
-	text-decoration: none;
-	font-weight: bold;
-	color: #2b2a36;
+  text-decoration: none;
+  font-weight: bold;
+  color: #2b2a36;
 }
 a:visited {
-	color: #ca88b3;
+  color: #ca88b3;
 }
 a:hover {
-	color: #8f4b36;
+  color: #8f4b36;
 }
 a:active {
-	color: #000000;
+  color: #000000;
 }
 
 .lss-n { list-style-type: none; }
@@ -113,5 +113,5 @@ a:active {
 .fl-r { float: right; }
 
 .myblg--pic {
-	width: 10em;
+  width: 10em;
 }
