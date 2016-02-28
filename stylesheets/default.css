@@ -204,6 +204,10 @@ pre {
 }
 
 @media (orientation: portrait), (max-width: 480px) {
+  body {
+    font-size: 150%;
+  }
+
   main {
     display: initial;
   }
