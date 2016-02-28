@@ -203,7 +203,7 @@ pre {
   width: 95%;
 }
 
-@media (orientation: portrait) {
+@media (orientation: portrait), (max-width: 480px) {
   main {
     display: initial;
   }
