@@ -25,7 +25,6 @@ var Tetrinimo = function(args) {
     x: Math.floor(width / 2) + this.col,
     y: Math.floor(height / 2) + this.row
   }
-  console.log('width', width, 'height', height, 'center', this.center);
 }
 Tetrinimo.prototype.raise = function() {
   this.row--;
@@ -53,11 +52,9 @@ Tetrinimo.prototype.slide = function(direction) {
 };
 Tetrinimo.prototype.rotate = function(direction) {
   var modX, modY;
-  console.log('this in rotate', this, 'center', this.center);
   var center = this.center;
 
   this.blocks.forEach(function(block) {
-    console.log('block', block, 'center', center);
     modX = block.y - center.y;
     modY = block.x - center.x;
     if(direction == 'counter') {
@@ -67,7 +64,6 @@ Tetrinimo.prototype.rotate = function(direction) {
       if(modX !== 0) modX *= -1;
     }
 
-    console.log('modX', modX, 'modY', modY);
     block.x = center.x + modX;
     block.y = center.y + modY;
   });

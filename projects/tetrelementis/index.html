@@ -28,7 +28,7 @@
           Block Preview
         </canvas>
         <div id="level-display">
-          <div style="float:left">
+          <div id="level-left">
             <p>
               Level: <span id="game-level">0</span>
             </p>
@@ -36,13 +36,37 @@
             <p>
               Score: <span id="player-score">0</span>
             </p>
+            <br/>
+            <p>
+              Difficulty: <span id="game-difficulty">Easy</span>
+            </p>
           </div>
-          <div style="float:right">
-            Difficulty: <span id="game-difficulty">Easy</span>
+          <div id="level-right">
+            <div class="controls-row">
+              <button class="control-button" data-key="up" title="Arrow Key Up: Rotate Block">&#8593;</button>
+            </div>
+            <div class="controls-row">
+              <button class="control-button" data-key="left" title="Arrow Key Left: Move Block Left">&#8592;</button>
+              <button class="control-button" data-key="down" title="Arrow Key Down: Drop Block Faster">&#8595;</button>
+              <button class="control-button" data-key="right" title="Arrow Key Right: Move Block Right">&#8594;</button>
+            </div>
+            <div class="controls-row">
+              <button class="control-button" data-key="space" id="spacebar" title="Spacebar: Start or Pause">start / pause</button>
+            </div>
           </div>
         </div>
-        <div id="element-description">
-          Next Element
+        <div id="element-description-container">
+          <h2 id="element-name">Chemical Element</h2>
+          <p>Atomic Number: <span id="atomic-number">#</span></p>
+          <p id="element-description">
+            Use the arrow keys or buttons above to play.
+            &#8592; and &#8594; arrows slide the falling tetrinimo.
+            &#8593; rotates the tetrinimo, and &#8595; makes it fall faster.
+            Press the spacebar to start.
+          </p>
+          <p>
+            <a href="" id="element-link" target="_blank"></a>
+          </p>
         </div>
         <canvas id="tetris-table" height="270" width="540">
           Table of Elements

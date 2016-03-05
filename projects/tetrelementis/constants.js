@@ -1,8 +1,12 @@
+var CHEMISTRY_URL = "http://www.webelements.com/";
 var FONT_SIZE = 11;
 var BLOCK_FONT = "px monospace";
+
+// Delay values in milliseconds
 var DROP_DELAY = 600;
 var FAST_DROP = 100;
 var INPUT_DELAY = 200;
+var CLEAR_DELAY = 1;
 
 var GRID_HEIGHT = 20;
 var GRID_WIDTH = 10;
@@ -53,11 +57,12 @@ var processTetrinimos = function() {
 var TETRINIMO_SHAPES = processTetrinimos();
 
 var KEY_CODES = {
+  8: 'backspace',
+  32: 'space',
   37: 'left',
   38: 'up',
   39: 'right',
-  40: 'down',
-  8: 'backspace'
+  40: 'down'
 }
 
 var PERIODIC_TABLE = [

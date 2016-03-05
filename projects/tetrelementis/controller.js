@@ -7,7 +7,7 @@ var Controller = function(shape) {
       shape: getRandomShape()
     }),
     createNextTetrinimo: this.createNextTetrinimo.bind(this),
-    showGameOver: this.showGameOver
+    showGameOver: this.showGameOver.bind(this)
   });
 
   this.gameView = new BrowserView({
@@ -19,8 +19,29 @@ var Controller = function(shape) {
     element: this.elements.pop(),
     shape: getRandomShape()
   });
+  this.gameView.drawAllBoards();
+  this.gameState = 'gameover';
+
+  addEventListener('keydown', function(event) {
+    if(this.gameState === 'gameover') {
+      var keyPressed = KEY_CODES[event.keyCode];
+      if(keyPressed == 'space') {
+        event.preventDefault();
+        this.startGame();
+      }
+    }
+  }.bind(this));
+  addEventListener('mousedown', function(event) {
+    if(event.target.nodeName == 'BUTTON' && this.gameState === 'gameover') {
+      var buttonPressed = event.target.dataset.key;
+      if(buttonPressed == 'space') {
+        this.startGame();
+      }
+    }
+  }.bind(this));
 }
 Controller.prototype.startGame = function() {
+  this.gameState = 'inProgress';
   this.gameView.animateGame();
   this.gameView.previewBoard.blit();
   this.gameView.tableBoard.showElement(this.gameBoard.tetrinimo.element);
@@ -53,8 +74,10 @@ Controller.prototype.createNextTetrinimo = function() {
   this.gameView.updateElementDescrip();
 };
 Controller.prototype.showGameOver = function() {
-  console.log('game over!');
-}
+  this.gameState = 'gameover';
+  this.gameView.isPaused = true;
+  this.gameBoard.clearForGameover();
+};
 
 var generateRandomElements = function() {
   var randElements = new Array;

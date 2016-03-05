@@ -57,7 +57,7 @@ TetrisBoard.prototype.dropBlock = function() {
     this.blit();
     this.tetrinimo = null;
     this.createNextTetrinimo();
-    if(this.isOutOfSpace()) {
+    if(this.detectCollision() != 'clear') {
       clearInterval(this.dropInterval);
       this.blit();
       this.showGameOver();
@@ -106,9 +106,31 @@ TetrisBoard.prototype.handleFullLines = function() {
   });
   if(lines > 0) this.score += Math.pow(2, lines) / 2;
 };
-TetrisBoard.prototype.isOutOfSpace = function() {
-  if(this.detectCollision() == 'clear') {
-    return false;
-  }
-  return true;
+TetrisBoard.prototype.clearForGameover = function() {
+  var randElement = Math.ceil(Math.random() * 118);
+  var boardCoords = {x: 0, y: 0};
+
+  var clearBoard = function(boardCoords) {
+    if(boardCoords.y < 20) {
+      this.board[boardCoords.y][boardCoords.x] = randElement;
+      if(boardCoords.x >= 9) {
+        boardCoords.y++;
+        boardCoords.x = 0;
+      }
+      else {
+        boardCoords.x++;
+      }
+      setTimeout(clearBoard.bind(this, boardCoords), CLEAR_DELAY);
+    }
+    else if(randElement > 0) {
+      randElement = 0;
+      boardCoords = {x: 0, y:0};
+      setTimeout(clearBoard.bind(this, boardCoords), CLEAR_DELAY);
+    }
+    else {
+      console.log('done!');
+    }
+  }.bind(this);
+
+  clearBoard(boardCoords);
 };

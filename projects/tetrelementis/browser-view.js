@@ -8,7 +8,10 @@ var BrowserView = function(args) {
   BLOCK_HEIGHT = BLOCK_SPACING_HEIGHT - 10;
   BLOCK_WIDTH = BLOCK_SPACING_WIDTH - 10;
 
-  this.elementDescrip = document.querySelector('#element-description');
+  this.elementDescrip = document.getElementById('element-description');
+  this.elementName = document.getElementById('element-name');
+  this.atomicNumDisplay = document.getElementById('atomic-number');
+  this.elementLink = document.getElementById('element-link');
   this.playerScore = document.getElementById('player-score');
 
   this.gridContext = gridCanvas.getContext('2d');
@@ -20,69 +23,156 @@ var BrowserView = function(args) {
   this.tableBoard = new PeriodicTable();
 
   this.cycleDropBlock = args.cycleDropBlock;
+  this.isPaused = true;
   this.pressed = {
     slide: false,
     drop: false,
     rotate: false
   };
+  this.interval = {
+    slide: null,
+    rotate: null
+  };
 
   addEventListener('keydown', this.keyDown.bind(this));
   addEventListener('keyup', this.keyUp.bind(this));
+  addEventListener('mousedown', this.buttonDown.bind(this));
+  addEventListener('mouseup', this.buttonUp.bind(this));
 }
 BrowserView.prototype.keyDown = function(event) {
   var pressedKey = KEY_CODES[event.keyCode];
-  if(pressedKey == 'left' || pressedKey == 'right') {
-    event.preventDefault();
-    if(this.pressed.slide == false) {
-      this.pressed.slide = pressedKey;
-      this.handleInput.bind(this).call();
+  if(this.isPaused) {
+    if(pressedKey == 'space') {
+      event.preventDefault();
+      this.isPaused = false;
+      this.cycleDropBlock();
     }
   }
-  if(pressedKey == 'down') {
-    event.preventDefault();
-    if(this.pressed.drop == false) {
-      this.pressed.drop = true;
-      this.handleInput.bind(this).call();
+  else {
+    if(pressedKey == 'left' || pressedKey == 'right') {
+      event.preventDefault();
+      if(this.pressed.slide == false) {
+        this.pressed.slide = pressedKey;
+        clearInterval(this.interval.slide);
+        this.gameBoard.slideBlock(this.pressed.slide);
+        this.interval.slide = setInterval(this.gameBoard.slideBlock.bind(this.gameBoard, this.pressed.slide), INPUT_DELAY);
+      }
     }
-  }
-  if(pressedKey == 'up') {
-    event.preventDefault();
-    if(this.pressed.rotate == false) {
-      this.pressed.rotate = true;
-      this.handleInput.bind(this).call();
+    else if(pressedKey == 'down') {
+      event.preventDefault();
+      if(this.pressed.drop == false) {
+        this.pressed.drop = true;
+        clearTimeout(this.dropTimeout);
+        this.cycleDropBlock({quickly: true});
+      }
+    }
+    else if(pressedKey == 'up') {
+      event.preventDefault();
+      if(this.pressed.rotate == false) {
+        this.pressed.rotate = true;
+        clearInterval(this.interval.rotate);
+        this.gameBoard.rotateBlock('counter');
+        this.interval.rotate = setInterval(this.gameBoard.rotateBlock.bind(this.gameBoard, 'counter'), INPUT_DELAY);
+      }
+    }
+    else if(pressedKey == 'space') {
+      event.preventDefault();
+      clearTimeout(this.gameBoard.dropInterval);
+      clearTimeout(this.dropTimeout);
+      clearInterval(this.interval.rotate);
+      clearInterval(this.interval.slide);
+      this.isPaused = true;
     }
   }
 };
 BrowserView.prototype.keyUp = function(event){
   var releasedKey = KEY_CODES[event.keyCode];
-  if(releasedKey == 'left' || releasedKey == 'right') {
-    event.preventDefault();
-    this.pressed.slide = false;
+  if(this.isPaused === false) {
+    if(releasedKey == 'left' || releasedKey == 'right') {
+      event.preventDefault();
+      clearInterval(this.interval.slide);
+      this.pressed.slide = false;
+    }
+    if(releasedKey == 'down') {
+      event.preventDefault();
+      clearTimeout(this.dropTimeout);
+      this.pressed.drop = false;
+      this.cycleDropBlock();
+    }
+    if(releasedKey == 'up') {
+      event.preventDefault();
+      clearInterval(this.interval.rotate);
+      this.pressed.rotate = false;
+    }
   }
-  if(releasedKey == 'down') {
-    event.preventDefault();
-    this.pressed.drop = false;
-    clearTimeout(this.dropTimeout);
-    this.cycleDropBlock();
+};
+BrowserView.prototype.buttonDown = function(event) {
+  if(event.target.nodeName == "BUTTON") {
+    var buttonPressed = event.target.dataset.key;
+    if(this.isPaused) {
+      if(buttonPressed == 'space') {
+        this.isPaused = false;
+        this.cycleDropBlock();
+      }
+    }
+    else {
+      if(buttonPressed == 'left' || buttonPressed == 'right') {
+        if(this.pressed.slide == false) {
+          this.pressed.slide = buttonPressed;
+          clearInterval(this.interval.slide);
+          this.interval.slide = setInterval(this.handleInput.bind(this), INPUT_DELAY);
+        }
+      }
+      else if(buttonPressed == 'down') {
+        if(this.pressed.drop == false) {
+          this.pressed.drop = true;
+          clearTimeout(this.dropTimeout);
+          this.cycleDropBlock({quickly: true});
+        }
+      }
+      else if(buttonPressed == 'up') {
+        if(this.pressed.rotate == false) {
+          this.pressed.rotate = true;
+          clearInterval(this.interval.rotate);
+          this.interval.rotate = setInterval(this.handleInput.bind(this), INPUT_DELAY);
+        }
+      }
+      else if(buttonPressed == 'space') {
+        clearTimeout(this.gameBoard.dropInterval);
+        clearTimeout(this.dropTimeout);
+        clearInterval(this.interval.rotate);
+        clearInterval(this.interval.slide);
+        this.isPaused = true;
+      }
+      this.handleInput();
+    }
   }
-  if(releasedKey == 'up') {
-    event.preventDefault();
-    this.pressed.rotate = false;
+};
+BrowserView.prototype.buttonUp = function(event) {
+  if(this.isPaused === false) {
+    if(this.pressed.drop) {
+      clearTimeout(this.dropTimeout);
+      this.cycleDropBlock();
+    }
+    clearInterval(this.interval.slide);
+    clearInterval(this.interval.rotate);
+    this.releaseAllKeys();
   }
 };
 BrowserView.prototype.handleInput = function() {
   if(this.pressed.slide) {
     this.gameBoard.slideBlock(this.pressed.slide);
-    setTimeout(this.handleInput.bind(this), INPUT_DELAY);
   }
-  if(this.pressed.drop) {
-    clearTimeout(this.dropTimeout);
-    this.cycleDropBlock({quickly: true});
-  }
-  if(this.pressed.rotate) {
+  else if(this.pressed.rotate) {
     this.gameBoard.rotateBlock('counter');
-    setTimeout(this.handleInput.bind(this), INPUT_DELAY);
   }
+};
+BrowserView.prototype.releaseAllKeys = function() {
+  this.pressed = {
+    slide: false,
+    drop: false,
+    rotate: false
+  };
 };
 BrowserView.prototype.drawBoard = function(board, context) {
   var gridContext = context;
@@ -119,6 +209,11 @@ BrowserView.prototype.drawBoard = function(board, context) {
     });
   });
 };
+BrowserView.prototype.drawAllBoards = function() {
+  this.drawBoard(this.gameBoard.board, this.gridContext);
+  this.drawBoard(this.previewBoard.board, this.previewContext);
+  this.drawBoard(this.tableBoard.board, this.tableContext);
+};
 BrowserView.prototype.animateGame = function() {
   var lastTime = null;
   var progress = true;
@@ -129,9 +224,8 @@ BrowserView.prototype.animateGame = function() {
       progress = timeStep < 2000;
     }
     lastTime = time;
-    this.drawBoard(this.gameBoard.board, this.gridContext);
-    this.drawBoard(this.previewBoard.board, this.previewContext);
-    this.drawBoard(this.tableBoard.board, this.tableContext);
+
+    this.drawAllBoards();
 
     this.updatePlayerScore(this.gameBoard.score);
     if(progress) {
@@ -142,11 +236,14 @@ BrowserView.prototype.animateGame = function() {
 };
 BrowserView.prototype.updateElementDescrip = function() {
   var element = this.previewBoard.tetrinimo.element;
-  this.elementDescrip.innerHTML = '<h2>' + CHEMICAL_ELEMENTS[element].name
-  + ' [' + CHEMICAL_ELEMENTS[element].symbol + "]</h2>"
-  + '<p>Atomic Number: ' + element + '</p>'
-  + '<p>' + CHEMICAL_ELEMENTS[element].descrip + '</p>';
-}
+
+  this.elementName.innerHTML = CHEMICAL_ELEMENTS[element].name + ' [' + CHEMICAL_ELEMENTS[element].symbol + ']';
+  this.atomicNumDisplay.innerHTML = element;
+  this.elementDescrip.innerHTML = CHEMICAL_ELEMENTS[element].descrip;
+
+  this.elementLink.href = CHEMISTRY_URL + CHEMICAL_ELEMENTS[element].name.toLowerCase();
+  this.elementLink.innerHTML = 'Learn more about ' + CHEMICAL_ELEMENTS[element].name.toLowerCase();
+};
 BrowserView.prototype.updatePlayerScore = function(score) {
   this.playerScore.innerHTML = score;
-}
+};

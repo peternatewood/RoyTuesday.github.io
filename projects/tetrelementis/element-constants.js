@@ -14,7 +14,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DBC3DB',
     'border-color': '#A971A9',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "The single most abundant element in the known universe. Named using the Greek word \"hydro,\" meaning \"water,\" because it makes up two parts of the water molecule."
   },
 
   2: {
@@ -23,7 +23,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFE09F',
     'border-color': '#FF9830',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek god of the sun, \"Helios,\" because it's presence was discovered to be on the surface of the sun."
   },
 
   3: {
@@ -32,7 +32,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "Named after the Greek for \"stone\"."
+    'descrip': "Named after the Greek word \"lithos,\" meaning \"stone\". Often used in rechargeable batteries."
   },
 
   4: {
@@ -41,7 +41,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DEDEDA',
     'border-color': '#50506A',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named for the salt from which it was isolated: beryl. Typically used to create copper alloys for use in electrical wiring."
   },
 
   5: {
@@ -50,7 +50,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#ACAFA0',
     'border-color': '#876750',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named for the salt from which it was isolated: borax. Used to create green flares and in insulation fiberglass."
   },
 
   6: {
@@ -59,7 +59,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#625858',
     'border-color': '#121212',
     'color': 'black',
-    'descrip': "Typically manifests in coal, graphite, and diamond."
+    'descrip': "Named after the Latin \"carbo,\" meaning \"charcoal.\" Typically manifests in coal, graphite, and diamond."
   },
 
   7: {
@@ -68,7 +68,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FFF',
     'border-color': '#999',
     'color': 'black',
-    'descrip': "Makes up the largest percent of air at the Earth's surface."
+    'descrip': "Named after the Latin \"nitrum,\" a native soda. Makes up the largest percent of air at the Earth's surface."
   },
 
   8: {
@@ -77,7 +77,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C1C5DB',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': "Makes up the second largest percent of air at the Earth's surface. Named after the Greek root for 'sour' or 'sharp', because the scientist who identified it believed Oxygen to be the key component of all acids."
+    'descrip': "Named after the Greek root for 'sour' or 'sharp', because the scientist who identified it believed Oxygen to be the key component of all acids. Makes up the second largest percent of air at the Earth's surface."
   },
 
   9: {
@@ -86,7 +86,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FFEF82',
     'border-color': '#B8B870',
     'color': 'black',
-    'descrip': "Named after the word \"flow\"."
+    'descrip': "Named for the French \"fluere,\" meaning \"flow\". Chlorine Trifluoride is one of the most dangerous, reactive chemicals in the world. It is known to burn concrete, melt sand, and explode on contact with water."
   },
 
   10: {
@@ -95,7 +95,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFE09F',
     'border-color': '#EFB830',
     'color': 'black',
-    'descrip': "Named after the Latin word for \"new\"."
+    'descrip': "Named after the Latin word for \"new\". Though often seen in neon signs, shows great potential as a refrigerant."
   },
 
   11: {
@@ -104,7 +104,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Commonly found in table salt, in the compound Sodium Chloride ( NaCl )."
+    'descrip': "Named after the word \"soda\" because it was first isolated from a sample of caustic soda. Commonly found in table salt, in the compound Sodium Chloride (NaCl)."
   },
 
   12: {
@@ -113,7 +113,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFFF',
     'border-color': '#656478',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Magnesia district in Thessaly. Because it readily ignites in air, it is used in flash photography and pyrotechnics."
   },
 
   13: {
@@ -122,7 +122,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E0E0F3',
     'border-color': '#656070',
     'color': 'black',
-    'descrip': "Named for the salt from which it was derived: Alum. Once a very precious metal, so much so that the Washington Monument was originally capped with Aluminum."
+    'descrip': "Named for the salt from which it was derived, \"alum\". Once a very precious metal, so much so that the Washington Monument was originally capped with Aluminum."
   },
 
   14: {
@@ -131,7 +131,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DEDEDA',
     'border-color': '#50506A',
     'color': 'black',
-    'descrip': "Common component in electronics, as its chemical properties are ideal for creating microscopic transistors."
+    'descrip': "Named after the Latin \"silex,\" meaning \"flint\". Common component in electronics, as its chemical properties are ideal for creating microscopic transistors."
   },
 
   15: {
@@ -140,7 +140,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#F5D311',
     'border-color': '#877040',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Ancient Greek name for the planet Venus, meaning \"light-carrier.\" It is an essential component of cell structure."
   },
 
   16: {
@@ -149,7 +149,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#F5D311',
     'border-color': '#877040',
     'color': 'black',
-    'descrip': "Known as \"brimstone\" in ancient times. A key component in gunpowder."
+    'descrip': "Known as \"brimstone\" in ancient times. A key component in gunpowder, and an element essential for organic life."
   },
 
   17: {
@@ -158,7 +158,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFDF82',
     'border-color': '#989840',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"chloro,\" meaning \"greenish yellow.\" It is used as a disinfectant and in water treatment plants to provide clean drinking water."
   },
 
   18: {
@@ -167,7 +167,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#BBA3BB',
     'border-color': '#A971A9',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"argos,\" meaning \"inert.\" Used to fill incandescent and fluorescent light bulbs."
   },
 
   19: {
@@ -176,7 +176,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FFDFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Commonly found in bananas and potatoes."
+    'descrip': "Named after the English \"potash,\" meaning \"pot ash.\" Its symbol comes from the Latin \"kalium.\" Commonly found in bananas and potatoes."
   },
 
   20: {
@@ -185,7 +185,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "Typically found in limestone, from which it gets its \"name\"."
+    'descrip': "Named after the Latin \"calx,\" meaning \"lime.\" It is typically found in limestone, and is the primary component of dental enamel."
   },
 
   21: {
@@ -194,7 +194,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named after the country of Scandinavia."
+    'descrip': "Named after the country of Scandinavia. Once used in high-intensity lights, sometimes used to create certain aluminum alloys."
   },
 
   22: {
@@ -203,7 +203,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"titans.\" Used as an alloy in aircraft, bicycle frames, and other lightweight, rigid structures. Titanium oxide is commonly used in house paint."
   },
 
   23: {

@@ -2,6 +2,30 @@ body {
   background-color: #F9F5FC;
 }
 
+.control-button {
+  background-color: #EEE;
+  border-radius: 10px;
+  color: #333;
+  font-size: 20px;
+  height: 36px;
+  margin: 2px;
+  padding: 2px;
+  text-align: center;
+  width: 36px;
+}
+#spacebar {
+  font-size: 14px;
+  font-weight: bold;
+  height: 28px;
+  width: 116px;
+}
+.controls-row {
+  display: webkit-flex;
+  -webkit-justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+
 #container {
   background-color: #F1EEFA;
   border: 0.5em solid #AAF;
@@ -16,31 +40,45 @@ body {
   vertical-align: top;
 }
 
-#element-description {
+#controls-container {
+  margin: 2px;
+}
+
+#element-description-container {
   border: 1px solid #DDA;
   height: 182px;
   padding: 12px;
   text-align: left;
   width: 516px;
 }
-#element-description h2 {
+#element-name {
   margin: 0;
 }
-#element-description p {
+#element-description, #atomic-number {
   margin: 8px 0 0 0;
 }
 #level-display {
   border: 1px solid #DAD;
   display: inline-block;
-  height: 104px;
-  padding: 8px;
+  height: 120px;
   text-align: left;
   vertical-align: top;
-  width: 397px;
+  width: 418px;
 }
 #level-display p {
   margin: 0;
 }
+#level-left {
+  float: left;
+  margin: 8px;
+  width: 45%;
+}
+#level-right {
+  float: right;
+  margin: 4px;
+  width: 45%;
+}
+
 #tetris-grid {
   border: 1px solid #DAA;
 }
