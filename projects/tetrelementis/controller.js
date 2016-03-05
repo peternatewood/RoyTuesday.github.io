@@ -1,5 +1,6 @@
 var Controller = function(shape) {
   this.elements = generateRandomElements();
+  this.level = 0;
 
   this.gameBoard = new TetrisBoard({
     tetrinimo: new Tetrinimo({
@@ -12,9 +13,10 @@ var Controller = function(shape) {
 
   this.gameView = new BrowserView({
     gameBoard: this.gameBoard,
-    cycleDropBlock: this.cycleDropBlock
+    cycleDropBlock: this.cycleDropBlock,
   });
 
+  this.gameView.level = this.level;
   this.gameView.previewBoard.tetrinimo = new Tetrinimo({
     element: this.elements.pop(),
     shape: getRandomShape()
@@ -50,7 +52,7 @@ Controller.prototype.startGame = function() {
   this.cycleDropBlock();
 };
 Controller.prototype.cycleDropBlock = function (args) {
-  var dropDelay = args ? FAST_DROP : DROP_DELAY;
+  var dropDelay = args ? FAST_DROP : DROP_DELAY[this.level];
   this.gameBoard.blit();
   if(this.gameBoard.dropInterval) {
     clearInterval(this.gameBoard.dropInterval);

@@ -38,7 +38,7 @@
             </p>
             <br/>
             <p>
-              Difficulty: <span id="game-difficulty">Easy</span>
+              Mode: <span id="game-mode">Marathon</span>
             </p>
           </div>
           <div id="level-right">
@@ -56,13 +56,16 @@
           </div>
         </div>
         <div id="element-description-container">
-          <h2 id="element-name">Chemical Element</h2>
-          <p>Atomic Number: <span id="atomic-number">#</span></p>
+          <div>
+            <h2 id="element-name">Chemical Element</h2>
+            <p id="atomic-number-container">Atomic Number: <span id="atomic-number">#</span></p>
+          </div>
           <p id="element-description">
-            Use the arrow keys or buttons above to play.
-            &#8592; and &#8594; arrows slide the falling tetrinimo.
-            &#8593; rotates the tetrinimo, and &#8595; makes it fall faster.
-            Press the spacebar to start.
+            Use the arrow keys or buttons above to play.<br/>
+            &#8592; and &#8594; arrows slide the falling tetrinimo.<br/>
+            &#8593; rotates the tetrinimo, and &#8595; makes it fall faster.<br/>
+            <br/>
+            Press the spacebar or click the start button to start.
           </p>
           <p>
             <a href="" id="element-link" target="_blank"></a>
@@ -70,6 +73,9 @@
         </div>
         <canvas id="tetris-table" height="270" width="540">
           Table of Elements
+        </canvas>
+        <canvas id="table-overlay" height="270" width="540">
+          Table overlay
         </canvas>
       </div>
     </main>

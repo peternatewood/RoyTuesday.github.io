@@ -1,3 +1,12 @@
+a, a:visited {
+  color: #57C;
+  font-weight: bold;
+  text-decoration: none;
+}
+a:hover, a:visited:hover {
+  color: #97E;
+}
+
 body {
   background-color: #F9F5FC;
 }
@@ -40,6 +49,12 @@ body {
   vertical-align: top;
 }
 
+#atomic-number-container {
+  display: inline-block;
+  margin: 4px 10px;
+  width: 150px;
+}
+
 #controls-container {
   margin: 2px;
 }
@@ -52,7 +67,9 @@ body {
   width: 516px;
 }
 #element-name {
+  display: inline-block;
   margin: 0;
+  width: 340px;
 }
 #element-description, #atomic-number {
   margin: 8px 0 0 0;
@@ -88,4 +105,7 @@ body {
 #tetris-table {
   border: 1px solid #ADA;
   display: block;
+}
+#table-overlay {
+  position: absolute;
 }

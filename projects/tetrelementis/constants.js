@@ -3,10 +3,33 @@ var FONT_SIZE = 11;
 var BLOCK_FONT = "px monospace";
 
 // Delay values in milliseconds
-var DROP_DELAY = 600;
-var FAST_DROP = 100;
-var INPUT_DELAY = 200;
+var FAST_DROP = 50;
+var SLIDE_DELAY = 100;
+var ROTATE_DELAY = 200;
 var CLEAR_DELAY = 1;
+var DROP_DELAY = {
+  0: 900,
+  1: 848,
+  2: 797,
+  3: 747,
+  4: 698,
+  5: 650,
+  6: 603,
+  7: 557,
+  8: 512,
+  9: 468,
+  10: 425,
+  11: 383,
+  12: 342,
+  13: 302,
+  14: 263,
+  15: 225,
+  16: 188,
+  17: 152,
+  18: 117,
+  19: 83,
+  20: 50
+}
 
 var GRID_HEIGHT = 20;
 var GRID_WIDTH = 10;
@@ -36,6 +59,14 @@ var TETRINIMO_TEMPLATES = {
   tBlock: ['xxx',
            ' x ']
 };
+var scoreToLevel = function(score) {
+  var level = Math.floor((score - 10) / 10);
+  if(level < 0) {
+    return 0;
+  }
+  return level;
+};
+
 var processTetrinimos = function() {
   var tetraShape = new Object;
   for(var shape in TETRINIMO_TEMPLATES) {

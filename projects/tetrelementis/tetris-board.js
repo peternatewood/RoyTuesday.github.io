@@ -127,9 +127,6 @@ TetrisBoard.prototype.clearForGameover = function() {
       boardCoords = {x: 0, y:0};
       setTimeout(clearBoard.bind(this, boardCoords), CLEAR_DELAY);
     }
-    else {
-      console.log('done!');
-    }
   }.bind(this);
 
   clearBoard(boardCoords);

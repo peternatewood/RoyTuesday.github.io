@@ -3,7 +3,7 @@ var CHEMICAL_ELEMENTS = {
     'name': 'n/a',
     'symbol': "",
     'background-color': '#F1EEFA',
-    'border-color': '#AAA',
+    'border-color': '#DDD',
     'color': '#F1EEFA',
     'descrip': "n/a"
   },
@@ -212,7 +212,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C1C5DB',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Scandinavian goddess of beauty, \"Vanadis.\" It is used to improve steel, and has been identified in the spectra of several stars and the sun."
   },
 
   24: {
@@ -221,7 +221,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"chroma,\" meaning \"color,\" because its known compounds were many different colors. Responsible for the green color of emeralds."
   },
 
   25: {
@@ -230,7 +230,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "Named for its magnetic properties."
+    'descrip': "Named after the Latin \"magnes,\" meaning \"magnet,\" for its magnetic properties. Responsible for the purple color of true amethyst."
   },
 
   26: {
@@ -239,7 +239,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#BF9270',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "It's English name may have been derived from words meaning \"holy metal\" because it was used to make swords for the Crusades. Its chemical symbol comes from the Latin word for Iron, \"ferrum.\""
   },
 
   27: {
@@ -248,7 +248,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#9EA3BB',
     'border-color': '#6871A9',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the German \"kobold,\" meaning \"goblin.\" It is essential to vitamin-B12."
   },
 
   28: {
@@ -257,7 +257,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the German \"kupfernickel,\" meaning \"Nick's copper\" (as in Saint Nicholas). An American nickel is 25% Nickel."
   },
 
   29: {
@@ -266,7 +266,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DFCE8F',
     'border-color': '#BF8230',
     'color': 'black',
-    'descrip': "It's chemical symbol derives from the Latin 'Cuprus'."
+    'descrip': "Named after the Latin \"cuprum,\" referring to the island of Cyprus. Typically used as wiring. Popular in ancient times for its malleability."
   },
 
   30: {
@@ -275,7 +275,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C1C5DB',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after its German name, \"zink\". Used with copper to make brass in ancient times. An essential part of animal and plant diets."
   },
 
   31: {
@@ -284,7 +284,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named after the ancient Celtic peoples who inhabited what is now France, Gaul."
+    'descrip': "Named after the Latin \"Gallia,\" the ancient Celtic peoples who inhabited Gaul, now France. Used in the study of solar neutrinos."
   },
 
   32: {
@@ -293,7 +293,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': 'Named after the country of Germany.'
+    'descrip': 'Named after the Latin "Germania," meaning "Germany". Used in infrared spectroscopes and to detect gamma radiation.'
   },
 
   33: {
@@ -302,7 +302,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFDF82',
     'border-color': '#989840',
     'color': 'black',
-    'descrip': "Deadly poison to humans, named for its yellow color."
+    'descrip': "Named after the Greek \"arsenikon,\" meaning \"yellow orpiment.\" Deadly poison to humans. Used as a laser material."
   },
 
   34: {
@@ -311,7 +311,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EF9F9F',
     'border-color': '#EF5C30',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"selene,\" meaning \"moon.\" Useful in photocells and transistors."
   },
 
   35: {
@@ -320,7 +320,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EF8F8F',
     'border-color': '#CF3C20',
     'color': 'black',
-    'descrip': "Named after the Greek for \"\" ( bad smell )."
+    'descrip': "Named after the Greek \"bromos,\" meaning \"stench.\" Gaseous Bromine is heavier than air; in an open container at room temperature the gas will pour out over the edges. Used as a flame retardant."
   },
 
   36: {
@@ -329,7 +329,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FFDFEF',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': "Named after the Greek for \"hidden\"."
+    'descrip': "Named after the Greek \"kryptos,\" meaning \"hidden.\" Used in fluorescent lightbulbs."
   },
 
   37: {
@@ -338,7 +338,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4C4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "Named for it's \"ruby red\" color."
+    'descrip': "Named after the Latin \"rubidius,\" meaning \"deepest red,\" for it's ruby red color. Used in vacuum tubes and photocells."
   },
 
   38: {
@@ -347,7 +347,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFB2',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Scottish village of Strontian. Useful in pyrotechnics for its red flame. Used in nuclear fission power plants."
   },
 
   39: {
@@ -356,7 +356,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named after the village of Ytterby."
+    'descrip': "Named after the Swedish village of Ytterby. Used as a red phosphor in television screens. Found in moon rocks."
   },
 
   40: {
@@ -365,7 +365,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Arabic \"zargun,\" meaning \"gold color.\" Used in the nuclear industry. Useful to protect against corrosion."
   },
 
   41: {
@@ -374,7 +374,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C1C5DB',
     'border-color': '#707389',
     'color': 'black',
-    'descrip': "Named after the city of Niobe."
+    'descrip': "Named after the Greek character \"Niobe,\" daughter of Tantalus, because of its close relation to Tantalum. Used in arc-welding rods and superconductive magnets."
   },
 
   42: {
@@ -383,7 +383,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Also known as \"fool's lead\"."
+    'descrip': "Named after the Greek \"molybdos,\" meaning \"lead.\" Also known as \"fool's lead\". Used as an alloying agent in steel."
   },
 
   43: {
@@ -392,7 +392,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"technikos,\" meaning \"artificial.\" It's the first chemical element to be produced artificially."
   },
 
   44: {
@@ -401,7 +401,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Latin \"Ruthenia,\" meaning \"Russia.\" Useful as a harder for palladium and platinum, and to prevent corrosion in titanium."
   },
 
   45: {
@@ -410,7 +410,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FFDFEF',
     'border-color': '#616063',
     'color': 'black',
-    'descrip': "Named for its pink color."
+    'descrip': "Named after the Greek \"rhodon,\" meaning \"rose\" or \"pink.\" Used in jewelery and catalytic converters."
   },
 
   46: {
@@ -419,7 +419,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the asteroid \"Pallas,\" named for the Greek goddess of wisdom. Used in watches, surgical instruments, and to decolorize gold into white gold."
   },
 
   47: {
@@ -428,7 +428,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Its chemical symbol derives from the Latin \"argent\"."
+    'descrip': "The chemical symbol derives from the Latin \"argentum.\" Used in high capacity batteries, as a paint for printing circuits, and alloyed with copper as silverware."
   },
 
   48: {
@@ -437,7 +437,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C1C5DB',
     'border-color': '#707399',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"kadmeia,\" meaning \"calamine.\" Used as phosphors in television tubes, and in control rods of nuclear reactors."
   },
 
   49: {
@@ -446,7 +446,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the country of India."
+    'descrip': "Named after its indigo color. Useful as an alloying agent, and to make mirrors."
   },
 
   50: {
@@ -455,7 +455,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "The chemical symbol comes from the Latin word for tin, \"stannum.\" Used to create the copper alloy, bronze."
   },
 
   51: {
@@ -464,7 +464,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Known during the Medieval Era to be the death of many monks who did not take enough care while gardening."
+    'descrip': "Possibly named from the Greek \"anti\" and \"monos,\" meaning \"not alone.\" Known during the Medieval Era to be the death of many monks who did not take enough care while gardening."
   },
 
   52: {
@@ -473,7 +473,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C7A770',
     'border-color': '#876730',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Latin \"tellus,\" meaning \"earth.\" Used in ceramics, semiconductors, and as an alloying agent."
   },
 
   53: {
@@ -482,7 +482,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DF8F9F',
     'border-color': '#876730',
     'color': 'black',
-    'descrip': "Named for its dark purple color."
+    'descrip': "Named after the Greek \"iodes,\" meaning \"violet.\" Useful as a disinfectant, and is added to table salt for nutrition."
   },
 
   54: {
@@ -491,7 +491,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFDFEF',
     'border-color': '#9093A9',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"xenos,\" meaning \"stranger.\" Used in electron tubes."
   },
 
   55: {
@@ -500,7 +500,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#F5F391',
     'border-color': '#838260',
     'color': 'black',
-    'descrip': "Named for its sky blue color."
+    'descrip': "Also spelled \"Cesium,\" named after the Latin \"caesius,\" meaning \"sky blue.\" Used in atomic clocks, and has potential for use in ion propulsion."
   },
 
   56: {
@@ -509,7 +509,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFB2',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named after the word for \"heavy\"."
+    'descrip': "Named after the Greek \"barys,\" meaning \"heavy.\" Used in making rubber and glass, and in x-ray diagnostics."
   },
 
   57: {
@@ -518,7 +518,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"lanthanein,\" meaning \"to lie hidden.\" Used in film projection and to create cast iron."
   },
 
   58: {
@@ -527,7 +527,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the word for \"farm\"."
+    'descrip': "Named after the asteroid \"Ceres,\" the Greek goddess of agriculture. Used in \"self-cleaning\" ovens and as a glass polishing agent."
   },
 
   59: {
@@ -536,7 +536,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"prasios didymos,\" meaning \"green twin.\" It naturally forms a green oxide unless exposed to air. Used in the film industry in carbon arc lights."
   },
 
   60: {
@@ -545,7 +545,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"neos didymos,\" meaning \"new twin.\" Used in very powerful permanent magnets."
   },
 
   61: {
@@ -554,7 +554,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFFF',
     'border-color': '#656478',
     'color': 'black',
-    'descrip': "Named after the tragic Greek hero Prometheus."
+    'descrip': "Named after the tragic Greek hero Prometheus. A radioactive element, Promethium salts glow blue or green in the dark."
   },
 
   62: {
@@ -563,7 +563,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the mineral from which it was first isolated, \"samarskite.\" Used in electronics and to create lasers and masers."
   },
 
   63: {
@@ -572,7 +572,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFB2',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named after the continent of Europe."
+    'descrip': "Named after the continent of Europe. Used in the red phosphor of television tubes."
   },
 
   64: {
@@ -581,7 +581,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after a Finnish chemist, J. Gadolin. Used in making tv tubes, enhancing MRI images, and in compact disks."
   },
 
   65: {
@@ -590,7 +590,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the village of Ytterby."
+    'descrip': "Named after the Swedish village of Ytterby. Useful as a laser material and as a phosphor in tv tubes."
   },
 
   66: {
@@ -599,7 +599,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named for being difficult to acquire."
+    'descrip': "Named after the Greek \"dysprositos,\" meaning \"difficult to acquire.\" Used to make laser materials and in compact disks."
   },
 
   67: {
@@ -608,7 +608,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the city of Stockholm, Sweden."
+    'descrip': "Named after the Greek for Sweden, \"Holmia.\" Used in metal alloys, and has an excellent potential for maintaining a magnetic field."
   },
 
   68: {
@@ -617,7 +617,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the village of Ytterby."
+    'descrip': "Named after the Swedish village of Ytterby. Used in the nuclear industry and as an alloying agent."
   },
 
   69: {
@@ -626,7 +626,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "Named after the country of Iceland."
+    'descrip': "Named after the ancient name for Scandinavia, \"Thule.\""
   },
 
   70: {
@@ -635,7 +635,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFB2',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named after the village of Ytterby."
+    'descrip': "Named after the Swedish village of Ytterby."
   },
 
   71: {
@@ -644,16 +644,16 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the original \"name\" of the city of Paris, Lutetia Parisii. 'Lutetia' may refer to the once swamp-like quality of the region."
+    'descrip': "Named after the Roman name for the city of Paris, \"Lutetia Parisiorum.\""
   },
 
   72: {
-    'name': 'Hafnum',
+    'name': 'Hafnium',
     'symbol': 'Hf',
     'background-color': '#E4E4DA',
     'border-color': '#505057',
     'color': 'black',
-    'descrip': "Named after the city of Copenhagen, Switzerland."
+    'descrip': "Named after the Latin name for the city of Copenhagen, \"Hafnia.\" Used in nuclear reactor control rods."
   },
 
   73: {
@@ -662,7 +662,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#C1C5DB',
     'border-color': '#707389',
     'color': 'black',
-    'descrip': "Named for the mythical Greek Tantalus: a region deep beneath the surface of the Earth, where Zeus banished the titans."
+    'descrip': "Named after the mythical Greek Tantalus, son of Zeus who was banished to Tartarus. Useful for strengthening steel."
   },
 
   74: {
@@ -671,7 +671,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Also known as \"Wolfram\", from which it derives its chemical symbol."
+    'descrip': "Named after the Swedish \"tung sten,\" meaning \"heavy stone.\" Also known as \"Wolfram,\" from which it derives its chemical symbol."
   },
 
   75: {
@@ -680,7 +680,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DEDEDA',
     'border-color': '#50506A',
     'color': 'black',
-    'descrip': "Named after the Rhine river."
+    'descrip': "Named after Greek name for the Rhine river, \"Rhenus.\" Useful as an alloying agent and in superconductors."
   },
 
   76: {
@@ -689,7 +689,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DEDEDA',
     'border-color': '#50508A',
     'color': 'black',
-    'descrip': "Named for its smell."
+    'descrip': "Named after the Greek \"osme,\" meaning \"smell.\" Used to make fountain pen tips, electrical contacts, and in alloys for implants such as pacemakers."
   },
 
   77: {
@@ -698,7 +698,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"iris,\" meaning \"rainbow.\" Used to make the standard metre bar in Paris."
   },
 
   78: {
@@ -707,7 +707,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named \"little silver\"."
+    'descrip': "Named after the Spanish \"platina,\" meaning \"little silver.\" Used in jewelery, dentistry, and catalytic converters."
   },
 
   79: {
@@ -716,7 +716,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEF62',
     'border-color': '#A89840',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Its chemical symbol comes from the Latin word for gold, \"aurum.\" The most malleable and ductile known metal, it doesn't tarnish in air."
   },
 
   80: {
@@ -725,7 +725,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Also known as 'quicksilver'. Its chemical symbol derives from ."
+    'descrip': "Also known as \"quicksilver,\" its chemical symbol derives from the Latin \"hydrargyrum,\" meaning \"liquid silver.\" Mercury vapor is toxic, and no longer used in thermometers."
   },
 
   81: {
@@ -734,7 +734,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"thallos,\" meaning \"green twig.\" Once used as rodenticide."
   },
 
   82: {
@@ -743,7 +743,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Latin for lead, \"plumbum.\" Though highly toxic, its sweet taste made it a favorite sweetener of the Romans."
   },
 
   83: {
@@ -752,7 +752,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Its name is of uncertain origin. Used in fire detection and extinguishing systems."
   },
 
   84: {
@@ -761,7 +761,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Discovered by Marie Curie, and named after her home country, Poland."
+    'descrip': "Discovered by Marie Curie, and named after her home country, Poland. Used to remove static charge in textile mills, and as thermoelectric power in man-made satellites."
   },
 
   85: {
@@ -770,7 +770,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#CDCDC0',
     'border-color': '#9D9D90',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"astatos,\" meaning \"unstable.\" All of its known isotopes are radioactive."
   },
 
   86: {
@@ -779,7 +779,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FFF',
     'border-color': '#999',
     'color': 'black',
-    'descrip': "Named for its radioactive, \"glowing\" properties."
+    'descrip': "Named for its radioactive, \"glowing\" properties. Used in earthquake prediction and radiation therapy."
   },
 
   87: {
@@ -788,7 +788,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#656463',
     'color': 'black',
-    'descrip': "Named for the country of France."
+    'descrip': "Named after the country of France. Found in uranium minerals, it can be isolated by bombarding it with Thorium."
   },
 
   88: {
@@ -797,7 +797,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named for its radioactive properties."
+    'descrip': "Named after the Latin \"radius,\" meaning \"ray,\" because of its radioactive properties. It can emit alpha, beta, and gamma rays."
   },
 
   89: {
@@ -806,7 +806,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#DEDEDD',
     'border-color': '#50508A',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"aktinos,\" meaning \"ray.\" Highly radioactive, it's often used in thermoelectric power and as a source of neutrons."
   },
 
   90: {
@@ -815,7 +815,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#555',
     'color': 'black',
-    'descrip': "Named after the Norse god, Thor."
+    'descrip': "Named after the Scandinavian god, Thor. Useful as a source of nuclear fission power."
   },
 
   91: {
@@ -824,7 +824,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Greek \"protos,\" meaning \"first.\" Acts as a superconductor at extremely low temperatures."
   },
 
   92: {
@@ -833,7 +833,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#555',
     'color': 'black',
-    'descrip': "Named after the Roman god, Uranus, often equated to the Greek Ouranos."
+    'descrip': "Named after the planet Uranus, often equated to the Greek Ouranos. Gives glass a distinct yellow green color and fluorescent glow. Useful as a fuel for nuclear fission."
   },
 
   93: {
@@ -842,7 +842,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the Roman god, Neptune."
+    'descrip': "Named after the planet Neptune, because it follows Uranium in the periodic table. Used in neutron detection instruments."
   },
 
   94: {
@@ -851,7 +851,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FAFAFA',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the Roman god, Pluto."
+    'descrip': "Named after the planet Pluto, because it follows Neptunium in the periodic table. Used in pacemakers, and as a fuel for nuclear fission."
   },
 
   95: {
@@ -860,7 +860,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the country of the United States of America."
+    'descrip': "Named after the country of the United States of America. Used in smoke detectors and as a source of gamma radiation."
   },
 
   96: {
@@ -869,7 +869,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#FAFAFA',
     'border-color': '#A971A9',
     'color': 'black',
-    'descrip': "Named after Marie Curie."
+    'descrip': "Named after Marie Curie. Used as the power source in NASA's Mars rover."
   },
 
   97: {
@@ -878,7 +878,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named \"birch tree\"."
+    'descrip': "Named after the city of Berkeley, California."
   },
 
   98: {
@@ -887,7 +887,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the US state, California."
+    'descrip': "Named after the US state, California. Useful in moisture gauges and as a source of neutron radiation."
   },
 
   99: {
@@ -896,7 +896,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the physicist, Albert Einstein."
+    'descrip': "Named after the physicist, Albert Einstein. A synthetic element, too little has been produced to have any practical uses."
   },
 
   100: {
@@ -905,7 +905,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the _, Enrico Fermi."
+    'descrip': "Named after the Italian physicist, Enrico Fermi. A synthetic element, too little has been produced to have any practical uses."
   },
 
   101: {
@@ -914,7 +914,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the chemist who devised what would become the modern periodic table of elements, Mendeleev."
+    'descrip': "Named after the Russian chemist who devised what would become the modern periodic table of elements, Dmitri Mendeleev. A synthetic element, too little has been produced to have any practical uses."
   },
 
   102: {
@@ -923,7 +923,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the _, Nobel."
+    'descrip': "Named after the Swedish chemist, Alfred Nobel. A synthetic element, too little has been produced to have any practical uses."
   },
 
   103: {
@@ -932,16 +932,16 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the _, Lawrence."
+    'descrip': "Named after Ernest Lawrence, inventor of the cyclotron. A synthetic element, too little has been produced to have any practical uses."
   },
 
   104: {
-    'name': 'Rutherford',
+    'name': 'Rutherfordium',
     'symbol': 'Rf',
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the physicist, Ernst Rutherford."
+    'descrip': "Named after the New Zealand chemist and physicist, Ernst Rutherford. A synthetic element, too little has been produced to have any practical uses."
   },
 
   105: {
@@ -950,7 +950,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Joint Nuclear Institute at Dubna. A synthetic element, too little has been produced to have any practical uses."
   },
 
   106: {
@@ -959,7 +959,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the _, Seaborg."
+    'descrip': "Named after the American nuclear chemist, Glenn T. Seaborg. A synthetic element, too little has been produced to have any practical uses."
   },
 
   107: {
@@ -968,7 +968,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the physicist, Niels Bohr."
+    'descrip': "Named after the Danish physicist, Niels Bohr. A synthetic element, too little has been produced to have any practical uses."
   },
 
   108: {
@@ -977,7 +977,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Latin for the German state, \"Hassias.\" A synthetic element, too little has been produced to have any practical uses."
   },
 
   109: {
@@ -986,7 +986,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Austrian physicist, Lise Meitner. A synthetic element, too little has been produced to have any practical uses."
   },
 
   110: {
@@ -995,7 +995,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after its place of discovery, Darmstadt, Germany. A synthetic element, too little has been produced to have any practical uses."
   },
 
   111: {
@@ -1004,7 +1004,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Its proposed name comes from Wilhelm Conrad Roentgen, who discovered x-rays in 1895. A synthetic element, too little has been produced to have any practical uses."
   },
 
   112: {
@@ -1013,7 +1013,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "Named after the philosopher, Copernicus."
+    'descrip': "Its proposed name comes from the Renaissance mathematician and astronomer, Nicolaus Copernicus. A synthetic element, too little has been produced to have any practical uses."
   },
 
   113: {
@@ -1022,7 +1022,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "No name has yet been proposed for this element as its discovery has not been officially confirmed."
   },
 
   114: {
@@ -1031,7 +1031,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Flerov Laboratory of Nuclear Reactions. A synthetic element, too little has been produced to have any practical uses."
   },
 
   115: {
@@ -1040,7 +1040,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "No name has yet been proposed for this element as its discovery has not been officially confirmed."
   },
 
   116: {
@@ -1049,7 +1049,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "Named after the Lawrence Livermore National Laboratory. A synthetic element, too little has been produced to have any practical uses."
   },
 
   117: {
@@ -1058,7 +1058,7 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "No name has yet been proposed for this element as its discovery has not been officially confirmed."
   },
 
   118: {
@@ -1067,6 +1067,6 @@ var CHEMICAL_ELEMENTS = {
     'background-color': '#EFEFEF',
     'border-color': '#818083',
     'color': 'black',
-    'descrip': "n/a"
+    'descrip': "No name has yet been proposed for this element as its discovery has not been officially confirmed."
   },
 };

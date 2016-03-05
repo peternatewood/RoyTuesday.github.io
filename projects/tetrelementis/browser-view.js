@@ -1,7 +1,9 @@
 var BrowserView = function(args) {
   var gridCanvas = document.querySelector('canvas#tetris-grid');
   var previewCanvas = document.querySelector('canvas#tetris-preview');
-  var tableCanvas = document.querySelector('canvas#tetris-table');
+
+  this.tableOverlay = document.querySelector('canvas#table-overlay');
+  this.tableCanvas = document.querySelector('canvas#tetris-table');
 
   BLOCK_SPACING_HEIGHT = gridCanvas.getAttribute('height') / 20;
   BLOCK_SPACING_WIDTH = gridCanvas.getAttribute('width') / 10;
@@ -13,10 +15,14 @@ var BrowserView = function(args) {
   this.atomicNumDisplay = document.getElementById('atomic-number');
   this.elementLink = document.getElementById('element-link');
   this.playerScore = document.getElementById('player-score');
+  this.gameLevel = document.getElementById('game-level');
 
   this.gridContext = gridCanvas.getContext('2d');
   this.previewContext = previewCanvas.getContext('2d');
-  this.tableContext = tableCanvas.getContext('2d');
+  this.tableContext = this.tableCanvas.getContext('2d');
+  this.overlayContext = this.tableOverlay.getContext('2d');
+
+  this.overlayContext.fillStyle = 'rgba(255, 255, 255, 0.5)';
 
   this.gameBoard = args.gameBoard;
   this.previewBoard = new PreviewBoard();
@@ -36,8 +42,32 @@ var BrowserView = function(args) {
 
   addEventListener('keydown', this.keyDown.bind(this));
   addEventListener('keyup', this.keyUp.bind(this));
-  addEventListener('mousedown', this.buttonDown.bind(this));
-  addEventListener('mouseup', this.buttonUp.bind(this));
+
+  document.querySelector('#level-right').addEventListener('mousedown', this.buttonDown.bind(this));
+  document.querySelector('#level-right').addEventListener('mouseup', this.buttonUp.bind(this));
+
+  this.tableOverlay.addEventListener('mousedown', function(event) {
+    var mouseX = Math.floor((event.pageX - this.tableOverlay.offsetLeft) / (540 / 18));
+    var mouseY = Math.floor((event.pageY - this.tableOverlay.offsetTop) / (270 / 9));
+    var element = this.tableBoard.board[mouseY][mouseX];
+
+    if(element > 0) {
+      this.updateElementDescrip(element);
+    }
+  }.bind(this));
+  this.tableOverlay.addEventListener('mousemove', function(event) {
+    var mouseX = Math.floor((event.pageX - this.tableOverlay.offsetLeft) / (540 / 18));
+    var mouseY = Math.floor((event.pageY - this.tableOverlay.offsetTop) / (270 / 9));
+    var element = this.tableBoard.board[mouseY][mouseX];
+
+    if(element > 0) {
+      this.overlayContext.clearRect(0, 0, 540, 270);
+      this.overlayContext.fillRect((mouseX * BLOCK_SPACING_WIDTH) + 5, (mouseY * BLOCK_SPACING_HEIGHT) + 5, BLOCK_WIDTH, BLOCK_HEIGHT);
+    }
+    else {
+      this.overlayContext.clearRect(0, 0, 540, 270);
+    }
+  }.bind(this));
 }
 BrowserView.prototype.keyDown = function(event) {
   var pressedKey = KEY_CODES[event.keyCode];
@@ -55,7 +85,7 @@ BrowserView.prototype.keyDown = function(event) {
         this.pressed.slide = pressedKey;
         clearInterval(this.interval.slide);
         this.gameBoard.slideBlock(this.pressed.slide);
-        this.interval.slide = setInterval(this.gameBoard.slideBlock.bind(this.gameBoard, this.pressed.slide), INPUT_DELAY);
+        this.interval.slide = setInterval(this.gameBoard.slideBlock.bind(this.gameBoard, this.pressed.slide), SLIDE_DELAY);
       }
     }
     else if(pressedKey == 'down') {
@@ -72,7 +102,7 @@ BrowserView.prototype.keyDown = function(event) {
         this.pressed.rotate = true;
         clearInterval(this.interval.rotate);
         this.gameBoard.rotateBlock('counter');
-        this.interval.rotate = setInterval(this.gameBoard.rotateBlock.bind(this.gameBoard, 'counter'), INPUT_DELAY);
+        this.interval.rotate = setInterval(this.gameBoard.rotateBlock.bind(this.gameBoard, 'counter'), ROTATE_DELAY);
       }
     }
     else if(pressedKey == 'space') {
@@ -120,7 +150,7 @@ BrowserView.prototype.buttonDown = function(event) {
         if(this.pressed.slide == false) {
           this.pressed.slide = buttonPressed;
           clearInterval(this.interval.slide);
-          this.interval.slide = setInterval(this.handleInput.bind(this), INPUT_DELAY);
+          this.interval.slide = setInterval(this.handleInput.bind(this), SLIDE_DELAY);
         }
       }
       else if(buttonPressed == 'down') {
@@ -134,7 +164,7 @@ BrowserView.prototype.buttonDown = function(event) {
         if(this.pressed.rotate == false) {
           this.pressed.rotate = true;
           clearInterval(this.interval.rotate);
-          this.interval.rotate = setInterval(this.handleInput.bind(this), INPUT_DELAY);
+          this.interval.rotate = setInterval(this.handleInput.bind(this), ROTATE_DELAY);
         }
       }
       else if(buttonPressed == 'space') {
@@ -221,21 +251,23 @@ BrowserView.prototype.animateGame = function() {
   var animate = function(time) {
     if(lastTime) {
       var timeStep = Math.min(time - lastTime, 100) / 1000;
-      progress = timeStep < 2000;
+      progress = timeStep < 1000;
     }
     lastTime = time;
 
-    this.drawAllBoards();
-
-    this.updatePlayerScore(this.gameBoard.score);
     if(progress) {
+      this.drawAllBoards();
+      this.updatePlayerScore(this.gameBoard.score);
+      this.updateGameLevel();
       requestAnimationFrame(animate.bind(this));
     }
   }
   requestAnimationFrame(animate.bind(this));
 };
-BrowserView.prototype.updateElementDescrip = function() {
-  var element = this.previewBoard.tetrinimo.element;
+BrowserView.prototype.updateElementDescrip = function(element) {
+  if(element === undefined) {
+    var element = this.previewBoard.tetrinimo.element;
+  }
 
   this.elementName.innerHTML = CHEMICAL_ELEMENTS[element].name + ' [' + CHEMICAL_ELEMENTS[element].symbol + ']';
   this.atomicNumDisplay.innerHTML = element;
@@ -246,4 +278,13 @@ BrowserView.prototype.updateElementDescrip = function() {
 };
 BrowserView.prototype.updatePlayerScore = function(score) {
   this.playerScore.innerHTML = score;
+};
+BrowserView.prototype.updateGameLevel = function() {
+  var newLevel = scoreToLevel(this.gameBoard.score);
+  if(this.level != newLevel) {
+    this.level = newLevel;
+    this.gameLevel.innerHTML = this.level;
+    clearTimeout(this.dropTimeout);
+    this.cycleDropBlock();
+  }
 };
