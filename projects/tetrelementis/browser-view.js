@@ -15,7 +15,22 @@ var BrowserView = function(args) {
   this.atomicNumDisplay = document.getElementById('atomic-number');
   this.elementLink = document.getElementById('element-link');
   this.playerScore = document.getElementById('player-score');
+  this.highScore = document.getElementById('high-score');
   this.gameLevel = document.getElementById('game-level');
+  this.gameModeContainer = document.getElementById('game-mode');
+  this.gameModeDropdown;
+
+  this.gameLevel.innerHTML = genLevelMenu(0);
+  this.gameModeContainer.innerHTML = genModeMenu('Marathon');
+  for(var node in this.gameModeContainer.childNodes) {
+    var currentNode = this.gameModeContainer.childNodes[node];
+    if(currentNode.tagName == 'SELECT') {
+      this.gameModeDropdown = currentNode;
+      break;
+    }
+  }
+
+  this.gameMode = GAME_MODES[this.gameModeDropdown.selectedIndex];
 
   this.gridContext = gridCanvas.getContext('2d');
   this.previewContext = previewCanvas.getContext('2d');
@@ -47,18 +62,26 @@ var BrowserView = function(args) {
   document.querySelector('#level-right').addEventListener('mouseup', this.buttonUp.bind(this));
 
   this.tableOverlay.addEventListener('mousedown', function(event) {
-    var mouseX = Math.floor((event.pageX - this.tableOverlay.offsetLeft) / (540 / 18));
-    var mouseY = Math.floor((event.pageY - this.tableOverlay.offsetTop) / (270 / 9));
-    var element = this.tableBoard.board[mouseY][mouseX];
+    var mouseX = Math.floor((event.layerX - this.tableOverlay.offsetLeft) / (540 / 18));
+    var mouseY = Math.floor((event.layerY - this.tableOverlay.offsetTop) / (270 / 9));
+    var element = 0
+
+    if(mouseX > 0 && mouseY > 0) {
+      element = this.tableBoard.board[mouseY][mouseX];
+    }
 
     if(element > 0) {
       this.updateElementDescrip(element);
     }
   }.bind(this));
   this.tableOverlay.addEventListener('mousemove', function(event) {
-    var mouseX = Math.floor((event.pageX - this.tableOverlay.offsetLeft) / (540 / 18));
-    var mouseY = Math.floor((event.pageY - this.tableOverlay.offsetTop) / (270 / 9));
-    var element = this.tableBoard.board[mouseY][mouseX];
+    var mouseX = Math.floor((event.layerX - this.tableOverlay.offsetLeft) / (540 / 18));
+    var mouseY = Math.floor((event.layerY - this.tableOverlay.offsetTop) / (270 / 9));
+    var element = 0;
+
+    if(mouseX > 0 && mouseY > 0) {
+      element = this.tableBoard.board[mouseY][mouseX];
+    }
 
     if(element > 0) {
       this.overlayContext.clearRect(0, 0, 540, 270);
@@ -68,6 +91,10 @@ var BrowserView = function(args) {
       this.overlayContext.clearRect(0, 0, 540, 270);
     }
   }.bind(this));
+
+  this.tableOverlay.addEventListener('mouseout', function(event) {
+    this.overlayContext.clearRect(0, 0, 540, 270);
+  }.bind(this));
 }
 BrowserView.prototype.keyDown = function(event) {
   var pressedKey = KEY_CODES[event.keyCode];
@@ -75,7 +102,7 @@ BrowserView.prototype.keyDown = function(event) {
     if(pressedKey == 'space') {
       event.preventDefault();
       this.isPaused = false;
-      this.cycleDropBlock();
+      this.cycleDropBlock(DROP_DELAY[this.level]);
     }
   }
   else {
@@ -93,7 +120,7 @@ BrowserView.prototype.keyDown = function(event) {
       if(this.pressed.drop == false) {
         this.pressed.drop = true;
         clearTimeout(this.dropTimeout);
-        this.cycleDropBlock({quickly: true});
+        this.cycleDropBlock(FAST_DROP);
       }
     }
     else if(pressedKey == 'up') {
@@ -101,8 +128,8 @@ BrowserView.prototype.keyDown = function(event) {
       if(this.pressed.rotate == false) {
         this.pressed.rotate = true;
         clearInterval(this.interval.rotate);
-        this.gameBoard.rotateBlock('counter');
-        this.interval.rotate = setInterval(this.gameBoard.rotateBlock.bind(this.gameBoard, 'counter'), ROTATE_DELAY);
+        this.gameBoard.rotateBlock('clock');
+        this.interval.rotate = setInterval(this.gameBoard.rotateBlock.bind(this.gameBoard, 'clock'), ROTATE_DELAY);
       }
     }
     else if(pressedKey == 'space') {
@@ -127,7 +154,7 @@ BrowserView.prototype.keyUp = function(event){
       event.preventDefault();
       clearTimeout(this.dropTimeout);
       this.pressed.drop = false;
-      this.cycleDropBlock();
+      this.cycleDropBlock(DROP_DELAY[this.level]);
     }
     if(releasedKey == 'up') {
       event.preventDefault();
@@ -142,7 +169,7 @@ BrowserView.prototype.buttonDown = function(event) {
     if(this.isPaused) {
       if(buttonPressed == 'space') {
         this.isPaused = false;
-        this.cycleDropBlock();
+        this.cycleDropBlock(DROP_DELAY[this.level]);
       }
     }
     else {
@@ -157,7 +184,7 @@ BrowserView.prototype.buttonDown = function(event) {
         if(this.pressed.drop == false) {
           this.pressed.drop = true;
           clearTimeout(this.dropTimeout);
-          this.cycleDropBlock({quickly: true});
+          this.cycleDropBlock(FAST_DROP);
         }
       }
       else if(buttonPressed == 'up') {
@@ -182,7 +209,7 @@ BrowserView.prototype.buttonUp = function(event) {
   if(this.isPaused === false) {
     if(this.pressed.drop) {
       clearTimeout(this.dropTimeout);
-      this.cycleDropBlock();
+      this.cycleDropBlock(DROP_DELAY[this.level]);
     }
     clearInterval(this.interval.slide);
     clearInterval(this.interval.rotate);
@@ -194,7 +221,7 @@ BrowserView.prototype.handleInput = function() {
     this.gameBoard.slideBlock(this.pressed.slide);
   }
   else if(this.pressed.rotate) {
-    this.gameBoard.rotateBlock('counter');
+    this.gameBoard.rotateBlock('clock');
   }
 };
 BrowserView.prototype.releaseAllKeys = function() {
@@ -265,10 +292,6 @@ BrowserView.prototype.animateGame = function() {
   requestAnimationFrame(animate.bind(this));
 };
 BrowserView.prototype.updateElementDescrip = function(element) {
-  if(element === undefined) {
-    var element = this.previewBoard.tetrinimo.element;
-  }
-
   this.elementName.innerHTML = CHEMICAL_ELEMENTS[element].name + ' [' + CHEMICAL_ELEMENTS[element].symbol + ']';
   this.atomicNumDisplay.innerHTML = element;
   this.elementDescrip.innerHTML = CHEMICAL_ELEMENTS[element].descrip;
@@ -281,10 +304,31 @@ BrowserView.prototype.updatePlayerScore = function(score) {
 };
 BrowserView.prototype.updateGameLevel = function() {
   var newLevel = scoreToLevel(this.gameBoard.score);
-  if(this.level != newLevel) {
+  if(this.gameMode != 'Fixed Level' && this.level != newLevel) {
     this.level = newLevel;
     this.gameLevel.innerHTML = this.level;
     clearTimeout(this.dropTimeout);
-    this.cycleDropBlock();
+    this.cycleDropBlock(DROP_DELAY[this.level]);
   }
+};
+BrowserView.prototype.disableMenus = function() {
+  var modeIndex = this.gameModeDropdown.selectedIndex;
+
+  for(var node in this.gameLevel.childNodes) {
+    var currentNode = this.gameLevel.childNodes[node];
+    if(currentNode.tagName == 'SELECT') {
+      this.level = currentNode.selectedIndex;
+    }
+  }
+
+  this.gameMode = GAME_MODES[modeIndex];
+  this.gameModeContainer.innerHTML = GAME_MODES[modeIndex];
+  this.gameLevel.innerHTML = this.level;
+};
+BrowserView.prototype.resetDisplay = function() {
+  this.gameModeContainer.innerHTML = genModeMenu(this.gameMode);
+  if(this.highScore.innerHTML < this.gameBoard.score) {
+    this.highScore.innerHTML = this.gameBoard.score;
+  }
+  this.gameLevel.innerHTML = genLevelMenu(this.level);
 };

@@ -1,13 +1,8 @@
 var Controller = function(shape) {
   this.elements = generateRandomElements();
-  this.level = 0;
 
   this.gameBoard = new TetrisBoard({
-    tetrinimo: new Tetrinimo({
-      element: this.elements.pop(),
-      shape: getRandomShape()
-    }),
-    createNextTetrinimo: this.createNextTetrinimo.bind(this),
+    createNextTetromino: this.createNextTetromino.bind(this),
     showGameOver: this.showGameOver.bind(this)
   });
 
@@ -16,16 +11,11 @@ var Controller = function(shape) {
     cycleDropBlock: this.cycleDropBlock,
   });
 
-  this.gameView.level = this.level;
-  this.gameView.previewBoard.tetrinimo = new Tetrinimo({
-    element: this.elements.pop(),
-    shape: getRandomShape()
-  });
   this.gameView.drawAllBoards();
-  this.gameState = 'gameover';
+  this.gameBoard.gameState = 'gameover';
 
   addEventListener('keydown', function(event) {
-    if(this.gameState === 'gameover') {
+    if(this.gameBoard.gameState == 'gameover') {
       var keyPressed = KEY_CODES[event.keyCode];
       if(keyPressed == 'space') {
         event.preventDefault();
@@ -34,7 +24,7 @@ var Controller = function(shape) {
     }
   }.bind(this));
   addEventListener('mousedown', function(event) {
-    if(event.target.nodeName == 'BUTTON' && this.gameState === 'gameover') {
+    if(event.target.nodeName == 'BUTTON' && this.gameBoard.gameState == 'gameover') {
       var buttonPressed = event.target.dataset.key;
       if(buttonPressed == 'space') {
         this.startGame();
@@ -43,16 +33,37 @@ var Controller = function(shape) {
   }.bind(this));
 }
 Controller.prototype.startGame = function() {
-  this.gameState = 'inProgress';
+  if(this.elements.length < 118) {
+    this.elements = generateRandomElements();
+  }
+
+  this.gameView.disableMenus();
+
+  if(this.gameBoard.tetromino === null) {
+    this.gameBoard.tetromino = new Tetromino({
+      element: this.elements.pop(),
+      shape: getRandomShape(this.gameView.gameMode)
+    });
+  }
+
+  if(this.gameView.previewBoard.tetromino === null) {
+    this.gameView.previewBoard.tetromino = new Tetromino({
+      element: this.elements.pop(),
+      shape: getRandomShape(this.gameView.gameMode)
+    })
+  }
+
+  this.gameBoard.score = 0;
+  this.gameBoard.gameState = 'inProgress';
+
   this.gameView.animateGame();
   this.gameView.previewBoard.blit();
-  this.gameView.tableBoard.showElement(this.gameBoard.tetrinimo.element);
-  this.gameView.updateElementDescrip();
+  this.gameView.tableBoard.showElement(this.gameBoard.tetromino.element);
+  this.gameView.updateElementDescrip(this.gameView.previewBoard.tetromino.element);
 
-  this.cycleDropBlock();
+  this.cycleDropBlock(DROP_DELAY[this.gameView.level]);
 };
-Controller.prototype.cycleDropBlock = function (args) {
-  var dropDelay = args ? FAST_DROP : DROP_DELAY[this.level];
+Controller.prototype.cycleDropBlock = function (dropDelay) {
   this.gameBoard.blit();
   if(this.gameBoard.dropInterval) {
     clearInterval(this.gameBoard.dropInterval);
@@ -62,23 +73,27 @@ Controller.prototype.cycleDropBlock = function (args) {
     dropDelay
   );
 };
-Controller.prototype.createNextTetrinimo = function() {
-  this.gameBoard.tetrinimo = this.gameView.previewBoard.tetrinimo;
+Controller.prototype.createNextTetromino = function() {
+  this.gameBoard.tetromino = this.gameView.previewBoard.tetromino;
   if(this.elements.length <= 0) {
     this.elements = generateRandomElements();
   }
-  this.gameView.previewBoard.tetrinimo = new Tetrinimo({
+  this.gameView.previewBoard.tetromino = new Tetromino({
     element: this.elements.pop(),
-    shape: getRandomShape()
+    shape: getRandomShape(this.gameView.gameMode)
   })
   this.gameView.previewBoard.blit();
-  this.gameView.tableBoard.showElement(this.gameBoard.tetrinimo.element);
-  this.gameView.updateElementDescrip();
+  this.gameView.tableBoard.showElement(this.gameBoard.tetromino.element);
+  this.gameView.updateElementDescrip(this.gameView.previewBoard.tetromino.element);
 };
 Controller.prototype.showGameOver = function() {
-  this.gameState = 'gameover';
+  this.gameBoard.tetromino = null;
+  this.gameView.previewBoard.tetromino = null;
+
   this.gameView.isPaused = true;
+  this.gameView.previewBoard.board = generateEmptyBoard();
   this.gameBoard.clearForGameover();
+  this.gameView.resetDisplay();
 };
 
 var generateRandomElements = function() {
@@ -101,13 +116,21 @@ var generateRandomElements = function() {
 
   return randElements;
 }
-var getRandomShape = function() {
-  var counter = 0;
-  var randNum = Math.floor(Math.random() * 7);
+var getRandomShape = function(gameMode) {
+  var shapes = TETROMINO_SHAPES[gameMode];
+  var length = 0;
+  for(var prop in shapes) {
+    if(shapes.hasOwnProperty(prop)) {
+      length++;
+    }
+  }
 
-  for(var prop in TETRINIMO_SHAPES) {
-    if(TETRINIMO_SHAPES.hasOwnProperty(prop)) {
-      if(counter == randNum) return TETRINIMO_SHAPES[prop];
+  var counter = 0;
+  var randNum = Math.floor(Math.random() * length);
+
+  for(var prop in shapes) {
+    if(shapes.hasOwnProperty(prop)) {
+      if(counter == randNum) return shapes[prop];
       counter++;
     }
   }

@@ -1,4 +1,4 @@
-var Tetrinimo = function(args) {
+var Tetromino = function(args) {
   this.element = args.element;
   var shape = args.shape;
 
@@ -26,14 +26,14 @@ var Tetrinimo = function(args) {
     y: Math.floor(height / 2) + this.row
   }
 }
-Tetrinimo.prototype.raise = function() {
+Tetromino.prototype.raise = function() {
   this.row--;
   for(var block in this.blocks) {
     this.blocks[block].y--;
   }
   this.center.y--;
 };
-Tetrinimo.prototype.drop = function() {
+Tetromino.prototype.drop = function() {
   this.row++;
   for(var block in this.blocks) {
     this.blocks[block].y++;
@@ -44,13 +44,13 @@ var directToInt = {
   'left': -1,
   'right': 1
 };
-Tetrinimo.prototype.slide = function(direction) {
+Tetromino.prototype.slide = function(direction) {
   this.blocks.forEach(function(block) {
     block.x += directToInt[direction];
   });
   this.center.x += directToInt[direction];
 };
-Tetrinimo.prototype.rotate = function(direction) {
+Tetromino.prototype.rotate = function(direction) {
   var modX, modY;
   var center = this.center;
 

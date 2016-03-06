@@ -30,6 +30,39 @@ var DROP_DELAY = {
   19: 83,
   20: 50
 }
+var GAME_MODES = {
+  0: 'Marathon',
+  1: 'Fixed Level',
+  2: 'Pentathlon'
+}
+
+var genModeMenu = function(mode) {
+  var menuString = '<select>';
+  for(var prop in GAME_MODES) {
+    if(GAME_MODES.hasOwnProperty(prop)) {
+      menuString += '<option';
+      if(GAME_MODES[prop] == mode) {
+        menuString += ' selected';
+      }
+      menuString += '>' + GAME_MODES[prop] + '</option>';
+    }
+  }
+  menuString += '</select>';
+  return menuString;
+};
+
+var genLevelMenu = function(level_num) {
+  var menuString = '<select>';
+  for(var i = 0; i <= 20; i++) {
+    menuString += '<option';
+    if(i == level_num) {
+      menuString += ' selected';
+    }
+    menuString += '>' + i + '</option>';
+  }
+  menuString += '</select>';
+  return menuString;
+};
 
 var GRID_HEIGHT = 20;
 var GRID_WIDTH = 10;
@@ -37,42 +70,101 @@ var GRID_WIDTH = 10;
 var BLOCK_WIDTH, BLOCK_HEIGHT;
 var BLOCK_SPACING_WIDTH, BLOCK_SPACING_HEIGHT;
 
-var TETRINIMO_TEMPLATES = {
-  jBlock: ['xx',
-           'x ',
-           'x '],
-  lBlock: ['xx',
-           ' x',
-           ' x'],
-  square: ['xx',
-           'xx'],
-  sBlock: ['x ',
-           'xx',
-           ' x'],
-  zBlock: [' x',
-           'xx',
-           'x '],
-  line:   ['x',
-           'x',
-           'x',
-           'x'],
-  tBlock: ['xxx',
-           ' x ']
+var TETROMINO_TEMPLATES = {
+  jBlock: [
+    'xxx',
+    '  x'],
+  lBlock: [
+    'xxx',
+    'x  '],
+  square: [
+    'xx',
+    'xx'],
+  sBlock: [
+    ' xx',
+    'xx'],
+  zBlock: [
+    'xx ',
+    ' xx'],
+  line:   [
+    'xxxx'],
+  tBlock: [
+    'xxx',
+    ' x ']
 };
+var PENTINIMO_TEMPLATES = {
+  wBlock: [
+    'xx ',
+    ' xx',
+    '  x'],
+  lowT: [
+    ' x ',
+    'xx ',
+    ' xx'],
+  kBlock: [
+    ' x ',
+    ' xx',
+    'xx '],
+  cross: [
+    ' x ',
+    'xxx',
+    ' x '],
+  uBlock: [
+    'xx',
+    'x ',
+    'xx'],
+  pBlock: [
+    'xx',
+    'xx',
+    'x '],
+  qBlock: [
+    'xx',
+    'xx',
+    ' x'],
+  capT: [
+    'x  ',
+    'xxx',
+    'x'],
+  corner: [
+    'xxx',
+    'x  ',
+    'x  '],
+  sBlock: [
+    ' xxx',
+    'xx'],
+  zBlock: [
+    'xxx ',
+    '  xx'],
+  leftT: [
+    'xxxx',
+    ' x  '],
+  rightT: [
+    'xxxx',
+    '  x '],
+  lBlock: [
+    'xx',
+    ' x',
+    ' x',
+    ' x'],
+  jBlock: [
+    'xx',
+    'x ',
+    'x ',
+    'x '],
+  line: [
+    'xxxxx']
+}
+
 var scoreToLevel = function(score) {
-  var level = Math.floor((score - 10) / 10);
-  if(level < 0) {
-    return 0;
-  }
-  return level;
+  return Math.floor(score / 10);
 };
 
-var processTetrinimos = function() {
+var processTetrominos = function(templates) {
   var tetraShape = new Object;
-  for(var shape in TETRINIMO_TEMPLATES) {
-    if( TETRINIMO_TEMPLATES.hasOwnProperty(shape)) {
+  for(var shape in templates) {
+    if( templates.hasOwnProperty(shape)) {
       tetraShape[shape] = new Array;
-      var currentShape = TETRINIMO_TEMPLATES[shape];
+      var currentShape = templates[shape];
       for(var row in currentShape) {
         for(var col in currentShape[row]) {
           if(currentShape[row][col] == 'x') {
@@ -85,7 +177,11 @@ var processTetrinimos = function() {
   }
   return tetraShape
 }
-var TETRINIMO_SHAPES = processTetrinimos();
+var TETROMINO_SHAPES = {
+  'Marathon': processTetrominos(TETROMINO_TEMPLATES),
+  'Fixed Level': processTetrominos(TETROMINO_TEMPLATES),
+  'Pentathlon': processTetrominos(PENTINIMO_TEMPLATES)
+};
 
 var KEY_CODES = {
   8: 'backspace',
