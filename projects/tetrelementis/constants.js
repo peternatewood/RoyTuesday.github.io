@@ -37,7 +37,7 @@ var GAME_MODES = {
 }
 
 var genModeMenu = function(mode) {
-  var menuString = '<select>';
+  var menuString = '<select id="game-mode-dropdown">';
   for(var prop in GAME_MODES) {
     if(GAME_MODES.hasOwnProperty(prop)) {
       menuString += '<option';
@@ -52,7 +52,7 @@ var genModeMenu = function(mode) {
 };
 
 var genLevelMenu = function(level_num) {
-  var menuString = '<select>';
+  var menuString = '<select id="game-level-dropdown">';
   for(var i = 0; i <= 20; i++) {
     menuString += '<option';
     if(i == level_num) {

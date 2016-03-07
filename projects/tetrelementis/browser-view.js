@@ -14,23 +14,22 @@ var BrowserView = function(args) {
   this.elementName = document.getElementById('element-name');
   this.atomicNumDisplay = document.getElementById('atomic-number');
   this.elementLink = document.getElementById('element-link');
+
+  this.staticPlayerScore = document.getElementById('player-score-static');
+  this.staticHighScore = document.getElementById('high-score-static');
+  this.staticGameLevel = document.getElementById('game-level-static');
+  this.staticGameMode = document.getElementById('game-mode-static');
+
   this.playerScore = document.getElementById('player-score');
   this.highScore = document.getElementById('high-score');
   this.gameLevel = document.getElementById('game-level');
-  this.gameModeContainer = document.getElementById('game-mode');
-  this.gameModeDropdown;
-
   this.gameLevel.innerHTML = genLevelMenu(0);
-  this.gameModeContainer.innerHTML = genModeMenu('Marathon');
-  for(var node in this.gameModeContainer.childNodes) {
-    var currentNode = this.gameModeContainer.childNodes[node];
-    if(currentNode.tagName == 'SELECT') {
-      this.gameModeDropdown = currentNode;
-      break;
-    }
-  }
 
-  this.gameMode = GAME_MODES[this.gameModeDropdown.selectedIndex];
+  this.gameModeContainer = document.getElementById('game-mode');
+  this.gameModeContainer.innerHTML = genModeMenu(0);
+
+  this.gameMode = GAME_MODES[document.getElementById('game-mode-dropdown').selectedIndex];
+  this.level = 0;
 
   this.gridContext = gridCanvas.getContext('2d');
   this.previewContext = previewCanvas.getContext('2d');
@@ -306,27 +305,39 @@ BrowserView.prototype.updateGameLevel = function() {
   var newLevel = scoreToLevel(this.gameBoard.score);
   if(this.gameMode != 'Fixed Level' && this.level != newLevel) {
     this.level = newLevel;
-    this.gameLevel.innerHTML = this.level;
+    this.staticGameLevel.innerHTML = this.level;
     clearTimeout(this.dropTimeout);
     this.cycleDropBlock(DROP_DELAY[this.level]);
   }
 };
 BrowserView.prototype.disableMenus = function() {
-  var modeIndex = this.gameModeDropdown.selectedIndex;
-
-  for(var node in this.gameLevel.childNodes) {
-    var currentNode = this.gameLevel.childNodes[node];
-    if(currentNode.tagName == 'SELECT') {
-      this.level = currentNode.selectedIndex;
-    }
-  }
+  var modeIndex = document.getElementById('game-mode-dropdown').selectedIndex;
+  var levelIndex = document.getElementById('game-level-dropdown').selectedIndex;
 
   this.gameMode = GAME_MODES[modeIndex];
-  this.gameModeContainer.innerHTML = GAME_MODES[modeIndex];
-  this.gameLevel.innerHTML = this.level;
+
+  this.staticGameMode.innerHTML = GAME_MODES[modeIndex];
+
+  if(this.gameMode == 'Fixed Level') {
+    this.level = levelIndex;
+  }
+  else {
+    this.level = 0;
+  }
+  this.staticGameLevel.innerHTML = this.level;
+
+  this.gameLevel.style = 'display:none;';
+  this.gameModeContainer.style = 'display:none;';
+  this.staticGameLevel.style = 'display:initial;';
+  this.staticGameMode.style = 'display:initial;';
 };
 BrowserView.prototype.resetDisplay = function() {
+  this.staticGameLevel.style = 'display:none;';
+  this.staticGameMode.style = 'display:none;';
+
+  this.gameModeContainer.style = 'display:initial;';
   this.gameModeContainer.innerHTML = genModeMenu(this.gameMode);
+  this.gameLevel.style = 'display:initial;';
   if(this.highScore.innerHTML < this.gameBoard.score) {
     this.highScore.innerHTML = this.gameBoard.score;
   }
