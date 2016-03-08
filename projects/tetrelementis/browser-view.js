@@ -65,7 +65,7 @@ var BrowserView = function(args) {
     var mouseY = Math.floor((event.layerY - this.tableOverlay.offsetTop) / (270 / 9));
     var element = 0
 
-    if(mouseX > 0 && mouseY > 0) {
+    if(mouseX >= 0 && mouseY >= 0) {
       element = this.tableBoard.board[mouseY][mouseX];
     }
 
@@ -78,7 +78,7 @@ var BrowserView = function(args) {
     var mouseY = Math.floor((event.layerY - this.tableOverlay.offsetTop) / (270 / 9));
     var element = 0;
 
-    if(mouseX > 0 && mouseY > 0) {
+    if(mouseX >= 0 && mouseY >= 0) {
       element = this.tableBoard.board[mouseY][mouseX];
     }
 
