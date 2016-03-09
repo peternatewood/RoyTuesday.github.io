@@ -180,14 +180,30 @@ pre {
 .resume-jobs {
   display: inline-block;
 }
-.resume-title {
+.resume-title-container {
   border-bottom: 2px solid #444;
   padding-bottom: 0.125em;
+}
+.resume-job-title {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.25em;
+  text-align: right;
+  width: 45%;
+}
+.resume-name {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.25em 0;
+  text-align: left;
+  width: 45%;
 }
 .resume-header {
   border-bottom: 1px solid #444;
   padding-bottom: 0.125em;
 }
+
+.fw-bold { font-weight: bold; }
 
 #web-headshot {
   border-color: #6C8938;
