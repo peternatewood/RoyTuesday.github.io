@@ -49,6 +49,39 @@ select:hover {
   justify-content: center;
 }
 
+@keyframes stretch {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+.stretching-container {
+  -webkit-animation: stretch 600ms running;
+  -moz-animation: stretch 600ms running;
+  -o-animation: stretch 600ms running;
+  animation: stretch 600ms running;
+}
+.fading-container {
+  -webkit-animation: fade 400ms running;
+  -moz-animation: fade 400ms running;
+  -o-animation: fade 400ms running;
+  animation: fade 400ms running;
+}
+
 #container {
   background-color: #F1EEFA;
   border: 8px solid #AAF;

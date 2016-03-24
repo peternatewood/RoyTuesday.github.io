@@ -9,8 +9,8 @@ var ready = function(fn) {
 ready(function() {
   var removeExcessSpaces = function(selector) {
     var htmlString = document.querySelector(selector).innerHTML;
-  	htmlString = htmlString.replace(/\s+</g, '<');
-  	htmlString = htmlString.replace(/>\s+/g, '>');
+    htmlString = htmlString.replace(/\s+</g, '<');
+    htmlString = htmlString.replace(/>\s+/g, '>');
     htmlString = htmlString.replace(/_/g, ' ');
     document.querySelector(selector).innerHTML = htmlString;
   }
@@ -44,11 +44,18 @@ ready(function() {
     }
 
     dirContainer.style["display"] = "initial";
+    dirContainer.className = "stretching-container";
   });
 
   document.querySelector("#hide-directions a").addEventListener("click", function(event) {
     event.preventDefault();
-    document.querySelector("#directions-container").style["display"] = "none";
+    dirContainer.className = "fading-container";
+  });
+
+  dirContainer.addEventListener("animationend", function(event) {
+    if(event.animationName == "fade") {
+      dirContainer.style["display"] = "none";
+    }
   });
 
   window.addEventListener("resize", function(event) {
