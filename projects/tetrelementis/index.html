@@ -31,7 +31,7 @@
           <div id="level-display">
             <div id="level-left">
               <p>
-                Score:_<span id="player-score"></span>
+                Score:_<span id="player-score">0</span>
               </p>
               <p>
                 High Score:_<span id="high-score">0</span>
@@ -39,10 +39,11 @@
               <p>
                 Level:_<span id="game-level">0</span>
                 <span id="game-level-static" style="display:none">0</span>
-              </p>
-              <p>
-                Mode:_<span id="game-mode">Marathon</span>
+                <span id="game-mode">Marathon</span>
                 <span id="game-mode-static" style="display:none">Marathon</span>
+              </p>
+              <p id="show-directions">
+                <a href="#">Directions</a>
               </p>
             </div>
             <div id="level-right">
@@ -85,6 +86,38 @@
           </canvas>
         </div>
       </div>
-    </main>
+    </main><div id="directions-container"><div id="directions-transparent-layer"></div><div id="directions">
+    <p id="hide-directions"><a href="#">close x</a></p>
+      <p>
+        Use the <span class="fw-bold">arrow keys</span> and <span class="fw-bold">spacebar</span> or the buttons in the upper right to control the game.
+        <ul>
+          <li><span class="fw-bold">Spacebar</span> starts a new game, and pauses/resumes a game in progress.</li>
+          <li><span class="fw-bold">The Arrow Keys</span> move the falling Tetris block (tetromino)</li>
+          <li><span class="fw-bold">Left</span> and <span class="fw-bold">Right</span> translate the tetromino left and right</li>
+          <li><span class="fw-bold">Up</span> rotates the tetromino clockwise</li>
+          <li><span class="fw-bold">Down</span> speeds up the tetromino (for those early levels when you just can't wait)</li>
+        </ul>
+      </p>
+      <p>
+        When the game starts, a tetromino of a random shape and chemical element will appear at the top of the game board and begin to fall. Once it cannot fall any further, either by hitting the bottom or another tetromino, a new random tetromino will appear at the top of the board.
+      </p>
+      <p>
+        Each new tetromino will be of a chemical element that has not yet appeared until the entire periodic table has filled up. Then, the collection of possible elements is reset, so that further tetrominos don't have repeats, and the table left full.
+      </p>
+      <p>
+        Your objective is to keep the board clear enough that more tetrominos can drop; if there is no more space for a tetromino to appear, the game is over. In order to keep the game going, you must fill every quadrant in a horizontal line accross the board. Once a line is filled, all its quadrants are emptied and every block above it falls one row down.
+      </p>
+      <p>
+        Every line you clear adds to your score; the more lines cleared at once, the more points earned. You can clear as many as four lines at once, if you're clever about it. Be wary! As your points increase, so does the Level; each level makes the tetromino drop faster, until it drops as fast as if you held the down arrow all the time!
+      </p>
+      <p>
+        There are three game modes: <span class="fw-bold">Marathon</span>, <span class="fw-bold">Fixed Level</span>, and <span class="fw-bold">Pentathlon</span>
+        <ul>
+          <li><span class="fw-bold">Marathon:</span> The classic Tetris gamemode in which tetrominos are generated forever, and the level increases with your score</li>
+          <li><span class="fw-bold">Fixed Level:</span> Like <span class="fw-bold">Marathon</span>, but you choose at which level you want to start, and the level does not increase</li>
+          <li><span class="fw-bold">Pentathlon:</span> Like <span class="fw-bold">Marathon</span>, but each tetromino is a permutation of <span class="fw-bold">five</span> blocks instead of four (not for the faint of heart)</li>
+        </ul>
+      </p>
+    </div></div>
   </body>
 </html>

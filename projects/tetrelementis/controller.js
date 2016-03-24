@@ -1,5 +1,9 @@
 var Controller = function(shape) {
   this.elements = generateRandomElements();
+  this.limiter = {
+    shapeIndex: null,
+    count: 0
+  }
 
   this.gameBoard = new TetrisBoard({
     createNextTetromino: this.createNextTetromino.bind(this),
@@ -42,14 +46,14 @@ Controller.prototype.startGame = function() {
   if(this.gameBoard.tetromino === null) {
     this.gameBoard.tetromino = new Tetromino({
       element: this.elements.pop(),
-      shape: getRandomShape(this.gameView.gameMode)
+      shape: getRandomShape(this.gameView.gameMode, this.limiter)
     });
   }
 
   if(this.gameView.previewBoard.tetromino === null) {
     this.gameView.previewBoard.tetromino = new Tetromino({
       element: this.elements.pop(),
-      shape: getRandomShape(this.gameView.gameMode)
+      shape: getRandomShape(this.gameView.gameMode, this.limiter)
     })
   }
 
@@ -80,7 +84,7 @@ Controller.prototype.createNextTetromino = function() {
   }
   this.gameView.previewBoard.tetromino = new Tetromino({
     element: this.elements.pop(),
-    shape: getRandomShape(this.gameView.gameMode)
+    shape: getRandomShape(this.gameView.gameMode, this.limiter)
   })
   this.gameView.previewBoard.blit();
   this.gameView.tableBoard.showElement(this.gameBoard.tetromino.element);
@@ -116,22 +120,32 @@ var generateRandomElements = function() {
 
   return randElements;
 }
-var getRandomShape = function(gameMode) {
-  var shapes = TETROMINO_SHAPES[gameMode];
-  var length = 0;
-  for(var prop in shapes) {
-    if(shapes.hasOwnProperty(prop)) {
-      length++;
+var getRandomShape = function(gameMode, limiter) {
+  var length = TETROMINO_SHAPES[gameMode].length;
+  var shapes = new Object;
+  TETROMINO_SHAPES[gameMode].forEach(function(shape, index) {
+    if(limiter.shapeIndex == index && limiter.count == REPEAT_TETROMINO_LIMIT) {
+      limiter.shapeIndex = null;
+      limiter.count = 0;
     }
-  }
+    else {
+      shapes[index] = shape;
+    }
+  });
 
-  var counter = 0;
   var randNum = Math.floor(Math.random() * length);
 
-  for(var prop in shapes) {
-    if(shapes.hasOwnProperty(prop)) {
-      if(counter == randNum) return shapes[prop];
-      counter++;
-    }
+  if(shapes[randNum] === undefined) {
+    randNum += randNum > (length / 2) ? -1 : 1;
   }
+
+  if(limiter.shapeIndex == randNum) {
+    limiter.count++;
+  }
+  else {
+    limiter.shapeIndex = randNum;
+    limiter.count = 1;
+  }
+
+  return shapes[randNum];
 }

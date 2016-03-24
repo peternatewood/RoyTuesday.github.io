@@ -324,7 +324,7 @@ BrowserView.prototype.disableMenus = function() {
   else {
     this.level = 0;
   }
-  this.staticGameLevel.innerHTML = this.level;
+  this.staticGameLevel.innerHTML = this.level + ": ";
 
   this.gameLevel.style = 'display:none;';
   this.gameModeContainer.style = 'display:none;';

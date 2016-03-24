@@ -35,6 +35,7 @@ var GAME_MODES = {
   1: 'Fixed Level',
   2: 'Pentathlon'
 }
+var REPEAT_TETROMINO_LIMIT = 4;
 
 var genModeMenu = function(mode) {
   var menuString = '<select id="game-mode-dropdown">';
@@ -92,7 +93,7 @@ var TETROMINO_TEMPLATES = {
     'xxx',
     ' x ']
 };
-var PENTINIMO_TEMPLATES = {
+var PENTOMINO_TEMPLATES = {
   wBlock: [
     'xx ',
     ' xx',
@@ -160,27 +161,29 @@ var scoreToLevel = function(score) {
 };
 
 var processTetrominos = function(templates) {
-  var tetraShape = new Object;
+  var tetrominoShape = new Array;
+  var index = 0;
   for(var shape in templates) {
-    if( templates.hasOwnProperty(shape)) {
-      tetraShape[shape] = new Array;
+    if(templates.hasOwnProperty(shape)) {
+      tetrominoShape.push(new Array);
       var currentShape = templates[shape];
       for(var row in currentShape) {
         for(var col in currentShape[row]) {
           if(currentShape[row][col] == 'x') {
-            tetraShape[shape].push({x: parseInt(col, 10),
+            tetrominoShape[index].push({x: parseInt(col, 10),
                                     y: parseInt(row, 10)});
           }
         }
       }
     }
+    index++;
   }
-  return tetraShape
+  return tetrominoShape
 }
 var TETROMINO_SHAPES = {
   'Marathon': processTetrominos(TETROMINO_TEMPLATES),
   'Fixed Level': processTetrominos(TETROMINO_TEMPLATES),
-  'Pentathlon': processTetrominos(PENTINIMO_TEMPLATES)
+  'Pentathlon': processTetrominos(PENTOMINO_TEMPLATES)
 };
 
 var KEY_CODES = {
