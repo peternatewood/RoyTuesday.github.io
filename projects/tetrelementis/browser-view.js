@@ -305,7 +305,7 @@ BrowserView.prototype.updateGameLevel = function() {
   var newLevel = scoreToLevel(this.gameBoard.score);
   if(this.gameMode != 'Fixed Level' && this.level != newLevel) {
     this.level = newLevel;
-    this.staticGameLevel.innerHTML = this.level;
+    this.staticGameLevel.innerHTML = this.level + ": ";
     clearTimeout(this.dropTimeout);
     this.cycleDropBlock(DROP_DELAY[this.level]);
   }
