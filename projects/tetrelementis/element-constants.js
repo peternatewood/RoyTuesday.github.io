@@ -2,8 +2,8 @@ var CHEMICAL_ELEMENTS = {
   0: {
     'name': 'n/a',
     'symbol': "",
-    'background-color': '#F1EEFA',
-    'border-color': '#DDD',
+    'background-color': 'rgba(0, 0, 0, 0)',
+    'border-color': 'rgba(0, 0, 0, 0.2)',
     'color': '#F1EEFA',
     'descrip': "n/a"
   },

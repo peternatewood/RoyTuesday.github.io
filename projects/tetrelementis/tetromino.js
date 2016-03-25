@@ -1,8 +1,15 @@
 var Tetromino = function(args) {
-  this.element = args.element;
-  var shape = args.shape;
+  this.element;
+  this.blocks;
+  this.shape;
 
-  this.blocks = shape.map(function(block) {
+  this.set(args);
+}
+Tetromino.prototype.set = function(args) {
+  this.element = args.element;
+  this.shape = args.shape;
+
+  this.blocks = this.shape.map(function(block) {
     return {x: new Number(block.x), y: new Number(block.y)};
   });
 
@@ -16,16 +23,16 @@ var Tetromino = function(args) {
 
   var width = 0;
   var height = 0;
-  shape.forEach(function(block) {
+  this.shape.forEach(function(block) {
     if(block.x > width) width = block.x;
     if(block.y > height) height = block.y;
-  })
+  });
 
   this.center = {
     x: Math.floor(width / 2) + this.col,
     y: Math.floor(height / 2) + this.row
   }
-}
+};
 Tetromino.prototype.raise = function() {
   this.row--;
   for(var block in this.blocks) {

@@ -91,9 +91,54 @@ var BrowserView = function(args) {
     }
   }.bind(this));
 
+  var dirContainer = document.querySelector("#directions-container");
+
+  var updateDirectionsOverlay = function(container) {
+    var dirTrans = document.querySelector("#directions-transparent-layer");
+    var directions = document.querySelector("#directions");
+    var main = document.querySelector("main");
+
+    container.style["left"] = main.offsetLeft + "px";
+    container.style["top"] = main.offsetTop + "px";
+    container.style["height"] = main.offsetHeight + "px";
+    container.style["width"] = main.offsetWidth + "px";
+
+    directions.style["height"] = (main.offsetHeight - 32) + "px";
+    directions.style["width"] = (main.offsetWidth - 64) + "px";
+
+    dirTrans.style["height"] = main.offsetHeight + "px";
+    dirTrans.style["width"] = main.offsetWidth + "px";
+  }
+
   this.tableOverlay.addEventListener('mouseout', function(event) {
     this.overlayContext.clearRect(0, 0, 540, 270);
   }.bind(this));
+
+   document.querySelector("#show-directions a").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    if(dirContainer.style["display"] != "none") {
+      updateDirectionsOverlay(dirContainer);
+    }
+
+    dirContainer.style["display"] = "initial";
+    dirContainer.className = "stretching-container";
+  });
+
+  document.querySelector("#hide-directions a").addEventListener("click", function(event) {
+    event.preventDefault();
+    dirContainer.className = "fading-container";
+  });
+
+  dirContainer.addEventListener("animationend", function(event) {
+    if(event.animationName == "fade") {
+      dirContainer.style["display"] = "none";
+    }
+  });
+
+  window.addEventListener("resize", function(event) {
+    updateDirectionsOverlay(dirContainer);
+  });
 }
 BrowserView.prototype.keyDown = function(event) {
   var pressedKey = KEY_CODES[event.keyCode];
@@ -232,6 +277,10 @@ BrowserView.prototype.releaseAllKeys = function() {
 };
 BrowserView.prototype.drawBoard = function(board, context) {
   var gridContext = context;
+  var width = gridContext.canvas.width;
+  var height = gridContext.canvas.height;
+  gridContext.clearRect(0, 0, width, height);
+
   gridContext.lineWidth = 4;
 
   board.forEach(function(row, rIndex) {

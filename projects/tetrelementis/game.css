@@ -8,16 +8,19 @@ a:hover, a:visited:hover {
 }
 
 body {
-  background-color: #F9F5FC;
+  background-color: #211833;
 }
-
+canvas {
+  border: 5px solid;
+  border-color: #235 #79B #579 #124;
+}
 select {
   color: #505;
   font-size: 14px;
   font-weight: bold;
 }
 select:hover {
-  color: #A5A;
+  color: #949;
 }
 
 .debug {
@@ -27,7 +30,9 @@ select:hover {
 
 .control-button {
   background-color: #EEE;
-  border-radius: 10px;
+  border-radius: 4px;
+  border-width: 3px 4px 7px 5px;
+  box-shadow: 0 0 0 1px black;
   color: #333;
   font-size: 20px;
   height: 36px;
@@ -36,10 +41,15 @@ select:hover {
   text-align: center;
   width: 36px;
 }
+.control-button:active {
+  box-shadow: 0 0 0 3px black;
+  border-color: white;
+  border-style: outset;
+  transform: scale(0.9);
+}
 #spacebar {
   font-size: 14px;
   font-weight: bold;
-  height: 28px;
   width: 116px;
 }
 .controls-row {
@@ -84,8 +94,7 @@ select:hover {
 
 #container {
   background-color: #F1EEFA;
-  border: 8px solid #AAF;
-  box-shadow: 0.25em 0.25em 0.25em #444;
+  border-radius: 10px;
   margin: 16px auto;
   padding: 32px;
   width: 876px;
@@ -189,18 +198,16 @@ select:hover {
 }
 
 #tetris-grid {
-  border: 5px inset #006;
   margin-right: 16px;
 }
 #tetris-preview {
-  border: 5px inset #006;
   display: inline-block;
 }
 #tetris-table {
-  border: 5px inset #006;
   display: block;
 }
 #table-overlay {
+  border: none;
   left: 5px;
   position: absolute;
   top: 5px;

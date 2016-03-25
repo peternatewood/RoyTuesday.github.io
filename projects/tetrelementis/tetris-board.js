@@ -53,7 +53,6 @@ TetrisBoard.prototype.dropBlock = function() {
   if(collision == 'floor' || collision == 'block') {
     this.tetromino.raise();
     this.blit();
-    this.tetromino = null;
     this.createNextTetromino();
     if(this.detectCollision() != 'clear') {
       clearInterval(this.dropInterval);
