@@ -105,9 +105,8 @@ select:hover {
 }
 
 #atomic-number-container {
-  display: inline-block;
   margin: 4px 10px;
-  width: 150px;
+  float: right;
 }
 
 #controls-container {
@@ -167,7 +166,6 @@ select:hover {
 #element-name {
   display: inline-block;
   margin: 0;
-  width: 340px;
 }
 #element-description, #atomic-number {
   margin: 8px 0 0 0;

@@ -186,13 +186,13 @@ var TETROMINO_SHAPES = {
   'Pentathlon': processTetrominos(PENTOMINO_TEMPLATES)
 };
 
-var KEY_CODES = {
-  8: 'backspace',
+var KEY_CODES_TO_ACTIONS = {
   32: 'space',
   37: 'left',
-  38: 'up',
   39: 'right',
-  40: 'down'
+  40: 'down',
+  88: 'counter',
+  90: 'clock'
 }
 
 var PERIODIC_TABLE = [

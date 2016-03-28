@@ -20,7 +20,7 @@ var Controller = function(shape) {
 
   addEventListener('keydown', function(event) {
     if(this.gameBoard.gameState == 'gameover') {
-      var keyPressed = KEY_CODES[event.keyCode];
+      var keyPressed = KEY_CODES_TO_ACTIONS[event.keyCode];
       if(keyPressed == 'space') {
         event.preventDefault();
         this.startGame();
