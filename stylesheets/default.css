@@ -56,6 +56,9 @@ nav {
   padding: 0.25em 1em;
   text-align: center;
 }
+nav div {
+  display: none;
+}
 nav li {
   background-color: #EFEAC1;
   border: 0.125em solid #8F4B36;
@@ -161,7 +164,6 @@ pre {
   padding: 0em 1em;
 }
 .nav-name {
-  display: initial;
   font-family: 'Trebuchet MS', trebuchet, sans-serif;
   font-weight: bold;
 }
@@ -261,21 +263,32 @@ pre {
     display: initial;
   }
   nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     position: sticky;
     top: 0;
     width: auto;
   }
-  nav li {
-    display: inline-block;
-    width: 2em;
+  nav ul {
+    display: none;
+  }
+  nav div {
+    background-color: #EFEAC1;
+    border: 0.125em solid #8F4B36;
+    border-radius: 0.5em;
+    display: initial;
+    flex: 1 1 2em;
+    margin: 0.375em 0.125em;
+    padding: 0.375em 0.125em;
   }
 
   .main-container {
+    margin: 1em;
     padding: 1em;
     overflow-y: initial;
     width: auto;
   }
-  .nav-name { display: none; }
 
   #web-headshot { display: none; }
   #mobile-headshot {
