@@ -240,9 +240,21 @@ pre {
   font-weight: bold;
 }
 
-@media (orientation: portrait), (max-width: 480px) {
+@media (orientation: portrait) {
   body {
     font-size: 150%;
+  }
+
+  footer {
+    margin: 1em;
+  }
+
+  header {
+    text-align: center;
+  }
+  header span {
+    display: block;
+    margin: 0.5em;
   }
 
   main {
@@ -259,7 +271,7 @@ pre {
   }
 
   .main-container {
-    height: auto;
+    padding: 1em;
     overflow-y: initial;
     width: auto;
   }
