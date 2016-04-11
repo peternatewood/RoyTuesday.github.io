@@ -156,7 +156,7 @@ pre {
   flex-grow: 1;
   margin-right: 1em;
   overflow-y: scroll;
-  padding: 2em;
+  padding: 0em 2em;
 }
 .nav-name {
   display: initial;
@@ -227,6 +227,10 @@ pre {
   type: text;
   maxlength: 78;
   width: 95%;
+}
+
+#home-list p {
+  font-weight: bold;
 }
 
 #update-date {
