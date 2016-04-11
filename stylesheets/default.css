@@ -289,6 +289,9 @@ pre {
     overflow-y: initial;
     width: auto;
   }
+  section.resume {
+    font-size-adjust: 0.5;
+  }
 
   #web-headshot { display: none; }
   #mobile-headshot {
