@@ -1,15 +1,23 @@
 body {
+  background-color: #F8F8F8;
   color: #444;
   font-family: 'Trebuchet MS', trebuchet, sans-serif;
 }
 
 footer {
+  background-color: #E8EEFF;
+  border-radius: 10px;
+  margin-top: 1em;
+  padding: 0.5em;
   text-align: center;
+}
+footer p {
+  margin: 0.375em auto;
 }
 
 header {
-  background-color: #EEF;
-  border-radius: 15px;
+  background-color: #E8EEFF;
+  border-radius: 10px;
   padding: 1em;
   margin: 1em 0;
   text-align: left;
@@ -219,6 +227,11 @@ pre {
   type: text;
   maxlength: 78;
   width: 95%;
+}
+
+#update-date {
+  font-size: 0.625em;
+  font-weight: bold;
 }
 
 @media (orientation: portrait), (max-width: 480px) {
