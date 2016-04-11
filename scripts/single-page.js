@@ -1,5 +1,12 @@
 $(document).on('ready', function() {
 
+  $.ajax({
+    cache: false,
+    url: "/partial-index.html"
+  }).done(function(response) {
+    $('.main-container').html(response);
+  });
+
   $('nav a').on('click', function(event) {
     event.preventDefault();
     var targetURI = event.currentTarget.dataset.pagePartial;
