@@ -300,6 +300,9 @@ pre {
     display: block;
     float: initial;
   }
+  .resume-dates p {
+    margin-top: 0;
+  }
 
   #web-headshot { display: none; }
   #mobile-headshot {
