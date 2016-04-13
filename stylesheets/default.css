@@ -116,6 +116,10 @@ pre {
   word-wrap: break-word;
 }
 
+ol.blog {
+  list-style: initial;
+}
+
 .container {
   align-content: center;
   margin: 0 auto;
