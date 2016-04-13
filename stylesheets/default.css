@@ -296,8 +296,9 @@ pre {
     overflow-y: initial;
     width: auto;
   }
-  section.resume {
-    font-size-adjust: 0.5;
+  .resume-dates {
+    display: block;
+    float: initial;
   }
 
   #web-headshot { display: none; }
