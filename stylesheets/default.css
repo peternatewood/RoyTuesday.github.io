@@ -177,7 +177,8 @@ pre {
   box-shadow: none;
   list-style: inside;
   margin: 0.125em;
-  padding: 0;
+  padding: 0 0 0 1.25em;
+  text-indent: -1.25em;
 }
 .resume article {
   margin: 1em 0;
