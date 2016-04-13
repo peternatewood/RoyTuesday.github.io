@@ -116,11 +116,6 @@ pre {
   word-wrap: break-word;
 }
 
-.columns-3 {
-  -webkit-columns: 1em 3;
-  -moz-columns: 1em 3;
-  columns: 1em 3;
-}
 .container {
   align-content: center;
   margin: 0 auto;
@@ -225,6 +220,18 @@ pre {
 }
 #mobile-headshot { display: none; }
 
+#skills-list {
+  -webkit-columns: 1em 3;
+  -moz-columns: 1em 3;
+  columns: 1em 3;
+}
+#skills-list:first-child {
+  margin-top: 0;
+}
+#skills-list:last-child {
+  margin-bottom: 0;
+}
+
 #end-message {}
 #console-display {}
 #console-input {
@@ -299,5 +306,11 @@ pre {
     display: block;
     margin: 0 auto;
     width: 200px;
+  }
+
+  #skills-list {
+    -webkit-columns: 1;
+    -moz-columns: 1;
+    columns: 1;
   }
 }
