@@ -116,8 +116,14 @@ pre {
   word-wrap: break-word;
 }
 
-ol.blog {
+.lsi {
   list-style: initial;
+}
+ol.lsi li, ul.lsi li {
+  border: none;
+  box-shadow: initial;
+  margin: 0 1em;
+  padding: 0;
 }
 
 .container {
