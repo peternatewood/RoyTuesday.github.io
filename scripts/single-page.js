@@ -7,6 +7,7 @@ $(document).on('ready', function() {
     $('.main-container').html(response);
   });
 
+  // Use navigator to detect Safari and render old resume partial instead
   $('nav a').on('click', function(event) {
     event.preventDefault();
     var targetURI = event.currentTarget.dataset.pagePartial;
