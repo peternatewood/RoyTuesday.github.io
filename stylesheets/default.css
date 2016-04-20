@@ -4,6 +4,11 @@ body {
   font-family: 'Trebuchet MS', trebuchet, sans-serif;
 }
 
+embed {
+  height: 94%;
+  margin: 1% 0;
+}
+
 footer {
   background-color: #E8EEFF;
   border-radius: 10px;
