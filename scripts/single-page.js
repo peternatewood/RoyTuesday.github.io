@@ -16,6 +16,12 @@ $(document).on('ready', function() {
       url: targetURI
     }).done(function(response) {
       $('.main-container').html(response);
+      if(targetURI == "./resume/embedded-resume.html") {
+        $('.main-container').css("overflow-y", "visible");
+      }
+      else {
+        $('.main-container').css("overflow-y", "scroll");
+      }
     });
   });
 
