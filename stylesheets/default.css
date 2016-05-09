@@ -169,6 +169,7 @@ pre {
   background-color: #E8EEFF;
   border-radius: 10px;
   flex-grow: 1;
+  height: 100%;
   margin-left: 1em;
   overflow-y: scroll;
   padding: 0em 1em;
