@@ -39,7 +39,7 @@ header span {
 main {
   display: flex;
   flex-direction: row;
-  height: 60vh;
+  height: 65vh;
   min-height: 24em;
 }
 main section li {
