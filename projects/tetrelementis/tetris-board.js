@@ -1,7 +1,11 @@
+var CONST = require("./constants.js");
+
+var Tetromino = require("./tetromino.js");
+
 var TetrisBoard = function(args) {
   this.score = 0;
   this.board = new Array;
-  this.randElements = generateRandomElements();
+  this.randElements = CONST.generateRandomElements();
   this.tetromino = args.tetromino || null;
   this.createNextTetromino = args.createNextTetromino;
   this.showGameOver = args.showGameOver;
@@ -31,13 +35,13 @@ TetrisBoard.prototype.blit = function(clear) {
 TetrisBoard.prototype.detectCollision = function() {
   for(var block in this.tetromino.blocks) {
     currentBlock = this.tetromino.blocks[block];
-    if(currentBlock.y >= GRID_HEIGHT) {
+    if(currentBlock.y >= CONST.GRID_HEIGHT) {
       return 'floor';
     }
     else if(currentBlock.y < 0) {
       return 'ceiling';
     }
-    else if(currentBlock.x < 0 || currentBlock.x >= GRID_WIDTH) {
+    else if(currentBlock.x < 0 || currentBlock.x >= CONST.GRID_WIDTH) {
       return 'wall';
     }
     else if(this.board[currentBlock.y][currentBlock.x] !== 0) {
@@ -117,12 +121,12 @@ TetrisBoard.prototype.clearForGameover = function() {
       else {
         boardCoords.x++;
       }
-      setTimeout(clearBoard.bind(this, boardCoords), CLEAR_DELAY);
+      setTimeout(clearBoard.bind(this, boardCoords), CONST.CLEAR_DELAY);
     }
     else if(randElement > 0) {
       randElement = 0;
       boardCoords = {x: 0, y:0};
-      setTimeout(clearBoard.bind(this, boardCoords), CLEAR_DELAY);
+      setTimeout(clearBoard.bind(this, boardCoords), CONST.CLEAR_DELAY);
     }
     else {
       this.gameState = 'gameover';
@@ -131,3 +135,5 @@ TetrisBoard.prototype.clearForGameover = function() {
 
   clearBoard(boardCoords);
 };
+
+module.exports = TetrisBoard;

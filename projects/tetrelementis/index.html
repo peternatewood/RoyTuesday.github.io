@@ -6,15 +6,7 @@
     <link href="../../stylesheets/normalize.css" rel="stylesheet" type="text/css"/>
     <link href="./game.css" rel="stylesheet" type="text/css"/>
 
-    <script src="./element-constants.js"></script>
-    <script src="./constants.js"></script>
-    <script src="./periodic-table.js"></script>
-    <script src="./tetromino.js"></script>
-    <script src="./tetris-board.js"></script>
-    <script src="./preview-board.js"></script>
-    <script src="./browser-view.js"></script>
-    <script src="./controller.js"></script>
-    <script src="./tetris.js"></script>
+    <script src="./bundle.js"></script>
 
     <title>Tetrelementis</title>
   </head>
@@ -35,6 +27,7 @@
               </p>
               <p>
                 High Score:_<span id="high-score">0</span>
+                _<a id="reset-high-score" href="#" title="Reset your high score to 0">Reset score</a>
               </p>
               <p>
                 Level:_<span id="game-level">0</span>
@@ -86,7 +79,8 @@
           </canvas>
         </div>
       </div>
-    </main><div id="directions-container"><div id="directions-transparent-layer"></div><div id="directions">
+    </main>
+    <div id="directions-container"><div id="directions-transparent-layer"></div><div id="directions">
     <p id="hide-directions"><a href="#">close x</a></p>
       <p>
         Use the <span class="fw-bold">arrow keys</span> and <span class="fw-bold">spacebar</span> or the buttons in the upper right to control the game.

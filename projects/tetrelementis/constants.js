@@ -1,13 +1,16 @@
-var CHEMISTRY_URL = "http://www.webelements.com/";
-var FONT_SIZE = 11;
-var BLOCK_FONT = "px monospace";
+var CHEMICAL_ELEMENTS = require("./chemical-elements.js");
+
+var CONST = {};
+CONST.CHEMISTRY_URL = "http://www.webelements.com/";
+CONST.FONT_SIZE = 11;
+CONST.BLOCK_FONT = "px monospace";
 
 // Delay values in milliseconds
-var FAST_DROP = 50;
-var SLIDE_DELAY = 100;
-var ROTATE_DELAY = 200;
-var CLEAR_DELAY = 1;
-var DROP_DELAY = {
+CONST.FAST_DROP = 50;
+CONST.SLIDE_DELAY = 100;
+CONST.ROTATE_DELAY = 200;
+CONST.CLEAR_DELAY = 1;
+CONST.DROP_DELAY = {
   0: 900,
   1: 848,
   2: 797,
@@ -30,46 +33,20 @@ var DROP_DELAY = {
   19: 83,
   20: 50
 }
-var GAME_MODES = {
+CONST.GAME_MODES = {
   0: 'Marathon',
   1: 'Fixed Level',
   2: 'Pentathlon'
 }
 var REPEAT_TETROMINO_LIMIT = 4;
 
-var genModeMenu = function(mode) {
-  var menuString = '<select id="game-mode-dropdown">';
-  for(var prop in GAME_MODES) {
-    if(GAME_MODES.hasOwnProperty(prop)) {
-      menuString += '<option';
-      if(GAME_MODES[prop] == mode) {
-        menuString += ' selected';
-      }
-      menuString += '>' + GAME_MODES[prop] + '</option>';
-    }
-  }
-  menuString += '</select>';
-  return menuString;
-};
+CONST.GRID_HEIGHT = 20;
+CONST.GRID_WIDTH = 10;
 
-var genLevelMenu = function(level_num) {
-  var menuString = '<select id="game-level-dropdown">';
-  for(var i = 0; i <= 20; i++) {
-    menuString += '<option';
-    if(i == level_num) {
-      menuString += ' selected';
-    }
-    menuString += '>' + i + '</option>';
-  }
-  menuString += '</select>';
-  return menuString;
-};
-
-var GRID_HEIGHT = 20;
-var GRID_WIDTH = 10;
-
-var BLOCK_WIDTH, BLOCK_HEIGHT;
-var BLOCK_SPACING_WIDTH, BLOCK_SPACING_HEIGHT;
+CONST.BLOCK_WIDTH;
+CONST.BLOCK_HEIGHT;
+CONST.BLOCK_SPACING_WIDTH;
+CONST.BLOCK_SPACING_HEIGHT;
 
 var TETROMINO_TEMPLATES = {
   jBlock: [
@@ -156,10 +133,6 @@ var PENTOMINO_TEMPLATES = {
     'xxxxx']
 }
 
-var scoreToLevel = function(score) {
-  return Math.floor(score / 10);
-};
-
 var processTetrominos = function(templates) {
   var tetrominoShape = new Array;
   var index = 0;
@@ -186,7 +159,7 @@ var TETROMINO_SHAPES = {
   'Pentathlon': processTetrominos(PENTOMINO_TEMPLATES)
 };
 
-var KEY_CODES_TO_ACTIONS = {
+CONST.KEY_CODES_TO_ACTIONS = {
   32: 'space',
   37: 'left',
   39: 'right',
@@ -195,7 +168,7 @@ var KEY_CODES_TO_ACTIONS = {
   90: 'clock'
 }
 
-var PERIODIC_TABLE = [
+CONST.PERIODIC_TABLE = [
   [1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2],
   [3,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  6,  7,  8,  9,  10],
   [11, 12, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  13, 14, 15, 16, 17, 18],
@@ -206,3 +179,93 @@ var PERIODIC_TABLE = [
   [0,  0,  57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 0],
   [0,  0,  89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 0]
 ];
+
+CONST.generateRandomElements = function() {
+  var randElements = new Array;
+  var orderedElements = new Array;
+
+  for(var prop in CHEMICAL_ELEMENTS) {
+    if(CHEMICAL_ELEMENTS.hasOwnProperty(prop)) {
+      if(prop != 0) orderedElements.push(prop);
+    }
+  }
+
+  var length = new Number(orderedElements.length);
+
+  for(var i = 0; i < length; i++) {
+    var randIndex = Math.floor(Math.random() * orderedElements.length);
+    randElements.push(orderedElements[randIndex]);
+    orderedElements.splice(randIndex, 1);
+  }
+
+  return randElements;
+}
+CONST.getRandomShape = function(gameMode, limiter) {
+  var length = TETROMINO_SHAPES[gameMode].length;
+  var shapes = new Object;
+  TETROMINO_SHAPES[gameMode].forEach(function(shape, index) {
+    if(limiter.shapeIndex == index && limiter.count == REPEAT_TETROMINO_LIMIT) {
+      limiter.shapeIndex = null;
+      limiter.count = 0;
+    }
+    else {
+      shapes[index] = shape;
+    }
+  });
+
+  var randNum = Math.floor(Math.random() * length);
+
+  if(shapes[randNum] === undefined) {
+    randNum += randNum > (length / 2) ? -1 : 1;
+  }
+
+  if(limiter.shapeIndex == randNum) {
+    limiter.count++;
+  }
+  else {
+    limiter.shapeIndex = randNum;
+    limiter.count = 1;
+  }
+
+  return shapes[randNum];
+}
+
+CONST.generateEmptyBoard = function() {
+  emptyBoard = new Array;
+  for(var y = 0; y < 4; y++) {
+    var row = new Array;
+    for(var x = 0; x < 4; x++) {
+      row.push(0);
+    }
+    emptyBoard.push(row);
+  }
+  return emptyBoard;
+}
+CONST.genModeMenu = function(mode) {
+  var menuString = '<select id="game-mode-dropdown">';
+  for(var prop in CONST.GAME_MODES) {
+    if(CONST.GAME_MODES.hasOwnProperty(prop)) {
+      menuString += '<option';
+      if(CONST.GAME_MODES[prop] == mode) {
+        menuString += ' selected';
+      }
+      menuString += '>' + CONST.GAME_MODES[prop] + '</option>';
+    }
+  }
+  menuString += '</select>';
+  return menuString;
+}
+CONST.genLevelMenu = function(level_num) {
+  var menuString = '<select id="game-level-dropdown">';
+  for(var i = 0; i <= 20; i++) {
+    menuString += '<option';
+    if(i == level_num) {
+      menuString += ' selected';
+    }
+    menuString += '>' + i + '</option>';
+  }
+  menuString += '</select>';
+  return menuString;
+}
+
+module.exports = CONST;

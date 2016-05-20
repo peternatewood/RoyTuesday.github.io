@@ -75,3 +75,5 @@ Tetromino.prototype.rotate = function(direction) {
     block.y = center.y + modY;
   });
 };
+
+module.exports = Tetromino;

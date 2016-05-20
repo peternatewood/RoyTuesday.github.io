@@ -8,11 +8,13 @@ a:hover, a:visited:hover {
 }
 
 body {
-  background-color: #211833;
+  background-color: #8A4358;
+  color: #222;
 }
 canvas {
+  background-color: #E1DEEA;
   border: 5px solid;
-  border-color: #235 #79B #579 #124;
+  border-color: #2868B8;
 }
 select {
   color: #505;
@@ -32,7 +34,7 @@ select:hover {
   background-color: #EEE;
   border-radius: 4px;
   border-width: 3px 4px 7px 5px;
-  box-shadow: 0 0 0 1px black;
+  box-shadow: 0 0 0 0.0625em black;
   color: #333;
   font-size: 20px;
   height: 36px;
@@ -95,6 +97,7 @@ select:hover {
 #container {
   background-color: #F1EEFA;
   border-radius: 10px;
+  box-shadow: 0 0 2px 4px #2868B8;
   margin: 16px auto;
   padding: 32px;
   width: 876px;
@@ -144,16 +147,16 @@ select:hover {
 #hide-directions a:visited:hover {
   color: #99E;
 }
-#show-directions a {
+#show-directions a, a#reset-high-score {
   color: #505;
 }
-#show-directions a:hover {
+#show-directions a:hover, a#reset-high-score:hover {
   color: #A5A;
 }
-#show-directions a:visited {
+#show-directions a:visited, a#reset-high-score:visited {
   color: #505;
 }
-#show-directions a:visited:hover {
+#show-directions a:visited:hover, a#reset-high-score:visited:hover {
   color: #A5A;
 }
 
@@ -205,6 +208,7 @@ select:hover {
   display: block;
 }
 #table-overlay {
+  background-color: transparent;
   border: none;
   left: 5px;
   position: absolute;
