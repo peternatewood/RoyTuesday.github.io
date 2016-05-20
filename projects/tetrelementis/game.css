@@ -128,6 +128,8 @@ select:hover {
 }
 #directions-transparent-layer {
   background-color: #213;
+  border-radius: 10px;
+  box-shadow: 0 0 4px 4px #EEE;
   opacity: 0.95;
   position: absolute;
   top: 0px;
