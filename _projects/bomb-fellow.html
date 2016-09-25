@@ -1,8 +1,12 @@
+---
+permalink: /projects/bomb-fellow
+---
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link type="text/css" rel="stylesheet" href="../stylesheets/bomb-fellow.css">
+		<link type="text/css" rel="stylesheet" href={{ "/css/bomb-fellow.css" | prepend: site.baseurl }}>
 		<title>Bomb Fellow</title>
 	</head>
 	<body>
@@ -10,8 +14,8 @@
 			Bomb fellow
 		</h1>
 		<p class="l-lg">
-			<a href="index.html">Back</a>
+			<a href={{ "/" | prepend: site.baseurl }}>Back</a>
 		</p>
-		<script src="game.js"></script>
+		<script src={{ "/scripts/bomb-fellow.js" | prepend: site.baseurl }}></script>
 </body>
 </html>
