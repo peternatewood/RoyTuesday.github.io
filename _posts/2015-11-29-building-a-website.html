@@ -1,3 +1,9 @@
+---
+layout: default
+title: Building a Website
+description: How I learned to start worrying about the DOM
+---
+
 <article>
   <h1>
     Building a Website
@@ -17,7 +23,7 @@
     Looking back, I can remember a lot of the steps I took to get here. Several weeks ago, I struggled to implement "sticky" positioning. I wanted a navigation bar that remained at the top of the window when the user scrolled down, but at the top of the page, would sit below my page title. I found two possible solutions: implement a script to change the positioning attribute as the page scrolls, or use a position attribute new CSS: "sticky".
   </p>
   <p>
-    I could write a fairly short JavaScript file to accomplish the same task; all I need is to set the position of my &ltnav&gt element to "fixed", and create an event listener to update its position whenever the user scrolls the page. However, this involves a lot of testing to implement and requires that I make sure it still works on all browsers whenever there is an update to anything. 
+    I could write a fairly short JavaScript file to accomplish the same task; all I need is to set the position of my &ltnav&gt element to "fixed", and create an event listener to update its position whenever the user scrolls the page. However, this involves a lot of testing to implement and requires that I make sure it still works on all browsers whenever there is an update to anything.
   </p>
   <p>
     On the other hand, "position: sticky" works exactly as I wanted; while the HTML element is positioned below the top edge of the client window, it behaves like the "relative" position, but when the element would otherwise scroll off screen, it behaves like the "fixed" position.
