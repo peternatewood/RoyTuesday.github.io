@@ -2,12 +2,12 @@
   <img class="headshot" id="web-headshot" src={{ site.headshot | prepend: site.baseurl }} alttext="my face">
   <ul>
     <li>
-      <a class="fa fa-home" data-page-partial="./partial-index.html" href="./" title="Home">
+      <a class="fa fa-home" href={{ site.baseurl }} title="Home">
         <span class="nav-name">Home</span>
       </a>
     </li>
     <li>
-      <a class="fa fa-pencil" data-page-partial="./blog/partial-index.html" href="./blog/index.html" title="My Blog">
+      <a class="fa fa-pencil" href={{ "/blog" | prepend: site.baseurl }} title="My Blog">
         <span class="nav-name">Blog</span>
       </a>
     </li>
@@ -17,35 +17,35 @@
       </a>
     </li>
     <li>
-      <a class="fa fa-user" data-page-partial="./about/partial-index.html" href="./about/index.html" title="About Me">
+      <a class="fa fa-user" href={{ "/about" | prepend: site.baseurl }} title="About Me">
         <span class="nav-name">About Me</span>
       </a>
     </li>
     <li>
-      <a class="fa fa-briefcase" data-page-partial="./resume/embedded-resume.html" href="./resume/index.html" title="Resume">
+      <a class="fa fa-briefcase" href={{ "/resume" | prepend: site.baseurl }} title="Resume">
         <span class="nav-name">Resume</span>
       </a>
     </li>
   </ul>
 
   <div>
-    <a class="fa fa-home" data-page-partial="./partial-index.html" href="./" title="Home">
+    <a class="fa fa-home" href={{ site.baseurl }} title="Home">
     </a>
   </div>
   <div>
-    <a class="fa fa-pencil" data-page-partial="./blog/partial-index.html" href="./blog/index.html" title="My Blog">
+    <a class="fa fa-pencil" href={{ "/blog" | prepend: site.baseurl }} title="My Blog">
     </a>
   </div>
   <div>
-    <a class="fa fa-book" data-page-partial="./projects/partial-index.html" href="./projects/index.html" title="Projects">
+    <a class="fa fa-book" href={{ "/projects" | prepend: site.baseurl }} title="Projects">
     </a>
   </div>
   <div>
-    <a class="fa fa-user" data-page-partial="./about/partial-index.html" href="./about/index.html" title="About Me">
+    <a class="fa fa-user" href={{ "/about" | prepend: site.baseurl }} title="About Me">
     </a>
   </div>
   <div>
-    <a class="fa fa-briefcase" data-page-partial="./resume/partial-index.html" href="./resume/index.html" title="Resume">
+    <a class="fa fa-briefcase" href={{ "/resume" | prepend: site.baseurl }} title="Resume">
     </a>
   </div>
 </nav>
