@@ -5,7 +5,7 @@ layout: default
 <ol id="home-list">
   <li>
     <h2>
-      <a class="home-link" href="./projects/index.html" data-page-partial="./projects/partial-index.html" title="Projects">Projects</a>
+      <a class="home-link" href={{ "/projects" | prepend: site.baseurl }} title="Projects">Projects</a>
     </h2>
     <p>
       Check out my programming projects. How about <a href="./projects/tetrelementis/index.html" target="_blank" title="Tetrelementis">Tetrelementis</a>?
@@ -13,7 +13,7 @@ layout: default
   </li>
   <li>
     <h2>
-      <a class="home-link" href="./about/index.html" data-page-partial="./about/partial-index.html" title="About Me">About Me</a>
+      <a class="home-link" href={{ "/about" | prepend: site.baseurl }} title="About Me">About Me</a>
     </h2>
     <p>
       "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href="./about/index.html" data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
@@ -21,7 +21,7 @@ layout: default
   </li>
   <li>
     <h2>
-      <a class="home-link" href="./blog/index.html" data-page-partial="./blog/partial-index.html" title="Blog">Blog</a>
+      <a class="home-link" href={{ "/blog" | prepend: site.baseurl }} title="Blog">Blog</a>
     </h2>
     <p>
       Why not read my latest post about
@@ -32,7 +32,7 @@ layout: default
   </li>
   <li>
     <h2>
-      <a class="home-link" href="./resume/index.html" data-page-partial="./resume/partial-index.html" title="Resume">Resume</a>
+      <a class="home-link" href={{ "/resume" | prepend: site.baseurl }} title="Resume">Resume</a>
     </h2>
     <p>
       Read up on my credentials: my skills, what programming languages I know, my work history, education, and more.
