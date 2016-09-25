@@ -26,3 +26,5 @@ twitter_username: peternatewood
 # Build settings
 markdown: kramdown
 theme: minima
+sass:
+  sass_dir: _sass
