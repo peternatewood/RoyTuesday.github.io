@@ -19,6 +19,7 @@ description: >
   My personal website containing my projects, resume, and tech blog
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://peternatewood.com" # the base hostname & protocol for your site
+headshot: "/imgs/dbc-headshot-2015-11-13.png"
 github_username:  peternatewood
 linkedin_username:  peternatewood
 twitter_username: peternatewood
@@ -26,6 +27,6 @@ twitter_username: peternatewood
 # Build settings
 markdown: kramdown
 theme: minima
-include: ['_pages']
+include: ['_pages', '_projects']
 sass:
   sass_dir: _sass
