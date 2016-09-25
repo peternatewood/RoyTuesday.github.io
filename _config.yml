@@ -20,6 +20,7 @@ description: >
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://peternatewood.com" # the base hostname & protocol for your site
 headshot: "/imgs/dbc-headshot-2015-11-13.png"
+resume: "/assets/resume.pdf"
 github_username:  peternatewood
 linkedin_username:  peternatewood
 twitter_username: peternatewood
