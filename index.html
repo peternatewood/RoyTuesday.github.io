@@ -1,146 +1,41 @@
-<!DOCTYPE html>
-<html>
+---
+layout: default
+---
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0"/>
-    
-    <link rel="stylesheet" href="./stylesheets/normalize.css"/>
-    <link rel="stylesheet" href="./stylesheets/font-awesome.min.css"/>
-    <link rel="stylesheet" href="./stylesheets/default.css"/>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.js"></script>
-    <script src="./scripts/single-page.js"></script>
-
-    <title>
-      Peter N Wood
-    </title>
-  </head>
-
-  <body class="container">
-
-    <header>
-      <h1>
-        Peter N Wood
-        <span>
-          programmer, pianist, video gamer
-        </span>
-      </h1>
-      <img class="headshot" id="mobile-headshot" src="imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-    </header>
-
-    <main>
-      <nav>
-        <img class="headshot" id="web-headshot" src="imgs/dbc-headshot-2015-11-13.png" alttext="my face">
-        <ul>
-          <li>
-            <a class="fa fa-home" data-page-partial="./partial-index.html" href="./" title="Home">
-              <span class="nav-name">Home</span>
-            </a>
-          </li>
-          <li>
-            <a class="fa fa-pencil" data-page-partial="./blog/partial-index.html" href="./blog/index.html" title="My Blog">
-              <span class="nav-name">Blog</span>
-            </a>
-          </li>
-          <li>
-            <a class="fa fa-book" data-page-partial="./projects/partial-index.html" href="./projects/index.html" title="Projects">
-              <span class="nav-name">Projects</span>
-            </a>
-          </li>
-          <li>
-            <a class="fa fa-user" data-page-partial="./about/partial-index.html" href="./about/index.html" title="About Me">
-              <span class="nav-name">About Me</span>
-            </a>
-          </li>
-          <li>
-            <a class="fa fa-briefcase" data-page-partial="./resume/embedded-resume.html" href="./resume/index.html" title="Resume">
-              <span class="nav-name">Resume</span>
-            </a>
-          </li>
-        </ul>
-
-        <div>
-          <a class="fa fa-home" data-page-partial="./partial-index.html" href="./" title="Home">
-          </a>
-        </div>
-        <div>
-          <a class="fa fa-pencil" data-page-partial="./blog/partial-index.html" href="./blog/index.html" title="My Blog">
-          </a>
-        </div>
-        <div>
-          <a class="fa fa-book" data-page-partial="./projects/partial-index.html" href="./projects/index.html" title="Projects">
-          </a>
-        </div>
-        <div>
-          <a class="fa fa-user" data-page-partial="./about/partial-index.html" href="./about/index.html" title="About Me">
-          </a>
-        </div>
-        <div>
-          <a class="fa fa-briefcase" data-page-partial="./resume/partial-index.html" href="./resume/index.html" title="Resume">
-          </a>
-        </div>
-      </nav>
-
-      <section class="main-container">
-        <ol id="home-list">
-          <li>
-            <h2>
-              <a class="home-link" href="./projects/index.html" data-page-partial="./projects/partial-index.html" title="Projects">Projects</a>
-            </h2>
-            <p>
-              Check out my programming projects. How about <a href="./projects/tetrelementis/index.html" target="_blank" title="Tetrelementis">Tetrelementis</a>?
-            </p>
-          </li>
-          <li>
-            <h2>
-              <a class="home-link" href="./about/index.html" data-page-partial="./about/partial-index.html" title="About Me">About Me</a>
-            </h2>
-            <p>
-              "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href="./about/index.html" data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
-            </p>
-          </li>
-          <li>
-            <h2>
-              <a class="home-link" href="./blog/index.html" data-page-partial="./blog/partial-index.html" title="Blog">Blog</a>
-            </h2>
-            <p>
-              Why not read my latest post about
-              <a class="blog-link" data-page-partial="./blog/partial-tech.html" href="./blog/tech.html" title="Computer Memory Blog">
-                Computer Memory
-              </a>?
-            </p>
-          </li>
-          <li>
-            <h2>
-              <a class="home-link" href="./resume/index.html" data-page-partial="./resume/partial-index.html" title="Resume">Resume</a>
-            </h2>
-            <p>
-              Read up on my credentials: my skills, what programming languages I know, my work history, education, and more.
-            </p>
-          </li>
-        </ol>
-      </section>
-    </main>
-
-    <footer>
-      <p class="footer-links">
-        <a href="https://github.com/peternatewood" target="_blank">
-          <span class="fa fa-github" title="GitHub"></span>
-        </a> | <a href="https://www.linkedin.com/in/peternatewood" target="_blank">
-          <span class="fa fa-linkedin-square" title="LinkedIn"></span>
-        </a> | <a href="https://twitter.com/programmingpete" target="_blank">
-          <span class="fa fa-twitter-square" title="Twitter"></span>
-        </a>
-      </p>
-      <p>
-        <span class="fa fa-envelope" title="Email"></span> peternatewood@gmail.com
-      </p>
-      <p id="update-date">
-        Last Updated: 06 Mar 2015
-      </p>
-    </footer>
-
-  </body>
-
-</html>
+<ol id="home-list">
+  <li>
+    <h2>
+      <a class="home-link" href={{ "/projects" | prepend: site.baseurl }} title="Projects">Projects</a>
+    </h2>
+    <p>
+      Check out my programming projects. How about <a href="/_projects/tetrelementis/index.html" title="Tetrelementis">Tetrelementis</a>?
+    </p>
+  </li>
+  <li>
+    <h2>
+      <a class="home-link" href={{ "/about" | prepend: site.baseurl }} title="About Me">About Me</a>
+    </h2>
+    <p>
+      "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href="./about/index.html" data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
+    </p>
+  </li>
+  <li>
+    <h2>
+      <a class="home-link" href={{ "/blog" | prepend: site.baseurl }} title="Blog">Blog</a>
+    </h2>
+    <p>
+      Why not read my latest post about
+      <a class="blog-link" data-page-partial="./blog/partial-tech.html" href="./blog/tech.html" title="Computer Memory Blog">
+        Computer Memory
+      </a>?
+    </p>
+  </li>
+  <li>
+    <h2>
+      <a class="home-link" href={{ "/resume" | prepend: site.baseurl }} title="Resume">Resume</a>
+    </h2>
+    <p>
+      Read up on my credentials: my skills, what programming languages I know, my work history, education, and more.
+    </p>
+  </li>
+</ol>

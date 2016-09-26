@@ -1,0 +1,51 @@
+<nav>
+  <img class="headshot" id="web-headshot" src={{ site.headshot | prepend: site.baseurl }} alttext="my face">
+  <ul>
+    <li>
+      <a class="fa fa-home" href={{ "/" | prepend: site.baseurl }} title="Home">
+        <span class="nav-name">Home</span>
+      </a>
+    </li>
+    <li>
+      <a class="fa fa-pencil" href={{ "/blog" | prepend: site.baseurl }} title="My Blog">
+        <span class="nav-name">Blog</span>
+      </a>
+    </li>
+    <li>
+      <a class="fa fa-book" href={{ "/projects" | prepend: site.baseurl }} title="Projects">
+        <span class="nav-name">Projects</span>
+      </a>
+    </li>
+    <li>
+      <a class="fa fa-user" href={{ "/about" | prepend: site.baseurl }} title="About Me">
+        <span class="nav-name">About Me</span>
+      </a>
+    </li>
+    <li>
+      <a class="fa fa-briefcase" href={{ "/resume" | prepend: site.baseurl }} title="Resume">
+        <span class="nav-name">Resume</span>
+      </a>
+    </li>
+  </ul>
+
+  <div>
+    <a class="fa fa-home" href={{ site.baseurl }} title="Home">
+    </a>
+  </div>
+  <div>
+    <a class="fa fa-pencil" href={{ "/blog" | prepend: site.baseurl }} title="My Blog">
+    </a>
+  </div>
+  <div>
+    <a class="fa fa-book" href={{ "/projects" | prepend: site.baseurl }} title="Projects">
+    </a>
+  </div>
+  <div>
+    <a class="fa fa-user" href={{ "/about" | prepend: site.baseurl }} title="About Me">
+    </a>
+  </div>
+  <div>
+    <a class="fa fa-briefcase" href={{ "/resume" | prepend: site.baseurl }} title="Resume">
+    </a>
+  </div>
+</nav>
