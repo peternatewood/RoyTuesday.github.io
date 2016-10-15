@@ -14,16 +14,17 @@ Terminal = function() {
   this.messageInterval = false;
   this.color = WHITE;
   this.ascii = [];
-  this.currentFloor = 3;
+  this.inventory = [];
 
   this.computer = new Computer();
   this.save = new Save();
+  this.player = new Actor();
 
   this.restartCursorBlink();
 
   this.rooms = {}
   ROOMS.forEach(function(room) {
-    this.rooms[room.name] = new Room(room.messages, room.items);
+    this.rooms[room.name] = new Room(room.messages, room.items, room.adjacents);
   }, this);
 
   return this;
@@ -40,7 +41,7 @@ Terminal.prototype.handleInput = function(event) {
     this.restartCursorBlink();
     // Only allow printable characters
     if (/^.$/.test(event.key) && this.cursor < TERMINAL_MESSAGE_CHARS) {
-      this.buffer += event.key;
+      this.buffer = this.buffer.slice(0, this.cursor) + event.key + this.buffer.slice(this.cursor);
       this.cursor += 1;
     }
     else if (event.key == 'Backspace' && this.cursor > 0) {
@@ -165,7 +166,7 @@ Terminal.prototype.processCommands = function() {
       if (/\S+/.test(name)) {
         this.save.save({name: name});
         this.scene = 1;
-        this.rooms.hibernation.items.bed3 = this.rooms.hibernation.items.bed3.replace('{{name}}', name);
+        this.rooms.hibernation.items['bed 3'] = this.rooms.hibernation.items['bed 3'].replace('{{name}}', name);
         this.pushMessage('Welcome to Space Fear, ' + name + '. ' + this.sceneMessage());
       }
       else {
@@ -178,6 +179,15 @@ Terminal.prototype.processCommands = function() {
       switch(getCommand(commands[0])) {
         case 'clear':
           this.message = [];
+          break;
+
+        case 'close':
+          var name = commands.slice(1).join(' ');
+          if (this.rooms[name]) {
+            this.rooms[name].closeDoor(this.player.room);
+          }
+          this.pushMessage(this.rooms[this.player.room].closeDoor(name));
+          console.log(this.rooms);
           break;
 
         case 'color':
@@ -226,13 +236,13 @@ Terminal.prototype.processCommands = function() {
           break;
 
         case 'look':
-          if (this.rooms[commands[1]]) {
-            if (this.rooms[commands[1]].items[commands[2]]) {
-              this.pushMessage(this.rooms[commands[1]].items[commands[2]]);
-            }
-            else {
-              this.pushMessage(this.rooms[commands[1]].message());
-            }
+          var room = this.rooms[this.player.room];
+          var item = room.items[commands.slice(1).join(' ')];
+          if (item) {
+            this.pushMessage(item);
+          }
+          else {
+            this.pushMessage(room.message());
           }
           break;
 
@@ -242,8 +252,17 @@ Terminal.prototype.processCommands = function() {
             this.ascii = map;
           }
           else {
-            this.ascii = ASCII['map' + this.currentFloor];
+            this.ascii = ASCII['map' + this.player.floor];
           }
+          break;
+
+        case 'open':
+          var name = commands.slice(1).join(' ');
+          if (this.rooms[name]) {
+            this.rooms[name].openDoor(this.player.room);
+          }
+          this.pushMessage(this.rooms[this.player.room].openDoor(name));
+          console.log(this.rooms);
           break;
 
         default:
