@@ -5,36 +5,12 @@ $light_blue: #E8EEFF;
 $link_blue: #565BB1;
 $link_hover_blue: #868BF1;
 $offwhite: #F8F8F8;
+$medium-green: #260;
+
 $trebuchet: 'Trebuchet MS', trebuchet, sans-serif;
 $resume_height: 1400px;
 
-@mixin transition($transition) {
-  -webkit-transition: #{$transition};
-  -moz-transition: #{$transition};
-  -ms-transition: #{$transition};
-  -o-transition: #{$transition};
-  transition: #{$transition};
-}
-@mixin keyframes($animationName) {
-  @-webkit-keyframes #{$animationName} {
-      @content;
-  }
-  @-moz-keyframes #{$animationName} {
-      @content;
-  }
-  @-o-keyframes #{$animationName} {
-      @content;
-  }
-  @keyframes #{$animationName} {
-      @content;
-  }
-}
-@mixin animation($animation) {
-  -webkit-animation: $animation;
-  -moz-animation: $animation;
-  -o-animation: $animation;
-  animation: $animation;
-}
+@import 'custom-mixins';
 
 body {
   background-color: $background_color;
@@ -44,7 +20,7 @@ body {
   width: 100%;
 
   header {
-    background-color: #260;
+    background-color: $medium-green;
     margin: 0;
     padding: 0 0 12px 0;
     position: fixed;
