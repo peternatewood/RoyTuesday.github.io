@@ -25,20 +25,11 @@
 
 main {
   text-align: center;
-
-  div.museum-frame {
-    &:first-child {
-      margin-left: auto;
-    }
-    &:last-child {
-      margin-right: auto;
-    }
-  }
 }
 
 .museum-frame {
   position: relative;
-  display: inline-block;
+  display: block;
   color: transparent;
   font-size: 32px;
   line-height: 200px;
@@ -46,8 +37,15 @@ main {
   width: 200px;
   border: 12px solid $medium-green;
   border-radius: 10%;
-  margin: 12px 3%;
+  margin: 12px auto;
   overflow: hidden;
+
+  &:first-child {
+    margin-left: auto;
+  }
+  &:last-child {
+    margin-right: auto;
+  }
 
   &#pac-man {
     background-color: black;
@@ -296,6 +294,78 @@ main {
         transform-origin: 0px 80px;
         @include animation(2s spin infinite 400ms);
       }
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .museum-frame {
+    display: inline-block;
+    margin-left: 4%;
+    margin-right: 4%;
+
+    &:nth-child(2n+1) {
+      margin-left: auto;
+    }
+    &:nth-child(2n) {
+      margin-right: auto;
+    }
+  }
+}
+@media (min-width: 800px) {
+  .museum-frame {
+    &:nth-child(3n+1) {
+      margin-left: auto;
+      margin-right: 2%;
+    }
+    &:nth-child(3n+2) {
+      margin-left: 2%;
+      margin-right: 2%;
+    }
+    &:nth-child(3n) {
+      margin-left: 2%;
+      margin-right: auto;
+    }
+
+    &:last-child {
+      margin-right: auto;
+    }
+  }
+}
+@media (min-width: 1000px) {
+  .museum-frame {
+    &:nth-child(3n+1) {
+      margin-left: auto;
+      margin-right: 4%;
+    }
+    &:nth-child(3n+2) {
+      margin-left: 4%;
+      margin-right: 4%;
+    }
+    &:nth-child(3n) {
+      margin-left: 4%;
+      margin-right: auto;
+    }
+
+    &:last-child {
+      margin-right: auto;
+    }
+  }
+}
+@media (min-width: 1120px) {
+  .museum-frame {
+    &:nth-child(4n+1) {
+      margin-left: auto;
+      margin-right: 2%;
+    }
+    &:nth-child(4n+2),
+    &:nth-child(4n+3) {
+      margin-left: 2%;
+      margin-right: 2%;
+    }
+    &:nth-child(4n) {
+      margin-left: 2%;
+      margin-right: auto;
     }
   }
 }
