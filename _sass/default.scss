@@ -5,7 +5,9 @@ $light_blue: #E8EEFF;
 $link_blue: #565BB1;
 $link_hover_blue: #868BF1;
 $offwhite: #F8F8F8;
-$medium-green: #260;
+$medium_green: #260;
+$dark_green: #204926;
+$brown: #8F4B36;
 
 $trebuchet: 'Trebuchet MS', trebuchet, sans-serif;
 $resume_height: 1400px;
@@ -20,9 +22,9 @@ body {
   width: 100%;
 
   header {
-    background-color: $medium-green;
+    background-color: $medium_green;
     margin: 0;
-    padding: 0 0 12px 0;
+    padding: 0;
     position: fixed;
     top: 0;
     width: 100%;
@@ -36,30 +38,81 @@ body {
       background-color: transparent;
       margin: 0;
       padding: 0;
+      position: relative;
 
       div {
-        background-color: $ivory;
-        border: {
-          color: $dark_ivory;
-          radius: 0 0 6px 6px;
-          style: solid;
-          width: 0 1px 3px 1px;
-        }
+        background-color: transparent;
+        border: none;
         box-sizing: border-box;
-        display: inline-block;
         margin: 0;
         padding: 0;
         text-align: center;
-        height: 3em;
-        width: 20%;
-        @include transition(border-bottom-width 120ms ease);
 
-        &:hover {
-          border-bottom-width: 8px;
+        &#home-link,
+        &#sandwich-menu {
+          background-color: transparent;
+          display: inline-block;
+          height: 3em;
+        }
+        &#home-link {
+          width: 4em;
+
+          &:hover {
+            background-color: forestgreen;
+          }
+
+          .nav-name {
+            display: none;
+          }
+        }
+        &#sandwich-menu {
+          width: 7em;
+          position: absolute;
+          right: 0;
+          top: 0;
+
+          &:before {
+            content: 'menu';
+            color: $dark_ivory;
+            position: absolute;
+            width: 100%;
+            height: 1em;
+            left: 0;
+            top: 50%;
+            margin-top: -0.625em;
+          }
+
+          #dropdown {
+            background-color: forestgreen;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: -12em;
+            z-index: 1;
+            @include transition(1s);
+
+            .dropdown-link {
+              padding-left: 12px;
+              text-align: left;
+            }
+          }
+
+          &:hover,
+          &:active {
+            background-color: forestgreen;
+
+            &:before {
+              color: $light_blue;
+            }
+
+            #dropdown {
+              top: 0;
+            }
+          }
         }
 
         a.nav-link {
-          color: #8F4B36;
+          color: $dark_ivory;
           box-sizing: border-box;
           font-size: 1.25em;
           padding: 0.5em 0;
@@ -80,13 +133,13 @@ body {
             text-decoration: none;
           }
           &:visited {
-            color: #8F4B36;
+            color: $dark_ivory;
           }
           &:hover {
-            color: #204926;
+            color: $light_blue;
           }
           &:visited:hover {
-            color: #204926;
+            color: $light_blue;
           }
         }
       }
@@ -102,11 +155,8 @@ body {
 
     li {
       background-color: $light_blue;
-      border-color: #3080CA;
-      border-radius: 0.5em;
-      border-style: solid;
-      border-width: 0.25em 1px 1px 0.375em;
-      box-shadow: 4px 4px #555;
+      border: none;
+      box-shadow: inset -4px -3px 12px 0 #555;
       margin: 1em 0;
       padding: 1em;
     }
@@ -314,97 +364,98 @@ body {
     font-size: 0.625em;
     font-weight: bold;
   }
+}
 
-  @media (orientation: portrait) {
-    body {
-      font-size: 150%;
-    }
-
-    footer {
-      margin: 1em;
-    }
-
+@media (min-width: 600px) {
+  body {
     header {
-      text-align: center;
+      padding: 0 0 12px 0;
 
-      span {
-        display: block;
-        margin: 0.5em;
+      nav {
+        div {
+          background-color: $ivory;
+          border: {
+            color: $dark_ivory;
+            radius: 0 0 6px 6px;
+            style: solid;
+            width: 0 1px 3px 1px;
+          }
+          box-sizing: border-box;
+          display: inline-block;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+          height: 3em;
+          @include transition(border-bottom-width 120ms ease);
+
+          &#home-link {
+            width: 20%;
+
+            .nav-name {
+              display: inline-block;
+            }
+          }
+          &#sandwich-menu {
+            border: none;
+            width: 80%;
+
+            &:before {
+              display: none;
+            }
+
+            #dropdown {
+              border: none;
+              top: 0;
+
+              .dropdown-link {
+                padding: 0;
+                text-align: center;
+                width: 25%;
+              }
+            }
+          }
+
+          &:hover {
+            border-bottom-width: 8px;
+          }
+
+          a.nav-link {
+            color: $brown;
+            box-sizing: border-box;
+            font-size: 1.25em;
+            padding: 0.5em 0;
+            height: 100%;
+            width: 100%;
+
+            .nav-name {
+              font: {
+                family: $trebuchet;
+                weight: bold;
+                size: 0.625em;
+              }
+              margin-left: 1em;
+            }
+
+            &:link {
+              font-weight: initial;
+              text-decoration: none;
+            }
+            &:visited {
+              color: $brown;
+            }
+            &:hover {
+              color: $dark_green;
+            }
+            &:visited:hover {
+              color: $dark_green;
+            }
+          }
+        }
       }
-    }
-
-    main {
-      display: initial;
-    }
-    nav {
-      display: -webkit-flex;
-      display: -ms-flex;
-      display: flex;
-      -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-      flex-direction: row;
-      -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      width: auto;
-
-      ul {
-        display: none;
-      }
-
-      div {
-        background-color: #EFEAC1;
-        border: 0.125em solid #8F4B36;
-        border-radius: 0.5em;
-        display: initial;
-        -webkit-flex: 1 1 2em;
-        -ms-flex: 1 1 2em;
-        flex: 1 1 2em;
-        margin: 0.375em 0.125em;
-        padding: 0.375em 0.125em;
-      }
-    }
-
-    .main-container {
-      margin: 1em;
-      padding: 1em;
-      overflow-y: initial;
-      width: auto;
-    }
-    .resume-dates {
-      display: block;
-      float: initial;
-
-      p {
-        margin-top: 0;
-      }
-    }
-    .resume-job-title {
-      padding: 0.25em 0;
-      text-align: left;
-    }
-    .resume-job-title, .resume-name {
-      display: block;
-      width: auto;
-    }
-
-    #web-headshot { display: none; }
-    #mobile-headshot {
-      border-color: #AAB;
-      display: block;
-      margin: 0 auto;
-      width: 200px;
-    }
-
-    #skills-list {
-      -webkit-columns: 1;
-      -moz-columns: 1;
-      columns: 1;
     }
   }
 }
+
 @include keyframes(spin) {
   0% {
     transform: rotate(0deg);
