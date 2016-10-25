@@ -50,7 +50,6 @@ body {
 
         &#home-link,
         &#sandwich-menu {
-          background-color: transparent;
           display: inline-block;
           height: 3em;
         }
@@ -66,6 +65,7 @@ body {
           }
         }
         &#sandwich-menu {
+          background-color: transparent;
           width: 7em;
           position: absolute;
           right: 0;
@@ -157,6 +157,7 @@ body {
     li {
       background-color: $light_blue;
       border: none;
+      border-radius: 12px;
       box-shadow: inset -4px -3px 12px 0 #555;
       margin: 1em 0;
       padding: 1em;
@@ -391,6 +392,10 @@ body {
 
           &#home-link {
             width: 20%;
+
+            &:hover {
+              background-color: $ivory;
+            }
 
             .nav-name {
               display: inline-block;
