@@ -213,11 +213,12 @@ permalink: /projects/asteroids-js
       context.strokeStyle = '#FFF';
       context.lineWidth = 1;
 
-      updateScore(true);
+      document.getElementById('hiscore').value = updateScore(true);
       function updateScore(reset) {
         if (reset) score = 0;
         else score++;
         document.getElementById('score').value = score;
+        return score;
       }
 
       document.querySelectorAll('input').forEach(function(input) {
