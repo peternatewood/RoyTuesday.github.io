@@ -6,52 +6,143 @@ permalink: /projects/asteroids-js
   <head>
     <meta charset="utf-8">
     <title>Asteroids JS</title>
+    <script type="text/javascript">
+      // Constants and global function declarations
+      var MAX_ASTEROIDS = 7;
+      var MAX_SPEED = 6;
+      var ASTEROID_SPEED = 1;
+      var VALID_KEYS = {
+        'ArrowLeft' : 'Left Arrow',
+        'ArrowRight': 'Right Arrow',
+        'ArrowUp'   : 'Up Arrow',
+        'ArrowDown' : 'Down Arrow',
+        'PageUp'    : 'Page Up',
+        'PageDown'  : 'Page Down',
+        ' '         : 'Spacebar'
+      }
+      var DEFAULT_KEYS = {
+        'left': 'ArrowLeft',
+        'right': 'ArrowRight',
+        'move': 'ArrowUp',
+        'fire': ' '
+      }
+      var KEYS_BY_CODE = {
+          8: 'Backspace',
+          9: 'Tab',
+         13: 'Enter',
+         16: 'Shift',
+         17: 'Control',
+         18: 'Alt',
+         32: ' ',
+         33: 'PageUp',
+         34: 'PageDown',
+         35: 'End',
+         36: 'Home',
+         37: 'ArrowLeft',
+         38: 'ArrowUp',
+         39: 'ArrowRight',
+         40: 'ArrowDown',
+         45: 'Insert',
+         46: 'Delete',
+        186: ';',
+        187: '=',
+        188: ',',
+        189: '-',
+        190: '.',
+        191: '/',
+        192: '`',
+        219: '[',
+        220: '\\',
+        221: ']',
+        222: '\'',
+      }
+      for (var code in KEYS_BY_CODE) {
+        if (KEYS_BY_CODE.hasOwnProperty(code) && ! VALID_KEYS[KEYS_BY_CODE[code]]) {
+          VALID_KEYS[KEYS_BY_CODE[code]] = KEYS_BY_CODE[code];
+        }
+      }
+      for (var i = 48; i < 90; i++) {
+        var key = String.fromCharCode(i);
+        if (! VALID_KEYS[key]) {
+          VALID_KEYS[key] = key;
+        }
+      }
+
+      var KEY_VALUES = {}
+      for (var code in VALID_KEYS) {
+        if (VALID_KEYS.hasOwnProperty(code)) {
+          KEY_VALUES[VALID_KEYS[code]] = code;
+        }
+      }
+
+      function preventEverything(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      };
+
+      // Get's key in browsers with event.key and those without
+      function getKey(event) {
+        if (event.key) return event.key.length === 1 ? event.key.toUpperCase() : event.key;
+        else if (KEYS_BY_CODE[event.keyCode]) return KEYS_BY_CODE[event.keyCode];
+        else if (/^\w$/.test(String.fromCharCode(event.keyCode))) return String.fromCharCode(event.keyCode);
+      }
+    </script>
     <style media="screen">
       #main {
         background: #226;
         color: #FFF;
         font: 1rem monospace;
         text-align: center;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         margin: 0;
-        padding: 2vh 0;
+        padding: 0;
+        max-width: 100vw;
         width: 100%;
-        min-height: 100vh;
+        max-height: 100vh;
+        height: 100%;
         box-sizing: border-box;
+      }
+      #wrapper {
+        width: 1024px;
+        height: 600px;
+        transform-origin: top left;
       }
       #canvas {
         background: #000;
         display: inline-block;
-        margin: 0 auto;
-        height: 96vh;
-        max-height: 600px;
-        width: 130vh;
-        max-width: 800px;
+        margin: 0;
+        padding: 0;
+        height: 600px;
+        width: 800px;
       }
       aside {
+        position: relative;
       	display: inline-block;
-        width: 28vh;
-      	max-width: 200px;
-        height: 96vh;
-        max-height: 600px;
-      	vertical-align: top;
-      	margin: 0 auto 0 2vh;
+      	width: 200px;
+        height: 576px;
+      	padding: 12px;
+        vertical-align: top;
       }
       #score-container {
         margin: 0 0 16px 0;
-        height: 12%;
       }
       #input-container {
         display: block;
         width: 100%;
-        height: 12%;
+        margin: 12px 0;
       }
       .input-block {
         display: inline-block;
         width: 30%;
         margin: 0 auto;
+      }
+      .keybind {
+        display: block;
+        width: 100%;
+        margin: 0;
       }
       label {
         display: block;
@@ -94,17 +185,17 @@ permalink: /projects/asteroids-js
         box-shadow: 0 0 16px 0 #FFF7;
       }
       #input-container input:hover,
-      #input-container input:focus {
+      #input-container input:focus,
+      #keybinds-container input:hover,
+      #keybinds-container input:focus {
         box-shadow: 0 0 16px 0 #FFF;
       }
       .button {
-        width: 20vh;
-      	max-width: 120px;
-        height: 20vh;
-      	max-height: 120px;
+      	width: 120px;
+      	height: 120px;
       	border-radius: 50%;
       	border: 4px solid;
-        margin: 30% auto;
+        margin: 54px auto;
         position: relative;
         box-sizing: border-box;
         box-shadow: 2px 1px 0 2px black;
@@ -155,10 +246,63 @@ permalink: /projects/asteroids-js
       .button.button-yellow:active:after {
         background: radial-gradient(at 60px 60px, #CC0 20%, #DD2 80%);
       }
-      .small-screen {
+      #toggle-controls {
+        background: radial-gradient(ellipse at bottom right, gray 20%, #DDD 80%);
+        position: absolute;
+        height: 38px;
+        width: 200px;
+        bottom: 0;
+        cursor: pointer;
+      }
+      #toggle-controls:after {
+        content: 'Toggle Controls';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85%;
+        height: 75%;
+        background: radial-gradient(ellipse at bottom right, gray 15%, #DDD 75%);
+        border: 3px solid black;
+        color: #111;
+        padding: 3px;
+        text-shadow: -1px -1px 0 #DDD;
+        box-sizing: border-box;
+      }
+      #toggle-controls:hover:after {
+        background: radial-gradient(ellipse at bottom right, gray 10%, #DDD 70%);
+        border-width: 2px;
+        padding-top: 4px;
+      }
+      #toggle-controls:active:after {
+        background: radial-gradient(ellipse at bottom right, gray 30%, #DDD 90%);
+        border-width: 4px;
+        padding-top: 2px;
+      }
+      .button,
+      .small-screen,
+      .orientation {
         display: none;
       }
-      @media (orientation: portrait) and (max-width: 600px), (orientation:portrait) and (max-height: 480px) {
+      @media (max-width: 1024px) {
+        .button {
+          display: block;
+        }
+        #keybinds-container {
+          display: none;
+        }
+      }
+      @media (orientation: portrait) and (max-width: 480px) {
+        #wrapper {
+          display: none;
+        }
+        .orientation {
+          display: block;
+          color: #EEE;
+          margin: 4em 1em;
+        }
+      }
+      @media (orientation: landscape) and (max-width: 420px), (max-height: 310px) {
         #wrapper {
           display: none;
         }
@@ -175,8 +319,7 @@ permalink: /projects/asteroids-js
       <div id="wrapper">
         <canvas id="canvas" width="800" height="600">
           Sorry, your browser does not meet the minimum requirements for this game
-        </canvas>
-        <aside>
+        </canvas><aside>
           <div id="score-container">
             <label for="score">Score</label><div class="input-wrapper"><input id="score" disabled="disabled"/></div>
             <label for="hiscore">Hi score</label><div class="input-wrapper"><input id="hiscore" disabled="disabled"/></div>
@@ -186,18 +329,47 @@ permalink: /projects/asteroids-js
             <div class="input-block"><label for="green">Green</label><div class="input-wrapper"><input data-color="g" name="green" value="255"/></div></div>
             <div class="input-block"><label for="blue">Blue</label><div class="input-wrapper"><input data-color="b" name="blue" value="255"/></div></div>
           </div>
+          <div id="keybinds-container">
+            <div class="keybind">
+              <label for="left">Turn Left</label>
+              <div class="input-wrapper">
+                <input type="text" name="left" value="">
+              </div>
+            </div>
+            <div class="keybind">
+              <label for="right">Turn Right</label>
+              <div class="input-wrapper">
+                <input type="text" name="right" value="">
+              </div>
+            </div>
+            <div class="keybind">
+              <label for="move">Fire Thrusters</label>
+              <div class="input-wrapper">
+                <input type="text" name="move" value="">
+              </div>
+            </div>
+            <div class="keybind">
+              <label for="fire">Fire Missile</label>
+              <div class="input-wrapper">
+                <input type="text" name="fire" value="">
+              </div>
+            </div>
+          </div>
+          <div id="button-red" class="button button-red"></div>
+          <div id="button-yellow" class="button button-yellow"></div>
+          <div id="toggle-controls"></div>
         </aside>
       </div>
       <div class="small-screen">
         Sorry, your screen is too small to play this game
       </div>
+      <div class="orientation">
+        Please rotate your device by one quarter turn
+      </div>
     </div>
 
     <script type="text/javascript">
-      var MAX_ASTEROIDS = 7;
-      var MAX_SPEED = 4;
-      var ASTEROID_SPEED = 1;
-      var INPUTS = {
+      var inputs = {
         'ArrowLeft': 'left',
         'ArrowRight': 'right',
         'ArrowUp': 'move',
@@ -206,6 +378,11 @@ permalink: /projects/asteroids-js
 
       var scene = 'title';
       var score = 0;
+      var buttonRed = document.getElementById('button-red');
+      var buttonYellow = document.getElementById('button-yellow');
+      var toggleControls = document.getElementById('toggle-controls');
+      var keybinds = document.getElementById('keybinds-container');
+      var buttons = document.getElementsByClassName('button');
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
       context.textAlign = 'center';
@@ -213,15 +390,43 @@ permalink: /projects/asteroids-js
       context.strokeStyle = '#FFF';
       context.lineWidth = 1;
 
-      document.getElementById('hiscore').value = updateScore(true);
+      var canvasScale = 1;
+      window.addEventListener('resize', updateWrapper);
+      function updateWrapper() {
+        var scale = 1;
+        var wrapper = document.getElementById('wrapper');
+        if (window.innerWidth / window.innerHeight > 1024 / 600) {
+          scale = window.innerHeight / 600;
+        }
+        else {
+          scale = window.innerWidth / 1024;
+        }
+        canvasScale = Math.min(1, scale);
+        wrapper.style.transform = 'scale(' + canvasScale + ')';
+      }
+      updateWrapper();
+
+      toggleControls.oncontextmenu = preventEverything;
+      toggleControls.addEventListener('touchstart', handleToggleControls);
+      function handleToggleControls() {
+        var keyDisp = keybinds.style.display ? keybinds.style.display : getComputedStyle(keybinds).display;
+        var buttonDisp = buttons[0].style.display ? buttons[0].style.display : getComputedStyle(buttons[0]).display;
+
+        keybinds.style.display = keyDisp === 'none' ? 'block' : 'none';
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].style.display = buttonDisp === 'none' ? 'block' : 'none';
+        }
+      }
+
+      updateScore(true);
+      document.getElementById('hiscore').value = Math.max(score, hiscore.value);
       function updateScore(reset) {
         if (reset) score = 0;
         else score++;
         document.getElementById('score').value = score;
-        return score;
       }
 
-      document.querySelectorAll('input').forEach(function(input) {
+      document.querySelectorAll('#input-container input').forEach(function(input) {
         input.addEventListener('keyup', updateColor);
         updateColor({target: input});
       });
@@ -251,6 +456,33 @@ permalink: /projects/asteroids-js
         }
       }
 
+      document.querySelectorAll('#keybinds-container input').forEach(function(input) {
+        input.addEventListener('keydown', updateKeybinds);
+        inputs[DEFAULT_KEYS[input.name]] = input.name;
+        input.value = VALID_KEYS[DEFAULT_KEYS[input.name]];
+      });
+      function updateKeybinds(event) {
+        event.preventDefault();
+        var newInputs = {}
+        var key = getKey(event);
+
+        if (VALID_KEYS[key]) {
+          newInputs[key] = event.target.name;
+          event.target.value = VALID_KEYS[key];
+        }
+        else if (! event.target.value) {
+          newInputs[DEFAULT_KEYS[event.target.name]] = event.target.name;
+          event.target.value = VALID_KEYS[DEFAULT_KEYS[event.target.name]];
+        }
+
+        document.querySelectorAll('#keybinds-container input:not([name="' + event.target.name + '"])').forEach(function(input) {
+          if (input.value === event.target.value) input.value = '';
+          else newInputs[KEY_VALUES[input.value]] = input.name;
+        });
+
+        inputs = newInputs;
+      }
+
       var Vector = function(rad, mag) {
         this.rad = typeof rad === 'number' ? rad : 0;
         this.mag = typeof mag === 'number' ? mag : 0;
@@ -262,6 +494,10 @@ permalink: /projects/asteroids-js
         this.rad = Math.atan2(y, x);
         this.mag = Math.min(MAX_SPEED, Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
         return this;
+      }
+
+      function boundRads(rads) {
+        return (2 * Math.PI + rads) % (2 * Math.PI);
       }
 
       var explosions = [];
@@ -279,6 +515,17 @@ permalink: /projects/asteroids-js
         this.vel = vel;
         this.dir = dir ? dir : new Vector(vel.rad, 0);
         return this;
+      }
+      Actor.prototype.move = moveActor;
+      function moveActor() {
+        this.x += this.vel.mag * Math.cos(this.vel.rad);
+        this.y += this.vel.mag * Math.sin(this.vel.rad);
+
+        if (this.x < 0) this.x = canvas.width;
+        else if (this.x > canvas.width) this.x = 0;
+
+        if (this.y < 0) this.y = canvas.height;
+        else if (this.y > canvas.height) this.y = 0;
       }
 
       var asteroids = [];
@@ -321,6 +568,7 @@ permalink: /projects/asteroids-js
       }
 
       var missile = false;
+      var mTimeout = 0;
       var player;
       function setPlayer() {
         player = {
@@ -329,80 +577,122 @@ permalink: /projects/asteroids-js
           vel: new Vector(),
           dir: new Vector(),
           size: 8,
-          rot: 0
+          rot: 0,
+          frame: 0,
+          move: moveActor
         }
       }
 
-      document.addEventListener('keydown', handleInput);
-      document.addEventListener('keyup', handleInput);
-      function handleInput(event) {
-        if (event.target.tagName !== 'INPUT' && ! event.repeat && INPUTS[event.key]) {
+      canvas.oncontextmenu = preventEverything;
+      buttonRed.oncontextmenu = preventEverything;
+      buttonYellow.oncontextmenu = preventEverything;
+      // Touch events
+      var touch = { x: 0, y: 0, active: false }
+      canvas.addEventListener('touchstart', handleTouchDown);
+      canvas.addEventListener('touchmove', handleTouchMove);
+      canvas.addEventListener('touchend', handleTouchUp);
+      canvas.addEventListener('touchcancel', handleTouchUp);
+      // Touch event Handlers
+      function handleTouchDown(event) {
+        touch.active = true;
+        handleTouchMove(event);
+      }
+      function handleTouchMove(event) {
+        touch.x = event.touches[0].clientX * (1 / canvasScale);
+        touch.y = event.touches[0].clientY * (1 / canvasScale);
+      }
+      function handleTouchUp(event) {
+        touch.active = false;
+        if (player) player.rot = 0;
+      }
+      // Key Events
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keyup', handleKeyUp);
+      // Key event Handlers
+      function handleKeyDown(event) {
+        var key = getKey(event);
+        if (event.target.tagName !== 'INPUT' && ! event.repeat && inputs[key]) {
           event.preventDefault();
-          switch (INPUTS[event.key]) {
-            case 'left': player.rot -= event.type == 'keydown' ? 1 : -1; break;
-            case 'right': player.rot += event.type == 'keydown' ? 1 : -1; break;
-            case 'move': updateThrusters(event); break;
-            case 'fire':
-              if (event.type == 'keydown') {
-                launchMissile();
-              }
-              break;
+          switch (inputs[key]) {
+            case 'left': player.rot--; break;
+            case 'right': player.rot++; break;
+            case 'move': updateThrusters(true); break;
+            case 'fire': handleFireAction(); break;
           }
         }
       }
-      function launchMissile() {
+      function handleKeyUp(event) {
+        var key = getKey(event);
+        if (event.target.tagName !== 'INPUT' && ! event.repeat && inputs[key]) {
+          event.preventDefault();
+          switch (inputs[key]) {
+            case 'left': player.rot++; break;
+            case 'right': player.rot--; break;
+            case 'move': updateThrusters(); break;
+          }
+        }
+      }
+      // Touch Events
+      buttonRed.addEventListener('touchstart', handleFireAction);
+      buttonYellow.addEventListener('touchstart', handleYellowButton);
+      buttonYellow.addEventListener('touchend', handleYellowButton);
+      buttonYellow.addEventListener('touchcancel', handleYellowButton);
+      // Touch event Handlers
+      function handleFireAction(event) {
         if (scene !== 'game') reset();
-        else if (! missile) {
-          missile = new Actor(player.x, player.y, new Vector(player.dir.rad, MAX_SPEED + 1));
-          setTimeout(function() {missile = false}, 1000);
+        else {
+          if (! missile) {
+            missile = new Actor(player.x, player.y, new Vector(player.dir.rad, MAX_SPEED + 1));
+            mTimeout = setTimeout(function() { missile = false }, 1000);
+          }
         }
       }
-      function updateThrusters(event) {
-        switch (event.type) {
-          case 'keydown':
-          case 'mousedown':
-            player.dir.mag = 1;
-            break;
-          case 'keyup':
-          case 'mouseup':
-            player.dir.mag = 0;
-            break;
+      function handleYellowButton(event) {
+        event.preventDefault();
+        if (player) {
+          updateThrusters(event.type === 'touchstart');
         }
       }
+      function breakMissile() {
+        missile = false;
+        clearTimeout(mTimeout);
+      }
+      function updateThrusters(fireThrusters) {
+        player.dir.mag = fireThrusters ? 1 : 0;
+      }
+
       function reset() {
         setPlayer();
         updateScore(true);
-        missile = false;
+        breakMissile();
         asteroids = [];
         while (asteroids.length < 3) spawnAsteroid();
         scene = 'game';
       }
 
-      var updateInterval = window.setInterval(update, 15);
+      var updateInterval = window.setInterval(update, 20);
       function update() {
-        if (missile) moveActor(missile);
-        asteroids.forEach(moveActor);
+        if (missile) missile.move();
+        asteroids.forEach(function(ast) { ast.move() });
         handleCollisions();
 
         switch (scene) {
           case 'game':
-            player.dir.rad += (player.rot * (Math.PI / 24));
+            if (touch.active) {
+              var diff = boundRads(Math.atan2(touch.y - player.y, touch.x - player.x)) - player.dir.rad;
+              if (Math.abs(diff) > Math.PI) player.rot = diff > 0 ? -1 : 1;
+              else if (Math.abs(diff) > 0.1) player.rot = diff > 0 ? 1 : -1;
+              else player.rot = 0;
+            }
+
+            player.dir.rad = boundRads(player.dir.rad + (player.rot * (Math.PI / 24)));
             if (player.dir.mag > 0) {
               player.vel.add(player.dir);
             }
-            moveActor(player);
+            player.frame = (player.frame + 1) % 6;
+            player.move();
             break;
         }
-      }
-      function moveActor(actor) {
-        actor.x += actor.vel.mag * Math.cos(actor.vel.rad);
-        actor.y += actor.vel.mag * Math.sin(actor.vel.rad);
-
-        if (actor.x < 0) actor.x = canvas.width;
-        else if (actor.x > canvas.width) actor.x = 0;
-
-        if (actor.y < 0) actor.y = canvas.height;
-        else if (actor.y > canvas.height) actor.y = 0;
       }
       function handleCollisions() {
         for (var i = 0; i < asteroids.length; i++) {
@@ -411,7 +701,7 @@ permalink: /projects/asteroids-js
             return;
           }
           else if (missile && detectActorCollision(missile, asteroids[i])) {
-            missile = false;
+            breakMissile();
             if (asteroids[i].dir.mag === 16) updateScore();
             breakAsteroid(i);
             asteroids.splice(i, 1);
@@ -486,7 +776,7 @@ permalink: /projects/asteroids-js
         switch(scene) {
           case 'title':
             context.font = '48px monospace';
-            context.fillText('ASTEROIDS', canvas.width / 2, (canvas.height / 2) - 32);
+            context.fillText('ASTEROIDS JS', canvas.width / 2, (canvas.height / 2) - 32);
             context.font = '18px monospace';
             context.fillText('Press "fire" to start', canvas.width / 2, (canvas.height / 2) + 8);
             break;
@@ -501,10 +791,11 @@ permalink: /projects/asteroids-js
             context.stroke();
             // Render exhaust
             if (player.dir.mag !== 0) {
+              var exMod = 24 + (3 * (player.frame < 3 ? player.frame : 6 - player.frame));
               context.beginPath();
               context.moveTo(player.x - (14 * Math.cos(player.dir.rad)) + 0.5, player.y - (14 * Math.sin(player.dir.rad)) + 0.5);
               context.lineTo(player.x - (18 * Math.cos(player.dir.rad - (Math.PI / 8))) + 0.5, player.y - (18 * Math.sin(player.dir.rad - (Math.PI / 8))) + 0.5);
-              context.lineTo(player.x - (32 * Math.cos(player.dir.rad)) + 0.5, player.y - (32 * Math.sin(player.dir.rad)) + 0.5);
+              context.lineTo(player.x - (exMod * Math.cos(player.dir.rad)) + 0.5, player.y - (exMod * Math.sin(player.dir.rad)) + 0.5);
               context.lineTo(player.x - (18 * Math.cos(player.dir.rad + (Math.PI / 8))) + 0.5, player.y - (18 * Math.sin(player.dir.rad + (Math.PI / 8))) + 0.5);
               context.closePath();
               context.stroke();
@@ -534,16 +825,19 @@ permalink: /projects/asteroids-js
       function gameOver() {
         scene = 'over';
         explosions.push(new Explosion(player, 12));
-        var hiscore = document.getElementById('hiscore');
-        hiscore.value = Math.max(score, hiscore.value);
+        document.getElementById('hiscore').value = Math.max(score, hiscore.value);
       }
 
-      // var frameCount = 0;
       window.requestAnimationFrame(step);
       function step(timestamp) {
+        if (! start) var start = timestamp;
+        var progress = timestamp - start;
+
         render();
-        // frameCount = (frameCount + 1) % 60;
-        window.requestAnimationFrame(step);
+
+        if (progress < 2000) {
+          window.requestAnimationFrame(step);
+        }
       }
     </script>
   </body>
