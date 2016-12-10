@@ -309,7 +309,6 @@ permalink: /projects/asteroids-js
       }
       #toggle-controls.disabled:after {
         content: 'Mobile Only';
-        cursor: default;
         border-color: #333;
         text-shadow: none;
       }
@@ -450,7 +449,8 @@ permalink: /projects/asteroids-js
 
         adaptAddEventListener(toggleControls, 'contextmenu', preventEverything);
         adaptAddEventListener(toggleControls, 'touchstart', handleToggleControls);
-        adaptAddEventListener(toggleControls, 'mousemove', disableToggleControls, {once: true});
+        adaptAddEventListener(toggleControls, 'mousedown', disableToggleControls);
+        adaptAddEventListener(toggleControls, 'mouseup', enableToggleControls);
         function handleToggleControls() {
           var keyDisp = keybinds.style.display ? keybinds.style.display : getComputedStyle(keybinds).display;
           var buttonDisp = buttons[0].style.display ? buttons[0].style.display : getComputedStyle(buttons[0]).display;
@@ -462,12 +462,17 @@ permalink: /projects/asteroids-js
         }
         function disableToggleControls(event) {
           var el = event.target;
-          if (el.classList && el.classList.length == 0) {
+          if (el.classList && el.classList.length === 0) {
             el.classList.add('disabled');
           }
-          else {
-            if (el.className.length === 0 || ! el.className.includes('disabled')) el.className += ' disabled';
+          else if (el.className.length === 0 && ! el.className.includes('disabled')) el.className = 'disabled';
+        }
+        function enableToggleControls(event) {
+          var el = event.target;
+          if (el.classList && el.classList.length > 0) {
+            el.classList.remove('disabled');
           }
+          else if (el.className.includes('disabled')) el.className = '';
         }
 
         updateScore(true);
