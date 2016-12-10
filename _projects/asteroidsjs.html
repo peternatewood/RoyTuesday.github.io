@@ -706,7 +706,7 @@ permalink: /projects/asteroids-js
           else {
             if (! missile) {
               missile = new Actor(player.x, player.y, new Vector(player.dir.rad, MAX_SPEED + 1));
-              mTimeout = setTimeout(function() { missile = false }, 1000);
+              missile.life = 1000;
             }
           }
         }
@@ -735,7 +735,11 @@ permalink: /projects/asteroids-js
 
         var updateInterval = window.setInterval(update, 20);
         function update() {
-          if (missile) missile.move();
+          if (missile) {
+            missile.move();
+            missile.life -= 20;
+            if (missile.life <= 0) missile = false;
+          }
           asteroids.forEach(function(ast) { ast.move() });
           handleCollisions();
 
