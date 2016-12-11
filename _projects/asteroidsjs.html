@@ -853,7 +853,7 @@ permalink: /projects/asteroids-js
           handleMouseUp: function(event) {
             this.sliders.forEach(function(slider) { slider.active = false; });
             this.buttons.forEach(function(btn) {
-              var max = Math.max(1, Math.floor(scores.hiscore / 20));
+              var max = Math.min(1, Math.floor(scores.hiscore / 20));
               switch (btn.handleMouseUp(event)) {
                 case 'left': player.sprite--; if (player.sprite < 0) player.sprite = max; break;
                 case 'right': player.sprite = (player.sprite + 1) % (max + 1); break;
