@@ -24,38 +24,10 @@ permalink: /projects/asteroids-js
         'left': 'ArrowLeft',
         'right': 'ArrowRight',
         'move': 'ArrowUp',
-        'fire': ' '
+        'fire': ' ',
+        'options': 'O'
       }
-      var KEYS_BY_CODE = {
-          8: 'Backspace',
-          9: 'Tab',
-         13: 'Enter',
-         16: 'Shift',
-         17: 'Control',
-         18: 'Alt',
-         32: ' ',
-         33: 'PageUp',
-         34: 'PageDown',
-         35: 'End',
-         36: 'Home',
-         37: 'ArrowLeft',
-         38: 'ArrowUp',
-         39: 'ArrowRight',
-         40: 'ArrowDown',
-         45: 'Insert',
-         46: 'Delete',
-        186: ';',
-        187: '=',
-        188: ',',
-        189: '-',
-        190: '.',
-        191: '/',
-        192: '`',
-        219: '[',
-        220: '\\',
-        221: ']',
-        222: '\'',
-      }
+      var KEYS_BY_CODE = { 8: 'Backspace', 9: 'Tab', 13: 'Enter', 16: 'Shift', 17: 'Control', 18: 'Alt', 32: ' ', 33: 'PageUp', 34: 'PageDown', 35: 'End', 36: 'Home', 37: 'ArrowLeft', 38: 'ArrowUp', 39: 'ArrowRight', 40: 'ArrowDown', 45: 'Insert', 46: 'Delete', 186: ';', 187: '=', 188: ',', 189: '-', 190: '.', 191: '/', 192: '`', 219: '[', 220: '\\', 221: ']', 222: '\'' }
       for (var code in KEYS_BY_CODE) {
         if (KEYS_BY_CODE.hasOwnProperty(code) && ! VALID_KEYS[KEYS_BY_CODE[code]]) {
           VALID_KEYS[KEYS_BY_CODE[code]] = KEYS_BY_CODE[code];
@@ -73,6 +45,137 @@ permalink: /projects/asteroids-js
         if (VALID_KEYS.hasOwnProperty(code)) {
           KEY_VALUES[VALID_KEYS[code]] = code;
         }
+      }
+
+      // Class definitions
+      var Button = function(x, y, name) {
+        this.x = x;
+        this.y = y;
+        this.w = 80;
+        this.h = 30;
+        this.name = name;
+        this.hover = false;
+        this.active = false;
+        this.grad;
+      }
+      Button.prototype.handleMouseDown = function(event) {
+        if (this.hover) this.active = true; return this.name;
+      }
+      Button.prototype.handleMouseUp = function(event) {
+        if (this.active) {
+          this.active = false;
+          return this.name;
+        }
+      }
+      Button.prototype.handleMouseMove = function(event) {
+        return this.hover = ! (event.layerX < this.x || event.layerX > this.x + this.w || event.layerY < this.y - (this.h / 2) || event.layerY > this.y + (this.h / 2));
+      }
+      Button.prototype.render = function(context) {
+        if (! this.grad) {
+          this.grad = context.createRadialGradient(this.x + (this.w / 2), this.y, 0, this.x + (this.w / 2), this.y, (this.w / 2));
+          this.grad.addColorStop(0, 'rgba(220,124,16,1)');
+          this.grad.addColorStop(1, 'rgba(220,124,16,0)');
+        }
+        context.strokeStyle = '#777';
+        context.lineWidth = 3;
+        context.beginPath();
+        switch (this.name) {
+          case 'right':
+            context.moveTo(this.x, this.y - (this.h / 2));
+            context.lineTo(this.x + (this.w * 0.8), this.y - (this.h / 2))
+            context.lineTo(this.x + this.w, this.y);
+            context.lineTo(this.x + (this.w * 0.8), this.y + (this.h / 2));
+            context.lineTo(this.x, this.y + (this.h / 2));
+            break;
+          case 'left':
+            context.moveTo(this.x, this.y);
+            context.lineTo(this.x + (this.w * 0.2), this.y + (this.h / 2))
+            context.lineTo(this.x + this.w, this.y + (this.h / 2));
+            context.lineTo(this.x + this.w, this.y - (this.h / 2));
+            context.lineTo(this.x + (this.w * 0.2), this.y - (this.h / 2));
+            break;
+        }
+        context.closePath();
+        context.fillStyle = this.active ? '#444' : this.hover ? '#222' : '#000';
+        context.fill();
+        context.fillStyle = this.grad;
+        context.fill();
+        context.stroke();
+        context.lineWidth = 1;
+      }
+
+      var Slider = function(x, y, name, percent) {
+        this.x = x;
+        this.y = y;
+        this.name = name;
+        this.pos = 255 * (percent ? Math.min(1, Math.max(0, percent)) : 1);
+        return this;
+      }
+      Slider.prototype.checkActive = function(event) {
+        return this.active = ! (event.layerX < this.x - 8 || event.layerX > this.x + 8 || event.layerY < this.y - 4 || event.layerY > this.y + 256 + 20);
+      }
+      Slider.prototype.updatePos = function(event) {
+        this.pos = Math.min(255, Math.max(0, (255 - (event.layerY - this.y - 20))));
+      }
+      Slider.prototype.render = function(context) {
+        context.fillStyle = '#FFF';
+        context.textAlign = 'center';
+        context.font = '16px Courier, monospace';
+        context.fillText(this.name, this.x, this.y);
+        context.fillStyle = '#222';
+        context.fillRect(this.x - 2, this.y + 20, 4, 256);
+        context.fillStyle = '#CCC';
+        context.fillRect(this.x - 8, this.y + 16 + (256 - this.pos), 16, 6);
+      }
+
+      var Vector = function(rad, mag) {
+        this.rad = typeof rad === 'number' ? rad : 0;
+        this.mag = typeof mag === 'number' ? mag : 0;
+        return this;
+      }
+      Vector.prototype.add = function(other) {
+        var x = (this.mag * Math.cos(this.rad)) + (other.mag * Math.cos(other.rad));
+        var y = (this.mag * Math.sin(this.rad)) + (other.mag * Math.sin(other.rad));
+        this.rad = Math.atan2(y, x);
+        this.mag = Math.min(MAX_SPEED, Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+        return this;
+      }
+
+      var Actor = function(x, y, vel, dir) {
+        this.x = x;
+        this.y = y;
+        this.vel = vel;
+        this.dir = dir ? dir : new Vector(vel.rad, 0);
+        return this;
+      }
+      Actor.prototype.move = moveActor;
+      function moveActor() {
+        this.x += this.vel.mag * Math.cos(this.vel.rad);
+        this.y += this.vel.mag * Math.sin(this.vel.rad);
+
+        if (this.x < 0) this.x = canvas.width;
+        else if (this.x > canvas.width) this.x = 0;
+
+        if (this.y < 0) this.y = canvas.height;
+        else if (this.y > canvas.height) this.y = 0;
+      }
+
+      var Explosion = function(actor, end) {
+        this.x = actor.x;
+        this.y = actor.y;
+        this.frame = 0;
+        this.end = end ? end : 8;
+        return this;
+      }
+
+      // Global Functions
+      function saveHiscore(score) {
+        window.localStorage.setItem('hiscore', score);
+        return score;
+      }
+      function loadHiscore() {
+        var savedScore = window.localStorage.getItem('hiscore');
+        return savedScore ? savedScore : 0;
       }
 
       function preventEverything(event) {
@@ -159,15 +262,16 @@ permalink: /projects/asteroids-js
       #score-container {
         margin: 0 0 16px 0;
       }
-      #input-container {
-        display: block;
+      .score {
+        position: relative;
+        background: transparent;
+        font: 1rem monospace;
+        border: none;
         width: 100%;
-        margin: 12px 0;
-      }
-      .input-block {
-        display: inline-block;
-        width: 30%;
-        margin: 0 auto;
+        text-align: center;
+        box-sizing: border-box;
+        box-shadow: 0 0 16px 0 rgba(255,255,255,0.5);
+        cursor: default;
       }
       .keybind {
         display: block;
@@ -178,9 +282,6 @@ permalink: /projects/asteroids-js
         display: block;
         text-shadow: -1px -1px 1px #777, 1px 1px 1px black;
       }
-      #score-container label:first-child {
-        margin-bottom: 10px;
-      }
       #score-container label,
       #score-container .input-wrapper {
         display: inline-block;
@@ -190,11 +291,13 @@ permalink: /projects/asteroids-js
       #score-container label {
         line-height: 29px;
         width: 45%;
+        margin-bottom: 10px;
       }
       #score-container .input-wrapper {
         width: 55%;
       }
       .input-wrapper {
+        position: relative;
         background: #000;
         width: 100%;
         padding: 4px;
@@ -202,17 +305,32 @@ permalink: /projects/asteroids-js
         box-sizing: border-box;
         overflow: hidden;
       }
-      input {
+      .input-display {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -0.625rem;
+        margin-left: -50%;
+        width: 100%;
         background: transparent;
+        font: 1rem monospace;
         color: #FFF;
+      }
+      input {
+        position: relative;
+        background: transparent;
         font: 1rem monospace;
         border: none;
         width: 100%;
-        box-sizing: border-box;
         transition: 230ms;
         text-align: center;
         box-sizing: border-box;
         box-shadow: 0 0 16px 0 rgba(255,255,255,0.5);
+        cursor: pointer;
+        text-indent: -9999px;
+      }
+      input[data-key=""] {
+        box-shadow: 0 0 16px 0 rgba(255,63,63,0.8);
       }
       #input-container input:hover,
       #input-container input:focus,
@@ -276,15 +394,15 @@ permalink: /projects/asteroids-js
       .button.button-yellow:active:after {
         background: radial-gradient(at 60px 60px, #CC0 20%, #DD2 80%);
       }
-      #toggle-controls {
+      #toggle-options {
         background: radial-gradient(ellipse at bottom right, #777777 20%, #D7D7D7 80%);
-        position: absolute;
+        position: relative;
         height: 38px;
         width: 200px;
-        bottom: 0;
+        margin-bottom: 12px;
       }
-      #toggle-controls:after {
-        content: 'Toggle Controls';
+      #toggle-options:after {
+        content: 'Options Menu';
         position: absolute;
         top: 50%;
         left: 50%;
@@ -299,23 +417,15 @@ permalink: /projects/asteroids-js
         box-sizing: border-box;
         cursor: pointer;
       }
-      #toggle-controls:active:after {
+      #toggle-options:hover:after {
+        background: radial-gradient(ellipse at bottom right, #7F7F7F 15%, #DFDFDF 75%);
+        border-width: 2px;
+        padding-top: 4px;
+      }
+      #toggle-options:active:after {
         background: radial-gradient(ellipse at bottom right, #707070 30%, #D0D0D0 90%);
         border-width: 4px;
         padding-top: 2px;
-      }
-      #toggle-controls.disabled {
-        background: #777;
-      }
-      #toggle-controls.disabled:after {
-        content: 'Mobile Only';
-        border-color: #333;
-        text-shadow: none;
-      }
-      #toggle-controls.disabled:active:after {
-        background: transparent;
-        border-width: 3px;
-        padding-top: 3px;
       }
       .button,
       .small-screen,
@@ -359,43 +469,43 @@ permalink: /projects/asteroids-js
           Sorry, your browser does not meet the minimum requirements for this game
         </canvas><aside>
           <div id="score-container">
-            <label for="score">Score</label><div class="input-wrapper"><input id="score" disabled="disabled"/></div>
-            <label for="hiscore">Hi score</label><div class="input-wrapper"><input id="hiscore" disabled="disabled"/></div>
+            <label for="score">Score</label><div class="input-wrapper"><div id="score" class="score">0</div></div>
+            <label for="hiscore">Hi score</label><div class="input-wrapper"><div id="hiscore" class="score">0</div></div>
+            <label for="lives">Lives</label><div class="input-wrapper"><div id="lives" class="score">3</div></div>
           </div>
-          <div id="input-container">
-            <div class="input-block"><label for="red">Red</label><div class="input-wrapper"><input data-color="r" name="red" value="255"/></div></div>
-            <div class="input-block"><label for="green">Green</label><div class="input-wrapper"><input data-color="g" name="green" value="255"/></div></div>
-            <div class="input-block"><label for="blue">Blue</label><div class="input-wrapper"><input data-color="b" name="blue" value="255"/></div></div>
-          </div>
+          <div id="toggle-options"></div>
           <div id="keybinds-container">
             <div class="keybind">
               <label for="left">Turn Left</label>
               <div class="input-wrapper">
-                <input type="text" name="left" value="">
+                <div id="left" class="input-display"></div>
+                <input type="text" name="left" value="" data-key="">
               </div>
             </div>
             <div class="keybind">
               <label for="right">Turn Right</label>
               <div class="input-wrapper">
-                <input type="text" name="right" value="">
+                <div id="right" class="input-display"></div>
+                <input type="text" name="right" value="" data-key="">
               </div>
             </div>
             <div class="keybind">
               <label for="move">Fire Thrusters</label>
               <div class="input-wrapper">
-                <input type="text" name="move" value="">
+                <div id="move" class="input-display"></div>
+                <input type="text" name="move" value="" data-key="">
               </div>
             </div>
             <div class="keybind">
               <label for="fire">Fire Missile</label>
               <div class="input-wrapper">
-                <input type="text" name="fire" value="">
+                <div id="fire" class="input-display"></div>
+                <input type="text" name="fire" value="" data-key="">
               </div>
             </div>
           </div>
           <div id="button-red" class="button button-red"></div>
           <div id="button-yellow" class="button button-yellow"></div>
-          <div id="toggle-controls"></div>
         </aside>
       </div>
       <div class="small-screen">
@@ -416,11 +526,13 @@ permalink: /projects/asteroids-js
         }
 
         var scene = 'title';
-        var score = 0;
+        var scores = { score: 0, hiscore: loadHiscore() };
+        var explosions = [];
+        var asteroids = [];
         var buttonRed = document.getElementById('button-red');
         var buttonYellow = document.getElementById('button-yellow');
-        var toggleControls = document.getElementById('toggle-controls');
-        var keybinds = document.getElementById('keybinds-container');
+        var optionsButton = document.getElementById('toggle-options');
+        var keybindsContainer = document.getElementById('keybinds-container');
         var buttons = document.getElementsByClassName('button');
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
@@ -445,80 +557,34 @@ permalink: /projects/asteroids-js
         }
         updateWrapper();
 
-        function setToggleButton() {}
-
-        adaptAddEventListener(toggleControls, 'contextmenu', preventEverything);
-        adaptAddEventListener(toggleControls, 'touchstart', handleToggleControls);
-        adaptAddEventListener(toggleControls, 'mousedown', disableToggleControls);
-        adaptAddEventListener(toggleControls, 'mouseup', enableToggleControls);
-        function handleToggleControls() {
-          var keyDisp = keybinds.style.display ? keybinds.style.display : getComputedStyle(keybinds).display;
-          var buttonDisp = buttons[0].style.display ? buttons[0].style.display : getComputedStyle(buttons[0]).display;
-
-          keybinds.style.display = keyDisp === 'none' ? 'block' : 'none';
-          for (var i = 0; i < buttons.length; i++) {
-            buttons[i].style.display = buttonDisp === 'none' ? 'block' : 'none';
-          }
-        }
-        function disableToggleControls(event) {
-          var el = event.target;
-          if (el.classList && el.classList.length === 0) {
-            el.classList.add('disabled');
-          }
-          else if (el.className.length === 0 && ! el.className.includes('disabled')) el.className = 'disabled';
-        }
-        function enableToggleControls(event) {
-          var el = event.target;
-          if (el.classList && el.classList.length > 0) {
-            el.classList.remove('disabled');
-          }
-          else if (el.className.includes('disabled')) el.className = '';
+        adaptAddEventListener(optionsButton, 'contextmenu', preventEverything);
+        adaptAddEventListener(optionsButton, 'touchstart', handleOptionsButton);
+        adaptAddEventListener(optionsButton, 'mousedown', handleOptionsButton);
+        function handleOptionsButton() {
+          optionsMenu.toggle();
         }
 
         updateScore(true);
-        document.getElementById('hiscore').value = Math.max(score, hiscore.value);
+        document.getElementById('hiscore').innerHTML = Math.max(scores.hiscore, hiscore.innerHTML);
         function updateScore(reset) {
-          if (reset) score = 0;
-          else score++;
-          document.getElementById('score').value = score;
+          if (reset) scores.score = 0;
+          else scores.score++;
+          document.getElementById('score').innerHTML = scores.score;
         }
-
-        var colorInputs = document.querySelectorAll('#input-container input');
-        for (var i = 0; i < colorInputs.length; i++) {
-          adaptAddEventListener(colorInputs[i], 'keyup', updateColor);
-          updateColor({target: colorInputs[i]});
-        }
-        function updateColor(event) {
-          var color, newColor;
-          var colors = {
-            r: parseInt(context.strokeStyle.substr(1,2), 16),
-            g: parseInt(context.strokeStyle.substr(3,2), 16),
-            b: parseInt(context.strokeStyle.substr(5,2), 16)
-          }
-          if (isNaN(event.target.value)) {
-            event.target.value = colors[event.target.dataset.color];
-          }
-          else {
-            if (event.target.value < 0 || event.target.value > 255 || event.target.value % 1 !== 0) {
-              color = Math.max(0, Math.min(255, Math.round(event.target.value)));
-              event.target.value = color;
-            }
-            else {
-              color = event.target.value;
-            }
-            colors[event.target.dataset.color] = color;
-            newColor = 'rgb(' + colors.r + ',' + colors.g + ',' + colors.b + ')';
-
-            context.strokeStyle = newColor;
-            context.fillStyle = newColor;
-          }
+        var livesCounter = document.getElementById('lives');
+        function updateLivesCounter() {
+          livesCounter.innerHTML = player.lives;
         }
 
         var keybinds = document.querySelectorAll('#keybinds-container input');
+        var keybindDisplays = {}
         for (var i = 0; i < keybinds.length; i++) {
           adaptAddEventListener(keybinds[i], 'keydown', updateKeybinds);
           inputs[DEFAULT_KEYS[keybinds[i].name]] = keybinds[i].name;
-          keybinds[i].value = VALID_KEYS[DEFAULT_KEYS[keybinds[i].name]];
+          keybinds[i].dataset.key = [DEFAULT_KEYS[keybinds[i].name]];
+          var display = document.getElementById(keybinds[i].name);
+          display.innerHTML = VALID_KEYS[DEFAULT_KEYS[keybinds[i].name]];
+          keybindDisplays[keybinds[i].name] = display;
         }
         function updateKeybinds(event) {
           event.preventDefault();
@@ -527,68 +593,34 @@ permalink: /projects/asteroids-js
 
           if (VALID_KEYS[key]) {
             newInputs[key] = event.target.name;
-            event.target.value = VALID_KEYS[key];
+            event.target.dataset.key = key;
+            keybindDisplays[event.target.name].innerHTML = VALID_KEYS[key];
           }
-          else if (! event.target.value) {
+          else if (! event.target.dataset.key) {
             newInputs[DEFAULT_KEYS[event.target.name]] = event.target.name;
-            event.target.value = VALID_KEYS[DEFAULT_KEYS[event.target.name]];
+            event.target.dataset.key = DEFAULT_KEYS[event.target.name];
+            keybindDisplays[event.target.name].innerHTML = VALID_KEYS[DEFAULT_KEYS[event.target.name]];
           }
 
           var others = document.querySelectorAll('#keybinds-container input:not([name="' + event.target.name + '"])');
           for (var i = 0; i < others.length; i++) {
-            if (others[i].value === event.target.value) others[i].value = '';
-            else newInputs[KEY_VALUES[others[i].value]] = others[i].name;
+            if (others[i].dataset.key === event.target.dataset.key) {
+              others[i].dataset.key = '';
+              keybindDisplays[others[i].name].innerHTML = '';
+            }
+            else {
+              newInputs[KEY_VALUES[others[i].dataset.key]] = others[i].name;
+              keybindDisplays[others[i].name].innerHTML = VALID_KEYS[others[i].dataset.key] ? VALID_KEYS[others[i].dataset.key] : '';
+            }
           }
 
           inputs = newInputs;
-        }
-
-        var Vector = function(rad, mag) {
-          this.rad = typeof rad === 'number' ? rad : 0;
-          this.mag = typeof mag === 'number' ? mag : 0;
-          return this;
-        }
-        Vector.prototype.add = function(other) {
-          var x = (this.mag * Math.cos(this.rad)) + (other.mag * Math.cos(other.rad));
-          var y = (this.mag * Math.sin(this.rad)) + (other.mag * Math.sin(other.rad));
-          this.rad = Math.atan2(y, x);
-          this.mag = Math.min(MAX_SPEED, Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
-          return this;
         }
 
         function boundRads(rads) {
           return (2 * Math.PI + rads) % (2 * Math.PI);
         }
 
-        var explosions = [];
-        var Explosion = function(actor, end) {
-          this.x = actor.x;
-          this.y = actor.y;
-          this.frame = 0;
-          this.end = end ? end : 8;
-          return this;
-        }
-
-        var Actor = function(x, y, vel, dir) {
-          this.x = x;
-          this.y = y;
-          this.vel = vel;
-          this.dir = dir ? dir : new Vector(vel.rad, 0);
-          return this;
-        }
-        Actor.prototype.move = moveActor;
-        function moveActor() {
-          this.x += this.vel.mag * Math.cos(this.vel.rad);
-          this.y += this.vel.mag * Math.sin(this.vel.rad);
-
-          if (this.x < 0) this.x = canvas.width;
-          else if (this.x > canvas.width) this.x = 0;
-
-          if (this.y < 0) this.y = canvas.height;
-          else if (this.y > canvas.height) this.y = 0;
-        }
-
-        var asteroids = [];
         while (asteroids.length < 3) spawnAsteroid();
         function spawnAsteroid(ast, rad) {
           var x, y, size;
@@ -629,22 +661,250 @@ permalink: /projects/asteroids-js
 
         var missile = false;
         var mTimeout = 0;
-        var player;
-        function setPlayer() {
-          player = {
-            x: canvas.width / 2,
-            y: canvas.height / 2,
-            vel: new Vector(),
-            dir: new Vector(),
-            size: 8,
-            rot: 0,
-            frame: 0,
-            move: moveActor,
-            setRot: function(dir) {
-              this.rot = dir == 'right' ? Math.min(1, this.rot + 1) : Math.max(-1, this.rot - 1);
+        var player = {
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vel: new Vector(),
+          dir: new Vector(),
+          lives: 3,
+          vul: true,
+          enable: true,
+          sprite: 0,
+          size: 8,
+          rot: 0,
+          frame: 0,
+          move: moveActor,
+          setRot: function(dir) {
+            if (this.enable) this.rot = dir == 'right' ? Math.min(1, this.rot + 1) : Math.max(-1, this.rot - 1);
+          },
+          destroy: function() {
+            explosions.push(new Explosion(player, 12));
+            this.lives--;
+            updateLivesCounter();
+            if (this.lives === 0) gameOver();
+            else {
+              this.enable = false;
+              this.vul = false;
+              this.x = canvas.width / 2,
+              this.y = canvas.height / 2,
+              this.vel = new Vector();
+              this.dir = new Vector();
+              setTimeout(function() { this.enable = true; }.bind(this), 800);
+              setTimeout(function() { this.vul = true; }.bind(this), 1200);
+            }
+          },
+          render: function(context, x, y) {
+            if (this.enable) {
+              var x = x ? x : this.x;
+              var y = y ? y : this.y;
+              context.beginPath();
+              switch (this.sprite) {
+                case 0:
+                  context.moveTo(x + (16 * Math.cos(this.dir.rad)) + 0.5, y + (16 * Math.sin(this.dir.rad)) + 0.5);
+                  context.lineTo(x - (16 * Math.cos(this.dir.rad - (Math.PI / 5))) + 0.5, y - (16 * Math.sin(this.dir.rad - (Math.PI / 5))) + 0.5);
+                  context.lineTo(x - (8 * Math.cos(this.dir.rad)) + 0.5, y - (8 * Math.sin(this.dir.rad)) + 0.5);
+                  context.lineTo(x - (16 * Math.cos(this.dir.rad + (Math.PI / 5))) + 0.5, y - (16 * Math.sin(this.dir.rad + (Math.PI / 5))) + 0.5);
+                  break;
+                case 1:
+                  context.moveTo(x + (8 * Math.cos(this.dir.rad)) + 0.5, y + (8 * Math.sin(this.dir.rad)) + 0.5);
+                  context.lineTo(x + (8 * Math.cos(this.dir.rad + 0.2)) + 0.5, y + (8 * Math.sin(this.dir.rad + 0.2)) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad + 0.1)) + 0.5, y + (16 * Math.sin(this.dir.rad + 0.1)) + 0.5);
+                  context.lineTo(x + (17 * Math.cos(this.dir.rad + (Math.PI / 8))) + 0.5, y + (17 * Math.sin(this.dir.rad + (Math.PI / 8))) + 0.5);
+                  context.lineTo(x + (14 * Math.cos(this.dir.rad + 0.8)) + 0.5, y + (14 * Math.sin(this.dir.rad + 0.8)) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad + 1)) + 0.5, y + (16 * Math.sin(this.dir.rad + 1)) + 0.5);
+                  context.lineTo(x + (18 * Math.cos(this.dir.rad + 1)) + 0.5, y + (18 * Math.sin(this.dir.rad + 1)) + 0.5);
+                  context.lineTo(x + (21 * Math.cos(this.dir.rad + 1.1)) + 0.5, y + (21 * Math.sin(this.dir.rad + 1.1)) + 0.5);
+                  context.lineTo(x + (19 * Math.cos(this.dir.rad + 1.4)) + 0.5, y + (19 * Math.sin(this.dir.rad + 1.4)) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad + (Math.PI / 2))) + 0.5, y + (16 * Math.sin(this.dir.rad + (Math.PI / 2))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad + (Math.PI * (5 / 8)))) + 0.5, y + (16 * Math.sin(this.dir.rad + (Math.PI * (5 / 8)))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad + (Math.PI * (3 / 4)))) + 0.5, y + (16 * Math.sin(this.dir.rad + (Math.PI * (3 / 4)))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad + (Math.PI * (7 / 8)))) + 0.5, y + (16 * Math.sin(this.dir.rad + (Math.PI * (7 / 8)))) + 0.5);
+                  context.lineTo(x - (16 * Math.cos(this.dir.rad)) + 0.5, y - (16 * Math.sin(this.dir.rad)) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad - (Math.PI * (7 / 8)))) + 0.5, y + (16 * Math.sin(this.dir.rad - (Math.PI * (7 / 8)))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad - (Math.PI * (3 / 4)))) + 0.5, y + (16 * Math.sin(this.dir.rad - (Math.PI * (3 / 4)))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad - (Math.PI * (5 / 8)))) + 0.5, y + (16 * Math.sin(this.dir.rad - (Math.PI * (5 / 8)))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad - (Math.PI / 2))) + 0.5, y + (16 * Math.sin(this.dir.rad - (Math.PI / 2))) + 0.5);
+                  context.lineTo(x + (17 * Math.cos(this.dir.rad - (Math.PI / 8))) + 0.5, y + (17 * Math.sin(this.dir.rad - (Math.PI / 8))) + 0.5);
+                  context.lineTo(x + (16 * Math.cos(this.dir.rad - 0.1)) + 0.5, y + (16 * Math.sin(this.dir.rad - 0.1)) + 0.5);
+                  context.lineTo(x + (8 * Math.cos(this.dir.rad - 0.2)) + 0.5, y + (8 * Math.sin(this.dir.rad - 0.2)) + 0.5);
+                  break;
+              }
+              context.closePath();
+              context.stroke();
+              // Render exhaust
+              if (this.dir.mag !== 0) {
+                var exMod = 24 + (3 * (this.frame < 3 ? this.frame : 6 - this.frame));
+                context.beginPath();
+                switch (this.sprite) {
+                  case 0:
+                    context.moveTo(x - (14 * Math.cos(this.dir.rad)) + 0.5, y - (14 * Math.sin(this.dir.rad)) + 0.5);
+                    context.lineTo(x - (18 * Math.cos(this.dir.rad - (Math.PI / 8))) + 0.5, y - (18 * Math.sin(this.dir.rad - (Math.PI / 8))) + 0.5);
+                    context.lineTo(x - (exMod * Math.cos(this.dir.rad)) + 0.5, y - (exMod * Math.sin(this.dir.rad)) + 0.5);
+                    context.lineTo(x - (18 * Math.cos(this.dir.rad + (Math.PI / 8))) + 0.5, y - (18 * Math.sin(this.dir.rad + (Math.PI / 8))) + 0.5);
+                    break;
+                  case 1:
+                    context.moveTo(x - (19 * Math.cos(this.dir.rad)) + 0.5, y - (19 * Math.sin(this.dir.rad)) + 0.5);
+                    context.lineTo(x - (19 * Math.cos(this.dir.rad - (Math.PI / 8))) + 0.5, y - (19 * Math.sin(this.dir.rad - (Math.PI / 8))) + 0.5);
+                    context.lineTo(x - (19 * Math.cos(this.dir.rad - (Math.PI / 5))) + 0.5, y - (19 * Math.sin(this.dir.rad - (Math.PI / 5))) + 0.5);
+                    context.lineTo(x - (exMod * Math.cos(this.dir.rad)) + 0.5, y - (exMod * Math.sin(this.dir.rad)) + 0.5);
+                    context.lineTo(x - (19 * Math.cos(this.dir.rad + (Math.PI / 5))) + 0.5, y - (19 * Math.sin(this.dir.rad + (Math.PI / 5))) + 0.5);
+                    context.lineTo(x - (19 * Math.cos(this.dir.rad + (Math.PI / 8))) + 0.5, y - (19 * Math.sin(this.dir.rad + (Math.PI / 8))) + 0.5);
+                    break;
+                }
+                context.closePath();
+                context.stroke();
+              }
             }
           }
         }
+
+        function setPlayer() {
+          player.x = canvas.width / 2;
+          player.y = canvas.height / 2;
+          player.vel = new Vector();
+          player.dir = new Vector();
+          player.lives = 3;
+          player.vul = true;
+          player.enable = true;
+          player.rot = 0;
+          player.frame = 0;
+        }
+        setPlayer();
+
+        var togX = 580;
+        var togY = 500;
+        var switchGrad = context.createRadialGradient(togX, togY + (window.innerWidth > 1024 ? -20 : 20), 0, togX, togY + (window.innerWidth > 1024 ? -20 : 20), 8);
+        switchGrad.addColorStop(0, '#999');
+        switchGrad.addColorStop(1, '#555');
+        var lightGrad = context.createRadialGradient(togX + 140, togY + (window.innerWidth > 1024 ? -10 : 10), 0, togX + 140, togY + (window.innerWidth > 1024 ? -10 : 10), 10);
+        lightGrad.addColorStop(0, '#E33');
+        lightGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        var optionsMenu = {
+          active: false,
+          buttons: [new Button(125, 500, 'left'), new Button(400, 500, 'right')],
+          sliders: [new Slider(600, 130, 'R'), new Slider(632, 130, 'G'), new Slider(664, 130, 'B')],
+          toggleSwitch: {
+            x: togX, y: togY, dir: window.innerWidth > 1024 ? -1 : 1,
+            grad: switchGrad, light: lightGrad,
+            over: function(event) {
+              return ! (event.layerX < this.x - 6 || event.layerX > this.x + 6 || event.layerY < this.y - 20 || event.layerY > this.y + 20);
+            },
+            toggle: function() {
+              this.dir *= -1;
+              var switchGrad = context.createRadialGradient(this.x, this.y + (this.dir * 20), 0, this.x, this.y + (this.dir * 20), 8);
+              switchGrad.addColorStop(0, this.dir < 0 ? '#999' : '#555');
+              switchGrad.addColorStop(1, this.dir < 0 ? '#555' : '#999');
+              this.grad = switchGrad;
+              var lightGrad = context.createRadialGradient(this.x + 140, this.y + (this.dir * 10), 0, this.x + 140, this.y + (this.dir * 10), 10);
+              lightGrad.addColorStop(0, '#E33');
+              lightGrad.addColorStop(1, 'rgba(0,0,0,0)');
+              this.light = lightGrad;
+              toggleControls();
+            },
+            render: function (context) {
+              context.fillStyle = '#111';
+              context.strokeStyle = '#777';
+              context.lineWidth = 3;
+              context.beginPath();
+              context.moveTo(this.x + 5, this.y);
+              context.arc(this.x, this.y, 5, 0, Math.PI * 2);
+              context.closePath();
+              context.fill();
+              context.stroke();
+              context.fillStyle = this.grad;
+              context.beginPath();
+              context.moveTo(this.x + 2, this.y);
+              context.arc(this.x, this.y, 2, 0, Math.PI, this.dir === 1);
+              context.lineTo(this.x - 4, this.y + (this.dir * 20));
+              context.arc(this.x, this.y + (this.dir * 20), 4, Math.PI, Math.PI * 2, this.dir === 1);
+              context.lineTo(this.x + 4, this.y + (this.dir * 20));
+              context.closePath();
+              context.fill();
+              context.font = '16px Courier, monospace';
+              context.textAlign = 'left';
+              context.fillStyle = '#FFF';
+              context.fillText('Keyboard', this.x + 20, this.y - 6);
+              context.fillText('Touchscreen', this.x + 20, this.y + 16);
+              context.fillStyle = this.light;
+              context.beginPath();
+              context.moveTo(this.x + 160, this.y + (this.dir * 10));
+              context.arc(this.x + 140, this.y + (this.dir * 10), 10, 0, Math.PI * 2);
+              context.closePath();
+              context.fill();
+              context.lineWidth = 1;
+            }
+          },
+          toggle: function() { this.active = ! this.active },
+          handleMouseDown: function(event) {
+            if (this.active) {
+              if (this.toggleSwitch.over(event)) {
+                this.toggleSwitch.toggle();
+                return;
+              }
+              for (var i = 0; i < this.sliders.length; i++) {
+                if (this.sliders[i].checkActive(event)) {
+                  this.sliders[i].updatePos(event);
+                  break;
+                }
+              }
+              this.buttons.forEach(function(btn) { btn.handleMouseDown(event); });
+            }
+          },
+          handleMouseUp: function(event) {
+            this.sliders.forEach(function(slider) { slider.active = false; });
+            this.buttons.forEach(function(btn) {
+              var max = Math.max(1, Math.floor(scores.hiscore / 20));
+              switch (btn.handleMouseUp(event)) {
+                case 'left': player.sprite--; if (player.sprite < 0) player.sprite = max; break;
+                case 'right': player.sprite = (player.sprite + 1) % (max + 1); break;
+              }
+            });
+          },
+          handleMouseMove: function(event) {
+            if (this.active) {
+              for (var i = 0; i < this.sliders.length; i++) {
+                if (this.sliders[i].active) {
+                  this.sliders[i].updatePos(event);
+                  break;
+                }
+              }
+              this.buttons.forEach(function(btn) { btn.handleMouseMove(event); });
+            }
+          },
+          render: function(context) {
+            if (this.active) {
+              context.fillStyle = 'rgba(0,0,0,0.4)';
+              context.fillRect(0, 0, canvas.width, canvas.height);
+              context.fillStyle = '#FFF';
+              context.font = '32px Courier, monospace';
+              context.textAlign = 'left';
+              context.fillText('Options', 60, 60);
+              this.toggleSwitch.render(context);
+              this.buttons.forEach(function(btn) { btn.render(context); });
+              this.sliders.forEach(function(slider) { slider.render(context); });
+              context.fillStyle = '#000';
+              context.strokeStyle = '#777';
+              context.fillRect(150, 100, 300, 300);
+              context.strokeRect(150, 100, 300, 300);
+              // Update the colors based on sliders
+              context.strokeStyle = context.fillStyle = 'rgb(' + this.sliders.map(function(slider) { return slider.pos }).join(',') + ')';
+              player.render(context, 300, 250);
+            }
+          }
+        }
+        function toggleControls() {
+          var keyDisp = keybindsContainer.style.display ? keybindsContainer.style.display : getComputedStyle(keybindsContainer).display;
+          var buttonDisp = buttons[0].style.display ? buttons[0].style.display : getComputedStyle(buttons[0]).display;
+
+          keybindsContainer.style.display = keyDisp === 'none' ? 'block' : 'none';
+          for (var i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = buttonDisp === 'none' ? 'block' : 'none';
+          }
+        }
+        // Mouse events
+        adaptAddEventListener(canvas, 'mousedown', function(event) { optionsMenu.handleMouseDown(event) });
+        adaptAddEventListener(canvas, 'mouseup', function(event) { optionsMenu.handleMouseUp(event) });
+        adaptAddEventListener(canvas, 'mousemove', function(event) { optionsMenu.handleMouseMove(event) });
 
         adaptAddEventListener(canvas, 'contextmenu', preventEverything);
         adaptAddEventListener(buttonRed, 'contextmenu', preventEverything);
@@ -677,8 +937,8 @@ permalink: /projects/asteroids-js
           if (event.target.tagName !== 'INPUT' && ! event.repeat && inputs[key]) {
             event.preventDefault();
             switch (inputs[key]) {
-              case 'left': player.setRot('left'); break;
-              case 'right': player.setRot('right'); break;
+              case 'left': if (player) player.setRot('left'); break;
+              case 'right': if (player) player.setRot('right'); break;
               case 'move': updateThrusters(true); break;
               case 'fire': handleFireAction(); break;
             }
@@ -689,8 +949,8 @@ permalink: /projects/asteroids-js
           if (event.target.tagName !== 'INPUT' && ! event.repeat && inputs[key]) {
             event.preventDefault();
             switch (inputs[key]) {
-              case 'left': player.setRot('right'); break;
-              case 'right': player.setRot('left'); break;
+              case 'left': if (player && player.rot !== 0) player.setRot('right'); break;
+              case 'right': if (player && player.rot !== 0) player.setRot('left'); break;
               case 'move': updateThrusters(); break;
             }
           }
@@ -703,11 +963,9 @@ permalink: /projects/asteroids-js
         // Touch event Handlers
         function handleFireAction(event) {
           if (scene !== 'game') reset();
-          else {
-            if (! missile) {
-              missile = new Actor(player.x, player.y, new Vector(player.dir.rad, MAX_SPEED + 1));
-              missile.life = 1000;
-            }
+          else if (player.enable && ! missile) {
+            missile = new Actor(player.x + (12 * Math.cos(player.dir.rad)), player.y + (12 * Math.sin(player.dir.rad)), new Vector(player.dir.rad, MAX_SPEED + 1));
+            missile.life = 1000;
           }
         }
         function handleYellowButton(event) {
@@ -716,16 +974,19 @@ permalink: /projects/asteroids-js
             updateThrusters(event.type === 'touchstart');
           }
         }
+        function updateThrusters(fireThrusters) {
+          if (! optionsMenu.active && player.enable) {
+            player.dir.mag = fireThrusters ? 1 : 0;
+          }
+        }
         function breakMissile() {
           missile = false;
           clearTimeout(mTimeout);
         }
-        function updateThrusters(fireThrusters) {
-          player.dir.mag = fireThrusters ? 1 : 0;
-        }
 
         function reset() {
           setPlayer();
+          updateLivesCounter();
           updateScore(true);
           breakMissile();
           asteroids = [];
@@ -735,44 +996,42 @@ permalink: /projects/asteroids-js
 
         var updateInterval = window.setInterval(update, 20);
         function update() {
-          if (missile) {
-            missile.move();
-            missile.life -= 20;
-            if (missile.life <= 0) missile = false;
-          }
-          asteroids.forEach(function(ast) { ast.move() });
-          handleCollisions();
+          if (! optionsMenu.active) {
+            if (missile) {
+              missile.move();
+              missile.life -= 20;
+              if (missile.life <= 0) missile = false;
+            }
+            asteroids.forEach(function(ast) { ast.move() });
+            handleCollisions();
 
-          switch (scene) {
-            case 'game':
-              if (touch.active) {
-                var diff = boundRads(Math.atan2(touch.y - player.y, touch.x - player.x)) - player.dir.rad;
-                if (Math.abs(diff) > Math.PI) player.rot = diff > 0 ? -1 : 1;
-                else if (Math.abs(diff) > 0.1) player.rot = diff > 0 ? 1 : -1;
-                else player.rot = 0;
-              }
+            switch (scene) {
+              case 'game':
+                if (touch.active) {
+                  var diff = boundRads(Math.atan2(touch.y - player.y, touch.x - player.x)) - player.dir.rad;
+                  if (Math.abs(diff) > Math.PI) player.rot = diff > 0 ? -1 : 1;
+                  else if (Math.abs(diff) > 0.1) player.rot = diff > 0 ? 1 : -1;
+                  else player.rot = 0;
+                }
 
-              player.dir.rad = boundRads(player.dir.rad + (player.rot * (Math.PI / 24)));
-              if (player.dir.mag > 0) {
-                player.vel.add(player.dir);
-              }
-              player.frame = (player.frame + 1) % 6;
-              player.move();
-              break;
+                player.dir.rad = boundRads(player.dir.rad + (player.rot * (Math.PI / 24)));
+                if (player.dir.mag > 0) {
+                  player.vel.add(player.dir);
+                }
+                player.frame = (player.frame + 1) % 6;
+                player.move();
+                break;
+            }
           }
         }
         function handleCollisions() {
           for (var i = 0; i < asteroids.length; i++) {
-            if (scene == 'game' && detectActorCollision(player, asteroids[i])) {
-              gameOver();
-              return;
-            }
+            if (scene == 'game' && detectActorCollision(player, asteroids[i]) && player.vul) player.destroy();
             else if (missile && detectActorCollision(missile, asteroids[i])) {
               breakMissile();
               if (asteroids[i].dir.mag === 16) updateScore();
               breakAsteroid(i);
               asteroids.splice(i, 1);
-              return;
             }
             else {
               for (var j = 0; j < asteroids.length; j++) {
@@ -784,7 +1043,7 @@ permalink: /projects/asteroids-js
                     if (index !== i && index !== j) newAsts.push(ast);
                   });
                   asteroids = newAsts;
-                  return;
+                  break;
                 }
               }
             }
@@ -842,34 +1101,19 @@ permalink: /projects/asteroids-js
 
           switch(scene) {
             case 'title':
-              context.font = '48px monospace';
+              context.textAlign = 'center';
+              context.font = '48px Courier, monospace';
               context.fillText('ASTEROIDS JS', canvas.width / 2, (canvas.height / 2) - 32);
-              context.font = '18px monospace';
+              context.font = '18px Courier, monospace';
               context.fillText('Press "fire" to start', canvas.width / 2, (canvas.height / 2) + 8);
               break;
             case 'game':
-              // Render player
-              context.beginPath();
-              context.moveTo(player.x + (16 * Math.cos(player.dir.rad)) + 0.5, player.y + (16 * Math.sin(player.dir.rad)) + 0.5);
-              context.lineTo(player.x - (16 * Math.cos(player.dir.rad - (Math.PI / 5))) + 0.5, player.y - (16 * Math.sin(player.dir.rad - (Math.PI / 5))) + 0.5);
-              context.lineTo(player.x - (8 * Math.cos(player.dir.rad)) + 0.5, player.y - (8 * Math.sin(player.dir.rad)) + 0.5);
-              context.lineTo(player.x - (16 * Math.cos(player.dir.rad + (Math.PI / 5))) + 0.5, player.y - (16 * Math.sin(player.dir.rad + (Math.PI / 5))) + 0.5);
-              context.closePath();
-              context.stroke();
-              // Render exhaust
-              if (player.dir.mag !== 0) {
-                var exMod = 24 + (3 * (player.frame < 3 ? player.frame : 6 - player.frame));
-                context.beginPath();
-                context.moveTo(player.x - (14 * Math.cos(player.dir.rad)) + 0.5, player.y - (14 * Math.sin(player.dir.rad)) + 0.5);
-                context.lineTo(player.x - (18 * Math.cos(player.dir.rad - (Math.PI / 8))) + 0.5, player.y - (18 * Math.sin(player.dir.rad - (Math.PI / 8))) + 0.5);
-                context.lineTo(player.x - (exMod * Math.cos(player.dir.rad)) + 0.5, player.y - (exMod * Math.sin(player.dir.rad)) + 0.5);
-                context.lineTo(player.x - (18 * Math.cos(player.dir.rad + (Math.PI / 8))) + 0.5, player.y - (18 * Math.sin(player.dir.rad + (Math.PI / 8))) + 0.5);
-                context.closePath();
-                context.stroke();
-              }
+              context.lineWidth = 1;
+              player.render(context);
               break;
             case 'over':
-              context.font = '64px monospace';
+              context.textAlign = 'center';
+              context.font = '64px Courier, monospace';
               context.fillText('GAME', canvas.width / 2, (canvas.height / 2) - 32);
               context.fillText('OVER', canvas.width / 2, (canvas.height / 2) + 32);
               break;
@@ -883,16 +1127,18 @@ permalink: /projects/asteroids-js
             context.closePath();
             context.stroke();
             // Increment the explosion's animation frame
-            exp.frame++
+            if (! optionsMenu.active) exp.frame++
             if (exp.frame < exp.end) newExp.push(exp);
           });
           explosions = newExp;
+
+          optionsMenu.render(context);
         }
 
         function gameOver() {
           scene = 'over';
-          explosions.push(new Explosion(player, 12));
-          document.getElementById('hiscore').value = Math.max(score, hiscore.value);
+          scores.hiscore = Math.max(scores.score, scores.hiscore);
+          document.getElementById('hiscore').innerHTML = scores.hiscore;
         }
 
         window.requestAnimationFrame(step);
