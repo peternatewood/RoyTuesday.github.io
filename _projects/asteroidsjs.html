@@ -11,6 +11,7 @@ permalink: /projects/asteroids-js
       var MAX_ASTEROIDS = 7;
       var MAX_SPEED = 6;
       var ASTEROID_SPEED = 1;
+      var MAX_SPRITES = 1;
       var VALID_KEYS = {
         'ArrowLeft' : 'Left Arrow',
         'ArrowRight': 'Right Arrow',
@@ -781,6 +782,7 @@ permalink: /projects/asteroids-js
         lightGrad.addColorStop(1, 'rgba(0,0,0,0)');
         var optionsMenu = {
           active: false,
+          allowSpriteSwitch: Math.min(MAX_SPRITES, Math.floor(scores.hiscore / 20)) > 0,
           buttons: [new Button(125, 500, 'left'), new Button(400, 500, 'right')],
           sliders: [new Slider(600, 130, 'R'), new Slider(632, 130, 'G'), new Slider(664, 130, 'B')],
           toggleSwitch: {
@@ -834,7 +836,10 @@ permalink: /projects/asteroids-js
               context.lineWidth = 1;
             }
           },
-          toggle: function() { this.active = ! this.active },
+          toggle: function() {
+            this.active = ! this.active;
+            this.allowSpriteSwitch = Math.min(MAX_SPRITES, Math.floor(scores.hiscore / 20)) > 0;
+          },
           handleMouseDown: function(event) {
             if (this.active) {
               if (this.toggleSwitch.over(event)) {
@@ -853,7 +858,7 @@ permalink: /projects/asteroids-js
           handleMouseUp: function(event) {
             this.sliders.forEach(function(slider) { slider.active = false; });
             this.buttons.forEach(function(btn) {
-              var max = Math.min(1, Math.floor(scores.hiscore / 20));
+              var max = Math.min(MAX_SPRITES, Math.floor(scores.hiscore / 20));
               switch (btn.handleMouseUp(event)) {
                 case 'left': player.sprite--; if (player.sprite < 0) player.sprite = max; break;
                 case 'right': player.sprite = (player.sprite + 1) % (max + 1); break;
@@ -880,7 +885,7 @@ permalink: /projects/asteroids-js
               context.textAlign = 'left';
               context.fillText('Options', 60, 60);
               this.toggleSwitch.render(context);
-              this.buttons.forEach(function(btn) { btn.render(context); });
+              if (this.allowSpriteSwitch) this.buttons.forEach(function(btn) { btn.render(context); });
               this.sliders.forEach(function(slider) { slider.render(context); });
               context.fillStyle = '#000';
               context.strokeStyle = '#777';
