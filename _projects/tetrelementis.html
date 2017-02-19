@@ -6,115 +6,2603 @@ permalink: /projects/tetrelementis/
 <html>
   <head>
     <meta charset="UTF-8"/>
-
-    <link href={{ "/css/tetrelementis.css" | prepend: site.baseurl }} rel="stylesheet" type="text/css"/>
-
-    <script src={{ "/scripts/tetrelementis.js" | prepend: site.baseurl }}></script>
+    <style media="screen">
+      body {
+        background-color: #8A4358;
+        color: #222;
+        margin: 0;
+        padding: 18px 0;
+        text-align: center;
+      }
+      main {
+        position: relative;
+        margin: 0 auto;
+        max-width: 900px;
+        width: 100vw;
+      }
+      canvas {
+        background-color: #4CC;
+        cursor: none;
+        width: 100%;
+      }
+    </style>
 
     <title>Tetrelementis</title>
   </head>
   <body>
-    <main id="container">
-      <canvas id="tetris-grid" height="600" width="300">
-        Main Game View
-      </canvas>
-      <div id="right-container">
-        <div style="height:130px;">
-          <canvas id="tetris-preview" height="120" width="120">
-            Block Preview
-          </canvas>
-          <div id="level-display">
-            <div id="level-left">
-              <p>
-                Score:_<span id="player-score">0</span>
-              </p>
-              <p>
-                High Score:_<span id="high-score">0</span>
-                _<a id="reset-high-score" href="#" title="Reset your high score to 0">Reset score</a>
-              </p>
-              <p>
-                Level:_<span id="game-level">0</span>
-                <span id="game-level-static" style="display:none">0</span>
-                <span id="game-mode">Marathon</span>
-                <span id="game-mode-static" style="display:none">Marathon</span>
-              </p>
-              <p id="show-directions">
-                <a href="#">Directions</a>
-              </p>
-            </div>
-            <div id="level-right">
-              <div class="controls-row">
-                <button class="control-button" data-key="counter" title="Z Key: Rotate Block Counter-Clockwise">&#8634;</button>
-                <button class="control-button" data-key="clock" title="X Key: Rotate Block Clockwise">&#8635;</button>
-              </div>
-              <div class="controls-row">
-                <button class="control-button" data-key="left" title="Arrow Key Left: Move Block Left">&#8592;</button>
-                <button class="control-button" data-key="down" title="Arrow Key Down: Drop Block Faster">&#8595;</button>
-                <button class="control-button" data-key="right" title="Arrow Key Right: Move Block Right">&#8594;</button>
-              </div>
-              <div class="controls-row">
-                <button class="control-button" data-key="space" id="spacebar" title="Spacebar: Start or Pause">start / pause</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="element-description-container">
-          <div>
-            <h2 id="element-name">Chemical Element</h2>
-            <p id="atomic-number-container">Atomic Number:_<span id="atomic-number">#</span></p>
-          </div>
-          <p id="element-description">
-            Click the "Directions" link above to learn how to play.
-            <br/>
-            <br/>
-            Press the spacebar or click the start button to start.
-          </p>
-          <p>
-            <a href="" id="element-link" target="_blank"></a>
-          </p>
-        </div>
-        <div id="periodic-table-container">
-          <canvas id="tetris-table" height="270" width="540">
-            Table of Elements
-          </canvas>
-          <canvas id="table-overlay" height="270" width="540">
-            Table overlay
-          </canvas>
-        </div>
-      </div>
+    <main>
+      <canvas id="canvas" width="900" height="630"></canvas>
     </main>
-    <div id="directions-container"><div id="directions-transparent-layer"></div><div id="directions">
-    <p id="hide-directions"><a href="#">close x</a></p>
-      <p>
-        Use the <span class="fw-bold">arrow keys</span> and <span class="fw-bold">spacebar</span> or the buttons in the upper right to control the game.
-        <ul>
-          <li><span class="fw-bold">Spacebar</span> starts a new game, and pauses/resumes a game in progress.</li>
-          <li><span class="fw-bold">The Arrow Keys</span> move the falling Tetris block (tetromino)</li>
-          <li><span class="fw-bold">Left</span> and <span class="fw-bold">Right</span> translate the tetromino left and right</li>
-          <li><span class="fw-bold">Z</span> rotates the tetromino counter-clockwise and <span class="fw-bold">X</span> rotates it clockwise</li>
-          <li><span class="fw-bold">Down</span> speeds up the tetromino (for those early levels when you just can't wait)</li>
-        </ul>
-      </p>
-      <p>
-        When the game starts, a tetromino of a random shape and chemical element will appear at the top of the game board and begin to fall. Once it cannot fall any further, either by hitting the bottom or another tetromino, a new random tetromino will appear at the top of the board.
-      </p>
-      <p>
-        Each new tetromino will be of a chemical element that has not yet appeared until the entire periodic table has filled up. Then, the collection of possible elements is reset, so that further tetrominos don't have repeats, and the table left full.
-      </p>
-      <p>
-        Your objective is to keep the board clear enough that more tetrominos can drop; if there is no more space for a tetromino to appear, the game is over. In order to keep the game going, you must fill every quadrant in a horizontal line accross the board. Once a line is filled, all its quadrants are emptied and every block above it falls one row down.
-      </p>
-      <p>
-        Every line you clear adds to your score; the more lines cleared at once, the more points earned. You can clear as many as four lines at once, if you're clever about it. Be wary! As your points increase, so does the Level; each level makes the tetromino drop faster, until it drops as fast as if you held the down arrow all the time!
-      </p>
-      <p>
-        There are three game modes: <span class="fw-bold">Marathon</span>, <span class="fw-bold">Fixed Level</span>, and <span class="fw-bold">Pentathlon</span>
-        <ul>
-          <li><span class="fw-bold">Marathon:</span> The classic Tetris gamemode in which tetrominos are generated forever, and the level increases with your score</li>
-          <li><span class="fw-bold">Fixed Level:</span> Like <span class="fw-bold">Marathon</span>, but you choose at which level you want to start, and the level does not increase</li>
-          <li><span class="fw-bold">Pentathlon:</span> Like <span class="fw-bold">Marathon</span>, but each tetromino is a permutation of <span class="fw-bold">five</span> blocks instead of four (not for the faint of heart)</li>
-        </ul>
-      </p>
-    </div></div>
   </body>
+  <script type="text/javascript">
+  const CHEMICAL_ELEMENTS = [
+    {
+      symbol: false,
+      title: '',
+      background: 'rgba(0,0,0,0)',
+      border: 'rgba(0,0,0,0.2)',
+      color: '#F1EEFA',
+      descrip: [
+        "n/a"
+      ]
+    },
+    {
+      symbol: 'H',
+      title: 'Hydrogen [H]',
+      background: '#DBC3DB',
+      border: '#A971A9',
+      color: 'black',
+      descrip: [
+        "The single most abundant element in the known",
+        "universe. Named using the Greek word \"hydro,\"",
+        "meaning \"water,\" because it makes up two parts of",
+        "the water molecule."
+      ]
+    },
+    {
+      symbol: 'He',
+      title: 'Helium [He]',
+      background: '#EFE09F',
+      border: '#FF9830',
+      color: 'black',
+      descrip: [
+        "Named after the Greek god of the sun, \"Helios,\"",
+        "because it's presence was discovered to be on the",
+        "surface of the sun."
+      ]
+    },
+    {
+      symbol: 'Li',
+      title: 'Lithium [Li]',
+      background: '#E4E4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the Greek word \"lithos,\" meaning \"stone\".",
+        "Often used in rechargeable batteries."
+      ]
+    },
+    {
+      symbol: 'Be',
+      title: 'Beryllium [Be]',
+      background: '#DEDEDA',
+      border: '#50506A',
+      color: 'black',
+      descrip: [
+        "Named for the salt from which it was isolated:",
+        "beryl. Typically used to create copper alloys for",
+        "use in electrical wiring."
+      ]
+    },
+    {
+      symbol: 'B',
+      title: 'Boron [B]',
+      background: '#ACAFA0',
+      border: '#876750',
+      color: 'black',
+      descrip: [
+        "Named for the salt from which it was isolated:",
+        "borax. Used to create green flares and in insulation",
+        "fiberglass."
+      ]
+    },
+    {
+      symbol: 'C',
+      title: 'Carbon [C]',
+      background: '#625858',
+      border: '#121212',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"carbo,\" meaning \"charcoal.\"",
+        "Typically manifests in coal, graphite, and diamond."
+      ]
+    },
+    {
+      symbol: 'N',
+      title: 'Nitrogen [N]',
+      background: '#FFF',
+      border: '#999',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"nitrum,\" a native soda.",
+        "Makes up the largest percent of air at the Earth's",
+        "surface."
+      ]
+    },
+    {
+      symbol: 'O',
+      title: 'Oxygen [O]',
+      background: '#C1C5DB',
+      border: '#9093A9',
+      color: 'black',
+      descrip: [
+        "Named after the Greek root for \"sour\" or \"sharp\",",
+        "because the scientist who identified it believed",
+        "Oxygen to be the key component of all acids. Makes",
+        "up the second largest percent of air at the Earth's",
+        "surface."
+      ]
+    },
+    {
+      symbol: 'F',
+      title: 'Fluorine [F]',
+      background: '#FFEF82',
+      border: '#B8B870',
+      color: 'black',
+      descrip: [
+        "Named for the French \"fluere,\" meaning \"flow\".",
+        "Chlorine Trifluoride is one of the most dangerous,",
+        "reactive chemicals in the world. It is known to burn",
+        "concrete, melt sand, and explode on contact with",
+        "water."
+      ]
+    },
+    {
+      symbol: 'Ne',
+      title: 'Neon [Ne]',
+      background: '#EFE09F',
+      border: '#EFB830',
+      color: 'black',
+      descrip: [
+        "Named after the Latin word for \"new\". Though often",
+        "seen in neon signs, shows great potential as a",
+        "refrigerant."
+      ]
+    },
+    {
+      symbol: 'Na',
+      title: 'Sodium [Na]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the word \"soda\" because it was first",
+        "isolated from a sample of caustic soda. Commonly",
+        "found in table salt, in the compound Sodium Chloride",
+        "(NaCl)."
+      ]
+    },
+    {
+      symbol: 'Mg',
+      title: 'Magnesium [Mg]',
+      background: '#EFEFFF',
+      border: '#656478',
+      color: 'black',
+      descrip: [
+        "Named after the Magnesia district in Thessaly.",
+        "Because it readily ignites in air, it is used in",
+        "flash photography and pyrotechnics."
+      ]
+    },
+    {
+      symbol: 'Al',
+      title: 'Aluminum [Al]',
+      background: '#E0E0F3',
+      border: '#656070',
+      color: 'black',
+      descrip: [
+        "Named for the salt from which it was derived, \"alum\".",
+        "Once a very precious metal, so much so that the",
+        "Washington Monument was originally capped with",
+        "Aluminum."
+      ]
+    },
+    {
+      symbol: 'Si',
+      title: 'Silicon [Si]',
+      background: '#DEDEDA',
+      border: '#50506A',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"silex,\" meaning \"flint\".",
+        "Common component in electronics, as its chemical",
+        "properties are ideal for creating microscopic",
+        "transistors."
+      ]
+    },
+    {
+      symbol: 'P',
+      title: 'Phosphorus [P]',
+      background: '#F5D311',
+      border: '#877040',
+      color: 'black',
+      descrip: [
+        "Named after the Ancient Greek name for the planet",
+        "Venus, meaning \"light-carrier.\" It is an essential",
+        "component of cell structure."
+      ]
+    },
+    {
+      symbol: 'S',
+      title: 'Sulfur [S]',
+      background: '#F5D311',
+      border: '#877040',
+      color: 'black',
+      descrip: [
+        "Known as \"brimstone\" in ancient times. A key",
+        "component in gunpowder, and an element essential for",
+        "organic life."
+      ]
+    },
+    {
+      symbol: 'Cl',
+      title: 'Chlorine [Cl]',
+      background: '#EFDF82',
+      border: '#989840',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"chloro,\" meaning \"greenish",
+        "yellow.\" It is used as a disinfectant and in water",
+        "treatment plants to provide clean drinking water."
+      ]
+    },
+    {
+      symbol: 'Ar',
+      title: 'Argon [Ar]',
+      background: '#BBA3BB',
+      border: '#A971A9',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"argos,\" meaning \"inert.\"",
+        "Used to fill incandescent and fluorescent light",
+        "bulbs."
+      ]
+    },
+    {
+      symbol: 'K',
+      title: 'Potassium [K]',
+      background: '#FFDFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the English \"potash,\" meaning \"pot",
+        "ash.\" Its symbol comes from the Latin \"kalium.\"",
+        "Commonly found in bananas and potatoes."
+      ]
+    },
+    {
+      symbol: 'Ca',
+      title: 'Calcium [Ca]',
+      background: '#E4E4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"calx,\" meaning \"lime.\" It",
+        "is typically found in limestone, and is the primary",
+        "component of dental enamel."
+      ]
+    },
+    {
+      symbol: 'Sc',
+      title: 'Scandium [Sc]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the country of Scandinavia. Once used in",
+        "high-intensity lights, sometimes used to create",
+        "certain aluminum alloys."
+      ]
+    },
+    {
+      symbol: 'Ti',
+      title: 'Titanium [Ti]',
+      background: '#E4E4DA',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"titans.\" Used as an alloy in",
+        "aircraft, bicycle frames, and other lightweight,",
+        "rigid structures. Titanium oxide is commonly used in",
+        "house paint."
+      ]
+    },
+    {
+      symbol: 'V',
+      title: 'Vanadium [V]',
+      background: '#C1C5DB',
+      border: '#9093A9',
+      color: 'black',
+      descrip: [
+        "Named after the Scandinavian goddess of beauty,",
+        "\"Vanadis.\" It is used to improve steel, and has been",
+        "identified in the spectra of several stars and the",
+        "sun."
+      ]
+    },
+    {
+      symbol: 'Cr',
+      title: 'Chromium [Cr]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"chroma,\" meaning \"color,\"",
+        "because its known compounds were many different",
+        "colors. Responsible for the green color of emeralds."
+      ]
+    },
+    {
+      symbol: 'Mn',
+      title: 'Manganese [Mn]',
+      background: '#E4E4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"magnes,\" meaning \"magnet,\"",
+        "for its magnetic properties. Responsible for the",
+        "purple color of true amethyst."
+      ]
+    },
+    {
+      symbol: 'Fe',
+      title: 'Iron [Fe]',
+      background: '#E4E4DA',
+      border: '#BF9270',
+      color: 'black',
+      descrip: [
+        "It's English name may have been derived from words",
+        "meaning \"holy metal\" because it was used to make",
+        "swords for the Crusades. Its chemical symbol comes",
+        "from the Latin word for Iron, \"ferrum.\""
+      ]
+    },
+    {
+      symbol: 'Co',
+      title: 'Cobalt [Co]',
+      background: '#9EA3BB',
+      border: '#6871A9',
+      color: 'black',
+      descrip: [
+        "Named after the German \"kobold,\" meaning \"goblin.\"",
+        "It is essential to vitamin-B12."
+      ]
+    },
+    {
+      symbol: 'Ni',
+      title: 'Nickel [Ni]',
+      background: '#E4E4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the German \"kupfernickel,\" meaning",
+        "\"Nick's copper\" (as in Saint Nicholas). An American",
+        "nickel is 25% Nickel."
+      ]
+    },
+    {
+      symbol: 'Cu',
+      title: 'Copper [Cu]',
+      background: '#DFCE8F',
+      border: '#BF8230',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"cuprum,\" referring to the",
+        "island of Cyprus. Typically used as wiring. Popular",
+        "in ancient times for its malleability."
+      ]
+    },
+    {
+      symbol: 'Zn',
+      title: 'Zinc [Zn]',
+      background: '#C1C5DB',
+      border: '#9093A9',
+      color: 'black',
+      descrip: [
+        "Named after its German name, \"zink\". Used with",
+        "copper to make brass in ancient times. An essential",
+        "part of animal and plant diets."
+      ]
+    },
+    {
+      symbol: 'Ga',
+      title: 'Gallium [Ga]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"Gallia,\" the ancient Celtic",
+        "peoples who inhabited Gaul, now France. Used in the",
+        "study of solar neutrinos."
+      ]
+    },
+    {
+      symbol: 'Ge',
+      title: 'Germanium [Ge]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"Germania,\" meaning \"Germany\".",
+        "Used in infrared spectroscopes and to detect gamma",
+        "radiation."
+      ]
+    },
+    {
+      symbol: 'As',
+      title: 'Arsenic [As]',
+      background: '#EFDF82',
+      border: '#989840',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"arsenikon,\" meaning \"yellow",
+        "orpiment.\" Deadly poison to humans. Used as a laser",
+        "material."
+      ]
+    },
+    {
+      symbol: 'Se',
+      title: 'Selenium [Se]',
+      background: '#EF9F9F',
+      border: '#EF5C30',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"selene,\" meaning \"moon.\"",
+        "Useful in photocells and transistors."
+      ]
+    },
+    {
+      symbol: 'Br',
+      title: 'Bromine [Br]',
+      background: '#EF8F8F',
+      border: '#CF3C20',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"bromos,\" meaning \"stench.\"",
+        "Gaseous Bromine is heavier than air; in an open",
+        "container at room temperature the gas will pour out",
+        "over the edges. Used as a flame retardant."
+      ]
+    },
+    {
+      symbol: 'Kr',
+      title: 'Krypton [Kr]',
+      background: '#FFDFEF',
+      border: '#9093A9',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"kryptos,\" meaning \"hidden.\"",
+        "Used in fluorescent lightbulbs."
+      ]
+    },
+    {
+      symbol: 'Rb',
+      title: 'Rubidium [Rb]',
+      background: '#E4C4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"rubidius,\" meaning \"deepest",
+        "red,\" for it's ruby red color. Used in vacuum tubes",
+        "and photocells."
+      ]
+    },
+    {
+      symbol: 'Sr',
+      title: 'Strontium [Sr]',
+      background: '#EFEFB2',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Scottish village of Strontian.",
+        "Useful in pyrotechnics for its red flame. Used in",
+        "nuclear fission power plants."
+      ]
+    },
+    {
+      symbol: 'Y',
+      title: 'Yttrium [Y]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Swedish village of Ytterby. Used as",
+        "a red phosphor in television screens. Found in moon",
+        "rocks."
+      ]
+    },
+    {
+      symbol: 'Zr',
+      title: 'Zirconium [Zr]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Arabic \"zargun,\" meaning \"gold",
+        "color.\" Used in the nuclear industry. Useful to",
+        "protect against corrosion."
+      ]
+    },
+    {
+      symbol: 'Nb',
+      title: 'Niobium [Nb]',
+      background: '#C1C5DB',
+      border: '#707389',
+      color: 'black',
+      descrip: [
+        "Named after the Greek character \"Niobe,\" daughter of",
+        "Tantalus, because of its close relation to Tantalum.",
+        "Used in arc-welding rods and superconductive",
+        "magnets."
+      ]
+    },
+    {
+      symbol: 'Mo',
+      title: 'Molybdenum [Mo]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"molybdos,\" meaning \"lead.\"",
+        "Also known as \"fool's lead\". Used as an alloying",
+        "agent in steel."
+      ]
+    },
+    {
+      symbol: 'Tc',
+      title: 'Technetium [Tc]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"technikos,\" meaning",
+        "\"artificial.\" It's the first chemical element to be",
+        "produced artificially."
+      ]
+    },
+    {
+      symbol: 'Ru',
+      title: 'Ruthenium [Ru]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"Ruthenia,\" meaning \"Russia.\"",
+        "Useful as a harder for palladium and platinum, and",
+        "to prevent corrosion in titanium."
+      ]
+    },
+    {
+      symbol: 'Rh',
+      title: 'Rhodium [Rh]',
+      background: '#FFDFEF',
+      border: '#616063',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"rhodon,\" meaning \"rose\" or",
+        "\"pink.\" Used in jewelery and catalytic converters."
+      ]
+    },
+    {
+      symbol: 'Pd',
+      title: 'Palladium [Pd]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the asteroid \"Pallas,\" named for the",
+        "Greek goddess of wisdom. Used in watches, surgical",
+        "instruments, and to decolorize gold into white gold."
+      ]
+    },
+    {
+      symbol: 'Ag',
+      title: 'Silver [Ag]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "The chemical symbol derives from the Latin",
+        "\"argentum.\" Used in high capacity batteries, as a",
+        "paint for printing circuits, and alloyed with copper",
+        "as silverware."
+      ]
+    },
+    {
+      symbol: 'Cd',
+      title: 'Cadmium [Cd]',
+      background: '#C1C5DB',
+      border: '#707399',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"kadmeia,\" meaning \"calamine.\"",
+        "Used as phosphors in television tubes, and in",
+        "control rods of nuclear reactors."
+      ]
+    },
+    {
+      symbol: 'In',
+      title: 'Indium [In]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after its indigo color. Useful as an alloying",
+        "agent, and to make mirrors."
+      ]
+    },
+    {
+      symbol: 'Sn',
+      title: 'Tin [Sn]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "The chemical symbol comes from the Latin word for",
+        "tin, \"stannum.\" Used to create the copper alloy,",
+        "bronze."
+      ]
+    },
+    {
+      symbol: 'Sb',
+      title: 'Antimony [Sb]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Possibly named from the Greek \"anti\" and \"monos,\"",
+        "meaning \"not alone.\" Known during the Medieval Era",
+        "to be the death of many monks who did not take",
+        "enough care while gardening."
+      ]
+    },
+    {
+      symbol: 'Te',
+      title: 'Tellurium [Te]',
+      background: '#C7A770',
+      border: '#876730',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"tellus,\" meaning \"earth.\"",
+        "Used in ceramics, semiconductors, and as an alloying",
+        "agent."
+      ]
+    },
+    {
+      symbol: 'I',
+      title: 'Iodine [I]',
+      background: '#DF8F9F',
+      border: '#876730',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"iodes,\" meaning \"violet.\"",
+        "Useful as a disinfectant, and is added to table salt",
+        "for nutrition."
+      ]
+    },
+    {
+      symbol: 'Xe',
+      title: 'Xenon [Xe]',
+      background: '#EFDFEF',
+      border: '#9093A9',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"xenos,\" meaning \"stranger.\"",
+        "Used in electron tubes."
+      ]
+    },
+    {
+      symbol: 'Cs',
+      title: 'Caesium [Cs]',
+      background: '#F5F391',
+      border: '#838260',
+      color: 'black',
+      descrip: [
+        "Also spelled \"Cesium,\" named after the Latin",
+        "\"caesius,\" meaning \"sky blue.\" Used in atomic",
+        "clocks, and has potential for use in ion propulsion."
+      ]
+    },
+    {
+      symbol: 'Ba',
+      title: 'Barium [Ba]',
+      background: '#EFEFB2',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"barys,\" meaning \"heavy.\"",
+        "Used in making rubber and glass, and in x-ray",
+        "diagnostics."
+      ]
+    },
+    {
+      symbol: 'La',
+      title: 'Lanthanum [La]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"lanthanein,\" meaning \"to lie",
+        "hidden.\" Used in film projection and to create cast",
+        "iron."
+      ]
+    },
+    {
+      symbol: 'Ce',
+      title: 'Cerium [Ce]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the asteroid \"Ceres,\" the Greek goddess",
+        "of agriculture. Used in \"self-cleaning\" ovens and as",
+        "a glass polishing agent."
+      ]
+    },
+    {
+      symbol: 'Pr',
+      title: 'Praseodymium [Pr]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"prasios didymos,\" meaning",
+        "\"green twin.\" It naturally forms a green oxide",
+        "unless exposed to air. Used in the film industry in",
+        "carbon arc lights."
+      ]
+    },
+    {
+      symbol: 'Nd',
+      title: 'Neodymium [Nd]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"neos didymos,\" meaning \"new",
+        "twin.\" Used in very powerful permanent magnets."
+      ]
+    },
+    {
+      symbol: 'Pm',
+      title: 'Promethium [Pm]',
+      background: '#EFEFFF',
+      border: '#656478',
+      color: 'black',
+      descrip: [
+        "Named after the tragic Greek hero Prometheus. A",
+        "radioactive element, Promethium salts glow blue or",
+        "green in the dark."
+      ]
+    },
+    {
+      symbol: 'Sm',
+      title: 'Samarium [Sm]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the mineral from which it was first",
+        "isolated, \"samarskite.\" Used in electronics and to",
+        "create lasers and masers."
+      ]
+    },
+    {
+      symbol: 'Eu',
+      title: 'Europium [Eu]',
+      background: '#EFEFB2',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the continent of Europe. Used in the red",
+        "phosphor of television tubes."
+      ]
+    },
+    {
+      symbol: 'Gd',
+      title: 'Gadolinium [Gd]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after a Finnish chemist, J. Gadolin. Used in",
+        "making tv tubes, enhancing MRI images, and in",
+        "compact disks."
+      ]
+    },
+    {
+      symbol: 'Tb',
+      title: 'Terbium [Tb]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Swedish village of Ytterby. Useful",
+        "as a laser material and as a phosphor in tv tubes."
+      ]
+    },
+    {
+      symbol: 'Dy',
+      title: 'Dysprosium [Dy]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"dysprositos,\" meaning",
+        "\"difficult to acquire.\" Used to make laser materials",
+        "and in compact disks."
+      ]
+    },
+    {
+      symbol: 'Ho',
+      title: 'Holmium [Ho]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek for Sweden, \"Holmia.\" Used in",
+        "metal alloys, and has an excellent potential for",
+        "maintaining a magnetic field."
+      ]
+    },
+    {
+      symbol: 'Er',
+      title: 'Erbium [Er]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Swedish village of Ytterby. Used in",
+        "the nuclear industry and as an alloying agent."
+      ]
+    },
+    {
+      symbol: 'Tm',
+      title: 'Thulium [Tm]',
+      background: '#E4E4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the ancient name for Scandinavia, \"Thule.\""
+      ]
+    },
+    {
+      symbol: 'Yb',
+      title: 'Ytterbium [Yb]',
+      background: '#EFEFB2',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Swedish village of Ytterby."
+      ]
+    },
+    {
+      symbol: 'Lu',
+      title: 'Lutetium [Lu]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Roman name for the city of Paris,",
+        "\"Lutetia Parisiorum.\""
+      ]
+    },
+    {
+      symbol: 'Hf',
+      title: 'Hafnium [Hf]',
+      background: '#E4E4DA',
+      border: '#505057',
+      color: 'black',
+      descrip: [
+        "Named after the Latin name for the city of",
+        "Copenhagen, \"Hafnia.\" Used in nuclear reactor",
+        "control rods."
+      ]
+    },
+    {
+      symbol: 'Ta',
+      title: 'Tantalum [Ta]',
+      background: '#C1C5DB',
+      border: '#707389',
+      color: 'black',
+      descrip: [
+        "Named after the mythical Greek Tantalus, son of Zeus",
+        "who was banished to Tartarus. Useful for",
+        "strengthening steel."
+      ]
+    },
+    {
+      symbol: 'W',
+      title: 'Tungsten [W]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Swedish \"tung sten,\" meaning \"heavy",
+        "stone.\" Also known as \"Wolfram,\" from which it",
+        "derives its chemical symbol."
+      ]
+    },
+    {
+      symbol: 'Re',
+      title: 'Rhenium [Re]',
+      background: '#DEDEDA',
+      border: '#50506A',
+      color: 'black',
+      descrip: [
+        "Named after Greek name for the Rhine river, \"Rhenus.\"",
+        "Useful as an alloying agent and in superconductors."
+      ]
+    },
+    {
+      symbol: 'Os',
+      title: 'Osmium [Os]',
+      background: '#DEDEDA',
+      border: '#50508A',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"osme,\" meaning \"smell.\" Used",
+        "to make fountain pen tips, electrical contacts, and",
+        "in alloys for implants such as pacemakers."
+      ]
+    },
+    {
+      symbol: 'Ir',
+      title: 'Iridium [Ir]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"iris,\" meaning \"rainbow.\"",
+        "Used to make the standard metre bar in Paris."
+      ]
+    },
+    {
+      symbol: 'Pt',
+      title: 'Platinum [Pt]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Spanish \"platina,\" meaning \"little",
+        "silver.\" Used in jewelery, dentistry, and catalytic",
+        "converters."
+      ]
+    },
+    {
+      symbol: 'Au',
+      title: 'Gold [Au]',
+      background: '#EFEF62',
+      border: '#A89840',
+      color: 'black',
+      descrip: [
+        "Its chemical symbol comes from the Latin word for",
+        "gold, \"aurum.\" The most malleable and ductile known",
+        "metal, it doesn't tarnish in air."
+      ]
+    },
+    {
+      symbol: 'Hg',
+      title: 'Mercury [Hg]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Also known as \"quicksilver,\" its chemical symbol",
+        "derives from the Latin \"hydrargyrum,\" meaning",
+        "\"liquid silver.\" Mercury vapor is toxic, and no",
+        "longer used in thermometers."
+      ]
+    },
+    {
+      symbol: 'Tl',
+      title: 'Thallium [Tl]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"thallos,\" meaning \"green",
+        "twig.\" Once used as rodenticide."
+      ]
+    },
+    {
+      symbol: 'Pb',
+      title: 'Lead [Pb]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the Latin for lead, \"plumbum.\" Though",
+        "highly toxic, its sweet taste made it a favorite",
+        "sweetener of the Romans."
+      ]
+    },
+    {
+      symbol: 'Bi',
+      title: 'Bismuth [Bi]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Its name is of uncertain origin. Used in fire",
+        "detection and extinguishing systems."
+      ]
+    },
+    {
+      symbol: 'Po',
+      title: 'Polonium [Po]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Discovered by Marie Curie, and named after her home",
+        "country, Poland. Used to remove static charge in",
+        "textile mills, and as thermoelectric power in",
+        "man-made satellites."
+      ]
+    },
+    {
+      symbol: 'At',
+      title: 'Astatine [At]',
+      background: '#CDCDC0',
+      border: '#9D9D90',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"astatos,\" meaning \"unstable.\"",
+        "All of its known isotopes are radioactive."
+      ]
+    },
+    {
+      symbol: 'Rn',
+      title: 'Radon [Rn]',
+      background: '#FFF',
+      border: '#999',
+      color: 'black',
+      descrip: [
+        "Named for its radioactive, \"glowing\" properties.",
+        "Used in earthquake prediction and radiation therapy."
+      ]
+    },
+    {
+      symbol: 'Fr',
+      title: 'Francium [Fr]',
+      background: '#EFEFEF',
+      border: '#656463',
+      color: 'black',
+      descrip: [
+        "Named after the country of France. Found in uranium",
+        "minerals, it can be isolated by bombarding it with",
+        "Thorium."
+      ]
+    },
+    {
+      symbol: 'Ra',
+      title: 'Radium [Ra]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Latin \"radius,\" meaning \"ray,\"",
+        "because of its radioactive properties. It can emit",
+        "alpha, beta, and gamma rays."
+      ]
+    },
+    {
+      symbol: 'Ac',
+      title: 'Actinium [Ac]',
+      background: '#DEDEDD',
+      border: '#50508A',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"aktinos,\" meaning \"ray.\"",
+        "Highly radioactive, it's often used in",
+        "thermoelectric power and as a source of neutrons."
+      ]
+    },
+    {
+      symbol: 'Th',
+      title: 'Thorium [Th]',
+      background: '#EFEFEF',
+      border: '#555',
+      color: 'black',
+      descrip: [
+        "Named after the Scandinavian god, Thor. Useful as a",
+        "source of nuclear fission power."
+      ]
+    },
+    {
+      symbol: 'Pa',
+      title: 'Proactinium [Pa]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Greek \"protos,\" meaning \"first.\"",
+        "Acts as a superconductor at extremely low",
+        "temperatures."
+      ]
+    },
+    {
+      symbol: 'U',
+      title: 'Uranium [U]',
+      background: '#EFEFEF',
+      border: '#555',
+      color: 'black',
+      descrip: [
+        "Named after the planet Uranus, often equated to the",
+        "Greek Ouranos. Gives glass a distinct yellow green",
+        "color and fluorescent glow. Useful as a fuel for",
+        "nuclear fission."
+      ]
+    },
+    {
+      symbol: 'Np',
+      title: 'Neptunium [Np]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the planet Neptune, because it follows",
+        "Uranium in the periodic table. Used in neutron",
+        "detection instruments."
+      ]
+    },
+    {
+      symbol: 'Pu',
+      title: 'Plutonium [Pu]',
+      background: '#FAFAFA',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the planet Pluto, because it follows",
+        "Neptunium in the periodic table. Used in pacemakers,",
+        "and as a fuel for nuclear fission."
+      ]
+    },
+    {
+      symbol: 'Am',
+      title: 'Americanium [Am]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the country of the United States of",
+        "America. Used in smoke detectors and as a source of",
+        "gamma radiation."
+      ]
+    },
+    {
+      symbol: 'Cm',
+      title: 'Curium [Cm]',
+      background: '#FAFAFA',
+      border: '#A971A9',
+      color: 'black',
+      descrip: [
+        "Named after Marie Curie. Used as the power source in",
+        "NASA's Mars rover."
+      ]
+    },
+    {
+      symbol: 'Bk',
+      title: 'Berkelium [Bk]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the city of Berkeley, California."
+      ]
+    },
+    {
+      symbol: 'Cf',
+      title: 'Californium [Cf]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the US state, California. Useful in",
+        "moisture gauges and as a source of neutron",
+        "radiation."
+      ]
+    },
+    {
+      symbol: 'Es',
+      title: 'Einsteinium [Es]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the physicist, Albert Einstein. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Fm',
+      title: 'Fermium [Fm]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Italian physicist, Enrico Fermi. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Md',
+      title: 'Mendelevium [Md]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Russian chemist who devised what",
+        "would become the modern periodic table of elements,",
+        "Dmitri Mendeleev. A synthetic element, too little",
+        "has been produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'No',
+      title: 'Nobelium [No]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Swedish chemist, Alfred Nobel. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Lr',
+      title: 'Lawrencium [Lr]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after Ernest Lawrence, inventor of the",
+        "cyclotron. A synthetic element, too little has been",
+        "produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Rf',
+      title: 'Rutherfordium [Rf]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the New Zealand chemist and physicist,",
+        "Ernst Rutherford. A synthetic element, too little",
+        "has been produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Db',
+      title: 'Dubnium [Db]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Joint Nuclear Institute at Dubna. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Sg',
+      title: 'Seaborgium [Sg]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the American nuclear chemist, Glenn T.",
+        "Seaborg. A synthetic element, too little has been",
+        "produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Bh',
+      title: 'Bohrium [Bh]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Danish physicist, Niels Bohr. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Hs',
+      title: 'Hassium [Hs]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Latin for the German state,",
+        "\"Hassias.\" A synthetic element, too little has been",
+        "produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Mt',
+      title: 'Meitnerium [Mt]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Austrian physicist, Lise Meitner. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Ds',
+      title: 'Darmstadtium [Ds]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after its place of discovery, Darmstadt,",
+        "Germany. A synthetic element, too little has been",
+        "produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Rg',
+      title: 'Roentgenium [Rg]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Its proposed name comes from Wilhelm Conrad",
+        "Roentgen, who discovered x-rays in 1895. A synthetic",
+        "element, too little has been produced to have any",
+        "practical uses."
+      ]
+    },
+    {
+      symbol: 'Cn',
+      title: 'Copernicium [Cn]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Its proposed name comes from the Renaissance",
+        "mathematician and astronomer, Nicolaus Copernicus. A",
+        "synthetic element, too little has been produced to",
+        "have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Uut',
+      title: 'Ununtrium [Uut]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "No name has yet been proposed for this element as",
+        "its discovery has not been officially confirmed."
+      ]
+    },
+    {
+      symbol: 'Fl',
+      title: 'Flerovium [Fl]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Flerov Laboratory of Nuclear",
+        "Reactions. A synthetic element, too little has been",
+        "produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Uup',
+      title: 'Ununpentium [Uup]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "No name has yet been proposed for this element as",
+        "its discovery has not been officially confirmed."
+      ]
+    },
+    {
+      symbol: 'Lv',
+      title: 'Livermorium [Lv]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "Named after the Lawrence Livermore National",
+        "Laboratory. A synthetic element, too little has been",
+        "produced to have any practical uses."
+      ]
+    },
+    {
+      symbol: 'Uus',
+      title: 'Ununseptium [Uus]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "No name has yet been proposed for this element as",
+        "its discovery has not been officially confirmed."
+      ]
+    },
+    {
+      symbol: 'Uuo',
+      title: 'Ununoctium [Uuo]',
+      background: '#EFEFEF',
+      border: '#818083',
+      color: 'black',
+      descrip: [
+        "No name has yet been proposed for this element as",
+        "its discovery has not been officially confirmed."
+      ]
+    },
+  ];
+  const BLOCK_SPACING = 30;
+  const BLOCK_PADDING = 5;
+  const BLOCK_SIZE = BLOCK_SPACING - (BLOCK_PADDING * 2);
+  const CANVAS_WIDTH = 900;
+  const CANVAS_HEIGHT = 630;
+
+  var KEY_CODES = [,,,,,,,,
+    'backspace',
+    'tab',,,,
+    'enter',,,
+    'shift',
+    'control',
+    'alt',,
+    'capslock',,,,,,,,,,,,
+    ' ',
+    'pageup',
+    'pagedown',
+    'end',
+    'home',,,,,,,,,
+    'insert',
+    'delete',,
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',,
+    ';',,
+    '=',,,,
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    '-',,,,,,,,,,,,,,,
+    ',',,
+    '.',
+    '/',
+    '`',,,,,,,,,,,,,,,,,,,,,,,,,,,
+    '[',
+    '\\',
+    ']',
+    '\'',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  ];
+
+  var CHEERS = [
+    'Spell me!',
+    [
+      'One!',
+      'Cleared one!'
+    ],
+    [
+      "Two!",
+      'Two for the show!'
+    ],
+    [
+      'Three!',
+      "Three's charmed!"
+    ],
+    [
+      'Four!',
+      'Awesome!'
+    ]
+  ];
+
+  const CHEMISTRY_URL = "http://www.rsc.org/periodic-table/element/";
+  const FONT_SIZE = 11;
+  const BLOCK_FONT = "px monospace";
+
+  // Delay values in milliseconds
+  const FAST_DROP = 50;
+  const SLIDE_DELAY = 100;
+  const ROTATE_DELAY = 200;
+  var DROP_DELAY = [
+    900,
+    848,
+    797,
+    747,
+    698,
+    650,
+    603,
+    557,
+    512,
+    468,
+    425,
+    383,
+    342,
+    302,
+    263,
+    225,
+    188,
+    152,
+    117,
+    83,
+    50
+  ]
+  var GAME_MODES = [
+    'Marathon',
+    'Fixed Level',
+    'Pentathlon'
+  ];
+
+  function convertToDisplayKey(key) {
+    switch (key) {
+      case ' '          : return 'Space';
+      case 'ArrowLeft'  : return '←';
+      case 'ArrowRight' : return '→';
+      case 'ArrowDown'  : return '↓';
+      case 'ArrowUp'    : return '↑';
+      default:
+        var capital = key;
+        if (/^[a-z]$/.test(key)) capital = key.toUpperCase();
+        else if (key.length > 1) {
+          var chars = key.split('');
+          chars[0] = chars[0].toUpperCase();
+          capital = chars.join('');
+        }
+        return capital;
+    }
+  }
+
+  var PENTOMINO_TEMPLATES = {
+    wBlock: [
+      'xx ',
+      ' xx',
+      '  x'],
+    lowT: [
+      ' x ',
+      'xx ',
+      ' xx'],
+    kBlock: [
+      ' x ',
+      ' xx',
+      'xx '],
+    cross: [
+      ' x ',
+      'xxx',
+      ' x '],
+    uBlock: [
+      'xx',
+      'x ',
+      'xx'],
+    pBlock: [
+      'xx',
+      'xx',
+      'x '],
+    qBlock: [
+      'xx',
+      'xx',
+      ' x'],
+    capT: [
+      'x  ',
+      'xxx',
+      'x'],
+    corner: [
+      'xxx',
+      'x  ',
+      'x  '],
+    sBlock: [
+      ' xxx',
+      'xx'],
+    zBlock: [
+      'xxx ',
+      '  xx'],
+    leftT: [
+      'xxxx',
+      ' x  '],
+    rightT: [
+      'xxxx',
+      '  x '],
+    lBlock: [
+      'xx',
+      ' x',
+      ' x',
+      ' x'],
+    jBlock: [
+      'xx',
+      'x ',
+      'x ',
+      'x '],
+    line: [
+      'xxxxx']
+  }
+  var TETROMINO_SHAPES = {
+    jBlock: [4, 3, 5,15],
+    // xxx
+    //   x
+    lBlock: [4, 3, 5,13],
+    // xxx
+    // x
+    square: [4, 5,14,15],
+    // xx
+    // xx
+    sBlock: [4, 5,13,14],
+    //  xx
+    // xx
+    zBlock: [4, 3,14,15],
+    // xx
+    //  xx
+    line  : [4, 3, 5, 6],
+    // xxxx
+    tBlock: [4, 3, 5,14],
+    // xxx
+    //  x
+  }
+
+  var PERIODIC_TABLE = [
+     1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,
+     3,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  6,  7,  8,  9, 10,
+    11, 12, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  13, 14, 15, 16, 17, 18,
+    19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+    37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+    55, 56,  0, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86,
+    87, 88,  0,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,
+     0,  0, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,  0,
+     0,  0, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,100,101,102,103,  0
+  ];
+
+  function generateRandomElements(elements) {
+    var random = [];
+    var aNums = [];
+    for (var i = 1; i < elements.length; i++) aNums.push(i);
+
+    while (aNums.length > 0) random.push(aNums.splice((Math.random() * aNums.length) >> 0, 1)[0]);
+
+    return random;
+  }
+  var elementsQueue = generateRandomElements(CHEMICAL_ELEMENTS);
+
+  function generateRandomShapes(template) {
+    var random = [];
+    var triple = [];
+
+    for (var shape in template) if (template.hasOwnProperty(shape)) triple = triple.concat([shape, shape, shape]);
+
+    while (triple.length > 0) random.push(triple.splice((Math.random() * triple.length) >> 0, 1)[0]);
+
+    return random;
+  }
+  var shapesQueue = generateRandomShapes(TETROMINO_SHAPES);
+  function decreaseByTen(num) { return num -= 10 }
+  function increaseByTen(num) { return num += 10 }
+  function returnSelf(el) { return el }
+
+  var Tetromino = function() {
+    if (elementsQueue.length === 0) elementsQueue = generateRandomElements(CHEMICAL_ELEMENTS);
+    this.element = elementsQueue.pop();
+
+    var shapes = TETROMINO_SHAPES;
+    if (shapesQueue.length === 0) shapesQueue = generateRandomShapes(shapes);
+    this.shape = shapesQueue.pop();
+    this.blocks = shapes[this.shape];
+
+    setTableElement(gPeriodicTable, this.element);
+  };
+  Tetromino.prototype.raise = function() {
+    return this.blocks.map(decreaseByTen);
+  };
+  Tetromino.prototype.drop = function() {
+    return this.blocks.map(increaseByTen);
+  };
+  Tetromino.prototype.slide = function(xMod) {
+    var blocks = this.blocks;
+    for (var i = 0; i < 4; i++) blocks[i] += xMod;
+    this.blocks = blocks;
+  };
+  Tetromino.prototype.rotate = function(direction) {
+    if (this.shape == 'square') return false;
+    var blocks = this.blocks.map(returnSelf);
+    var center = blocks[0];
+    var transCenter = ((center % 10) * 10 * direction) + ((direction * center / -10) >> 0);
+    var transX = ((center % 10) - (transCenter % 10)) >> 0;
+    var transY = ((center / 10) >> 0) - ((transCenter / 10) >> 0);
+
+    for (var i = 1; i < 4; i++) {
+      blocks[i] = ((((blocks[i] / -10) >> 0) * direction) + transX) + ((((blocks[i] % 10) * direction) + transY) * 10);
+    }
+    return blocks;
+  };
+  var gPeriodicTable = {
+    board: [],
+    activeIndex: -1,
+    element: 0,
+  }
+  for (var i = 0; i < 162; i++) gPeriodicTable.board.push(0);
+
+  function showTableElement(table, aNum) {
+    table.board[PERIODIC_TABLE.indexOf(aNum)] = aNum;
+  }
+  function setTableElement(table, aNum) {
+    table.element = aNum;
+    var element = CHEMICAL_ELEMENTS[aNum];
+    table.title = element.title;
+    table.descrip = element.descrip;
+  }
+  function renderPeriodicTable(context, table, isOverLink) {
+    var x = 345;
+    var y = 345;
+    var spacing = BLOCK_SPACING;
+    var right = x + (spacing * 18);
+
+    context.lineWidth = 4;
+    for (var i = 0; i < 162; i++) {
+      renderBlock(context, table.board[i], x, y);
+      x += spacing;
+      if (x == right) {
+        x = 345;
+        y += spacing;
+      }
+    }
+
+    // Chemical Element Description
+    if (table.element > 0) {
+      context.textAlign = 'left';
+      context.font = (FONT_SIZE * 2) + BLOCK_FONT;
+      context.lineWidth = 1;
+
+      var linkColor = isOverLink ? '#8CF' : '#111'
+      context.fillStyle = linkColor;
+      context.strokeStyle = linkColor;
+      context.fillText(table.title, 350, 175);
+      context.strokeText(table.title, 350, 175);
+      context.fillStyle = '#111';
+      context.font = (FONT_SIZE * 1.5) + BLOCK_FONT;
+      context.fillText('Atomic Number: ' + table.element, 700, 175);
+      for (var i = 0; i < 5; i++) if (table.descrip[i]) context.fillText(table.descrip[i], 350, 204 + (i * (2 + FONT_SIZE * 1.5)));
+    }
+  }
+  var nextTetromino = new Tetromino;
+
+  setPreviewBoard = function(tetromino) {
+    var tetrominoPos = [];
+    switch (tetromino.shape) {
+      case 'jBlock' : tetrominoPos = [4,5,6,10]; break;
+      case 'lBlock' : tetrominoPos = [5,6,7,9]; break;
+      case 'square' : tetrominoPos = [5,6,9,10]; break;
+      case 'sBlock' : tetrominoPos = [5,6,8,9]; break;
+      case 'zBlock' : tetrominoPos = [4,5,9,10]; break;
+      case 'line'   : tetrominoPos = [4,5,6,7]; break;
+      case 'tBlock' : tetrominoPos = [4,5,6,9]; break;
+    }
+    var board = new Array(16);
+    for (var i = 0; i < 4; i++) board[tetrominoPos[i]] = tetromino.element;
+    for (var i = 0; i < 16; i++) if (!board[i]) board[i] = 0;
+    return board;
+  }
+  var gPreviewBoard = setPreviewBoard(nextTetromino);
+
+  renderPreview = function(context, board) {
+    var x = 345;
+    var y = 15;
+    var spacing = BLOCK_SPACING;
+    var right = x + (spacing * 4);
+
+    for (var i = 0; i < 16; i++) {
+      renderBlock(context, board[i], x, y);
+      x += spacing;
+      if (x == right) {
+        x = 345;
+        y += spacing;
+      }
+    }
+  };
+  function checkBoardIndexIsEmpty(b) { return this.board[b] === 0 }
+  function checkBoardIndexIsNotEmpty(b) { return this.board[b] !== 0 }
+  function checkBlocksAreNotFull(b) { return b > 199 || this.board[b] !== 0 }
+  function checkGreaterThanZero(num) { return num > 0 }
+
+  function slideTetromino(tetrisBoard) {
+    var board = tetrisBoard.board;
+    var blocks = tetrisBoard.tetromino.blocks;
+    var direction = tetrisBoard.slideDirection;
+    var wall = 4.5 + (direction * 4.5);
+    if (blocks.every(function(b) { return b % 10 !== wall && board[b + direction] === 0 })) tetrisBoard.tetromino.slide(direction);
+  }
+  function rotateTetromino(tetrisBoard) {
+    var blocks = tetrisBoard.tetromino.rotate(tetrisBoard.rotateDirection);
+    if (!blocks) return;
+    for (var a = 0, b = 1; b < blocks.length; a++, b++) {
+      var xA = blocks[a] % 10, xB = blocks[b] % 10;
+      var yA = (blocks[a] / 10) >> 0, yB = (blocks[b] / 10) >> 0;
+      var dist = Math.sqrt(Math.pow(xA - xB, 2) + Math.pow(yA - yB, 2));
+      if (dist > 4 || dist < -4) return false;
+    }
+    var board = tetrisBoard.board;
+    if (blocks.every(checkBoardIndexIsEmpty, tetrisBoard)) tetrisBoard.tetromino.blocks = blocks;
+  }
+  function raiseTetromino(tetrisBoard) {
+    var board = tetrisBoard.board;
+    var blocks = tetrisBoard.tetromino.raise();
+
+    if (blocks.every(function(b) { return b > 0 && board[b] === 0 })) tetrisBoard.tetromino.blocks = blocks;
+  }
+  function dropTetromino(tetrisBoard) {
+    var board = tetrisBoard.board;
+    var blocks = tetrisBoard.tetromino.drop();
+    var lines = 0;
+
+    if (blocks.some(checkBlocksAreNotFull, tetrisBoard)) {
+      var element = tetrisBoard.tetromino.element;
+      tetrisBoard.tetromino.blocks.forEach(function(b) { board[b] = element; });
+      showTableElement(gPeriodicTable, element);
+      tetrisBoard.tetromino = nextTetromino;
+      nextTetromino = new Tetromino;
+      gPreviewBoard = setPreviewBoard(nextTetromino);
+      // If any of the new tetromino's blocks collide with filled blocks in the board, it's game over
+      if (tetrisBoard.tetromino.blocks.some(checkBoardIndexIsNotEmpty, tetrisBoard)) return -1;
+      lines = handleFullLines(tetrisBoard);
+    }
+    else tetrisBoard.tetromino.blocks = blocks;
+    // If the number of lines is greater than 0, we'll update the score
+    return lines;
+  }
+  function handleFullLines(tetrisBoard) {
+    var board = [];
+    var lines = 0;
+    for (var i = 0; i < tetrisBoard.board.length; i += 10) {
+      var slice = tetrisBoard.board.slice(i, i + 10);
+      if (slice.every(checkGreaterThanZero)) {
+        lines++;
+        board = [0,0,0,0,0,0,0,0,0,0].concat(board);
+      }
+      else board = board.concat(slice);
+    }
+    if (lines > 0) {
+      tetrisBoard.board = board;
+      tetrisBoard.cheerOpacity = 50;
+      tetrisBoard.cheer = CHEERS[lines][Math.random() * 2 >> 0];
+    }
+    return lines;
+  }
+  function clearMovement(tetrisBoard) {
+    if (tetrisBoard.dropInterval > 0) clearInterval(tetrisBoard.dropInterval);
+    tetrisBoard.dropInterval = 0;
+    tetrisBoard.slideDirection = 0;
+    tetrisBoard.rotateDirection = 0;
+  }
+  function setTetrisBoard() {
+    var board = [];
+    for (var i = 0; i < 200; i++) board.push(0);
+    return board;
+  }
+  function renderTetrisBoard(context, board) {
+    var x = 15;
+    var y = 15;
+    var spacing = BLOCK_SPACING;
+    var right = x + (spacing * 10);
+
+    for (var i = 0; i < 200; i++) {
+      renderBlock(context, board.board[i], x, y);
+      x += spacing;
+      if (x == right) {
+        x = 15;
+        y += spacing;
+      }
+    }
+
+    if (board.cheerOpacity > 0) {
+      var opacity = board.cheerOpacity / 50;
+      context.textAlign = 'center';
+      context.lineWidth = 3;
+      context.font = (FONT_SIZE * 2) + BLOCK_FONT;
+      context.fillStyle = 'rgba(0,0,0,' + opacity + ')';
+      context.strokeStyle = 'rgba(141,225,240,' + opacity + ')';
+
+      context.strokeText(board.cheer, 157, 330);
+      context.fillText(board.cheer, 157, 330);
+
+      board.cheerOpacity--;
+    }
+
+    if (!gameover) {
+      var blocks = board.tetromino.blocks;
+      var element = board.tetromino.element;
+      for (var i = 0; i < 4; i++) {
+        x = 15 + ((blocks[i] % 10) * spacing);
+        y = 15 + ((blocks[i] / 10 >> 0) * spacing);
+        renderBlock(context, element, x, y);
+      }
+    }
+  }
+
+  var gTetrisBoard = {
+    board: setTetrisBoard(),
+    tetromino: new Tetromino,
+    dropInterval: 0,
+    slideDirection: 0,
+    rotateDirection: 0,
+    cheerOpacity: 0,
+    cheer: ''
+  }
+  var saveData;
+  var storedData = window.localStorage.getItem('tetrelementis');
+  if (!storedData) {
+    saveData = {
+      highScore: 0
+    }
+  }
+  else saveData = JSON.parse(storedData);
+
+  var isPaused = true;
+  var optionsMenu = false;
+  var activeElement = '';
+  var gameover = false;
+  var scene = 0;
+  var playerScore = 0;
+  var highScore = saveData.highScore;
+  var level = 0;
+  var gameMode = 'Marathon';
+  var resetBoard = 0;
+  var gameoverElement = 0;
+  var comboQueue = [];
+
+  var gMouse = { x: 0, y: 0, overElement: '' }
+  function setOverElement(mouse) {
+    var element = false;
+
+    if (optionsMenu) {
+      if (mouse.x > 840 && mouse.x < 870 && mouse.y > 30 && mouse.y < 60) {
+        if (mouse.overElement !== 'close') element = 'close';
+      }
+      else if (mouse.x > 485 && mouse.x < 625 && mouse.y > 135 && mouse.y < 405) {
+        if (mouse.y < 165) { if (mouse.overElement !== 'pause') element = 'pause'; }
+        else if (mouse.y > 175 && mouse.y < 205) { if (mouse.overElement !== 'counter') element = 'counter'; }
+        else if (mouse.y > 215 && mouse.y < 245) { if (mouse.overElement !== 'clock') element = 'clock'; }
+        else if (mouse.y > 255 && mouse.y < 285) { if (mouse.overElement !== 'left') element = 'left'; }
+        else if (mouse.y > 295 && mouse.y < 325) { if (mouse.overElement !== 'right') element = 'right'; }
+        else if (mouse.y > 335 && mouse.y < 365) { if (mouse.overElement !== 'up') element = 'up'; }
+        else if (mouse.y > 375) { if (mouse.overElement !== 'down') element = 'down'; }
+      }
+      else if (mouse.x > 0 && mouse.x < 330 && mouse.y > 0 && mouse.y < 630) {
+        if (mouse.overElement !== 'board') element = 'board';
+      }
+      else if (mouse.overElement) element = '';
+    }
+    else if (mouse.x > 345 && mouse.x < 700 && mouse.y > 155 && mouse.y < 185) {
+      if (mouse.overElement !== 'link') element = 'link';
+    }
+    else if (mouse.x > 330 && mouse.x < 900 && mouse.y > 0 && mouse.y < 150) {
+      if (mouse.overElement !== 'menu') element = 'menu';
+    }
+    else if (mouse.overElement) element = '';
+
+    return element;
+  }
+
+  function pause(tetrisBoard) {
+    clearInterval(tetrisBoard.dropInterval);
+    tetrisBoard.dropInterval = 0;
+  }
+  function resume(tetrisBoard) {
+    clearMovement(tetrisBoard);
+    tetrisBoard.dropInterval = setInterval(drop, DROP_DELAY[level]);
+  }
+
+  function drop() {
+    var lines = dropTetromino(gTetrisBoard);
+    if (lines < 0) {
+      clearMovement(gTetrisBoard);
+      gameover = true;
+      gameoverElement = nextTetromino.element;
+    }
+    else if (lines > 0) {
+      playerScore += Math.pow(2, lines) / 2;
+      level = Math.min(20, playerScore / 10 >> 0);
+    }
+  }
+  canSlide = true;
+  function allowSlide() { canSlide = true }
+  canRotate = true;
+  function allowRotate() { canRotate = true }
+
+  var activeKeys = {
+    pause   : false,
+    counter : false,
+    clock   : false,
+    left    : false,
+    right   : false,
+    up      : false,
+    down    : false
+  }
+  var keyActions = {
+    pause   : 'Space',
+    counter : 'Z',
+    clock   : 'X',
+    left    : '←',
+    right   : '→',
+    up      : '↑',
+    down    : '↓'
+  }
+  var keyBinds = {
+    ' ': 'pause',
+    'z': 'counter', 'Z': 'counter',
+    'x': 'clock',   'X': 'clock',
+    'ArrowLeft' : 'left',
+    'ArrowRight': 'right',
+    'ArrowUp'   : 'up',
+    'ArrowDown' : 'down'
+  }
+  function getAction(event) {
+    var key = event.key;
+    return keyBinds[key ? key : KEY_CODES[event.keyCode]];
+  }
+  function setKeybind(keyBinds, keyActions, action, key) {
+    var newKeys = {}
+    for (var k in keyBinds) {
+      if (keyBinds.hasOwnProperty(k) && keyBinds[k] !== action) newKeys[k] = keyBinds[k];
+    }
+
+    newKeys[key] = action;
+    if (/^[a-z]$/.test(key)) {
+      newKeys[key.toUpperCase()] = action;
+      // keyActions[action] = key;
+    }
+    else if (/^[A-Z]$/.test(key)) {
+      newKeys[key.toLowerCase()] = action;
+      // keyActions[action] = key.toLowerCase();
+    }
+    keyActions[action] = convertToDisplayKey(key);
+
+    return newKeys;
+  }
+
+  function handleKeyDown(event) {
+    var action = getAction(event);
+    if (!event.ctrlKey && !event.altKey && !event.metaKey) event.preventDefault();
+    if (!event.repeat) {
+      switch (scene) {
+        case 0:
+          if (action == 'pause') scene = 1;
+          break;
+        case 1:
+          var board = gTetrisBoard;
+          activeKeys[action] = true;
+          if (isPaused) {
+            if (action == 'pause') {
+              if (optionsMenu) optionsMenu = false;
+              resume(board);
+              isPaused = false;
+            }
+          }
+          else if (! gameover) {
+            switch (action) {
+              case 'left'   : board.slideDirection--;  break;
+              case 'right'  : board.slideDirection++;  break;
+              case 'counter': board.rotateDirection--; break;
+              case 'clock'  : board.rotateDirection++; break;
+              case 'down':
+                clearInterval(board.dropInterval);
+                board.dropInterval = setInterval(drop, FAST_DROP);
+                break;
+              case 'pause':
+                pause(board);
+                isPaused = true;
+                break;
+            }
+          }
+          break;
+        }
+    }
+  }
+  function handleKeyUp(event) {
+    var action = getAction(event);
+    switch (scene) {
+      case 1:
+        activeKeys[action] = false;
+
+        if (!isPaused) {
+          var board = gTetrisBoard;
+          if (!gameover && !isPaused && action == 'down') {
+            clearInterval(board.dropInterval);
+            board.dropInterval = setInterval(drop, DROP_DELAY[level]);
+          }
+
+          switch (action) {
+            case 'left'   : board.slideDirection++;  break;
+            case 'right'  : board.slideDirection--;  break;
+            case 'counter': board.rotateDirection++; break;
+            case 'clock'  : board.rotateDirection--; break;
+          }
+        }
+        break;
+    }
+  }
+  document.addEventListener('keydown', handleKeyDown);
+  document.addEventListener('keyup', handleKeyUp);
+
+  var canvas = document.getElementById('canvas');
+  var canvasScale = canvas.width / canvas.offsetWidth;
+  function handleResize() {
+    canvasScale = canvas.width / canvas.offsetWidth;
+  }
+  window.addEventListener('resize', handleResize);
+
+  function handleMouseMove(event) {
+    gMouse.x = event.layerX * canvasScale;
+    gMouse.y = event.layerY * canvasScale;
+    var element = setOverElement(gMouse);
+    if (typeof element === 'string') gMouse.overElement = element;
+
+    var x = gMouse.x - 345;
+    var y = gMouse.y - 345;
+    var i = (x / BLOCK_SPACING >> 0) + (18 * (y / BLOCK_SPACING >> 0));
+    if (x >= 0 && x <= 540 && y >= 0 && y <= 270 && i >= 0 && gPeriodicTable.board[i] > 0) gPeriodicTable.activeIndex = i;
+    else if (gPeriodicTable.activeIndex >= 0) gPeriodicTable.activeIndex = -1;
+  }
+  canvas.addEventListener('mousemove', handleMouseMove);
+
+  function handleMouseDown(event) {
+    var aNum = gPeriodicTable.board[gPeriodicTable.activeIndex];
+    if (aNum > 0) setTableElement(gPeriodicTable, aNum);
+    else {
+      var element = gMouse.overElement;
+      switch (element) {
+        case 'close':
+        case 'board':
+          optionsMenu = false;
+          if (!isPaused) resume(gTetrisBoard);
+          break;
+        case 'menu':
+          optionsMenu = true;
+          pause(gTetrisBoard);
+          break;
+        default:
+          if (element !== activeElement) activeElement = element;
+          break;
+      }
+    }
+  }
+  canvas.addEventListener('mousedown', handleMouseDown);
+
+  // Required to open a new tab without triggering popup blockers
+  function handleMouseClick(event) {
+    if (gMouse.overElement === 'link' && gPeriodicTable.element > 0) {
+      var newTab = window.open(CHEMISTRY_URL + gPeriodicTable.element + '/' + /^[a-zA-Z]+/.exec(CHEMICAL_ELEMENTS[gPeriodicTable.element].title)[0].toLowerCase(), '_blank');
+      if (newTab) newTab.focus();
+      if (!isPaused) {
+        pause(gTetrisBoard);
+        isPaused = true;
+      }
+    }
+  }
+  canvas.addEventListener('click', handleMouseClick);
+  function renderBlock(context, num, x, y) {
+    if (typeof num !== 'number') return;
+    var spacing = BLOCK_SPACING;
+    var padding = BLOCK_PADDING;
+    var chem = CHEMICAL_ELEMENTS[num];
+    var size = BLOCK_SIZE;
+
+    var xPos = x + padding;
+    var yPos = y + padding;
+    var textX = x + (spacing / 2);
+    var textY = y + (spacing / 2) + 2;
+
+    var fontSize = FONT_SIZE;
+    if (chem.symbol.length === 3) fontSize -= 2;
+    context.font = fontSize + BLOCK_FONT;
+
+    context.fillStyle = chem.background;
+    context.strokeStyle = chem.border;
+
+    context.fillRect(xPos, yPos, size, size);
+    context.strokeRect(xPos, yPos, size, size);
+    if (chem.symbol) {
+      context.fillStyle = chem.color;
+      context.fillText(chem.symbol, textX, textY);
+    }
+  }
+
+  function renderMouse(context, mouse) {
+    context.beginPath();
+    context.moveTo(mouse.x, mouse.y);
+    context.lineTo(mouse.x + 12, mouse.y + 12);
+    context.lineTo(mouse.x + 6, mouse.y + 12);
+    context.lineTo(mouse.x + 0, mouse.y + 17);
+    context.closePath();
+
+    context.fillStyle = '#000';
+    context.strokeStyle = '#9EE';
+    context.lineWidth = 2;
+    context.fill();
+    context.stroke();
+  }
+
+  function renderKeys(context, keyActions, activeKeys) {
+    var x = 475;
+    var y = 36;
+    var size = 13;
+    context.lineWidth = 3;
+    context.strokeStyle = '#333';
+    context.font = size + BLOCK_FONT;
+
+    // Pause
+    context.textAlign = 'left';
+    context.fillStyle = '#111';
+    context.fillText('Pause', x, y);
+    context.fillStyle = activeKeys.pause ? '#555' : '#DDD';
+    x += 8 * size;
+    context.textAlign = 'center';
+    switch (keyActions.pause) {
+      case 'Space':
+        context.fillRect(x - (3 * size), y - size, 6 * size, 2 * size);
+        context.strokeRect(x - (3 * size), y - size, 6 * size, 2 * size);
+        break;
+      default:
+        context.fillRect(x - (2 * size), y - size, 2 * size, 2 * size);
+        context.strokeRect(x - (2 * size), y - size, 2 * size, 2 * size);
+        break;
+    }
+    context.fillStyle = activeKeys.pause ? '#EEE' : '#111';
+    context.fillText(keyActions.pause, x, y);
+    x = 475;
+    y += 3 * size;
+    // Move
+    context.textAlign = 'left';
+    context.fillStyle = '#111';
+    context.fillText('Move', x, y);
+    x += 8 * size;
+    context.textAlign = 'center';
+    // Left
+    context.fillStyle = activeKeys.left ? '#555' : '#DDD';
+    switch (keyActions.left) {
+      case 'Space':
+        context.fillRect(x - (6 * size), y - size, 6 * size, 2 * size);
+        context.strokeRect(x - (6 * size), y - size, 6 * size, 2 * size);
+        break;
+      default:
+        context.fillRect(x - (4 * size), y - size, 2 * size, 2 * size);
+        context.strokeRect(x - (4 * size), y - size, 2 * size, 2 * size);
+        break;
+    }
+    context.fillStyle = activeKeys.left ? '#EEE' : '#111';
+    context.fillText(keyActions.left, x - (3 * size), y);
+    // Down
+    context.fillStyle = activeKeys.down ? '#555' : '#DDD';
+    switch (keyActions.down) {
+      case 'Space':
+        context.fillRect(x - (3 * size), y - size, 6 * size, 2 * size);
+        context.strokeRect(x - (3 * size), y - size, 6 * size, 2 * size);
+        break;
+      default:
+        context.fillRect(x - size, y - size, 2 * size, 2 * size);
+        context.strokeRect(x - size, y - size, 2 * size, 2 * size);
+        break;
+    }
+    context.fillStyle = activeKeys.down ? '#EEE' : '#111';
+    context.fillText(keyActions.down, x, y);
+    // Right
+    context.fillStyle = activeKeys.right ? '#555' : '#DDD';
+    switch (keyActions.right) {
+      case 'Space':
+        context.fillRect(x - size, y - size, 6 * size, 2 * size);
+        context.strokeRect(x - size, y - size, 6 * size, 2 * size);
+        break;
+      default:
+        context.fillRect(x + (2 * size), y - size, 2 * size, 2 * size);
+        context.strokeRect(x + (2 * size), y - size, 2 * size, 2 * size);
+        break;
+    }
+    context.fillStyle = activeKeys.right ? '#EEE' : '#111';
+    context.fillText(keyActions.right, x + (3 * size), y);
+    x = 475;
+    y += 3 * size;
+    // Rotate
+    context.textAlign = 'left';
+    context.fillStyle = '#111';
+    context.fillText('Rotate', x, y);
+    x += 8 * size;
+    context.textAlign = 'center';
+    // Counter
+    context.fillStyle = activeKeys.counter ? '#555' : '#DDD';
+    switch (keyActions.counter) {
+      case 'Space':
+        context.fillRect(x - (3 * size), y - size, 6 * size, 2 * size);
+        context.strokeRect(x - (3 * size), y - size, 6 * size, 2 * size);
+        break;
+      default:
+        context.fillRect(x - (2.5 * size), y - size, 2 * size, 2 * size);
+        context.strokeRect(x - (2.5 * size), y - size, 2 * size, 2 * size);
+        break;
+    }
+    context.fillStyle = activeKeys.counter ? '#EEE' : '#111';
+    context.fillText(keyActions.counter, x - (1.5 * size), y);
+    // Clock
+    context.fillStyle = activeKeys.clock ? '#555' : '#DDD';
+    switch (keyActions.clock) {
+      case 'Space':
+        context.fillRect(x + (3 * size), y - size, 6 * size, 2 * size);
+        context.strokeRect(x + (3 * size), y - size, 6 * size, 2 * size);
+        break;
+      default:
+        context.fillRect(x + (0.5 * size), y - size, 2 * size, 2 * size);
+        context.strokeRect(x + (0.5 * size), y - size, 2 * size, 2 * size);
+        break;
+    }
+    context.fillStyle = activeKeys.clock ? '#EEE' : '#111';
+    context.fillText(keyActions.clock, x + (1.5 * size), y);
+  }
+
+  function renderOptionsMenu(context, keyActions, hover, active) {
+    context.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    context.fillRect(330, 0, 570, 630);
+    context.fillStyle = 'rgba(255, 255, 255, 0.933)';
+    context.fillRect(360, 30, 510, 570);
+
+    context.textAlign = 'left';
+    context.fillStyle = '#111';
+    context.fillText('Options Menu', 390, 60);
+    context.fillText('Keybinds', 390, 105);
+
+    var row = 150;
+    for (var action in keyActions) {
+      context.fillStyle = active == action ? '#7FA' : hover == action ? '#AEF' : '#FFF';
+      context.fillRect(485, row - 15, 140, 30);
+      context.fillStyle = '#111';
+      context.textAlign = 'right';
+      context.fillText(action, 465, row);
+      context.textAlign = 'left';
+      context.fillText(keyActions[action], 495, row);
+      row += 40;
+    }
+
+    context.beginPath();
+    context.moveTo(861, 35);
+    context.lineTo(865, 39);
+    context.lineTo(859, 45);
+    context.lineTo(865, 51);
+    context.lineTo(861, 55);
+    context.lineTo(855, 49);
+    context.lineTo(849, 55);
+    context.lineTo(845, 52);
+    context.lineTo(851, 45);
+    context.lineTo(845, 39);
+    context.lineTo(849, 35);
+    context.lineTo(855, 41);
+    context.closePath();
+    context.fillStyle = hover == 'close' ? '#AEF' : '#CCC';
+    context.fill();
+  }
+
+  function numToANum(num) {
+    switch (num) {
+      case '2': return 27;
+      case '3': return 2;
+      case '4': return 35;
+      case '5': return 10;
+      case '7': return 79;
+      case '8': return 53;
+      default: return num;
+    }
+  }
+  var TITLE = [
+    '11111 22222 11111 3333  22222 4     22222 5   5 22222 6   6 11111 77777  8888',
+    '  1   2       1   3   3 2     4     2     55 55 2     66  6   1     7   88   ',
+    '  1   222     1   3   3 222   4     222   5 5 5 222   6 6 6   1     7   8    ',
+    '  1   2       1   3333  2     4     2     5   5 2     6  66   1     7    888 ',
+    '  1   2       1   3 3   2     4     2     5   5 2     6   6   1     7      88',
+    '  1   2       1   3  3  2     4     2     5   5 2     6   6   1     7       8',
+    '  1   22222   1   3   3 22222 44444 22222 5   5 22222 6   6   1   77777 8888 '
+  ].join('').split('').map(numToANum);
+
+  function renderTitle(context) {
+    var size = BLOCK_SIZE / 2;
+    var title = TITLE;
+
+    var startX = size * 5;
+    var x = startX;
+    var y = 275 - (size * 3.5);
+    var elements = CHEMICAL_ELEMENTS;
+    context.lineWidth = 3;
+    for (var i = 0; i < 539; i++) {
+      if (title[i] > 0) {
+        var chem = elements[title[i]];
+        context.fillStyle = chem.background;
+        context.strokeStyle = chem.border;
+        context.fillRect(x, y, size, size);
+        context.strokeRect(x + 0.5, y + 0.5, size - 1, size - 1);
+      }
+      x += size;
+      if (i > 0 && i % 77 == 0) {
+        x = startX + size;
+        y += size;
+      }
+    }
+    // Subtitle
+    context.font = '26px Courier, monospace';
+    context.textAlign = 'center';
+    context.fillStyle = '#111';
+    context.fillText('Press space to start', 450, 370);
+  }
+
+  var frame = 0;
+  function render(context, scene) {
+    var width = CANVAS_WIDTH;
+    var height = CANVAS_HEIGHT;
+    var spacing = BLOCK_SPACING;
+
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = '#E1DEEA';
+    context.fillRect(0, 0, width, height);
+    context.lineWidth = 4;
+
+    switch (scene) {
+      case 0:
+        renderTitle(context);
+        break;
+      case 1:
+        context.textAlign = 'center';
+        renderPreview(context, gPreviewBoard);
+        renderTetrisBoard(context, gTetrisBoard);
+        renderPeriodicTable(context, gPeriodicTable, gMouse.overElement === 'link');
+
+        // Periodic Table element highlight
+        var active = gPeriodicTable.activeIndex;
+        if (active >= 0) {
+          context.fillStyle = 'rgba(255, 255, 255, 0.467)';
+          context.fillRect(345 + (active % 18) * spacing, 345 + (active / 18 >> 0) * spacing, spacing, spacing);
+        }
+
+        renderKeys(context, keyActions, activeKeys);
+
+        // Player score
+        context.textAlign = 'right';
+        context.fillStyle = '#111';
+        context.font = (FONT_SIZE * 1.5) + BLOCK_FONT;
+        context.fillText('Score:', 740, 37);
+        context.fillText('Hi Score:', 740, 62);
+        context.fillText('Level:', 740, 87);
+        context.fillText('Mode:', 740, 112);
+
+        context.textAlign = 'left';
+        context.fillText(playerScore, 750, 37);
+        context.fillText(highScore, 750, 62);
+        context.fillText(level, 750, 87);
+        context.fillText(gameMode, 750, 112);
+        context.textAlign = 'center';
+        // Pause overlay
+        if (isPaused || optionsMenu) {
+          context.fillStyle = 'rgba(255, 255, 255, 0.467)';
+          context.fillRect(0, 0, 330, 630);
+          context.fillStyle = 'rgba(255, 255, 255, 0.867)';
+          context.fillRect(113, 297, 104, 36);
+          context.fillStyle = '#111';
+          context.fillText('Paused', 165, 315);
+        }
+
+        if (optionsMenu) renderOptionsMenu(context, keyActions, gMouse.overElement, activeElement);
+        else if (gMouse.overElement == 'menu') {
+          context.fillStyle = "rgba(0, 0, 0, 0.2)";
+          context.fillRect(330, 0, 570, 150);
+          context.fillStyle = 'rgba(255, 255, 255, 0.867)';
+          context.fillRect(563, 58, 104, 36);
+          context.fillStyle = '#111';
+          context.fillText('Options', 615, 78);
+        }
+        break;
+    }
+
+    renderMouse(context, gMouse);
+  }
+  var context = canvas.getContext('2d');
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+
+  function update() {
+    switch (scene) {
+      case 1:
+        if (gameover) {
+          gTetrisBoard.board.splice(
+            resetBoard * 10,
+            10,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement,
+            gameoverElement
+          );
+          if (resetBoard < 19) resetBoard++;
+          else {
+            if (gameoverElement === 0) {
+              gameover = false;
+              isPaused = true;
+              highScore = playerScore;
+              playerScore = 0;
+              level = 0;
+              saveData.highScore = highScore;
+              window.localStorage.setItem('tetrelementis', JSON.stringify(saveData));
+              gTetrisBoard.board = setTetrisBoard();
+            }
+            else gameoverElement = 0;
+            resetBoard = 0;
+          }
+        }
+
+        if (canSlide && gTetrisBoard.slideDirection !== 0) {
+          slideTetromino(gTetrisBoard);
+          canSlide = false;
+          setTimeout(allowSlide, FAST_DROP);
+        }
+
+        if (canRotate && gTetrisBoard.rotateDirection !== 0) {
+          rotateTetromino(gTetrisBoard);
+          canRotate = false;
+          setTimeout(allowRotate, FAST_DROP * 5);
+        }
+        break;
+    }
+  }
+
+  function step(timestamp) {
+    if (!start) var start = timestamp;
+
+    update();
+    render(context, scene);
+
+    var progress = timestamp - start;
+    if (progress < 2000) window.requestAnimationFrame(step);
+  }
+  window.requestAnimationFrame(step);
+  </script>
 </html>

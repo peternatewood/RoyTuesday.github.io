@@ -1,0 +1,120 @@
+---
+permalink: /projects/tetrelementis_1/
+---
+
+<!DOCTYPE html >
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+
+    <link href={{ "/css/tetrelementis.css" | prepend: site.baseurl }} rel="stylesheet" type="text/css"/>
+
+    <script src={{ "/scripts/tetrelementis.js" | prepend: site.baseurl }}></script>
+
+    <title>Tetrelementis</title>
+  </head>
+  <body>
+    <main id="container">
+      <canvas id="tetris-grid" height="600" width="300">
+        Main Game View
+      </canvas>
+      <div id="right-container">
+        <div style="height:130px;">
+          <canvas id="tetris-preview" height="120" width="120">
+            Block Preview
+          </canvas>
+          <div id="level-display">
+            <div id="level-left">
+              <p>
+                Score:_<span id="player-score">0</span>
+              </p>
+              <p>
+                High Score:_<span id="high-score">0</span>
+                _<a id="reset-high-score" href="#" title="Reset your high score to 0">Reset score</a>
+              </p>
+              <p>
+                Level:_<span id="game-level">0</span>
+                <span id="game-level-static" style="display:none">0</span>
+                <span id="game-mode">Marathon</span>
+                <span id="game-mode-static" style="display:none">Marathon</span>
+              </p>
+              <p id="show-directions">
+                <a href="#">Directions</a>
+              </p>
+            </div>
+            <div id="level-right">
+              <div class="controls-row">
+                <button class="control-button" data-key="counter" title="Z Key: Rotate Block Counter-Clockwise">&#8634;</button>
+                <button class="control-button" data-key="clock" title="X Key: Rotate Block Clockwise">&#8635;</button>
+              </div>
+              <div class="controls-row">
+                <button class="control-button" data-key="left" title="Arrow Key Left: Move Block Left">&#8592;</button>
+                <button class="control-button" data-key="down" title="Arrow Key Down: Drop Block Faster">&#8595;</button>
+                <button class="control-button" data-key="right" title="Arrow Key Right: Move Block Right">&#8594;</button>
+              </div>
+              <div class="controls-row">
+                <button class="control-button" data-key="space" id="spacebar" title="Spacebar: Start or Pause">start / pause</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="element-description-container">
+          <div>
+            <h2 id="element-name">Chemical Element</h2>
+            <p id="atomic-number-container">Atomic Number:_<span id="atomic-number">#</span></p>
+          </div>
+          <p id="element-description">
+            Click the "Directions" link above to learn how to play.
+            <br/>
+            <br/>
+            Press the spacebar or click the start button to start.
+          </p>
+          <p>
+            <a href="" id="element-link" target="_blank"></a>
+          </p>
+        </div>
+        <div id="periodic-table-container">
+          <canvas id="tetris-table" height="270" width="540">
+            Table of Elements
+          </canvas>
+          <canvas id="table-overlay" height="270" width="540">
+            Table overlay
+          </canvas>
+        </div>
+      </div>
+    </main>
+    <div id="directions-container"><div id="directions-transparent-layer"></div><div id="directions">
+    <p id="hide-directions"><a href="#">close x</a></p>
+      <p>
+        Use the <span class="fw-bold">arrow keys</span> and <span class="fw-bold">spacebar</span> or the buttons in the upper right to control the game.
+        <ul>
+          <li><span class="fw-bold">Spacebar</span> starts a new game, and pauses/resumes a game in progress.</li>
+          <li><span class="fw-bold">The Arrow Keys</span> move the falling Tetris block (tetromino)</li>
+          <li><span class="fw-bold">Left</span> and <span class="fw-bold">Right</span> translate the tetromino left and right</li>
+          <li><span class="fw-bold">Z</span> rotates the tetromino counter-clockwise and <span class="fw-bold">X</span> rotates it clockwise</li>
+          <li><span class="fw-bold">Down</span> speeds up the tetromino (for those early levels when you just can't wait)</li>
+        </ul>
+      </p>
+      <p>
+        When the game starts, a tetromino of a random shape and chemical element will appear at the top of the game board and begin to fall. Once it cannot fall any further, either by hitting the bottom or another tetromino, a new random tetromino will appear at the top of the board.
+      </p>
+      <p>
+        Each new tetromino will be of a chemical element that has not yet appeared until the entire periodic table has filled up. Then, the collection of possible elements is reset, so that further tetrominos don't have repeats, and the table left full.
+      </p>
+      <p>
+        Your objective is to keep the board clear enough that more tetrominos can drop; if there is no more space for a tetromino to appear, the game is over. In order to keep the game going, you must fill every quadrant in a horizontal line accross the board. Once a line is filled, all its quadrants are emptied and every block above it falls one row down.
+      </p>
+      <p>
+        Every line you clear adds to your score; the more lines cleared at once, the more points earned. You can clear as many as four lines at once, if you're clever about it. Be wary! As your points increase, so does the Level; each level makes the tetromino drop faster, until it drops as fast as if you held the down arrow all the time!
+      </p>
+      <p>
+        There are three game modes: <span class="fw-bold">Marathon</span>, <span class="fw-bold">Fixed Level</span>, and <span class="fw-bold">Pentathlon</span>
+        <ul>
+          <li><span class="fw-bold">Marathon:</span> The classic Tetris gamemode in which tetrominos are generated forever, and the level increases with your score</li>
+          <li><span class="fw-bold">Fixed Level:</span> Like <span class="fw-bold">Marathon</span>, but you choose at which level you want to start, and the level does not increase</li>
+          <li><span class="fw-bold">Pentathlon:</span> Like <span class="fw-bold">Marathon</span>, but each tetromino is a permutation of <span class="fw-bold">five</span> blocks instead of four (not for the faint of heart)</li>
+        </ul>
+      </p>
+    </div></div>
+  </body>
+</html>
