@@ -8,7 +8,7 @@ layout: default
       <a class="home-link" href={{ "/projects" | prepend: site.baseurl }} title="Projects">Projects</a>
     </h2>
     <p>
-      Check out my programming projects. How about <a href="/_projects/tetrelementis/index.html" title="Tetrelementis">Tetrelementis</a>?
+      Check out my programming projects. How about <a href={{ "/projects/tetrelementis" | prepend: site.baseurl }} title="Tetrelementis">Tetrelementis</a>?
     </p>
   </li>
   <li>
@@ -16,7 +16,7 @@ layout: default
       <a class="home-link" href={{ "/about" | prepend: site.baseurl }} title="About Me">About Me</a>
     </h2>
     <p>
-      "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href="./about/index.html" data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
+      "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href={{ "/about" | prepend: site.baseurl }} data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
     </p>
   </li>
   <li>
@@ -25,8 +25,8 @@ layout: default
     </h2>
     <p>
       Why not read my latest post about
-      <a class="blog-link" data-page-partial="./blog/partial-tech.html" href="./blog/tech.html" title="Computer Memory Blog">
-        Computer Memory
+      <a class="blog-link" data-page-partial="./blog/partial-tech.html" href={{ site.posts.first.url | prepend: site.baseurl }} title="Building a Website">
+        Building a website
       </a>?
     </p>
   </li>
