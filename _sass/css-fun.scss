@@ -23,10 +23,6 @@
   }
 }
 
-main {
-  text-align: center;
-}
-
 .museum-frame {
   position: relative;
   display: block;
@@ -88,6 +84,7 @@ main {
   }
 
   &#shadow-fade {
+    background: #EEE;
     color: #333;
     transition: box-shadow 1s, color 400ms;
     text-align: center;
@@ -221,7 +218,7 @@ main {
         left: 0;
         top: 0;
         position: absolute;
-        background: $background-color;
+        background: #000;
         border-radius: 50%;
       }
 
@@ -276,7 +273,7 @@ main {
       &:before,
       &:after {
         content: '';
-        background: $background-color;
+        background: #000;
         position: absolute;
         top: -1 * ($ring-width + 1);
         width: 80px;
