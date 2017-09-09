@@ -1,8 +1,107 @@
 ---
 layout: default
-title: Web Audio Basics
+title: WebAudio Basics
 description: Start using oscillators to generate sound with WebAudio API in JavaScript
+permalink: /blog/webaudio-basics
 ---
 <article>
-  Here it is!
+  <h1>WebAudio Basics</h1>
+  <p>
+    Posted: <strong>9 Sep, 2017</strong><br/>
+  </p>
 </article>
+<article>
+  <p>
+    WebAudio API is a handy way to generate audio and play audio files using JavaScript. It's a few years old now, and pretty well-implemented on the web; the only notable exceptions are Safari, which requires a vendor prefix, and Internet Explorer, which doesn't work at all (no surprises there). Check out <a href="http://caniuse.com/#search=webaudio" target="_blank">caniuse.com</a> for a comprehensive compatibility list.
+  </p>
+  <p>
+    I've learned about how WebAudio from a variety of articles on the web, some of which are a little outdated. I'd like to share what I've learned as a series of tutorials and keep it reasonably up to date. I'll include links to the excellent Mozilla Development Network (MDN) documentation, and several articles I found useful. I'm going to start here under the assumption that you, the reader, have a working knowledge of JavaScript and the developer's console in your favorite browser, but no experience with WebAudio. We're starting from square one.
+  </p>
+  <p>
+    We start with a new <span class="code">AudioContext</span> object. We only need to instantiate one: it provides us with methods get the data and generate the nodes we need to do everything from creating an oscillator to playing audio through your device's speakers, headphone jack, or what have you. It isn't enough to just call the <span class="code">AudioContext</span> constructor: first, we have to account for lazy Safari and incapable Internet Explorer. There are different ways to handle this, but whatever way we go, we have to fall back on <span class="code">webkitAudioContext</span> for Safari and account for the total absense of the API.
+  </p>
+  <pre>
+var audio;
+
+if (AudioContext) {
+  audio = new AudioContext;
+}
+else if (webkitAudioContext) {
+  audio = new webkitAudioContext;
+}</pre>
+  <p>
+    I typically include WebAudio as part of a game or some other application where it's not strictly required, so I like to allow the audio context to be null quietly. If you're application requires audio, inform your user in a polite, non-invasive way; try to avoid a clunky <span class="code">alert()</span> popup if you can. Also, be aware that some versions of Safari will throw an error if you try to instantiate <span class="code">AudioContext</span>; I found a few articles that used an approach similar to the following, but that will invariably cause issues for some Safari users.
+  </p>
+  <pre>
+// Don't do it this way
+var audio = new AudioContext || new webkitAudioContext;</pre>
+  <p>
+    Next, we're going to create some audio nodes. WebAudio uses the <span class="code">AudioNode</span> object as a base class to build more specific nodes; that gives them several methods, properties, and events in common, but the connect method is all we need right now. We'll start with an oscillator node. An oscillator is the easiest way to generate sound; it simply wavers or &#8220;oscillates&#8221; at a particular frequency, which your speakers imitate, thus generating a tone.
+  </p>
+  <p>
+    In WebAudio, we create an oscillator node, connect it to the audio context's output <span class="code">audio.destination</span>, and start the node. WebAudio includes its own timing system, in lieu of the often misused <span class="code">setTimeout</span>. The <span class="code">currentTime</span> property is a number in seconds, and it's important we use it as our starting point, otherwise the <span class="code">stop</span> call might occur before the oscillator starts. Also, if we pass no value to <span class="code">start</span>, the oscillator will start as soon as the method is called.
+  </p>
+  <p>
+    I recommend you turn down your volume if you try this, especially if you wear headphones. The WebAudio oscillator is pretty loud.
+  </p>
+  <pre>
+var oscillator = audio.createOscillator();
+// AudioContext gives us the device's audio output
+oscillator.connect(audio.destination);
+
+oscillator.start();
+// Schedule stopping the oscillator
+oscillator.stop(audio.currentTime + 0.1);</pre>
+  <a href="#" id="raw-osc" class="button">Play Tone</a>
+  <p>
+    By default, the oscillator generates a sine wave at 440 Hz, concert A above middle C. We can change the oscillator's wave with it's <span class="code">type</span> property, which is a string: sine, triangle, square, or sawtooth. Try the different waves and hear what they sound like.
+  </p>
+  <canvas id="waveforms" width="1200" height="800"></canvas>
+  <p>
+    The oscillator's <span class="code">frequency</span> property is an <span class="code">AudioParam</span> object. All <span class="code">AudioParam</span> objects have a value and a few methods to alter that value. We're going to start with <span class="code">setValueAtTime</span>. It takes two parameters, the new value, and the time, in seconds, when to change to that value. Let's make our oscillator use a sawtooth wave at 220 Hz.
+  </p>
+  <pre>
+oscillator.type = 'sawtooth';
+oscillator.frequency.setValueAtTime(220, audio.currentTime);</pre>
+  <a href="#" id="sawtooth" class="button">Play Tone</a>
+  <p>
+    You'll notice the sawtooth wave is even louder than the default sine wave. Let's do something about this high volume. We can pass our oscillator through a <span class="code">GainNode</span> and reduce it's gain value to lower the volume. Instead of connecting the oscillator straight to the device output, we connect it to the <span class="code">GainNode</span>, and connect that to the output. Note that the <span class="code">GainNode</span> has a gain <span class="node">AudioParam</span> whose value we need to change.
+  </p>
+  <pre>
+var oscillator = audio.createOscillator();
+var gain = audio.createGain();
+gain.gain.setValueAtTime(0.1, audio.currentTime);
+
+oscillator.connect(gain);
+gain.connect(audio.destination);
+
+oscillator.start(audio.currentTime);
+oscillator.stop(audio.currentTime + 1);</pre>
+  <a href="#" id="softer" class="button">Play Tone</a>
+  <p>
+    Now the oscillator is much quieter. Gain ranges from 0 to 1, where 0 generates no sound. You'll notice that every time we stop an oscillator, and sometimes when we start one, we get an awkward click sound. We can avoid the click if we start the oscillator at zero gain, quickly ramp the gain to whatever value we need, and then back to zero before we stop. Luckily, we have <span class="code">linearRampToValueAtTime</span> and <span class="code">exponentialRampToValueAtTime</span> to help us. The exponential ramp is more pleasing to the ear, but it can't ramp to zero because it uses the target value as a divisor (can't divide by zero). For the quick changes we need to remove the clicks, <span class="code">linearRampToValueAtTime</span> will do just fine. It's important to note that the ramp methods will only work if the <span class="code">setValueAtTime</span> was previously called on that <span class="code">AudioParam</span>; it establishes when the ramp will start, while the ramp functions can only set when the ramp will end.
+  </p>
+  <pre>
+// Start gain at 0 and ramp 0.1 over 10 milliseconds
+gain.gain.setValueAtTime(0, audio.currentTime);
+gain.gain.linearRampToValueAtTime(0.1, audio.currentTime + 0.01);
+// Ramp back to zero starting 10ms before the oscillator stops
+gain.gain.setValueAtTime(0.1, audio.currentTime + 0.99);
+gain.gain.linearRampToValueAtTime(0, audio.currentTime + 1);
+
+oscillator.start(audio.currentTime);
+oscillator.stop(audio.currentTime + 1);</pre>
+  <a href="#" id="ramp" class="button">Play Tone</a>
+  <p>
+    There you are! Try playing around with the four wave types, the ramp functions, and playing multiple oscillators at once. Check out the links below for more info on WebAudio, as well as some cool tricks you can use. I'll be writing another tutorial soon!
+  </p>
+  <p>
+    <strong>&mdash; Peter Wood</strong>
+  </p>
+</article>
+
+{% include webaudio.html %}
+
+<script type="text/javascript" src={{ "/scripts/ready.js" | prepend:site.baseurl }}></script>
+<script type="text/javascript" src={{ "/scripts/code-highlighter.js" | prepend:site.baseurl }}></script>
+<script type="text/javascript" src={{ "/scripts/webaudio-basics.js" | prepend:site.baseurl }}></script>
