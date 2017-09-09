@@ -10,7 +10,6 @@ $brown: #8F4B36;
 
 $lato: 'Lato', helvetica, sans-serif;
 $baskerville: 'Libre Baskerville', Georgia, serif;
-$resume_height: 1400px;
 
 @import 'custom-mixins';
 
@@ -23,7 +22,7 @@ body {
   margin: 0;
 
   header {
-    background-color: $medium_green;
+    background-color: $link_blue;
     margin: 0;
     padding: 0;
     position: fixed;
@@ -43,11 +42,11 @@ body {
 
       div {
         background-color: transparent;
-        border: none;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
         text-align: center;
+        border: none;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
 
         &#home-link,
         &#sandwich-menu {
@@ -58,7 +57,7 @@ body {
           width: 4em;
 
           &:hover {
-            background-color: forestgreen;
+            color: #AAE;
           }
 
           .nav-name {
@@ -74,7 +73,7 @@ body {
 
           &:before {
             content: 'menu';
-            color: $dark_ivory;
+            color: #EEE;
             position: absolute;
             width: 100%;
             height: 1em;
@@ -84,8 +83,13 @@ body {
             text-transform: uppercase;
           }
 
+          &:hover,
+          &:active {
+            background-color: $link_hover_blue;
+          }
+
           #dropdown {
-            background-color: forestgreen;
+            background-color: $link_blue;
             position: absolute;
             width: 100%;
             left: 0;
@@ -101,10 +105,8 @@ body {
 
           &:hover,
           &:active {
-            background-color: forestgreen;
-
             &:before {
-              color: $light_blue;
+              color: #EEE;
             }
 
             #dropdown {
@@ -114,7 +116,7 @@ body {
         }
 
         a.nav-link {
-          color: $dark_ivory;
+          color: #EEE;
           box-sizing: border-box;
           font-size: 1.25em;
           padding: 0.5em 0;
@@ -135,13 +137,11 @@ body {
             text-decoration: none;
           }
           &:visited {
-            color: $dark_ivory;
+            color: #EEE;
           }
-          &:hover {
-            color: $light_blue;
-          }
+          &:hover,
           &:visited:hover {
-            color: $light_blue;
+            color: #AAE;
           }
         }
       }
@@ -164,49 +164,45 @@ body {
     h2 {
       font-size: 20px;
     }
-
-    embed {
-      height: $resume_height;
-      margin: 0.5em 0;
-    }
   }
 
   article {
     background: #EEE;
-    margin: 32px 16px;
     padding: 8px 16px;
+    margin: 32px auto;
+    width: 80%;
+    box-sizing: border-box;
   }
 
   ol, ul {
     list-style: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
   }
 
   a {
-    color: $link_blue;
+    color: #444;
 
     &:link {
       font-weight: bold;
       text-decoration: none;
     }
     &:visited {
-      color: $link_blue;
+      color: #444;
     }
-    &:hover {
-      color: $link_hover_blue;
-    }
+    &:hover,
     &:visited:hover {
-      color: $link_hover_blue;
+      color: #666;
+      text-decoration: underline;
     }
   }
 
   pre {
     background-color: #676767;
-    border: 2px inset #000;
     color: #DDD;
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 1em;
+    border: 2px inset #000;
     padding: 1em;
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
@@ -228,7 +224,7 @@ body {
   footer {
     background-color: #EEE;
     text-align: center;
-    padding: 0.5em 0;
+    padding: 0.75em 0 0.5em;
 
     div {
       display: inline-block;
@@ -252,17 +248,20 @@ body {
           color: $link_blue;
           vertical-align: middle;
 
-          &:hover {
+          &:hover,
+          &:visited:hover {
             color: $link_hover_blue;
+            text-decoration: underline;
           }
           &:visited {
             color: $link_blue;
           }
-          &:visited:hover {
-            color: $link_hover_blue;
-          }
         }
       }
+    }
+
+    .mail-link:hover {
+      text-decoration: none;
     }
   }
 
@@ -276,8 +275,8 @@ body {
 
   .quote-container {
     background-color: #DDD;
-    border: 3px double #222;
     font-family: 'Georgia', serif;
+    border: 3px double #222;
     padding: 0 1em;
   }
 
@@ -302,36 +301,22 @@ body {
 @media screen and (min-width: 600px) {
   body {
     background: {
-      image: url(/imgs/bg-desktop.jpg);
+      image: url("/imgs/bg-desktop.jpg");
       size: cover;
     }
 
     header {
-      padding: 0 0 12px 0;
-
       nav {
         div {
-          background-color: $ivory;
-          border: {
-            color: $dark_ivory;
-            radius: 0 0 6px 6px;
-            style: solid;
-            width: 0 1px 3px 1px;
-          }
-          box-sizing: border-box;
           display: inline-block;
-          margin: 0;
-          padding: 0;
           text-align: center;
-          height: 3em;
-          @include transition(border-bottom-width 120ms ease);
+          padding: 0;
+          margin: 0;
+          height: auto;
 
           &#home-link {
             width: 20%;
-
-            &:hover {
-              background-color: $ivory;
-            }
+            height: auto;
 
             .nav-name {
               display: inline-block;
@@ -340,6 +325,7 @@ body {
           &#sandwich-menu {
             border: none;
             width: 80%;
+            height: auto;
 
             &:before {
               display: none;
@@ -350,24 +336,24 @@ body {
               top: 0;
 
               .dropdown-link {
-                padding: 0;
                 text-align: center;
+                padding: 0;
                 width: 25%;
               }
             }
           }
 
           &:hover {
-            border-bottom-width: 8px;
+            background-color: $link_hover_blue;
           }
 
           a.nav-link {
-            color: $brown;
-            box-sizing: border-box;
+            color: #EEE;
             font-size: 1.25em;
             padding: 0.5em 0;
             height: 100%;
             width: 100%;
+            box-sizing: border-box;
 
             .nav-name {
               font: {
@@ -383,13 +369,11 @@ body {
               text-decoration: none;
             }
             &:visited {
-              color: $brown;
+              color: #EEE;
             }
-            &:hover {
-              color: $dark_green;
-            }
+            &:hover,
             &:visited:hover {
-              color: $dark_green;
+              color: #EEE;
             }
           }
         }
@@ -399,8 +383,15 @@ body {
 }
 
 @media screen and (min-width: 800px) {
-  body header nav div a.nav-link .nav-name {
-    font-size: 0.75em;
+  body {
+    header nav div a.nav-link .nav-name {
+      font-size: 0.75em;
+    }
+
+    article {
+      margin-left: 10%;
+      width: 40%;
+    }
   }
 }
 
