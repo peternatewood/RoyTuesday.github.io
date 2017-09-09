@@ -4,6 +4,9 @@ function highlightCode(match) {
   if (!isNaN(parseInt(match))) {
     replaced[1] = '#A6E';
   }
+  else if (/\/\//.test(match)) {
+    replaced[1] = '#999';
+  }
   else if (/('.+'|".+")/.test(match)) {
     replaced[1] = '#EE6';
   }
@@ -27,7 +30,7 @@ function highlightCode(match) {
 }
 
 ready(function() {
-  var codeRegex = /((\b|\s)(\d+|[!<>+\-*/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return|var|function|document|window|[a-z][a-zA-Z\_]+(?=\(.*\)))(\b|\s)|'\w+'|"\w+")/g;
+  var codeRegex = /(\/\/.+(\r|\n|\r\n)|(\b|\s)(\d+|[!<>+\-*/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return|var|function|document|window|[a-z][a-zA-Z\_]+(?=\(.*\)))(\b|\s)|'\w+'|"\w+")/g;
   var preTags = document.getElementsByTagName('pre');
   var preTagsLength = preTags.length;
 
