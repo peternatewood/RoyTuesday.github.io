@@ -24,8 +24,8 @@ layout: default
   </h2>
   <p>
     Why not read my latest post about
-    <a class="blog-link" data-page-partial="./blog/partial-tech.html" href={{ site.posts.first.url | prepend: site.baseurl }} title="Building a Website">
-      Building a website
+    <a class="blog-link" href={{ site.design_blog.first.url | prepend: site.baseurl }} title={{ site.design_blog.first.title }}>
+      {{ site.design_blog.first.title }}
     </a>?
   </p>
 </article>
