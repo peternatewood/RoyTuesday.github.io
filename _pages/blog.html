@@ -3,21 +3,19 @@ layout: default
 title: Blog
 permalink: /blog/
 ---
-
 <article>
-  <h2>
-    Past blogs
-  </h2>
+  <h1>Game Design Blog</h1>
+  <p>Things I've learned about designing games in HTML/Javascript and C</p>
 </article>
-{% for post in site.posts %}
+{% for blog in site.design_blog %}
   <article>
     <h2>
-      <a class="blog-link" href={{ post.url | prepend: site.baseurl }} title="">
-        {{ post.title }}
+      <a class="blog-link" href={{ blog.url | prepend: site.baseurl }} title="">
+        {{ blog.title }}
       </a>
     </h2>
     <p>
-      {{ post.description }}
+      {{ blog.description }}
     </p>
   </article>
 {% endfor %}
