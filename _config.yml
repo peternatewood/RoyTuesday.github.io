@@ -28,6 +28,9 @@ twitter_username: peternatewood
 # Build settings
 markdown: kramdown
 theme: minima
-include: ['_pages', '_projects']
+include: ['_pages', '_projects', '_design_blog']
 sass:
   sass_dir: _sass
+collections:
+  design_blog:
+    permalink: /blog/:title
