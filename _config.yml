@@ -33,4 +33,4 @@ sass:
   sass_dir: _sass
 collections:
   design_blog:
-    permalink: /blog/:name
+    permalink: /blog/:title
