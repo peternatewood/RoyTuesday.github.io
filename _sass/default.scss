@@ -209,7 +209,9 @@ body {
     font-family: $sharetech;
     font-size: 1em;
     border: 2px inset #000;
-    padding: 8px 16px 0;
+    padding: 8px 16px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .code {
@@ -398,7 +400,7 @@ body {
 
     article {
       margin-left: 10%;
-      width: 40%;
+      width: 55%;
     }
   }
 }
