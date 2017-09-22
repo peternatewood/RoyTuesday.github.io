@@ -1,0 +1,52 @@
+---
+layout: default
+title: Tetrelementis
+permalink: /projects/summary/tetrelementis
+---
+<article>
+  <h1><a href="{{ "/projects/tetrelementis" | prepend: site.baseurl }}">Tetrelementis</a></h1>
+  <p>
+    A Tetris clone about learning the chemical elements.
+  </p>
+  <p>
+    <a href="{{ "/projects/tetrelementis" | prepend: site.baseurl }}">Play it here!</a>
+  </p>
+  <div class="image-wrapper">
+    <img src="{{ "/imgs/tetrelementis.jpg" | prepend: site.baseurl }}">
+  </div>
+  <p>
+    <h2>How to Play</h2>
+    Use the arrow keys and spacebar or the buttons in the upper right to control the game.
+  </p>
+  <p>
+    <b>Spacebar</b> starts a new game, and pauses/resumes a game in progress.<br/>
+    <b>Arrow keys</b> move the falling Tetris block (tetromino)<br/>
+    <b>Left and Right</b> translate the tetromino left and right<br/>
+    <b>Z</b> rotates the tetromino counter-clockwise and <b>X</b> rotates it clockwise.<br/>
+    <b>Down</b> speeds up the tetromino (for those early levels when you just can't wait)<br/>
+  </p>
+  <p>
+    When the game starts, a tetromino of a random shape and chemical element will appear at the top of the game board and begin to fall. Once it cannot fall any further, either by hitting the bottom or another tetromino, a new random tetromino will appear at the top of the board.
+  </p>
+  <p>
+    Each new tetromino will be of a chemical element that has not yet appeared until the entire periodic table has filled up. Then, the collection of possible elements is reset, so that further tetrominos don't have repeats, and the table left full.
+  </p>
+  <p>
+    Your objective is to keep the board clear enough that more tetrominos can drop; if there is no more space for a tetromino to appear, the game is over. In order to keep the game going, you must fill every quadrant in a horizontal line accross the board. Once a line is filled, all its quadrants are emptied and every block above it falls one row down.
+  </p>
+  <p>
+    Every line you clear adds to your score; the more lines cleared at once, the more points earned. You can clear as many as four lines at once, if you're clever about it. Be wary! As your points increase, so does the Level; each level makes the tetromino drop faster, until it drops as fast as if you held the down arrow all the time!
+  </p>
+  <p>
+    There are three game modes: Marathon and Fixed Level
+    <ul>
+      <li><b>Marathon:</b> The classic Tetris gamemode in which tetrominos are generated forever, and the level increases with your score. Every ten points increases the level by one.</li>
+      <li><b>Fixed Level:</b> Like Marathon, but you choose at which level you want to start, and the level does not increase.</li>
+    </ul>
+  </p>
+  <p>
+    Built using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">Canvas Rendering Context</a> Web API.<br/>
+    Not mobile friendly.
+    <a href="https://github.com/RoyTuesday/tetrelementis" target="_blank">See the GitHub page</a> for more details.
+  </p>
+</article>
