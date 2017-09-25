@@ -298,7 +298,7 @@ permalink: /projects/tanks-js
       audio.mute = document.getElementById('mute').checked;
       window.localStorage.setItem('mute', audio.mute ? 1 : 0);
       if (!audio.mute) {
-        playTone(0, 0.1);
+        playTone(0, 0.2);
       }
     }
   }
@@ -452,7 +452,6 @@ permalink: /projects/tanks-js
     let n = calculateGain(f, w);
     g.gain.setValueAtTime(0, t);
     g.gain.linearRampToValueAtTime(n, t + 0.02);
-    g.gain.setValueAtTime(n, t + d - 0.02)
     g.gain.linearRampToValueAtTime(0, t + d);
     o.start(t);
     o.stop(t + d);
@@ -557,13 +556,13 @@ permalink: /projects/tanks-js
         else {
           if (menu.up && optionRow > 0) {
             optionRow--;
-            playTone(0, 0.1, 120, 'triangle');
-            playTone(0, 0.1, 180, 'triangle');
+            playTone(0, 0.2, 120, 'triangle');
+            playTone(0, 0.2, 180, 'triangle');
           }
           if (menu.down && optionRow < 2) {
             optionRow++;
-            playTone(0, 0.1, 120, 'triangle');
-            playTone(0, 0.1, 180, 'triangle');
+            playTone(0, 0.2, 120, 'triangle');
+            playTone(0, 0.2, 180, 'triangle');
           }
 
           if (menu.left || menu.right) {
@@ -573,39 +572,39 @@ permalink: /projects/tanks-js
                   updateRoundLimit(preContext, roundLimit -= 2);
 
                   let bass = 100 * (1 + roundLimit / 15);
-                  playTone(0, 0.1, bass, 'triangle');
-                  playTone(0, 0.1, 1.33 * bass, 'triangle');
+                  playTone(0, 0.2, bass, 'triangle');
+                  playTone(0, 0.2, 1.33 * bass, 'triangle');
                 }
                 if (menu.right && roundLimit < 15) {
                   updateRoundLimit(preContext, roundLimit += 2);
 
                   let bass = 100 * (1 + roundLimit / 15);
-                  playTone(0, 0.1, bass, 'triangle');
-                  playTone(0, 0.1, 1.33 * bass, 'triangle');
+                  playTone(0, 0.2, bass, 'triangle');
+                  playTone(0, 0.2, 1.33 * bass, 'triangle');
                 }
                 break;
               case 1:
                 if (menu.left && paletteOption > 0) {
                   updatePlayerColors(preContext, --paletteOption);
-                  playTone(0, 0.1, 150, 'triangle');
-                  playTone(0, 0.1, 200, 'triangle');
+                  playTone(0, 0.2, 150, 'triangle');
+                  playTone(0, 0.2, 200, 'triangle');
                 }
                 if (menu.right && paletteOption < 3) {
                   updatePlayerColors(preContext, ++paletteOption);
-                  playTone(0, 0.1, 150, 'triangle');
-                  playTone(0, 0.1, 200, 'triangle');
+                  playTone(0, 0.2, 150, 'triangle');
+                  playTone(0, 0.2, 200, 'triangle');
                 }
                 break;
               case 2:
                 if (menu.left && levelOption > 0) {
                   updateLevelOption(preContext, --levelOption);
-                  playTone(0, 0.1, 150, 'triangle');
-                  playTone(0, 0.1, 200, 'triangle');
+                  playTone(0, 0.2, 150, 'triangle');
+                  playTone(0, 0.2, 200, 'triangle');
                 }
                 if (menu.right && levelOption < RANDOM) {
                   updateLevelOption(preContext, ++levelOption);
-                  playTone(0, 0.1, 150, 'triangle');
-                  playTone(0, 0.1, 200, 'triangle');
+                  playTone(0, 0.2, 150, 'triangle');
+                  playTone(0, 0.2, 200, 'triangle');
                 }
                 break;
             }
