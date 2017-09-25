@@ -282,17 +282,27 @@ permalink: /projects/tanks-js
   else if (webkitAudioContext) { audio = new webkitAudioContext }
   else { console.error('AudioContext not available') }
 
-  if (audio) {
-    audio.mute = 1;
-    function toggleMute() {
+  var mute = window.localStorage.getItem('mute') == '1';
+  if (mute != null) {
+    document.getElementById('mute').checked = mute;
+    if (audio) {
+      audio.mute = mute;
+    }
+  }
+  else {
+    toggleMute();
+  }
+
+  function toggleMute() {
+    if (audio) {
       audio.mute = document.getElementById('mute').checked;
+      window.localStorage.setItem('mute', audio.mute ? 1 : 0);
       if (!audio.mute) {
         playTone(0, 0.1);
       }
     }
-    document.getElementById('mute').addEventListener('change', toggleMute);
-    toggleMute();
   }
+  document.getElementById('mute').addEventListener('change', toggleMute);
 
   function hkd(e) {
     if (!e.altKey && !e.ctrlKey && !e.metaKey) {e.preventDefault()}
