@@ -59,26 +59,26 @@ permalink: /projects/tanks-js
       2,2,2,2,2,2,2,2,1,1,1,0,0,0,1,1,1,1,0,0
     ],
     [
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+      0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,
+      0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
+      0,0,0,1,1,1,1,1,1,1,1,1,1,1,3,3,1,0,0,0,
+      0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,
+      0,0,1,1,1,0,0,0,0,1,1,1,1,1,1,1,3,3,0,0,
+      0,1,1,1,0,0,2,2,0,0,3,1,1,1,1,1,1,3,0,0,
+      1,1,1,0,0,2,2,2,2,2,3,3,3,3,1,1,1,3,1,0,
+      1,1,0,0,0,2,2,2,2,2,2,2,2,3,1,1,1,3,1,1,
+      1,0,0,0,2,2,2,2,2,2,2,2,2,2,2,1,1,3,1,1,
+      0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,
+      0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,0,1,1,1,
+      0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,1,1,1,
+      0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,1,1,1,
+      0,0,3,3,0,0,3,3,3,3,2,2,2,0,0,0,0,1,1,1,
+      0,0,0,3,0,0,1,1,1,3,0,0,0,0,0,0,0,1,1,1,
+      0,0,0,3,0,0,0,0,1,3,0,0,0,0,0,0,0,1,1,1,
+      0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+      1,1,1,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,1,1,
+      1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1
     ]
   ];
   const RANDOM = LEVELS.length;
@@ -277,10 +277,22 @@ permalink: /projects/tanks-js
   };
   Shell.prototype.life = 128;
 
-  window.mute = 1;
-  function toggleMute() { window.mute = document.getElementById('mute').checked }
-  document.getElementById('mute').addEventListener('change', toggleMute);
-  toggleMute();
+  var audio;
+  if (typeof AudioContext !== 'undefined') { audio = new AudioContext }
+  else if (webkitAudioContext) { audio = new webkitAudioContext }
+  else { console.error('AudioContext not available') }
+
+  if (audio) {
+    audio.mute = 1;
+    function toggleMute() {
+      audio.mute = document.getElementById('mute').checked;
+      if (!audio.mute) {
+        playTone(0, 0.1);
+      }
+    }
+    document.getElementById('mute').addEventListener('change', toggleMute);
+    toggleMute();
+  }
 
   function hkd(e) {
     if (!e.altKey && !e.ctrlKey && !e.metaKey) {e.preventDefault()}
@@ -355,11 +367,11 @@ permalink: /projects/tanks-js
     return Math.pow(1.05, f / -20) / gainMod;
   }
 
-  function stopSound(a, o, g) {
+  function stopSound(o, g) {
     // In case browser doesn't support WebAudio API
     // or sounds are muted
-    if (window.mute || !a) { return null }
-    let t = a.currentTime;
+    if (!audio || audio.mute) { return null }
+    let t = audio.currentTime;
     g.gain.setValueAtTime(g.gain.value, t);
     g.gain.linearRampToValueAtTime(0, t + 0.3);
     o.stop(t + 0.4);
@@ -367,17 +379,17 @@ permalink: /projects/tanks-js
     return null;
   }
 
-  function startTreadsSound(a, p) {
+  function startTreadsSound(p) {
     // In case browser doesn't support WebAudio API
     // or sounds are muted
-    if (window.mute || !a) {
+    if (!audio || audio.mute) {
       return { o: 0, g: 0 };
     }
-    let t = a.currentTime;
-    var o = a.createOscillator();
-    var g = a.createGain();
+    let t = audio.currentTime;
+    var o = audio.createOscillator();
+    var g = audio.createGain();
     o.connect(g);
-    g.connect(a.destination);
+    g.connect(audio.destination);
     let f = p == 0 ? 110 : 74;
     o.frequency.value = f;
     o.type = "triangle";
@@ -390,17 +402,17 @@ permalink: /projects/tanks-js
     return { o: o, g: g };
   }
 
-  function startTurnSound(a, p) {
+  function startTurnSound(p) {
     // In case browser doesn't support WebAudio API
     // or sounds are muted
-    if (window.mute || !a) {
+    if (!audio || audio.mute) {
       return { o: 0, g: 0 }
     }
-    let t = a.currentTime;
-    var o = a.createOscillator();
-    var g = a.createGain();
+    let t = audio.currentTime;
+    var o = audio.createOscillator();
+    var g = audio.createGain();
     o.connect(g);
-    g.connect(a.destination);
+    g.connect(audio.destination);
     let f = p == 0 ? 220 : 148;
     o.frequency.value = f;
     // o.frequency.value = p == 0 ? 165 : 101;
@@ -414,15 +426,37 @@ permalink: /projects/tanks-js
     return { o: o, g: g };
   }
 
-  function playFireSound(a, p) {
+  function playTone(s, d, f, w) {
     // In case browser doesn't support WebAudio API
     // or sounds are muted
-    if ( window.mute || !a) { return 0 }
-    let t = a.currentTime;
-    var o = a.createOscillator();
-    var g = a.createGain();
+    if (!audio || audio.mute) { return 0 }
+    let t = audio.currentTime + s;
+    var o = audio.createOscillator();
+    var g = audio.createGain();
     o.connect(g);
-    g.connect(a.destination);
+    g.connect(audio.destination);
+    if (f) { o.frequency.value = f; }
+    else { f = o.frequency.value; }
+    if (w) { o.type = w; }
+    else { w = o.type; }
+    let n = calculateGain(f, w);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(n, t + 0.02);
+    g.gain.setValueAtTime(n, t + d - 0.02)
+    g.gain.linearRampToValueAtTime(0, t + d);
+    o.start(t);
+    o.stop(t + d);
+  }
+
+  function playFireSound(p) {
+    // In case browser doesn't support WebAudio API
+    // or sounds are muted
+    if (!audio || audio.mute) { return 0 }
+    let t = audio.currentTime;
+    var o = audio.createOscillator();
+    var g = audio.createGain();
+    o.connect(g);
+    g.connect(audio.destination);
     let f = p == 0 ? 55 : 37;
     o.frequency.value = f;
     o.type = "square";
@@ -432,15 +466,15 @@ permalink: /projects/tanks-js
     o.stop(t + 0.2);
   }
 
-  function playRicochetSound(a, p) {
+  function playRicochetSound(p) {
     // In case browser doesn't support WebAudio API
     // or sounds are muted
-    if (window.mute || !a) { return 0 }
-    let t = a.currentTime;
-    var o = a.createOscillator();
-    var g = a.createGain();
+    if (!audio || audio.mute) { return 0 }
+    let t = audio.currentTime;
+    var o = audio.createOscillator();
+    var g = audio.createGain();
     o.connect(g);
-    g.connect(a.destination);
+    g.connect(audio.destination);
     let f = p == 0 ? 220 : 148;
     o.frequency.value = f;
     o.type = "square";
@@ -450,15 +484,15 @@ permalink: /projects/tanks-js
     o.stop(t + 0.2);
   }
 
-  function playExplodeSound(a, p) {
+  function playExplodeSound(p) {
     // In case browser doesn't support WebAudio API
     // or sounds are muted
-    if (window.mute || !a) { return 0 }
-    var t = a.currentTime;
-    var o = a.createOscillator();
-    var g = a.createGain();
+    if (!audio || audio.mute) { return 0 }
+    var t = audio.currentTime;
+    var o = audio.createOscillator();
+    var g = audio.createGain();
     o.connect(g);
-    g.connect(a.destination);
+    g.connect(audio.destination);
     let f = p == 0 ? 220 : 148;
     o.type = "square";
     let n = calculateGain(f, 'square');
@@ -486,14 +520,6 @@ permalink: /projects/tanks-js
   prerenderMenu(preContext, roundLimit, paletteOption, levelOption);
 
   var step = function(t) {
-    // Creating a new webkitAudioContext doesn't always work in Safari ¯\_(ツ)_/¯
-    if (typeof a === 'undefined') {
-      if (typeof AudioContext !== 'undefined') { var a = new AudioContext }
-      else if (webkitAudioContext) { var a = new webkitAudioContext }
-      else { console.error('AudioContext not available') }
-
-      if (typeof a === 'undefined') { console.error('AudioContext creation failed') }
-    }
     // Clear canvas
     x.clearRect(0, 0, 800, 640);
 
@@ -519,22 +545,58 @@ permalink: /projects/tanks-js
           prerenderLevel(preContext, level, levelOption, score, round, roundLimit);
         }
         else {
-          if (menu.up && optionRow > 0) { optionRow-- }
-          if (menu.down && optionRow < 2) { optionRow++ }
+          if (menu.up && optionRow > 0) {
+            optionRow--;
+            playTone(0, 0.1, 120, 'triangle');
+            playTone(0, 0.1, 180, 'triangle');
+          }
+          if (menu.down && optionRow < 2) {
+            optionRow++;
+            playTone(0, 0.1, 120, 'triangle');
+            playTone(0, 0.1, 180, 'triangle');
+          }
 
           if (menu.left || menu.right) {
             switch (optionRow) {
               case 0:
-                if (menu.left  && roundLimit >  1) { updateRoundLimit(preContext, roundLimit -= 2) }
-                if (menu.right && roundLimit < 15) { updateRoundLimit(preContext, roundLimit += 2) }
+                if (menu.left && roundLimit > 1) {
+                  updateRoundLimit(preContext, roundLimit -= 2);
+
+                  let bass = 100 * (1 + roundLimit / 15);
+                  playTone(0, 0.1, bass, 'triangle');
+                  playTone(0, 0.1, 1.33 * bass, 'triangle');
+                }
+                if (menu.right && roundLimit < 15) {
+                  updateRoundLimit(preContext, roundLimit += 2);
+
+                  let bass = 100 * (1 + roundLimit / 15);
+                  playTone(0, 0.1, bass, 'triangle');
+                  playTone(0, 0.1, 1.33 * bass, 'triangle');
+                }
                 break;
               case 1:
-                if (menu.left  && paletteOption > 0) { updatePlayerColors(preContext, --paletteOption) }
-                if (menu.right && paletteOption < 3) { updatePlayerColors(preContext, ++paletteOption) }
+                if (menu.left && paletteOption > 0) {
+                  updatePlayerColors(preContext, --paletteOption);
+                  playTone(0, 0.1, 150, 'triangle');
+                  playTone(0, 0.1, 200, 'triangle');
+                }
+                if (menu.right && paletteOption < 3) {
+                  updatePlayerColors(preContext, ++paletteOption);
+                  playTone(0, 0.1, 150, 'triangle');
+                  playTone(0, 0.1, 200, 'triangle');
+                }
                 break;
               case 2:
-                if (menu.left && levelOption > 0) { updateLevelOption(preContext, --levelOption) }
-                if (menu.right && levelOption < RANDOM) { updateLevelOption(preContext, ++levelOption) }
+                if (menu.left && levelOption > 0) {
+                  updateLevelOption(preContext, --levelOption);
+                  playTone(0, 0.1, 150, 'triangle');
+                  playTone(0, 0.1, 200, 'triangle');
+                }
+                if (menu.right && levelOption < RANDOM) {
+                  updateLevelOption(preContext, ++levelOption);
+                  playTone(0, 0.1, 150, 'triangle');
+                  playTone(0, 0.1, 200, 'triangle');
+                }
                 break;
             }
           }
@@ -626,16 +688,16 @@ permalink: /projects/tanks-js
               shells = [];
               if (levelOption == RANDOM) { level = LEVELS[Math.random() * RANDOM >> 0]; }
               if (players[0].treads) {
-                players[0].treads = stopSound(a, players[0].treads.o, players[0].treads.g);
+                players[0].treads = stopSound(players[0].treads.o, players[0].treads.g);
               }
               if (players[1].treads) {
-                players[1].treads = stopSound(a, players[1].treads.o, players[1].treads.g);
+                players[1].treads = stopSound(players[1].treads.o, players[1].treads.g);
               }
               if (players[0].turn) {
-                players[0].turn = stopSound(a, players[0].turn.o, players[0].turn.g);
+                players[0].turn = stopSound(players[0].turn.o, players[0].turn.g);
               }
               if (players[1].turn) {
-                players[1].turn = stopSound(a, players[1].turn.o, players[1].turn.g);
+                players[1].turn = stopSound(players[1].turn.o, players[1].turn.g);
               }
               players = [
                 { x:  64, y:  64, r:  0, life: 60, delay: 0 },
@@ -661,7 +723,7 @@ permalink: /projects/tanks-js
               p.r -= 6.28;
             }
             if (!players[i].turn) {
-              players[i].turn = startTurnSound(a, i);
+              players[i].turn = startTurnSound(i);
             }
           }
           else if (gKeys[i].right) {
@@ -673,15 +735,15 @@ permalink: /projects/tanks-js
               p.r -= 6.28;
             }
             if (!players[i].turn) {
-              players[i].turn = startTurnSound(a, i);
+              players[i].turn = startTurnSound(i);
             }
           }
           else if (players[i].turn) {
-            players[i].turn = stopSound(a, players[i].turn.o, players[i].turn.g);
+            players[i].turn = stopSound(players[i].turn.o, players[i].turn.g);
           }
           if (gKeys[i].up) {
             if (!players[i].treads) {
-              players[i].treads = startTreadsSound(a, i);
+              players[i].treads = startTreadsSound(i);
             }
             let cos = Math.cos(p.r);
             let sin = Math.sin(p.r);
@@ -697,12 +759,12 @@ permalink: /projects/tanks-js
             else if (nextCell < 3) { p.y = yPos }
           }
           else if (players[i].treads) {
-            players[i].treads = stopSound(a, players[i].treads.o, players[i].treads.g);
+            players[i].treads = stopSound(players[i].treads.o, players[i].treads.g);
           }
           if (gKeys[i].fire && p.delay == 0) {
             p.delay = 60;
             shells.push(new Shell(p, i));
-            playFireSound(a, i);
+            playFireSound(i);
           }
           if (p.delay > 0) { p.delay-- }
         }
@@ -761,8 +823,8 @@ permalink: /projects/tanks-js
           let c = ((h.x / 32) >> 0) + 20 * ((h.y / 32) >> 0);
           if (level[c] && level[c] == 3) {
             // Calculate distance from edges of tile
-            let fromX = 16 - Math.abs(h.x % 32 - 16);
-            let fromY = 16 - Math.abs(h.y % 32 - 16);
+            let fromX = 16 - Math.abs(h.x % 32 - 16) >> 0;
+            let fromY = 16 - Math.abs(h.y % 32 - 16) >> 0;
             if (fromX == fromY) {
               h.r = Math.atan2(-sin, -cos);
               if (!r) r = 1;
@@ -778,7 +840,7 @@ permalink: /projects/tanks-js
           }
         }
         if (r) {
-          playRicochetSound(a, h.n)
+          playRicochetSound(h.n)
         }
         h.life--;
         x.fillStyle = '#FFE';
@@ -790,12 +852,12 @@ permalink: /projects/tanks-js
         for (let p = 0; p < 2; p++) {
           if (players[p].life == 60 && Math.sqrt(Math.pow(players[p].x - h.x, 2) + Math.pow(players[p].y - h.y, 2)) < 16) {
             if (players[i].treads) {
-              players[i].treads = stopSound(a, players[i].treads.o, players[i].treads.g);
+              players[i].treads = stopSound(players[i].treads.o, players[i].treads.g);
             }
             if (players[i].turn) {
-              stopSound(a, players[i].turn.o, players[i].turn.g)
+              stopSound(players[i].turn.o, players[i].turn.g)
             }
-            playExplodeSound(a, p);
+            playExplodeSound(p);
             players[p].life--;
 
             // Score of player who didn't get hit goes up
