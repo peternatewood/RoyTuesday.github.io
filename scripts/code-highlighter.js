@@ -1,4 +1,4 @@
-function highlightCode(match) {
+function highlightJSCode(match) {
   var replaced = ['<span style="color:', '', ';">', match, '</span>'];
 
   if (!isNaN(parseInt(match))) {
@@ -30,12 +30,15 @@ function highlightCode(match) {
 }
 
 ready(function() {
-  var codeRegex = /(\/\/.+(\r|\n|\r\n)|(\b|\s)(\d+|[!<>+\-*/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return|var|function|document|window|[a-z][a-zA-Z\_]+(?=\(.*\)))(\b|\s)|'\w+'|"\w+")/g;
+  var jsRegex = /(\/\/.+(\r|\n|\r\n)|(\b|\s)(\d+|[!<>+\-*/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return|var|function|document|window|[a-z][a-zA-Z\_]+(?=\(.*\)))(\b|\s)|'\w+'|"\w+")/g;
   var preTags = document.getElementsByTagName('pre');
   var preTagsLength = preTags.length;
 
-  for (var i = 0; i < preTagsLength; i++) {
+  for (var i = 0; i < jsPreTagsLength; i++) {
     var originalHTML = preTags[i].innerHTML;
-    preTags[i].innerHTML = originalHTML.replace(codeRegex, highlightCode);
+
+    if (preTags[i].className.includes('code-javascript')) {
+      preTags[i].innerHTML = originalHTML.replace(jsRegex, highlightJSCode);
+    }
   }
 });
