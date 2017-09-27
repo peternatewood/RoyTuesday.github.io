@@ -1,8 +1,8 @@
-const CODE_RED = '#E46';
-const CODE_YELLOW = '#EE6';
-const CODE_GREEN = '#8E2';
-const CODE_BLUE = '#6AE';
-const CODE_PURPLE = '#A6E';
+const CODE_RED = '#E58';
+const CODE_YELLOW = '#EE8';
+const CODE_GREEN = '#AE4';
+const CODE_BLUE = '#6CE';
+const CODE_PURPLE = '#C6E';
 const CODE_GRAY = '#999';
 
 function highlightJSCode(match) {
