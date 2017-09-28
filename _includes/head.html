@@ -5,8 +5,6 @@
   <link rel="stylesheet" href="{{ '/css/main.css' | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
-  <link href="https://fonts.googleapis.com/css?family=Lato|Libre+Baskerville|Share+Tech+Mono" rel="stylesheet">
-
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
 
@@ -18,4 +16,14 @@
 
   <meta property="og:url" content="{% if page.permalink %}{{ page.permalink | prepend: site.url }}{% else %}{{ site.url }}{% endif %}">
   <meta property="og:type" content="website">
+
+  <!-- Load google fonts asynchronously to improve page loading speed, especially for mobile -->
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script type="text/javascript">
+    WebFont.load({
+      google: {
+        families: ['Lato', 'Libre Baskerville', 'Share Tech Mono']
+      }
+    })
+  </script>
 </head>
