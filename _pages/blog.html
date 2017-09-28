@@ -7,15 +7,15 @@ permalink: /blog/
   <h1>Game Design Blog</h1>
   <p>Things I've learned about designing games in HTML/Javascript and C</p>
 </article>
+<article>
 {% for blog in site.design_blog %}
-  <article>
-    <h2>
-      <a class="blog-link" href={{ blog.url | prepend: site.baseurl }} title="">
-        {{ blog.title }}
-      </a>
-    </h2>
-    <p>
-      {{ blog.description }}
-    </p>
-  </article>
+  <h2>
+    <a class="blog-link" href={{ blog.url | prepend: site.baseurl }} title="">
+      {{ blog.title }}
+    </a>
+  </h2>
+  <p>
+    {{ blog.description }}
+  </p>
 {% endfor %}
+</article>
