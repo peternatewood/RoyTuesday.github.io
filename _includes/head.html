@@ -8,4 +8,14 @@
   <link href="https://fonts.googleapis.com/css?family=Lato|Libre+Baskerville|Share+Tech+Mono" rel="stylesheet">
 
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"/>
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"/>
+
+  <meta property="og:image" content="{% if page.image %}{{ page.image }}{% else %}{{ site.headshot }}{% endif %}"/>
+  <meta property="og:image:alt" content="{% if page.image_alt %}{{ page.image_alt }}{% else %}{{ site.headshot_alt }}{% endif %}"/>
+
+  <meta property="og:url" content="{% if page.permalink %}{{ page.permalink | prepend: site.url }}{% else %}{{ site.url }}{% endif %}">
+  <meta property="og:type" content="website">
 </head>
