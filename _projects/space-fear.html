@@ -3,169 +3,76 @@ permalink: /projects/space-fear
 ---
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0"/>
 
-    <link href={{ "/css/space-fear/main.css" | prepend: site.baseurl }} rel="stylesheet" type="text/css"/>
+  <title>Space Fear</title>
+  <meta property="og:title" content="Space Fear">
 
-    <script src={{ "/scripts/space-fear/constants.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/room.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/actor.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/save.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/cursor.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/computer.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/key.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/keyboard.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/button.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/terminal.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/monitor.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/game.js" | prepend: site.baseurl }}></script>
-    <script src={{ "/scripts/space-fear/space-fear.js" | prepend: site.baseurl }}></script>
+  <meta name="description" content="A text-based horror adventure set on a spacestation. Click the red power button to enter standby mode, and again to power up the terminal. Follow the on-screen instructions to start. Type &quot;help&quot; for a list of commands."/>
+  <meta property="og:description" content="A text-based horror adventure set on a spacestation. Click the red power button to enter standby mode, and again to power up the terminal. Follow the on-screen instructions to start. Type &quot;help&quot; for a list of commands."/>
 
-    <title>Space Fear</title>
-  </head>
-  <body>
-    <canvas id="main-viewport" height="600" width="1280">
-      <p>
-        I'm sorry, your browser does not meet the minimum requirements to play this game.
-      </p>
-      <p>
-        Minimum screen size: <strong>1280px x 600px</strong>
-      </p>
-      <table>
-        <caption>Supported Browsers</caption>
-        <thead>
-          <tr>
-            <th>
-              Browser
-            </th>
-            <th>
-              Versions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Internet Explorer
-            </td>
-            <td>
-              9.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Edge
-            </td>
-            <td>
-              12.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Firefox
-            </td>
-            <td>
-              3.6+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Chrome
-            </td>
-            <td>
-              4.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Safari
-            </td>
-            <td>
-              4.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Opera
-            </td>
-            <td>
-              10.1+
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </canvas>
-    <div id="browser-requirements">
-      <p>
-        I'm sorry, your browser does not meet the minimum requirements to play this game.
-      </p>
-      <p>
-        Minimum screen size: <strong>1280px x 600px</strong>
-      </p>
-      <table>
-        <caption>Supported Browsers</caption>
-        <thead>
-          <tr>
-            <th>
-              Browser
-            </th>
-            <th>
-              Versions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Internet Explorer
-            </td>
-            <td>
-              9.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Edge
-            </td>
-            <td>
-              12.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Firefox
-            </td>
-            <td>
-              3.6+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Chrome
-            </td>
-            <td>
-              4.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Safari
-            </td>
-            <td>
-              4.0+
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Opera
-            </td>
-            <td>
-              10.1+
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </body>
+  <meta property="og:image" content="{{ '/imgs/space-fear.jpg' | prepend: site.url }}"/>
+  <meta property="og:image:alt" content="Gameplay screenshot of Space Fear"/>
+
+  <meta property="og:url" content="{{ page.permalink | prepend: site.url }}">
+  <meta property="og:type" content="website">
+
+  <link href={{ "/css/space-fear/main.css" | prepend: site.baseurl }} rel="stylesheet" type="text/css"/>
+
+  <script src={{ "/scripts/space-fear/constants.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/room.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/actor.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/save.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/cursor.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/computer.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/key.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/keyboard.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/button.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/terminal.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/monitor.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/game.js" | prepend: site.baseurl }}></script>
+  <script src={{ "/scripts/space-fear/space-fear.js" | prepend: site.baseurl }}></script>
+</head>
+<body>
+  <canvas id="main-viewport" height="600" width="1280">
+    <p>
+      I'm sorry, your browser does not meet the minimum requirements to play this game.
+    </p>
+    <p>
+      Minimum screen size: <strong>1280px x 600px</strong>
+    </p>
+    <table>
+      <caption>Supported Browsers</caption>
+      <thead><tr><th>Browser</th><th>Versions</th></tr></thead>
+      <tbody>
+        <tr><td>Internet Explorer</td><td>9.0+</td></tr>
+        <tr><td>Firefox</td><td>3.6+</td></tr>
+        <tr><td>Chrome</td><td>4.0+</td></tr>
+        <tr><td>Safari</td><td>4.0+</td></tr>
+        <tr><td>Opera</td><td>10.1+</td></tr>
+      </tbody>
+    </table>
+  </canvas>
+  <div id="browser-requirements">
+    <p>
+      I'm sorry, your browser does not meet the minimum requirements to play this game.
+    </p>
+    <p>
+      Minimum screen size: <strong>1280px x 600px</strong>
+    </p>
+    <table>
+      <caption>Supported Browsers</caption>
+      <thead><tr><th>Browser</th><th>Versions</th></tr></thead>
+      <tbody>
+        <tr><td>Internet Explorer</td><td>9.0+</td></tr>
+        <tr><td>Firefox</td><td>3.6+</td></tr>
+        <tr><td>Chrome</td><td>4.0+</td></tr>
+        <tr><td>Safari</td><td>4.0+</td></tr>
+        <tr><td>Opera</td><td>10.1+</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
 </html>
