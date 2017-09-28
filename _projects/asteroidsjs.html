@@ -5,7 +5,20 @@ permalink: /projects/asteroids-js
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0"/>
+
     <title>Asteroids JS</title>
+    <meta property="og:title" content="Asteroids JS">
+
+    <meta name="description" content="An adaptation of the classic Atari arcade game. Maneuver around deadly asteroids and shoot them to earn points.">
+    <meta property="og:description" content="An adaptation of the classic Atari arcade game. Maneuver around deadly asteroids and shoot them to earn points.">
+
+    <meta property="og:image" content="{{ "/imgs/asteroids-js.jpg" | prepend: site.url }}">
+    <meta property="og:image:alt" content="Gameplay screenshot of asteroids js in progress">
+
+    <meta property="og:url" content="{{ "/projects/asteroids-js" | prepend: site.url }}">
+    <meta property="og:type" content="website">
+
     <script type="text/javascript">
       // Constants and global function declarations
       var MAX_ASTEROIDS = 7;
