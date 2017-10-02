@@ -12,6 +12,8 @@ permalink: /projects/tanks-js
     1: Grass
     2: Water (Slows movement)
     3: Wall
+    4: Ash
+    5: Lava
   */
   const LEVELS = [
     [
@@ -101,11 +103,34 @@ permalink: /projects/tanks-js
       1,1,1,0,1,1,1,3,1,1,1,3,1,1,1,1,1,1,0,0,
       1,1,1,1,1,1,1,3,1,1,2,2,2,1,1,1,0,0,0,0,
       1,1,1,1,1,1,1,3,1,2,2,2,2,2,1,1,0,0,0,0
-    ]
+    ],
+    [
+      1,1,1,3,0,3,1,1,1,0,0,0,4,4,5,5,5,5,5,5,0,0,0,0,0,
+      1,1,0,0,0,0,0,1,1,0,0,0,4,4,5,5,5,5,5,5,0,0,0,0,0,
+      1,0,0,0,0,0,1,1,1,0,0,0,0,4,4,5,5,5,5,5,0,0,0,0,0,
+      0,0,0,0,0,1,1,1,1,1,0,0,0,4,4,4,5,5,5,5,0,0,0,0,0,
+      0,0,0,0,0,0,1,1,1,1,0,0,0,0,4,4,4,5,5,5,0,0,0,0,0,
+      0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,4,4,4,4,5,0,0,0,0,0,
+      1,1,0,0,1,1,1,1,3,1,1,0,0,0,0,0,0,4,4,4,3,0,0,0,0,
+      1,1,1,1,1,1,1,1,3,3,1,1,0,0,0,0,0,0,0,4,3,0,0,0,0,
+      1,1,1,1,1,1,1,1,3,1,1,1,1,1,0,0,0,0,0,0,3,0,0,0,0,
+      1,1,1,1,1,1,1,1,3,1,1,1,3,1,1,1,0,0,0,0,3,0,0,0,0,
+      1,1,1,1,3,3,3,3,3,1,1,1,3,1,1,1,1,1,1,0,3,0,0,0,0,
+      0,0,0,1,1,1,1,1,1,1,1,1,3,3,3,1,1,1,1,3,3,0,0,0,0,
+      0,0,0,0,0,0,1,1,1,1,1,1,3,1,1,1,1,1,1,1,0,0,0,0,0,
+      2,0,0,0,3,3,0,0,1,1,1,1,3,1,1,1,1,1,1,3,3,0,0,0,0,
+      2,2,2,0,0,3,0,0,0,1,1,1,3,1,1,1,1,1,1,0,3,0,0,0,0,
+      2,2,2,2,2,0,0,3,0,1,1,1,3,1,1,1,1,1,0,0,3,0,0,0,0,
+      2,2,2,2,2,2,0,3,3,0,1,3,3,1,1,1,0,0,0,0,3,0,0,0,0,
+      2,2,2,2,2,2,0,0,0,0,1,1,1,1,1,0,0,0,0,1,3,0,0,0,0,
+      2,2,2,2,2,2,2,0,0,0,1,1,1,1,1,0,0,0,0,1,3,0,0,0,0,
+      2,2,2,2,2,2,2,0,0,0,0,1,1,1,0,0,0,0,1,1,3,0,0,0,0
+    ],
   ];
   const RANDOM = LEVELS.length;
   var level = LEVELS[0];
   var levelOption = 0;
+  var bubbles = [];
 
   window.debug = 0;
 
@@ -114,7 +139,7 @@ permalink: /projects/tanks-js
   var menu = { show: 1, delay: 0, showLeft: 1, showRight: 1 };
   var final = 0;
   var optionRow = 0;
-  const PALETTE = [ '#951', '#791', '#158', '#722' ];
+  const PALETTE = [ '#951', '#791', '#158', '#722', '#333', '#C42' ];
   const paletteNames = [
     'Blue/Green',
     'Red/Yellow',
@@ -154,8 +179,13 @@ permalink: /projects/tanks-js
   }
   function renderLevelPreview(prerender, level) {
     if (level) {
+      let skipTiles = level.length > 400;
+      let skipAmount = 0;
+
       for (let i = 0; i < 400; i++) {
-        prerender.fillStyle = PALETTE[level[i]];
+        if (skipTiles && i > 0 && i % 20 == 0) { skipAmount += 5; }
+
+        prerender.fillStyle = PALETTE[level[i + skipAmount]];
         prerender.fillRect(520 + 4 * (i % 20), 450 + 4 * (i / 20 >> 0), 4, 4);
       }
     }
@@ -246,8 +276,13 @@ permalink: /projects/tanks-js
   function prerenderLevel(prerender, level, levelOption, score, round, roundLimit) {
     prerender.clearRect(0, 0, 800, 640);
 
+    let skipTiles = levelOption == 4;
+    let skipAmount = 0;
+
     for (let i = 0; i < 400; i++) {
-      prerender.fillStyle = PALETTE[level[i]];
+      if (skipTiles && i > 0 && i % 20 == 0) { skipAmount += 5; }
+
+      prerender.fillStyle = PALETTE[level[i + skipAmount]];
       prerender.fillRect(32 * (i % 20), 32 * (i / 20 >> 0), 32, 32);
     }
 
@@ -330,7 +365,7 @@ permalink: /projects/tanks-js
   function hkd(e) {
     if (!e.altKey && !e.ctrlKey && !e.metaKey) {e.preventDefault()}
     if (!e.repeat) {
-      if (e.key == '`') { debug = !debug }
+      if (e.key == '`') { window.debug = !window.debug }
       if (final) {
         menu.start = 1;
       }
@@ -345,7 +380,6 @@ permalink: /projects/tanks-js
       }
       else {
         switch (e.key) {
-          case '`': debug = !debug; break;
           // Player 1
           case 'ArrowLeft'  : gKeys[0].left   = 1; break;
           case 'ArrowRight' : gKeys[0].right  = 1; break;
@@ -537,8 +571,8 @@ permalink: /projects/tanks-js
     o.stop(t + 0.4);
   }
 
-  var x = document.getElementById('canvas').getContext('2d');
-  x.fillStyle = '#FFF';
+  var context = document.getElementById('canvas').getContext('2d');
+  context.fillStyle = '#FFF';
 
   var prerender = document.getElementById('prerender');
   var preContext = prerender.getContext('2d');
@@ -553,14 +587,14 @@ permalink: /projects/tanks-js
 
   var step = function(t) {
     // Clear canvas
-    x.clearRect(0, 0, 800, 640);
+    context.clearRect(0, 0, 800, 640);
 
     if (final) {
-      x.drawImage(prerender, 0, 0);
+      context.drawImage(prerender, 0, 0);
 
       if (menu.start) {
         prerenderMenu(preContext, roundLimit, paletteOption, levelOption);
-        x.fillStyle = '#FFF';
+        context.fillStyle = '#FFF';
         final = 0;
         menu.show = 1;
         menu.start = 0;
@@ -575,6 +609,11 @@ permalink: /projects/tanks-js
           if (levelOption == RANDOM) { level = LEVELS[(Math.random() * RANDOM) >> 0] }
           else { level = LEVELS[levelOption] }
           prerenderLevel(preContext, level, levelOption, score, round, roundLimit);
+          for (let i = 0; i < 400; i++) {
+            if (level[i] == 5) {
+              bubbles.push({ x: 32 * (i % 25), y: 32 * (i / 25 >> 0), step: (Math.random() * 120) >> 0 });
+            }
+          }
         }
         else {
           if (menu.up && optionRow > 0) {
@@ -683,27 +722,27 @@ permalink: /projects/tanks-js
         }
       }
       // # Render
-      x.drawImage(prerender, 0, 0);
+      context.drawImage(prerender, 0, 0);
 
       // Option arrows
       var rowY = 65 + 160 * optionRow;
       // Left
       if (menu.showLeft) {
-        x.beginPath();
-        x.moveTo(360, rowY);
-        x.lineTo(400, rowY - 30);
-        x.lineTo(400, rowY + 30);
-        x.closePath();
-        x.fill();
+        context.beginPath();
+        context.moveTo(360, rowY);
+        context.lineTo(400, rowY - 30);
+        context.lineTo(400, rowY + 30);
+        context.closePath();
+        context.fill();
       }
       // Right
       if (menu.showRight) {
-        x.beginPath();
-        x.moveTo(760, rowY);
-        x.lineTo(720, rowY - 30);
-        x.lineTo(720, rowY + 30);
-        x.closePath();
-        x.fill();
+        context.beginPath();
+        context.moveTo(760, rowY);
+        context.lineTo(720, rowY - 30);
+        context.lineTo(720, rowY + 30);
+        context.closePath();
+        context.fill();
       }
 
       if (menu.delay > 0) { menu.delay-- }
@@ -739,6 +778,8 @@ permalink: /projects/tanks-js
             }
             else {
               prerenderFinal(preContext, roundLimit, score);
+              players[0].l = false;
+              players[1].l = false;
               round = 0;
               final = 1;
             }
@@ -746,7 +787,7 @@ permalink: /projects/tanks-js
           }
         }
         else {
-          let cell = level[(p.x / 32 >> 0) + 20 * (p.y / 32 >> 0)];
+          let cell = level[(p.x / 32 >> 0) + (levelOption == 4 ? 25 : 20) * (p.y / 32 >> 0)];
           if (gKeys[i].left) {
             p.r -= 0.05;
             while (p.r < 0) {
@@ -778,18 +819,25 @@ permalink: /projects/tanks-js
             if (!players[i].treads) {
               players[i].treads = startTreadsSound(i);
             }
+            if (cell == 5 && !players[i].l) {
+              players[i].l = true;
+              trails[i] = [];
+            }
             let cos = Math.cos(p.r);
             let sin = Math.sin(p.r);
             let speed = cell == 2 ? 1 : 2;
             let xPos = speed * cos + p.x;
             let yPos = speed * sin + p.y;
-            let nextCell = level[(((16 * cos + p.x) / 32) >> 0) + 20 * (((16 * sin + p.y) / 32) >> 0)];
+            let nextCell = level[(((16 * cos + p.x) / 32) >> 0) + (levelOption == 4 ? 25 : 20) * (((16 * sin + p.y) / 32) >> 0)];
+            // Handle tile and level edge collisions
             if (xPos < 16) { p.x = 16; }
-            else if (xPos > 624) { p.x = 624; }
-            else if (nextCell < 3) { p.x = xPos; }
+            else if (levelOption == 4 && xPos > 784) { p.x = 784; }
+            else if (levelOption != 4 && xPos > 624) { p.x = 624; }
+            else if (nextCell < 3 || nextCell > 4) { p.x = xPos; }
+
             if (yPos < 16) { p.y = 16; }
             else if (yPos > 624) { p.y = 624; }
-            else if (nextCell < 3) { p.y = yPos; }
+            else if (nextCell < 3 || nextCell > 4) { p.y = yPos; }
           }
           else if (players[i].treads) {
             players[i].treads = stopSound(players[i].treads.o, players[i].treads.g);
@@ -830,7 +878,49 @@ permalink: /projects/tanks-js
 
       // # Rendering
       // Level and Score display
-      x.drawImage(prerender, 0, 0);
+      context.drawImage(prerender, 0, 0);
+      // Lava bubbles
+      if (levelOption > 3) {
+        context.strokeStyle = '#FE6';
+        context.lineWidth = 2;
+        for (let i = 0; i < 400; i++) {
+          if (bubbles[i]) {
+            if (bubbles[i].step < 90) {
+              context.beginPath();
+              context.arc(bubbles[i].x + 14, bubbles[i].y + 10, 5 * (bubbles[i].step / 90), 0, 6.28);
+              context.stroke();
+              context.closePath();
+            }
+            if (bubbles[i].step >= 30) {
+              context.beginPath();
+              context.arc(bubbles[i].x + 8, bubbles[i].y + 24, 4 * ((bubbles[i].step - 30) / 90), 0, 6.28);
+              context.stroke();
+              context.closePath();
+            }
+
+            if (bubbles[i].step < 30) {
+              context.beginPath();
+              context.arc(bubbles[i].x + 24, bubbles[i].y + 20, 4 * ((bubbles[i].step + 60) / 90), 0, 6.28);
+              context.stroke();
+              context.closePath();
+            }
+            else if (bubbles[i].step >= 60) {
+              context.beginPath();
+              context.arc(bubbles[i].x + 24, bubbles[i].y + 20, 4 * ((bubbles[i].step - 60) / 90), 0, 6.28);
+              context.stroke();
+              context.closePath();
+            }
+
+            bubbles[i].step++;
+            if (bubbles[i].step > 120) {
+              bubbles[i].step = 0;
+            }
+          }
+          else {
+            break;
+          }
+        }
+      }
 
       // Players
       for (let i = 0; i < 2; i++) {
@@ -839,9 +929,9 @@ permalink: /projects/tanks-js
         // Render trail first
         let xOffsets = [];
         let yOffsets = [];
-        x.beginPath();
-        x.strokeStyle = 'rgba(32,16,0,0.6)';
-        x.lineWidth = 6;
+        context.beginPath();
+        context.strokeStyle = p.l ? 'rgba(223,32,16,0.75)' : 'rgba(32,16,0,0.6)';
+        context.lineWidth = 6;
         // Right tracks
         for (let t = 0; t < 8; t++) {
           let trail = trails[i][t];
@@ -849,45 +939,46 @@ permalink: /projects/tanks-js
             xOffsets.push(6 * Math.cos(trail.r + 1.57));
             yOffsets.push(6 * Math.sin(trail.r + 1.57));
 
-            x[t == 0 ? 'moveTo' : 'lineTo'](trail.x + xOffsets[t], trail.y + yOffsets[t]);
+            context[t == 0 ? 'moveTo' : 'lineTo'](trail.x + xOffsets[t], trail.y + yOffsets[t]);
           }
         }
-        x.stroke();
-        x.closePath();
+        context.stroke();
+        context.closePath();
         // Left tracks
-        x.beginPath();
+        context.beginPath();
         for (let t = 0; t < 8; t++) {
           let trail = trails[i][t];
           if (trail) {
-            x[t == 0 ? 'moveTo' : 'lineTo'](trail.x - xOffsets[t], trail.y - yOffsets[t]);
+            context[t == 0 ? 'moveTo' : 'lineTo'](trail.x - xOffsets[t], trail.y - yOffsets[t]);
           }
         }
-        x.stroke();
-        x.closePath();
+        context.stroke();
+        context.closePath();
 
         if (p.life == 60) {
-          renderTank(x, p, colors[i]);
+          renderTank(context, p, colors[i]);
         }
         else if (p.life > 0) {
           let r = (60 - p.life) / 3 >> 0;
-          x.strokeStyle = colors[i];
-          x.beginPath();
-          x.moveTo(p.x + r / 4, p.y);
-          x.arc(p.x, p.y, r / 4, 0, 6.28);
+          context.strokeStyle = colors[i];
+          context.lineWidth = 2;
+          context.beginPath();
+          context.moveTo(p.x + r / 4, p.y);
+          context.arc(p.x, p.y, r / 4, 0, 6.28);
           if (p.life > 5) {
-            x.moveTo(p.x + r / 2, p.y);
-            x.arc(p.x, p.y, r / 2, 0, 6.28);
+            context.moveTo(p.x + r / 2, p.y);
+            context.arc(p.x, p.y, r / 2, 0, 6.28);
           }
           if (p.life > 15) {
-            x.moveTo(p.x + r, p.y);
-            x.arc(p.x, p.y, r, 0, 6.28);
+            context.moveTo(p.x + r, p.y);
+            context.arc(p.x, p.y, r, 0, 6.28);
           }
-          x.stroke();
+          context.stroke();
         }
       }
 
       // CPU tank
-      // renderTank(x, cpu, playerColors[(paletteOption + 1) % 4][0]);
+      // renderTank(context, cpu, playerColors[(paletteOption + 1) % 4][0]);
 
       // Shells
       let liveShells = [];
@@ -899,7 +990,7 @@ permalink: /projects/tanks-js
           let sin = Math.sin(h.r);
           h.x += cos;
           h.y += sin;
-          if (h.x <= 2 || h.x >= 638) {
+          if (h.x <= 2 || (players[h.n].x < 640 && h.x >= 638) || h.x >= 798) {
             h.r = Math.atan2(sin, -cos);
             if (!r) r = 1;
           }
@@ -907,8 +998,8 @@ permalink: /projects/tanks-js
             h.r = Math.atan2(-sin, cos);
             if (!r) r = 1;
           }
-          let c = ((h.x / 32) >> 0) + 20 * ((h.y / 32) >> 0);
-          if (level[c] && level[c] == 3) {
+          let c = ((h.x / 32) >> 0) + (levelOption == 4 ? 25 : 20) * ((h.y / 32) >> 0);
+          if (level[c] && level[c] > 2 && level[c] < 5) {
             // Calculate distance from edges of tile
             let fromX = 16 - Math.abs(h.x % 32 - 16) >> 0;
             let fromY = 16 - Math.abs(h.y % 32 - 16) >> 0;
@@ -930,8 +1021,8 @@ permalink: /projects/tanks-js
           playRicochetSound(h.n)
         }
         h.life--;
-        x.fillStyle = '#FFE';
-        x.fillRect(h.x - 2, h.y - 2, 4, 4);
+        context.fillStyle = players[h.n].l ? '#FAA' : '#FFE';
+        context.fillRect(h.x - 2, h.y - 2, 4, 4);
       }
       // Detect player collisions after updating shell positions
       for (let i = 0; i < shells.length; i++) {
@@ -960,16 +1051,19 @@ permalink: /projects/tanks-js
 
     // Debug
     if (debug) {
-      x.fillStyle = '#07F';
-      for (let r = 0; r < 640; r += 32) { x.fillRect(0, r, 800, 1) }
-      for (let c = 0; c < 800; c += 32) { x.fillRect(c, 0, 1, 640) }
-      x.font = '16px Courier';
-      x.textAlign = 'left';
-      x.fillStyle = 'rgba(255,255,255,0.8)';
-      x.fillRect(0, 0, 128, 128);
-      x.fillStyle = '#000';
-      x.fillText('Muted', 16, 16);
-      x.fillText(mute ? 'Yes' : 'No', 72, 16);
+      context.fillStyle = '#07F';
+      for (let r = 0; r < 640; r += 32) { context.fillRect(0, r, 800, 1) }
+      for (let c = 0; c < 800; c += 32) { context.fillRect(c, 0, 1, 640) }
+      context.font = '16px Courier';
+      context.textAlign = 'left';
+      context.fillStyle = '#FFF';
+      context.strokeStyle = '#000';
+
+      context.strokeText('player 1: ' + players[0].x + ' ' + players[0].y, 8, 24);
+      context.fillText('player 1: ' + players[0].x + ' ' + players[0].y, 8, 24);
+
+      context.strokeText('player 2: ' + players[1].x + ' ' + players[1].y, 8, 48);
+      context.fillText('player 2: ' + players[1].x + ' ' + players[1].y, 8, 48);
     }
 
     // Pause render loop if user leaves tab
