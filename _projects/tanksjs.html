@@ -113,6 +113,7 @@ permalink: /projects/tanks-js
     { x:  64, y:  64, r:    0, life: 60, delay: 0 },
     { x: 576, y: 576, r: 3.14, life: 60, delay: 0 }
   ];
+  var trails = [ [], [] ];
   var cpu = { x: 576, y: 64, r: 0, life: 60, delay: 0 };
 
   function renderTank(context, tank, color) {
@@ -760,12 +761,12 @@ permalink: /projects/tanks-js
             let xPos = speed * cos + p.x;
             let yPos = speed * sin + p.y;
             let nextCell = level[(((16 * cos + p.x) / 32) >> 0) + 20 * (((16 * sin + p.y) / 32) >> 0)];
-            if (xPos < 16) { p.x = 16 }
-            else if (xPos > 624) { p.x = 624 }
-            else if (nextCell < 3) { p.x = xPos }
-            if (yPos < 16) { p.y = 16 }
-            else if (yPos > 624) { p.y = 624 }
-            else if (nextCell < 3) { p.y = yPos }
+            if (xPos < 16) { p.x = 16; }
+            else if (xPos > 624) { p.x = 624; }
+            else if (nextCell < 3) { p.x = xPos; }
+            if (yPos < 16) { p.y = 16; }
+            else if (yPos > 624) { p.y = 624; }
+            else if (nextCell < 3) { p.y = yPos; }
           }
           else if (players[i].treads) {
             players[i].treads = stopSound(players[i].treads.o, players[i].treads.g);
@@ -775,7 +776,32 @@ permalink: /projects/tanks-js
             shells.push(new Shell(p, i));
             playFireSound(i);
           }
-          if (p.delay > 0) { p.delay-- }
+          // Add new trail coordinate if none at or near player
+          let addTrail = true;
+          let trailsLength = 0;
+          for (let t = 0; t < 8; t++) {
+            let trail = trails[i][t];
+            if (addTrail) {
+              if (trail) {
+                let dist = Math.sqrt(Math.pow(p.x - trail.x, 2) + Math.pow(p.y - trail.y, 2));
+                let radDiff = p.r - trail.r;
+                if (dist < 18 && radDiff > -1 && radDiff < 1) {
+                  addTrail = false;
+                }
+              }
+            }
+            if (trail) {
+              trailsLength++;
+            }
+          }
+          if (addTrail) {
+            if (trailsLength == 8) {
+              trails[i] = trails[i].slice(1);
+            }
+            trails[i].push({ x: p.x, y: p.y, r: p.r });
+          }
+
+          if (p.delay > 0) { p.delay--; }
         }
       }
 
@@ -787,6 +813,35 @@ permalink: /projects/tanks-js
       for (let i = 0; i < 2; i++) {
         let p = players[i];
         let colors = playerColors[paletteOption];
+        // Render trail first
+        let xOffsets = [];
+        let yOffsets = [];
+        x.beginPath();
+        x.strokeStyle = 'rgba(32,16,0,0.6)';
+        x.lineWidth = 6;
+        // Right tracks
+        for (let t = 0; t < 8; t++) {
+          let trail = trails[i][t];
+          if (trail) {
+            xOffsets.push(6 * Math.cos(trail.r + 1.57));
+            yOffsets.push(6 * Math.sin(trail.r + 1.57));
+
+            x[t == 0 ? 'moveTo' : 'lineTo'](trail.x + xOffsets[t], trail.y + yOffsets[t]);
+          }
+        }
+        x.stroke();
+        x.closePath();
+        // Left tracks
+        x.beginPath();
+        for (let t = 0; t < 8; t++) {
+          let trail = trails[i][t];
+          if (trail) {
+            x[t == 0 ? 'moveTo' : 'lineTo'](trail.x - xOffsets[t], trail.y - yOffsets[t]);
+          }
+        }
+        x.stroke();
+        x.closePath();
+
         if (p.life == 60) {
           renderTank(x, p, colors[i]);
         }
