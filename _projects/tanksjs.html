@@ -715,6 +715,7 @@ permalink: /projects/tanks-js
         if (p.life < 60) {
           if (p.life > -30){ p.life-- }
           else {
+            trails = [ [], [] ];
             if (round < roundLimit) {
               updateRound(preContext, ++round);
               shells = [];
