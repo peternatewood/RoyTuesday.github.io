@@ -105,6 +105,28 @@ permalink: /projects/tanks-js
       1,1,1,1,1,1,1,3,1,2,2,2,2,2,1,1,0,0,0,0
     ],
     [
+      2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+      2,0,0,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,3,
+      2,0,0,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,3,
+      3,1,1,3,3,3,3,3,3,3,3,1,1,3,1,1,3,1,1,3,
+      3,1,1,3,1,1,3,1,1,1,1,1,1,3,1,1,3,1,1,3,
+      3,1,1,3,1,1,3,1,1,1,1,1,1,1,1,1,3,1,1,3,
+      3,1,1,3,1,1,3,1,1,1,1,1,1,1,1,1,3,1,1,3,
+      3,1,1,3,1,1,3,1,1,3,3,3,3,3,1,1,3,1,1,3,
+      3,1,1,1,1,1,3,1,1,1,1,1,1,3,1,1,3,1,1,3,
+      3,1,1,1,1,1,3,1,1,1,1,1,1,3,1,1,3,1,1,3,
+      3,1,1,3,3,3,3,3,1,1,3,3,3,3,3,3,3,3,3,3,
+      3,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+      3,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+      3,1,1,3,1,1,3,3,3,3,3,3,1,1,3,3,3,1,1,3,
+      3,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,3,1,1,3,
+      3,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,3,1,1,3,
+      3,3,3,3,1,1,3,3,3,1,1,3,3,3,3,3,3,1,1,3,
+      3,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,0,0,2,
+      3,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,0,0,2,
+      3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2
+    ],
+    [
       1,1,1,3,0,3,1,1,1,0,0,0,4,4,5,5,5,5,5,5,0,0,0,0,0,
       1,1,0,0,0,0,0,1,1,0,0,0,4,4,5,5,5,5,5,5,0,0,0,0,0,
       1,0,0,0,0,0,1,1,1,0,0,0,0,4,4,5,5,5,5,5,0,0,0,0,0,
@@ -125,7 +147,7 @@ permalink: /projects/tanks-js
       2,2,2,2,2,2,0,0,0,0,1,1,1,1,1,0,0,0,0,1,3,0,0,0,0,
       2,2,2,2,2,2,2,0,0,0,1,1,1,1,1,0,0,0,0,1,3,0,0,0,0,
       2,2,2,2,2,2,2,0,0,0,0,1,1,1,0,0,0,0,1,1,3,0,0,0,0
-    ],
+    ]
   ];
   const RANDOM = LEVELS.length;
   var level = LEVELS[0];
@@ -276,7 +298,7 @@ permalink: /projects/tanks-js
   function prerenderLevel(prerender, level, levelOption, score, round, roundLimit) {
     prerender.clearRect(0, 0, 800, 640);
 
-    let skipTiles = levelOption == 4;
+    let skipTiles = levelOption == 5;
     let skipAmount = 0;
 
     for (let i = 0; i < 400; i++) {
@@ -609,9 +631,10 @@ permalink: /projects/tanks-js
           if (levelOption == RANDOM) { level = LEVELS[(Math.random() * RANDOM) >> 0] }
           else { level = LEVELS[levelOption] }
           prerenderLevel(preContext, level, levelOption, score, round, roundLimit);
+          let skipTiles = levelOption == 5;
           for (let i = 0; i < 400; i++) {
             if (level[i] == 5) {
-              bubbles.push({ x: 32 * (i % 25), y: 32 * (i / 25 >> 0), step: (Math.random() * 120) >> 0 });
+              bubbles.push({ x: 32 * (i % (skipTiles ? 25 : 20)), y: 32 * (i / (skipTiles ? 25 : 20) >> 0), step: (Math.random() * 120) >> 0 });
             }
           }
         }
@@ -787,7 +810,7 @@ permalink: /projects/tanks-js
           }
         }
         else {
-          let cell = level[(p.x / 32 >> 0) + (levelOption == 4 ? 25 : 20) * (p.y / 32 >> 0)];
+          let cell = level[(p.x / 32 >> 0) + (levelOption == 5 ? 25 : 20) * (p.y / 32 >> 0)];
           if (gKeys[i].left) {
             p.r -= 0.05;
             while (p.r < 0) {
@@ -828,11 +851,11 @@ permalink: /projects/tanks-js
             let speed = cell == 2 ? 1 : 2;
             let xPos = speed * cos + p.x;
             let yPos = speed * sin + p.y;
-            let nextCell = level[(((16 * cos + p.x) / 32) >> 0) + (levelOption == 4 ? 25 : 20) * (((16 * sin + p.y) / 32) >> 0)];
+            let nextCell = level[(((16 * cos + p.x) / 32) >> 0) + (levelOption == 5 ? 25 : 20) * (((16 * sin + p.y) / 32) >> 0)];
             // Handle tile and level edge collisions
             if (xPos < 16) { p.x = 16; }
-            else if (levelOption == 4 && xPos > 784) { p.x = 784; }
-            else if (levelOption != 4 && xPos > 624) { p.x = 624; }
+            else if (levelOption == 5 && xPos > 784) { p.x = 784; }
+            else if (levelOption != 5 && xPos > 624) { p.x = 624; }
             else if (nextCell < 3 || nextCell > 4) { p.x = xPos; }
 
             if (yPos < 16) { p.y = 16; }
@@ -998,7 +1021,7 @@ permalink: /projects/tanks-js
             h.r = Math.atan2(-sin, cos);
             if (!r) r = 1;
           }
-          let c = ((h.x / 32) >> 0) + (levelOption == 4 ? 25 : 20) * ((h.y / 32) >> 0);
+          let c = ((h.x / 32) >> 0) + (levelOption == 5 ? 25 : 20) * ((h.y / 32) >> 0);
           if (level[c] && level[c] > 2 && level[c] < 5) {
             // Calculate distance from edges of tile
             let fromX = 16 - Math.abs(h.x % 32 - 16) >> 0;
