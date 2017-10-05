@@ -1066,6 +1066,8 @@ permalink: /projects/tanks-js
           playRicochetSound(h.n)
         }
         h.life--;
+        context.fillStyle = '#000';
+        context.fillRect(h.x - 3, h.y - 3, 6, 6);
         context.fillStyle = players[h.n].l ? '#FAA' : '#FFE';
         context.fillRect(h.x - 2, h.y - 2, 4, 4);
       }
