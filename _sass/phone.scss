@@ -46,6 +46,11 @@ canvas {
   width: 100%;
 }
 
+.only-tablet-up,
+.only-desktop-up {
+  display: none;
+}
+
 nav {
   position: fixed;
   display: flex;
@@ -85,7 +90,6 @@ article {
   }
 }
 .article-body {
-  display: inline-block;
   line-height: 1.4;
   padding: 4px 14px 12px;
   margin: 0;
