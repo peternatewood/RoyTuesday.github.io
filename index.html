@@ -3,37 +3,37 @@ layout: default
 ---
 
 <article>
-  <h2>
+  <h2 class="article-title">
     <a class="home-link" href={{ "/projects" | prepend: site.baseurl }} title="Projects">Projects</a>
   </h2>
-  <p>
+  <p class="article-body">
     Check out my <a href="{{ "/projects" | prepend: site.baseurl }}">programming projects.</a> How about <a href={{ "/projects/tetrelementis" | prepend: site.baseurl }} title="Tetrelementis">Tetrelementis</a>?
   </p>
 </article>
 <article>
-  <h2>
+  <h2 class="article-title">
     <a class="home-link" href={{ "/about" | prepend: site.baseurl }} title="About Me">About Me</a>
   </h2>
-  <p>
+  <p class="article-body">
     "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href={{ "/about" | prepend: site.baseurl }} data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
   </p>
 </article>
 <article>
-  <h2>
+  <h2 class="article-title">
     <a class="home-link" href={{ "/blog" | prepend: site.baseurl }} title="Blog">Blog</a>
   </h2>
-  <p>
-    Why not read my latest post about
-    <a class="blog-link" href={{ site.design_blog.first.url | prepend: site.baseurl }} title={{ site.design_blog.first.title }}>
-      {{ site.design_blog.first.title }}
-    </a>?
+  <p class="article-body">
+    Why not read my latest post <a class="blog-link" href={{ site.design_blog.first.url | prepend: site.baseurl }} title={{ site.design_blog.first.title }}>{{ site.design_blog.last.title }}</a>?
+    <span class="article-preview">
+      {{ site.design_blog.last.preview }}...
+    </span>
   </p>
 </article>
 <article>
-  <h2>
+  <h2 class="article-title">
     <a class="home-link" href={{ site.resume | prepend: site.baseurl }} title="Resume">Resume</a>
   </h2>
-  <p>
-    Read up on my credentials: my skills, what programming languages I know, my work history, education, and more.
+  <p class="article-body">
+    Read up on my credentials: my skills, what programming languages I know, my work history, and education.
   </p>
 </article>

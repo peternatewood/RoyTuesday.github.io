@@ -4,19 +4,20 @@ title: Blog
 permalink: /blog/
 ---
 <article>
-  <h1>Game Design Blog</h1>
-  <p>Things I've learned about designing games in HTML/Javascript and C</p>
+  <h1 class="article-heading">Game Design Blog</h1>
+  <p class="article-body">Things I've learned about designing games in HTML/Javascript and C</p>
 </article>
 <article>
-  <h1>Building Asteroids for the web</h1>
+  <h1 class="article-heading">Building Asteroids for the web</h1>
 {% for blog in site.design_blog %}
-  <h2>
+  <h2 class="article-title">
     <a class="blog-link" href={{ blog.url | prepend: site.baseurl }} title="">
       {{ blog.title }}
     </a>
   </h2>
-  <p>
+  <p class="article-body">
     {{ blog.description }}
+    <span class="article-preview">{{ blog.preview }}</span>
   </p>
 {% endfor %}
 </article>

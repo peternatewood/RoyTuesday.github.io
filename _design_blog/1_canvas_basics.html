@@ -2,33 +2,27 @@
 layout: default
 title: "1: HTML Canvas Basics"
 description: Start drawing simple shapes with the HTML5 Canvas
+preview: "HTML5 provides a really powerful element: the canvas. These days, you can do a lot of cool things with CSS and pseudo selectors"
 permalink: /blog/canvas-basics
 ---
 <article>
-  <h1>HTML Canvas Basics</h1>
-  <p>
-    Previous <a href="/blog/webaudio-basics">0: Webaudio Basics</a>
-    <br/>
-    Next <em>coming soon</em>
-  </p>
-  <p>
+  <h1 class="article-heading">HTML Canvas Basics</h1>
+  <p class="article-body">
+    Previous <a href="/blog/webaudio-basics">0: Webaudio Basics</a><br/>
+    Next <em>coming soon</em><br/>
     Posted: <strong>28 Sep, 2017</strong><br/>
   </p>
 </article>
 <article>
-  <p>
-    HTML5 provides a really powerful element: the canvas. These days, you can do <a href="https://css-tricks.com/examples/ShapesOfCSS/">a lot of cool things with CSS and pseudo selectors</a>, but if you want to build games in the browser, you'd best learn how to use the canvas.
-  </p>
-  <p>
-    You could fill your webpage with absolute-position div elements, style them to whatever shape you like, and move them around as you need...right? Yes, you could, but it's not a good idea. HTML elements are designed to be static, or at least not move very often; a game like this would be very slow, and really just a terrible misuse of the Document Object Model (DOM). Those poor divs...
-  </p>
-  <p>
-    Instead we have the canvas; it was designed for the sort of frequent graphical changes you need to make in a video game. Plus, it saves us a lot of trouble to render anything more complicated than a rectangle or circle.
-  </p>
-  <p>
-    Another great thing about the canvas API: it's supported by just about every modern browser, and doesn't require you to load any external libraries. Unless your using a really old version of Chrome or Firefox, or Internet Explorer older than 9 (which some people still do), the canvas should work just fine for you.
-  </p>
-  <p>
+  <p class="article-body">
+    HTML5 provides a really powerful element: the canvas. These days, you can do <a href="https://css-tricks.com/examples/ShapesOfCSS/">a lot of cool things with CSS and pseudo selectors</a>, but if you want to build games in the browser, you'd best learn how to use the canvas.<br/><br/>
+
+    You could fill your webpage with absolute-position div elements, style them to whatever shape you like, and move them around as you need...right? Yes, you could, but it's not a good idea. HTML elements are designed to be static, or at least not move very often; a game like this would be very slow, and really just a terrible misuse of the Document Object Model (DOM). Those poor divs...<br/><br/>
+
+    Instead we have the canvas; it was designed for the sort of frequent graphical changes you need to make in a video game. Plus, it saves us a lot of trouble to render anything more complicated than a rectangle or circle.<br/><br/>
+
+    Another great thing about the canvas API: it's supported by just about every modern browser, and doesn't require you to load any external libraries. Unless your using a really old version of Chrome or Firefox, or Internet Explorer older than 9 (which some people still do), the canvas should work just fine for you.<br/><br/>
+
     First, you want to decide what size your canvas will be. You can use css to scale the element to any size you like, but the <span class="code">width</span> and <span class="code">height</span> attributes determine it's internal resolution (this is done automatically using a buffer that stays the same size). For games, I like to wrap my canvas in a table so that it's nice and centered. Also, any html contained in the canvas will render if the browser doesn't support the canvas element; I recommend something like the following table of browser requirements.
   </p>
   <pre class="code-html">
@@ -50,22 +44,19 @@ permalink: /blog/canvas-basics
     &lt;/table&gt;
   &lt;/canvas&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</pre>
-  <p>
+  <p class="article-body">
     Next, we need to get the rendering context from our canvas. If you use jQuery, you have to call <span class="code">getContext('2d')</span> on the DOMElement itself, not the special object jQuery gives you. jQuery isn't very useful for games, so I usually don't bother. We're specifying '2d' because the Canvas API also supports 3D rendering through WebGL.
   </p>
   <pre class="code-javascript">
 var context = document.getElementById('canvas').getContext('2d');</pre>
-  <p>
-    There are two main ways to render things on the canvas: vector graphics rendering, and copying from an img tag or another canvas. Vector Graphics (which I'll abbreviate VG) is a way of mathematically rendering simple shapes. It can be more processor intensive than loading an image, but VG images scale well, and transformations like rotation are less intensive than with images. Rendering in VG on the canvas also allows us to contain everything we need for a simple game in a single html file.
-  </p>
-  <p>
-    Copying image data from another source is a useful way to improve performance, but I'll discuss that in a separate tutorial.
-  </p>
-  <p>
-    Now that we have the rendering context, we can start drawing stuff. We'll start with a simple rectangle. The context has a bunch of properties used to render things, including stroke and fill colors, so let's specify what colors we want to use first. Any color name, hex, or rgba value that's valid in css will work here too. Then we can call <span class="code">fillRect()</span> and <span class="code">strokeRect()</span> to draw a rectangle with an outline.
-  </p>
-  <p>
-    I've added a grid to this canvas to better illustrate how things are positioned.
+  <p class="article-body">
+    There are two main ways to render things on the canvas: vector graphics rendering, and copying from an img tag or another canvas. Vector Graphics (which I'll abbreviate VG) is a way of mathematically rendering simple shapes. It can be more processor intensive than loading an image, but VG images scale well, and transformations like rotation are less intensive than with images. Rendering in VG on the canvas also allows us to contain everything we need for a simple game in a single html file.<br/><br/>
+
+    Copying image data from another source is a useful way to improve performance, but I'll discuss that in a separate tutorial.<br/><br/>
+
+    Now that we have the rendering context, we can start drawing stuff. We'll start with a simple rectangle. The context has a bunch of properties used to render things, including stroke and fill colors, so let's specify what colors we want to use first. Any color name, hex, or rgba value that's valid in css will work here too. Then we can call <span class="code">fillRect()</span> and <span class="code">strokeRect()</span> to draw a rectangle with an outline.<br/><br/>
+
+    I've added a grid to this canvas to better illustrate how things are positioned.<br/><br/>
   </p>
   <pre class="code-javascript">
 context.fillStyle = '#4E4';
@@ -73,14 +64,14 @@ context.strokeStyle = 'crimson';
 
 context.fillRect(100, 40, 200, 120);
 context.strokeRect(100, 40, 200, 120);</pre>
-<canvas id="rectangle" width="800" height="450"></canvas>
-  <p>
-    The canvas uses a coordinate system where the x- and y-axes are centered on the upper left corner of the element; x increases from left to right, y increases from top to bottom, and the upper left corner is at x = 0, y = 0. Our rectangle will be 200 pixels wide, 120 pixels high, with it's upper left corner at 100 pixels from the left edge of the canvas, and 40 pixels from the top.
-  </p>
-  <p>
-    It's important to note that every time you render, you're drawing over whatever you previously rendered as well as what's already on the canvas. That's why we draw the rectangle outline after the rectangle fill, so we can see it better.
-  </p>
-  <p>
+  <div class="canvas-wrapper">
+    <canvas id="rectangle" width="800" height="450" style="max-width:800px;"></canvas>
+  </div>
+  <p class="article-body">
+    The canvas uses a coordinate system where the x- and y-axes are centered on the upper left corner of the element; x increases from left to right, y increases from top to bottom, and the upper left corner is at x = 0, y = 0. Our rectangle will be 200 pixels wide, 120 pixels high, with it's upper left corner at 100 pixels from the left edge of the canvas, and 40 pixels from the top.<br/><br/>
+
+    It's important to note that every time you render, you're drawing over whatever you previously rendered as well as what's already on the canvas. That's why we draw the rectangle outline after the rectangle fill, so we can see it better.<br/><br/>
+
     Now lets draw something more complicated. Our rendering context also lets us define a set of points to form a path. Like the rectangle, we can fill, stroke, or both after defining the path. We start with <span class="code">beginPath()</span> and <span class="code">moveTo(x, y)</span> to declare our first point, where "x" is the x coordinate, and "y" is the y coordinate. From there, we use <span class="code">lineTo(x, y)</span> to specify that we want the previous point and the new one to connect in a straight line. Note: if you don't explicitly close the path before you try to fill it, the path will act like you called <span class="code">closePath()</span>, connect the last point to the first, and fill that path.
   </p>
   <pre class="code-javascript">
@@ -109,11 +100,12 @@ context.lineTo(600, 400);
 
 context.stroke();
 context.closePath();</pre>
-  <canvas id="three-lines" width="800" height="450"></canvas>
-  <p>
-    It's important to call <span class="code">closePath()</span> so that we clear out the path and don't draw it again by accident. As shown above, if we're just drawing lines, we can call <span class="code">moveTo()</span> to break up the line into several segments before we render. It's good for performance to call functions like <span class="code">fill()</span> and <span class="code">stroke()</span> as rarely as possible. We can do something similar if we want to fill several objects at once, as long as we make sure the last point of each shape is supposed to connect to the first.
-  </p>
-  <p>
+  <div class="canvas-wrapper">
+    <canvas id="three-lines" width="800" height="450" style="max-width:800px;"></canvas>
+  </div>
+  <p class="article-body">
+    It's important to call <span class="code">closePath()</span> so that we clear out the path and don't draw it again by accident. As shown above, if we're just drawing lines, we can call <span class="code">moveTo()</span> to break up the line into several segments before we render. It's good for performance to call functions like <span class="code">fill()</span> and <span class="code">stroke()</span> as rarely as possible. We can do something similar if we want to fill several objects at once, as long as we make sure the last point of each shape is supposed to connect to the first.<br/><br/>
+
     Let's also draw a circle. The <span class="code">arc(x, y, radius, startAngle, endAngle, anticlockwise)</span> function lets us draw a circular arc, where "startAngle" is the starting angle in radians (0 to 2 &times; pi), "endAngle" is the ending angle, and "anticlockwise" is an optional boolean that determines draw direction, which is clockwise by default.
   </p>
   <pre class="code-javascript">
@@ -152,21 +144,17 @@ context.arc(400, 325, 32, 0.5, 5.78);
 context.fillStyle = '#FF0';
 context.fill();
 context.closePath();</pre>
-  <canvas id="triangles" width="800" height="450"></canvas>
-  <p>
-    Notice how you can use <span class="code">moveTo()</span> together with <span class="code">arc()</span> for more complex shapes. All the functions that draw a path can be used in tandem; Check out the MDN documentation below for more details.
-  </p>
-  <p>
-    There you have it! VG rendering in the canvas is very easy, though more complex shapes can take many lines of code. Next, we'll learn about the game loop.
-  </p>
+  <div class="canvas-wrapper">
+    <canvas id="triangles" width="800" height="450" style="max-width: 800px;"></canvas>
+  </div>
+  <p class="article-body">
+    Notice how you can use <span class="code">moveTo()</span> together with <span class="code">arc()</span> for more complex shapes. All the functions that draw a path can be used in tandem; Check out the MDN documentation below for more details.<br/><br/>
 
-  <p>
-    <strong>&mdash; Peter Wood</strong>
-  </p>
+    There you have it! VG rendering in the canvas is very easy, though more complex shapes can take many lines of code. Next, we'll learn about the game loop.<br/><br/>
 
-  <p>
-    Previous <a href="/blog/webaudio-basics">0: Webaudio Basics</a>
-    <br/>
+    <strong>&mdash; Peter Wood</strong><br/><br/>
+
+    Previous <a href="/blog/webaudio-basics">0: Webaudio Basics</a><br/>
     Next <em>coming soon</em>
   </p>
 </article>
