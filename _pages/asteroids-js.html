@@ -4,31 +4,31 @@ title: Asteroids JS
 permalink: /projects/summary/asteroids-js
 ---
 <article>
-  <h1><a href="{{ "/projects/asteroids-js" | prepend: site.baseurl }}">Asteroids JS</a></h1>
-  <p>
-    My take on the classic Atari arcade game <em>Asteroids</em>. I built this over a week during my free time, which is more a testament to the ease of use of HTML and JavaScript than my own development skills. There are some changes and improvements I would like to make, like persisting your high score, but I decided to completely halt development after a week on the principle that I made it in a week ¯\_(ツ)_/¯
-  </p>
-  <p>
+  <h1 class="article-title">
+    <a href="{{ "/projects/asteroids-js" | prepend: site.baseurl }}">Asteroids JS</a>
+  </h1>
+  <p class="article-body">
+    My take on the classic Atari arcade game <em>Asteroids</em>. I built this over a week during my free time, which is more a testament to the ease of use of HTML and JavaScript than my own development skills.<br/><br/>
+
+    There are some changes and improvements I would like to make, like persisting your high score, but I decided to totally stop after a week on the principle that I made it in a week ¯\_(ツ)_/¯<br/><br/>
+
     <a href="{{ "/projects/asteroids-js" | prepend: site.baseurl }}">Play it here!</a>
   </p>
   <div class="image-wrapper">
     <img src="{{ "/imgs/asteroids-js.jpg" | prepend: site.baseurl }}">
   </div>
-  <p>
-    <h2>How to Play</h2>
-    If you're playing with a keyboard, you'll see the default controls on the right. If you want to rebind the controls, click the named key below the command, and type the key you would like to use. You turn the ship left or right relative to the direction it's facing.
+  <h2 class="article-title">How to Play</h2>
+  <p class="article-body">
+    If you're playing with a keyboard, you'll see the default controls on the right. If you want to rebind the controls, click the named key below the command, and type the key you would like to use. You turn the ship left or right relative to the direction it's facing.<br/><br/>
+
+    Firing thrusters propels the ship forward; being in outer space, there's no friction (although I've set a maximum speed) so you'll keep moving in the direction you last fired the thrusters. If you collide with an asteroid, it'll destroy your ship and lose you a life. Fire a missile to destroy an asteroid; large asteroids will break into two smaller ones.<br/><br/>
+
+    As you destroy asteroids, more will appear at the edges of the screen ad infinitum, though no more will appear if there are seven or more on screen already. You only get points for destroying the smallest size asteroid (out of three sizes). Check out the options menu to toggle control methods, and adjust the rendering color.<br/><br/>
   </p>
-  <p>
-    Firing thrusters propels the ship forward; being in outer space, there's no friction (although I've set a maximum speed) so you'll keep moving in the direction you last fired the thrusters. If you collide with an asteroid, it'll destroy your ship and lose you a life. Fire a missile to destroy an asteroid; large asteroids will break into two smaller ones.
-  </p>
-  <p>
-    As you destroy asteroids, more will appear at the edges of the screen ad infinitum, though no more will appear if there are seven or more on screen already. You only get points for destroying the smallest size asteroid (out of three sizes). Check out the options menu to toggle control methods, and adjust the rendering color.
-  </p>
-  <p>
-    <h2>Mobile Compatibility</h2>
-    This works on mobile, though you're likely to zoom in from double tapping the fire or thruster buttons. The ship turns toward your finger if you hold it on the screen. If the yellow and red buttons don't appear, click the options button and toggle the control type to "touchscreen". The yellow button fires thrusters, the red button fires missiles.
-  </p>
-  <p>
-    Built using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">Canvas Rendering Context</a> Web API.<br/>
+  <h2 class="article-title">Mobile Compatibility</h2>
+  <p class="article-body">
+    This works on mobile, though you're likely to zoom in from double tapping the fire or thruster buttons. The ship turns toward your finger if you hold it on the screen. If the yellow and red buttons don't appear, click the options button and toggle the control type to "touchscreen". The yellow button fires thrusters, the red button fires missiles.<br/><br/>
+
+    Built using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">Canvas Rendering Context</a> Web API.
   </p>
 </article>

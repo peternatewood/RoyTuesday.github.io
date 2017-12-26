@@ -9,12 +9,12 @@ Desigining a website to provide a pleasant user experience on every device is no
 
 ## Style Guide
 #### Typefaces
-**Title and Headers:** _Libre Baskerville_<br/>
+**Title and Headers:** _Roboto Slab_<br/>
 **Body:** _Lato_
 
 #### Color Scheme
-**Background Color:** _#BBBBDD_<br/>
-**Section Backgrounds:** _#E8EEFF_<br/>
-**Body Text:** _#444444_<br/>
-**Navigation Background:** _#226600_<br/>
-**Navigation Text:** _#F0E68C_<br/>
+**Background Color:** _#000000_<br/>
+**Section Backgrounds:** _#F8F8F8_<br/>
+**Body Text:** _#333333_<br/>
+**Navigation Background:** _#F8F8F8_<br/>
+**Link Color:** _#222288_<br/>

@@ -122,7 +122,7 @@ function highlightHTMLCode(original) {
 }
 
 ready(function() {
-  var jsRegex = /(\/\/.+(\r|\n|\r\n)|(\b|\s)(\d+|[!<>+\-*/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return|var|function|document|window|[a-z][a-zA-Z\_]+(?=\(.*\)))(\b|\s)|'[^']+'|"[^']+")/g;
+  var jsRegex = /(\/\/.+(\r|\n|\r\n)|(\b|\s)(\d+\.\d+|\d+|[!<>+\-*/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return|var|function|document|window|[a-z][a-zA-Z\_]+(?=\(.*\)))(\b|\s)|'[^']+'|"[^']+")/g;
 
   var preTags = document.getElementsByTagName('pre');
   var preTagsLength = preTags.length;

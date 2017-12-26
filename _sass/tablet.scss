@@ -1,0 +1,28 @@
+@media screen and (min-width: 600px) {
+  body {
+    padding-top: 3em;
+  }
+
+  .nav-link {
+    font-size: 18px;
+  }
+  .nav-name {
+    display: inline;
+    font: 16px $roboto;
+  }
+
+  .article-title {
+    font-size: 1.6em;
+  }
+  .article-body {
+    font-size: 1.25em;
+    line-height: 1.5;
+  }
+
+  .article-preview {
+    display: block;
+    background: #FFF;
+    padding: 4px;
+    margin: 8px 0 4px;
+  }
+}
