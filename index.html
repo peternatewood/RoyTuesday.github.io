@@ -4,32 +4,32 @@ layout: default
 
 <article>
   <h2 class="article-title">
-    <a class="home-link" href={{ "/projects" | prepend: site.baseurl }} title="Projects">Projects</a>
+    <a class="home-link" href="{{ '/projects' | prepend: site.baseurl }}" title="Projects">Projects</a>
   </h2>
   <p class="article-body">
-    Check out my <a href="{{ "/projects" | prepend: site.baseurl }}">programming projects.</a> How about <a href={{ "/projects/summary/tetrelementis" | prepend: site.baseurl }} title="Tetrelementis">Tetrelementis</a>?
+    Check out my <a href="{{ '/projects' | prepend: site.baseurl }}">programming projects.</a> How about <a href="{{ '/projects/summary/tetrelementis' | prepend: site.baseurl }}" title="Tetrelementis">Tetrelementis</a>?
   </p>
   <div class="image-wrapper only-tablet-up">
-    <img src="{{ "/imgs/tetrelementis.jpg" | prepend: site.baseurl }}">
+    <img src="{{ '/imgs/tetrelementis.jpg' | prepend: site.baseurl }}">
   </div>
   <p class="article-body">
-    <a href={{ "/projects/tetrelementis" }}>Play it here!</a>
+    <a href="{{ '/projects/tetrelementis' }}">Play it here!</a>
   </p>
 </article>
 <article>
   <h2 class="article-title">
-    <a class="home-link" href={{ "/about" | prepend: site.baseurl }} title="About Me">About Me</a>
+    <a class="home-link" href="{{ '/about' | prepend: site.baseurl }}" title="About Me">About Me</a>
   </h2>
   <p class="article-body">
-    "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href={{ "/about" | prepend: site.baseurl }} data-page-partial="./about/partial-index.html" title="About Me">click</a> and see for yourself!
+    "Who is Peter Wood?" I hear you ask. Ponder no more, you need only to <a href="{{ '/about' | prepend: site.baseurl }}" title="About Me">click</a> and see for yourself!
   </p>
 </article>
 <article>
   <h2 class="article-title">
-    <a class="home-link" href={{ "/blog" | prepend: site.baseurl }} title="Blog">Blog</a>
+    <a class="home-link" href="{{ '/blog' | prepend: site.baseurl }}" title="Blog">Blog</a>
   </h2>
   <p class="article-body">
-    Why not read my latest post <a class="blog-link" href={{ site.design_blog.first.url | prepend: site.baseurl }} title={{ site.design_blog.first.title }}>{{ site.design_blog.last.title }}</a>?
+    Why not read my latest post <a class="blog-link" href="{{ site.design_blog.last.url | prepend: site.baseurl }}" title="{{ site.design_blog.last.title }}">{{ site.design_blog.last.title }}</a>?
     <span class="article-preview">
       {{ site.design_blog.last.preview }}...
     </span>
@@ -37,7 +37,7 @@ layout: default
 </article>
 <article>
   <h2 class="article-title">
-    <a class="home-link" href={{ site.resume | prepend: site.baseurl }} title="Resume">Resume</a>
+    <a class="home-link" href="{{ site.resume | prepend: site.baseurl }}" title="Resume">Resume</a>
   </h2>
   <p class="article-body">
     Read up on my credentials, skills, and work history.
