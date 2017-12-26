@@ -1,0 +1,35 @@
+@media screen and (min-width: 1024px) {
+  .nav-link {
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  .image-wrapper {
+    margin: 0 12px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .nav-link {
+    font-size: 24px;
+    padding: {
+      top: 14px;
+      bottom: 14px;
+    }
+  }
+  .nav-name {
+    font-size: 22px;
+  }
+  footer {
+    font-size: 24px;
+  }
+  .footer-links a {
+    padding: {
+      top: 18px;
+      bottom: 18px;
+    }
+  }
+  .mail-link {
+    padding-bottom: 18px;
+  }
+}
