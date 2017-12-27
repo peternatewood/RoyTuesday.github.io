@@ -25,7 +25,7 @@ permalink: /blog/canvas-basics
 
     First, you want to decide what size your canvas will be. You can use css to scale the element to any size you like, but the <span class="code">width</span> and <span class="code">height</span> attributes determine it's internal resolution (this is done automatically using a buffer that stays the same size). For games, I like to wrap my canvas in a table so that it's nice and centered. Also, any html contained in the canvas will render if the browser doesn't support the canvas element; I recommend something like the following table of browser requirements.
   </p>
-  <pre class="code-html">
+<pre class="code-html">
 &lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;
   &lt;canvas id="canvas" width="800" height="600"&gt;
     &lt;p&gt;
@@ -43,12 +43,14 @@ permalink: /blog/canvas-basics
       &lt;/tbody&gt;
     &lt;/table&gt;
   &lt;/canvas&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</pre>
+&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+</pre>
   <p class="article-body">
     Next, we need to get the rendering context from our canvas. If you use jQuery, you have to call <span class="code">getContext('2d')</span> on the DOMElement itself, not the special object jQuery gives you. jQuery isn't very useful for games, so I usually don't bother. We're specifying '2d' because the Canvas API also supports 3D rendering through WebGL.
   </p>
-  <pre class="code-javascript">
-var context = document.getElementById('canvas').getContext('2d');</pre>
+<pre class="code-javascript">
+var context = document.getElementById('canvas').getContext('2d');
+</pre>
   <p class="article-body">
     There are two main ways to render things on the canvas: vector graphics rendering, and copying from an img tag or another canvas. Vector Graphics (which I'll abbreviate VG) is a way of mathematically rendering simple shapes. It can be more processor intensive than loading an image, but VG images scale well, and transformations like rotation are less intensive than with images. Rendering in VG on the canvas also allows us to contain everything we need for a simple game in a single html file.<br/><br/>
 
@@ -58,12 +60,13 @@ var context = document.getElementById('canvas').getContext('2d');</pre>
 
     I've added a grid to this canvas to better illustrate how things are positioned.<br/><br/>
   </p>
-  <pre class="code-javascript">
+<pre class="code-javascript">
 context.fillStyle = '#4E4';
 context.strokeStyle = 'crimson';
 
 context.fillRect(100, 40, 200, 120);
-context.strokeRect(100, 40, 200, 120);</pre>
+context.strokeRect(100, 40, 200, 120);
+</pre>
   <div class="canvas-wrapper">
     <canvas id="rectangle" width="800" height="450" style="max-width:800px;"></canvas>
   </div>
@@ -74,7 +77,7 @@ context.strokeRect(100, 40, 200, 120);</pre>
 
     Now lets draw something more complicated. Our rendering context also lets us define a set of points to form a path. Like the rectangle, we can fill, stroke, or both after defining the path. We start with <span class="code">beginPath()</span> and <span class="code">moveTo(x, y)</span> to declare our first point, where "x" is the x coordinate, and "y" is the y coordinate. From there, we use <span class="code">lineTo(x, y)</span> to specify that we want the previous point and the new one to connect in a straight line. Note: if you don't explicitly close the path before you try to fill it, the path will act like you called <span class="code">closePath()</span>, connect the last point to the first, and fill that path.
   </p>
-  <pre class="code-javascript">
+<pre class="code-javascript">
 context.fillStyle = '#FFF';
 // An isosceles triangle
 context.beginPath();
@@ -99,7 +102,8 @@ context.moveTo(500, 500);
 context.lineTo(600, 400);
 
 context.stroke();
-context.closePath();</pre>
+context.closePath();
+</pre>
   <div class="canvas-wrapper">
     <canvas id="three-lines" width="800" height="450" style="max-width:800px;"></canvas>
   </div>
@@ -108,7 +112,7 @@ context.closePath();</pre>
 
     Let's also draw a circle. The <span class="code">arc(x, y, radius, startAngle, endAngle, anticlockwise)</span> function lets us draw a circular arc, where "startAngle" is the starting angle in radians (0 to 2 &times; pi), "endAngle" is the ending angle, and "anticlockwise" is an optional boolean that determines draw direction, which is clockwise by default.
   </p>
-  <pre class="code-javascript">
+<pre class="code-javascript">
 // Two triangles
 context.fillStyle = '#F00';
 context.beginPath();
@@ -143,7 +147,8 @@ context.moveTo(384, 325);
 context.arc(400, 325, 32, 0.5, 5.78);
 context.fillStyle = '#FF0';
 context.fill();
-context.closePath();</pre>
+context.closePath();
+</pre>
   <div class="canvas-wrapper">
     <canvas id="triangles" width="800" height="450" style="max-width: 800px;"></canvas>
   </div>
@@ -161,6 +166,4 @@ context.closePath();</pre>
 
 {% include canvas.html %}
 
-<script type="text/javascript" src={{ "/scripts/ready.js" | prepend:site.baseurl }}></script>
-<script type="text/javascript" src={{ "/scripts/code-highlighter.js" | prepend:site.baseurl }}></script>
-<script type="text/javascript" src={{ "/scripts/canvas-basics.js" | prepend:site.baseurl }}></script>
+<script type="text/javascript" src="{{ '/scripts/canvas-basics.js' | prepend:site.baseurl }}"></script>

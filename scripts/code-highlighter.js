@@ -5,6 +5,125 @@ const CODE_BLUE = '#6CE';
 const CODE_PURPLE = '#C6E';
 const CODE_GRAY = '#999';
 
+function regexHighlightCCode(match) {
+  if (/^(\d+|\d+\.\d+)$/g.test(match)) {
+    return '<span style="color: ' + CODE_PURPLE + ';">' + match + '</span>'
+  }
+  else if (/[\w]+/g.test(match)) {
+    return '<span style="color: ' + CODE_BLUE + ';">' + match + '</span>';
+  }
+}
+
+function highlightCCode(original) {
+  const C_REGEX = /\b(\d+|\d+\.\d+|[\w]+(?=\())\b/g;
+  const TYPES = [
+    'bool',
+    'char',
+    'int',
+    'float',
+    'unsigned',
+    'signed',
+    'long',
+    'short',
+    'void'
+  ];
+  function getType(line) {
+    var typesLength = TYPES.length;
+
+    for (var t = 0; t < typesLength; t++) {
+      if (line.indexOf(TYPES[t]) === 0) {
+        return TYPES[t];
+      }
+    }
+  }
+
+  var highlighted = [];
+  var word = '';
+  var flags = {
+    comment: false,
+    include: false,
+    declare: false,
+    quotes: false
+  };
+
+  // Go line-by-line
+  var lines = original.split("\n");
+  var linesLength = lines.length;
+  for (var i = 0; i < linesLength; i++) {
+    var line = lines[i];
+
+    if (line === '\n') {
+      highlighted.push('');
+    }
+    else if (line.indexOf('#include') === 0) {
+      highlighted.push('<span style="color: ' + CODE_RED + ';">#include</span><span style="color: ' + CODE_YELLOW + ';">' + line.slice(8) + '</span>');
+    }
+    else if (line.indexOf('#define') === 0) {
+      var paren = line.indexOf('(');
+      var space = line.indexOf(' ', 8);
+      var sliceTo = paren !== -1 ? paren : space;
+
+      highlighted.push('<span style="color: ' + CODE_RED + ';">#define</span><span style="color: ' + CODE_GREEN + ';">' + line.slice(7, sliceTo) + '</span>' + line.slice(sliceTo).replace(C_REGEX, regexHighlightCCode));
+    }
+    else if (line[0] === '/' && line[1] === '/') {
+      highlighted.push('<span style="color: ' + CODE_GRAY + ';">' + line + '</span>');
+    }
+    else {
+      var type = getType(line);
+      if (type) {
+        highlighted.push('<span style="color: ' + CODE_BLUE + ';font-style:italic;">' + type + '</span>');
+        line = line.slice(type.length);
+
+        var sliceTo = line.indexOf('(');
+        if (sliceTo !== -1) {
+          highlighted.push('<span style="color: ' + CODE_GREEN + ';">' + line.slice(0, sliceTo) + '</span>');
+          line = line.slice(sliceTo);
+        }
+      }
+      var length = line.length;
+      if (length > 0) {
+        word = '';
+
+        for (var l = 0; l < length; l++) {
+          type = getType(line.slice(l));
+          if (type) {
+            highlighted.push(word + '<span style="color: ' + CODE_BLUE + ';">' + type + '</span>');
+            line = line.slice(type.length);
+            length -= type.length;
+            word = '';
+          }
+          else {
+            if (flags.quotes) {
+              if (line[l] === '"') {
+                flags.quotes = false;
+                highlighted.push('<span style="color: ' + CODE_YELLOW + ';">' + word + '"</span>');
+                l++;
+                word = '';
+              }
+            }
+            else {
+              if (line[l] === '"') {
+                flags.quotes = true;
+                highlighted.push(word);
+                word = '';
+              }
+              else if (line[l] === "'") {
+                highlighted.push(word + '<span style="color: ' + CODE_YELLOW + ';">' + line.slice(l, l += 3) + '</span>');
+                word = '';
+              }
+            }
+          }
+          word += line[l];
+        }
+        highlighted.push(word.replace(C_REGEX, regexHighlightCCode));
+      }
+    }
+    highlighted.push('\n');
+  }
+
+  return highlighted.join('');
+}
+
 function highlightRubyCode(match) {
   var replaced = ['<span style="color:', '', ';">', match, '</span>'];
 
@@ -97,8 +216,8 @@ function highlightHTMLCode(original) {
     doubleQuotes: false
   };
 
-  let length = original.length;
-  for (let i = 0; i < length; i++) {
+  var length = original.length;
+  for (var i = 0; i < length; i++) {
     if (!flags.tag) {
       if (original.slice(i, i + 4) === '&lt;') {
         if (word) {
@@ -175,7 +294,6 @@ function highlightHTMLCode(original) {
 
 ready(function() {
   const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]|[\&\|]{1,2})|(\b| )(if|new|else|elsif|case|break|switch|do|end|default|return|def [a-z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-  // Also any Capital object followed by a period gets blue and italic
   const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]|[\&\|]{1,2})|(\b| )(if|new|else|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
   var preTags = document.getElementsByTagName('pre');
@@ -185,7 +303,7 @@ ready(function() {
     var originalHTML = preTags[i].innerHTML;
 
     switch (preTags[i].className) {
-      // case 'code-c'         : break;
+      case 'code-c'         : preTags[i].innerHTML = highlightCCode(originalHTML); break;
       case 'code-ruby'      : preTags[i].innerHTML = originalHTML.replace(RUBY_REGEX, highlightRubyCode); break;
       case 'code-javascript': preTags[i].innerHTML = originalHTML.replace(JS_REGEX, highlightJSCode); break;
       case 'code-html'      : preTags[i].innerHTML = highlightHTMLCode(originalHTML); break;
