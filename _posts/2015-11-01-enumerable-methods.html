@@ -18,18 +18,18 @@ description: Ever wanted to iterate using times?
   <p class="article-body">
     Cycle is a very simple method, which works a lot like times. I took the example from the Ruby docs for this method and toyed around with it:
   </p>
-  <pre class="code-ruby">
+<pre class="code-ruby">
 a = [ "a", "b", "c" ]
 a.cycle( 3 ) { |x| puts x }
 
 # => a
 # => b
 # => c
-  </pre>
+</pre>
   <p class="article-body">
     That's pretty straightforward, but I wanted to get a little more complicated:
   </p>
-  <pre>
+<pre class="code-ruby">
 a.cycle( 6 ) { |x| puts x + " thing" }
 
 # => a thing
@@ -46,7 +46,7 @@ a.cycle( 6 ) { |x| puts x + " thing" }
 # => b thing thing thing thing thing thing
 # => c thing thing thing thing thing thing
 # Sixth cycle
-  </pre>
+</pre>
   <p class="article-body">
     That's way too many "things" for my liking! While 'times' repeats a block of code a certain number of times, cycle iterates through an object, passing the block to each element, then iterating again until it reaches the number passed to it.<br/><br/>
 

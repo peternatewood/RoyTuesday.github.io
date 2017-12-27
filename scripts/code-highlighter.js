@@ -1,4 +1,5 @@
 const CODE_RED = '#E58';
+const CODE_ORANGE = '#EA3';
 const CODE_YELLOW = '#EE8';
 const CODE_GREEN = '#AE4';
 const CODE_BLUE = '#6CE';
@@ -111,6 +112,10 @@ function highlightCCode(original) {
                 highlighted.push(word + '<span style="color: ' + CODE_YELLOW + ';">' + line.slice(l, l += 3) + '</span>');
                 word = '';
               }
+              else if (/ ?(if|else) ?/.test(word)) {
+                highlighted.push('<span style="color: ' + CODE_RED + ';">' + word + '</span>');
+                word = '';
+              }
             }
           }
           word += line[l];
@@ -136,12 +141,22 @@ function highlightRubyCode(match) {
   else if (/('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
   }
-  else if (/[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|elsif|case|break|switch|do|end|default|return/.test(match)) {
+  else if (/\|[\w]+\|/.test(match)) {
+    replaced[1] = CODE_ORANGE + ';font-style:italic';
+    replaced[3] = match.slice(1, match.length - 1);
+    replaced.unshift('|');
+    replaced.push('|');
+  }
+  else if (/[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|elsif|while|case|break|switch|do|end|default|return/.test(match)) {
     replaced[1] = CODE_RED;
   }
-  else if (match.slice(0, 3) === 'def') {
+  else if (match.trim().slice(0, 3) === 'def') {
     replaced[1] = CODE_RED;
-    replaced[3] = 'def</span> <span style="color:' + CODE_GREEN + ';">' + match.replace('def ', '');
+    replaced[3] = match.replace('def ', 'def</span> <span style="color:' + CODE_GREEN + ';">');
+  }
+  else if (match.trim().slice(0, 5) === 'class') {
+    replaced[1] = CODE_RED;
+    replaced[3] = match.replace('class ', 'class</span> <span style="color:' + CODE_GREEN + ';">');
   }
 
   return replaced.join('');
@@ -160,7 +175,7 @@ function highlightJSCode(match) {
   else if (/('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
   }
-  else if (/[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|case|break|switch|default|return/.test(match)) {
+  else if (/[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|case|break|switch|default|return/.test(match)) {
     replaced[1] = CODE_RED;
   }
   else if (match.slice(0, 8) === 'function') {
@@ -293,8 +308,8 @@ function highlightHTMLCode(original) {
 }
 
 ready(function() {
-  const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]|[\&\|]{1,2})|(\b| )(if|new|else|elsif|case|break|switch|do|end|default|return|def [a-z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-  const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]|[\&\|]{1,2})|(\b| )(if|new|else|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
+  const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
+  const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]|[\&\|]{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
   var preTags = document.getElementsByTagName('pre');
   var preTagsLength = preTags.length;
