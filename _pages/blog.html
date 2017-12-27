@@ -7,17 +7,42 @@ permalink: /blog/
   <h1 class="article-heading">Game Design Blog</h1>
   <p class="article-body">Things I've learned about designing games in HTML/Javascript and C</p>
 </article>
+
 <article>
   <h1 class="article-heading">Building Asteroids for the web</h1>
-{% for blog in site.design_blog %}
-  <h2 class="article-title">
-    <a class="blog-link" href={{ blog.url | prepend: site.baseurl }} title="">
-      {{ blog.title }}
-    </a>
-  </h2>
-  <p class="article-body">
-    {{ blog.description }}
-    <span class="article-preview">{{ blog.preview }}</span>
-  </p>
-{% endfor %}
+  <section class="grid">
+    {% for blog in site.design_blog %}
+    <div class="col-50">
+      <h2 class="article-title">
+        <a class="blog-link" href="{{ blog.url | prepend: site.baseurl }}" title="">
+          {{ blog.title }}
+        </a>
+      </h2>
+      <p class="article-body">
+        {{ blog.description }}
+        <span class="article-preview">{{ blog.preview }}</span>
+      </p>
+    </div>
+    {% endfor %}
+  </section>
+</article>
+
+<article>
+  <h1 class="article-heading">Dev Bootcamp Blog</h1>
+  <p class="article-body">This is the blog I wrote as part of Phase 0 of Dev Bootcamp. It </p>
+
+  <section class="grid">
+    {% for post in site.posts %}
+    <div class="col-50">
+      <h2 class="article-title">
+        <a class="blog-link" href="{{ post.url | prepend: site.baseurl }}" title="{{ post.title }}">
+          {{ post.title }}
+        </a>
+      </h2>
+      <p class="article-body">
+        {{ post.description }}
+      </p>
+    </div>
+    {% endfor %}
+  </section>
 </article>
