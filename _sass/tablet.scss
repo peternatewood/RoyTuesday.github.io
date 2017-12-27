@@ -18,10 +18,13 @@
   .grid {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
-    width: 96%;
+    justify-content: space-around;
   }
-  .grid > article {
+  .grid > .col-50 {
+    margin: {
+      left: 0;
+      right: 0;
+    }
     width: 48%;
   }
 
