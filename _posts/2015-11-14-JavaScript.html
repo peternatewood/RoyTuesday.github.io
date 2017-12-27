@@ -4,30 +4,25 @@ title: Ruby vs JavaScript
 description: Punctuation Terror
 ---
 
-<section>
-  <h1>
-    Ruby vs JavaScript
-  </h1>
-  <h2>
-    Posted: 14 Nov 2015
-  </h2>
-  <p>
+<article>
+  <h1 class="article-heading">Ruby vs JavaScript</h1>
+  <p class="article-body">
+    Posted: 14 Nov 2015<br/>
     Punctuation Terror
   </p>
-</section>
-<section>
-  <p>
-    Coding languages are fussy when it comes to punctuation. The older the language the worse it gets. C++, for example, requires a semicolon after every expression, every variable must be declared with a type name ( integer, character, etc ), curly braces around every code block, and parentheses at the end of every function call even if the function takes no arguments.
-  </p>
-  <p>
+</article>
+<article>
+  <p class="article-body">
+    Coding languages are fussy when it comes to punctuation. The older the language the worse it gets. C++, for example, requires a semicolon after every expression, every variable must be declared with a type name ( integer, character, etc ), curly braces around every code block, and parentheses at the end of every function call even if the function takes no arguments.<br/><br/>
+
     Be warned! What follows is valid C++ code that I have tested. It will look intimidating if you've never worked in it before, and it's actually a really convoluted program designed purely as an example. Any viewer with a weak heart is advised to look away.
   </p>
-<pre>
-//C++
+<pre class="code-c">
+// C++
 
-#include &ltcstring&gt
-#include &ltiostream&gt
-#include &ltstdio.h&gt
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
 
 int myNum = 0;
 char myCharacter = '!';
@@ -50,15 +45,15 @@ int main() {
   return 0;
 }
 
-=> Hello, world!
-=> 1 greeting.
-=> Hello, world!
-=> 2 greeting.
+// => Hello, world!
+// => 1 greeting.
+// => Hello, world!
+// => 2 greeting.
 </pre>
-<pre>
+<pre class="code-ruby">
 # Ruby
 
-[ no need to '#include' here ]
+# [ no need to '#include' here ]
 
 $myNum = 0
 $myCharacter = '!'
@@ -81,19 +76,19 @@ end
 sayHello
 sayHello
 
-=> Hello, world!
-=> 1 greeting.
-=> Hello, world!
-=> 2 greeting.
+# => Hello, world!
+# => 1 greeting.
+# => Hello, world!
+# => 2 greeting.
 </pre>
-<pre>
-//JavaScript
+<pre class="code-javascript">
+// JavaScript
 
-[ no need to '#include' here ]
+// [ no need to '#include' here ]
 
-var myNum = 0
-var myCharacter = '!'
-var myWord = 'world'
+var myNum = 0;
+var myCharacter = '!';
+var myWord = 'world';
 
 function incrementNumber( numIn ) {
   return numIn++;
@@ -106,21 +101,21 @@ function sayHello() {
   console.log( myNum.toString() + " greeting." );
 }
 
-sayHello()
-sayHello()
+sayHello();
+sayHello();
 
-=> Hello, world!
-=> 1 greeting.
-=> Hello, world!
-=> 2 greeting.
+// => Hello, world!
+// => 1 greeting.
+// => Hello, world!
+// => 2 greeting.
 </pre>
-  <p>
-    Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.
+  <p class="article-body">
+    Ruby is an outlier in this sense: being based on C, it needs all these punctuation marks, but it knows where to put them based on line breaks and keywords. Ruby secretly adds everything it needs to allow programmers to create less cluttered, more quickly written code.<br/><br/>
+
+    JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.<br/><br/>
+
+    I err on the side of caution; JavaScript is intended for a web environment, so your code should be easily manipulable by other programmers. For example: you do not need to terminate the last expression in a code block with a semicolon. However, if someone ever needs to add another expression to that block, they have to add a semicolon to the end of your expression. This leaves a lot of opportunities for simple errors that are hard to spot. JavaScript won't throw an error if there is a semicolon at the end of your block, so put it there just to be safe.<br/><br/>
+
+    <a href="{{ '/2015/11/08/ruby-classes.html' | prepend: site.baseurl }}">Previous: <b>Ruby's So Classy</b></a> | <a href="{{ '/2015/11/21/tech.html' | prepend: site.baseurl }}">Next: <b>Computer Memory</b></a>
   </p>
-  <p>
-    JavaScript is more closely related to C++; it requires parentheses after function calls, but it doesn't need curly braces for every code block, or a semicolon for every expression. This presents a difficult choice for the JavaScript programmer: whether to suffer an error for every crucial brace or semicolon you thought you could omit, or to take shelter with every punctuation mark included however cluttered the lines will be.
-  </p>
-  <p>
-    I err on the side of caution; JavaScript is intended for a web environment, so your code should be easily manipulable by other programmers. For example: you do not need to terminate the last expression in a code block with a semicolon. However, if someone ever needs to add another expression to that block, they have to add a semicolon to the end of your expression. This leaves a lot of opportunities for simple errors that are hard to spot. JavaScript won't throw an error if there is a semicolon at the end of your block, so put it there just to be safe.
-  </p>
-</section>
+</article>

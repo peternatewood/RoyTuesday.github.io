@@ -4,55 +4,62 @@ title: Margins, Borders, and Padding
 description: The differences between margin, border, and padding
 ---
 
-<section>
-  <h1>
-    Margins, Borders, and Padding
-  </h1>
-  <h2>
-    18 Oct 2015
-  </h2>
-  <p>
+<article>
+  <h1 class="article-heading">Margins, Borders, and Padding</h1>
+  <p class="article-body">
+    18 Oct 2015<br/>
     The differences between margin, border, and padding
   </p>
-</section>
-<section>
-  Every element in an HTML document has three attributes that determine it's profile on a web page: margin, border, and padding. These three attributes are typically understood as if each one is a box nested within another.
-  <aside>
-    <img src={{ "/imgs/margin-box-model.jpg" | prepend: site.baseurl }} alttext="dev-box"/>
-  </aside>The standard model as used in Chrome and Firefox dev tools.
-</section>
-<section>
-  <h2>Margin</h2>
-  <article>
+</article>
+
+<article>
+  <p class="article-body">
+    Every element in an HTML document has three attributes that determine it's profile on a web page: margin, border, and padding. These three attributes are typically understood as if each one is a box nested within another.
+  </p>
+  <div class="image-wrapper">
+    <img src="{{ '/imgs/margin-box-model.jpg' | prepend: site.baseurl }}" alttext="dev-box"/>
+  </div>
+  <p class="article-body">
+    The standard model as used in Chrome and Firefox dev tools.
+  </p>
+
+  <h2 class="article-title">Margin</h2>
+  <p class="article-body">
     The margin is the outermost box; the margin itself is invisible, but its edges can be seen where it meets the edge of the browser window or other elements. Margins are best for keeping elements a minimum distance apart.
-    <aside>
-      <img src={{ "/imgs/margin-lg-ex.jpg" | prepend: site.baseurl }} alttext="margin-lg"/>
-      <img src={{ "/imgs/margin-sm-ex.jpg" | prepend: site.baseurl }} alttext="margin-sm"/>
-    </aside>Here, we can see how the element's position changes from large margins to small.
-  </article>
-</section>
-<section>
-  <h2>Border</h2>
-  <article>
+  </p>
+  <div class="image-wrapper">
+    <img src="{{ '/imgs/margin-lg-ex.jpg' | prepend: site.baseurl }}" alttext="margin-lg"/>
+    <img src="{{ '/imgs/margin-sm-ex.jpg' | prepend: site.baseurl }}" alttext="margin-sm"/>
+  </div>
+  <p class="article-body">
+    Here, we can see how the element's position changes from large margins to small.
+  </p>
+
+  <h2 class="article-title">Border</h2>
+  <p class="article-body">
     The border lines the inner edges of the margin, and outer edges of the padding. Borders are invisible by default ( technically at a width of 0 ), but can be set to any width and color. Good borders can really make a page more pop or make a page flow better.
-    <aside>
-      <img src={{ "/imgs/border-lg-ex.jpg" | prepend: site.baseurl }} alttext="border-lg"/>
-      <img src={{ "/imgs/border-sm-ex.jpg" | prepend: site.baseurl }} alttext="border-sm"/>
-    </aside>Remember that the border has its own size, and it will affect elements' positioning.
-  </article>
-</section>
-<section>
-  <h2>Padding</h2>
-  <article>
+  </p>
+  <div class="image-wrapper">
+    <img src="{{ '/imgs/border-lg-ex.jpg' | prepend: site.baseurl }}" alttext="border-lg"/>
+    <img src="{{ '/imgs/border-sm-ex.jpg' | prepend: site.baseurl }}" alttext="border-sm"/>
+  </div>
+  <p class="article-body">
+    Remember that the border has its own size, and it will affect elements' positioning.
+  </p>
+
+  <h2 class="article-title">Padding</h2>
+  <p class="article-body">
     The padding is the innermost of these three attributes. Padding separates the content of an element from the border, like insulation in the walls of a building. Padding and borders go hand-in-hand, and you'll find yourself adjusting one for the benefit of the other.
-    <aside>
-      <img src={{ "/imgs/pad-lg-ex.jpg" | prepend: site.baseurl }} alttext="pad-lg"/>
-      <img src={{ "/imgs/pad-sm-ex.jpg" | prepend: site.baseurl }} alttext="pad-sm"/>
-    </aside>Here's a big difference in padding sizes.
-  </article>
-</section>
-<section>
-  <article>
-    Remember that each side of an element has its own margin, and padding, while the border is the same all around. The examples above show padding and margins that are equal on all sides, but that isn't always the best layout. Once you work with these attributes, you'll better understand how to adjust them and achieve the look you want.
-  </article>
-</section>
+  </p>
+  <div class="image-wrapper">
+    <img src="{{ '/imgs/pad-lg-ex.jpg' | prepend: site.baseurl }}" alttext="pad-lg"/>
+    <img src="{{ '/imgs/pad-sm-ex.jpg' | prepend: site.baseurl }}" alttext="pad-sm"/>
+  </div>
+  <p class="article-body">
+    Here's a big difference in padding sizes.<br/><br/>
+
+    Remember that each side of an element has its own margin, and padding, while the border is the same all around. The examples above show padding and margins that are equal on all sides, but that isn't always the best layout. Once you work with these attributes, you'll better understand how to adjust them and achieve the look you want.<br/><br/>
+
+    <a href="{{ '/2015/10/04/git.html' | prepend: site.baseurl }}">Previous: <b>Git</b></a> | <a href="{{ '/2015/10/25/arrays-hashes.html' | prepend: site.baseurl }}">Next: <b>Arrays and Hashes</b></a>
+  </p>
+</article>
