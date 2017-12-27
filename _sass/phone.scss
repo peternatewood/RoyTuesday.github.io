@@ -99,12 +99,13 @@ article {
   display: none;
 }
 .image-wrapper {
+  display: block;
   margin: 0 auto;
   width: 94%;
   max-width: 600px;
 
   &.thumbnail {
-    max-width: 300px;
+    max-width: 320px;
   }
 }
 .code {

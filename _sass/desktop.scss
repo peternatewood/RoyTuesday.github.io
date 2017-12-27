@@ -6,6 +6,10 @@
 
   .image-wrapper {
     margin: 0 12px;
+
+    &.thumbnail {
+      max-width: 480px;
+    }
   }
 }
 

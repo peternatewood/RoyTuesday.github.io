@@ -15,6 +15,16 @@
     font: 16px $roboto;
   }
 
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 96%;
+  }
+  .grid > article {
+    width: 48%;
+  }
+
   .article-title {
     font-size: 1.6em;
   }
