@@ -76,10 +76,11 @@ article {
   padding-bottom: 8px;
   margin: 12px auto;
   width: 94%;
-}
-article .col-50 {
-  background: #FFF;
-  margin: 12px auto;
+
+  .col-50 {
+    background: #FFF;
+    margin: 12px auto;
+  }
 }
 .article-heading {
   font-size: 1.8em;
@@ -98,6 +99,12 @@ article .col-50 {
   line-height: 1.4;
   padding: 4px 14px 12px;
   margin: 0;
+
+  &.quote {
+    background: #FFF;
+    font: 1em $roboto;
+    margin: 8px 12px;
+  }
 }
 .article-preview {
   display: none;
