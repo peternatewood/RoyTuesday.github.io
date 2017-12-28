@@ -7,7 +7,7 @@ const CODE_PURPLE = '#C6E';
 const CODE_GRAY = '#999';
 
 function regexHighlightCCode(match) {
-  if (/^(\d+|\d+\.\d+)$/g.test(match)) {
+  if (/^(\d+\.\d+f?|0x[\dA-F]+|\d+)$/g.test(match)) {
     return '<span style="color: ' + CODE_PURPLE + ';">' + match + '</span>'
   }
   else if (/[\w]+/g.test(match)) {
@@ -16,7 +16,7 @@ function regexHighlightCCode(match) {
 }
 
 function highlightCCode(original) {
-  const C_REGEX = /\b(\d+|\d+\.\d+|[\w]+(?=\())\b/g;
+  const C_REGEX = /\b(\d+\.\d+f?|0x[\dA-F]+|\d+|[\w]+(?=\())\b/g;
   const TYPES = [
     'bool',
     'char',
@@ -317,8 +317,8 @@ function highlightHTMLCode(original) {
 }
 
 function highlightPreTagsContent() {
-  const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-  const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
+  const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
+  const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
   var preTags = document.getElementsByTagName('pre');
   var preTagsLength = preTags.length;
