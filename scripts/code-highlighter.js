@@ -263,7 +263,7 @@ function highlightHTMLCode(original) {
     }
     else {
       if (flags.tagName) {
-        if (!/[a-zA-Z]/.test(original[i])) {
+        if (!/[a-zA-Z0-9]/.test(original[i])) {
           if (original[i] === ' ') {
             highlighted.push(word + ' </span>');
             i++;
