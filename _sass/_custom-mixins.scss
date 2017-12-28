@@ -25,8 +25,20 @@
   -o-animation: $animation;
   animation: $animation;
 }
+@mixin animation-delay($delay) {
+  -webkit-animation-delay: $delay;
+  -moz-animation-delay: $delay;
+  -o-animation-delay: $delay;
+  animation-delay: $delay;
+}
 
 @mixin border-radius($border-radius) {
   -webkit-border-radius: $border-radius;
   border-radius: $border-radius;
+}
+
+@mixin box-sizing($box-sizing) {
+  -webkit-box-sizing: $box-sizing;
+  -moz-box-sizing: $box-sizing;
+  box-sizing: $box-sizing;
 }
