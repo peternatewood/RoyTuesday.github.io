@@ -1,4 +1,4 @@
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: $bp_desktop) {
   .nav-link {
     text-align: center;
     padding: 8px 0;
@@ -13,7 +13,7 @@
   }
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: $bp_desktop_big) {
   body {
     padding-top: 4em;
   }
