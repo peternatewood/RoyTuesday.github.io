@@ -108,6 +108,14 @@ int main() {
 </article>
 
 <script type="text/javascript">
+  function replaceWithHTMLCodes(match) {
+    switch (match) {
+      case '&': return '&amp;';
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+    }
+  }
+
   function highlightFormCode(e) {
     e.preventDefault();
     var output = document.getElementById('code-output');
@@ -115,7 +123,7 @@ int main() {
     var language = document.getElementById('code-language').value;
 
     output.className = 'code-' + language;
-    output.innerHTML = source;
+    output.innerHTML = source.replace(/[&<>]/g, replaceWithHTMLCodes);
     highlightPreTagsContent();
 
     output = null;
