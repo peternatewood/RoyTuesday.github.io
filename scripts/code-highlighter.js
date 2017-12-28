@@ -22,10 +22,14 @@ function highlightCCode(original) {
     'char',
     'int',
     'float',
+    'double',
     'unsigned',
     'signed',
     'long',
     'short',
+    'enum',
+    'typedef',
+    'union',
     'void'
   ];
   function getType(line) {
@@ -112,7 +116,7 @@ function highlightCCode(original) {
                 highlighted.push(word + '<span style="color: ' + CODE_YELLOW + ';">' + line.slice(l, l += 3) + '</span>');
                 word = '';
               }
-              else if (/ ?(if|else) ?/.test(word)) {
+              else if (/ ?(break|case|const|continue|default|else|for|goto|if|return|sizeof|switch|while) ?/.test(word)) {
                 highlighted.push('<span style="color: ' + CODE_RED + ';">' + word + '</span>');
                 word = '';
               }
@@ -307,7 +311,7 @@ function highlightHTMLCode(original) {
   return highlighted.join('');
 }
 
-ready(function() {
+function highlightPreTagsContent() {
   const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
   const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|\d+|[!<>+\-*\/=]|[\&\|]{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
@@ -324,4 +328,6 @@ ready(function() {
       case 'code-html'      : preTags[i].innerHTML = highlightHTMLCode(originalHTML); break;
     }
   }
-});
+}
+
+ready(highlightPreTagsContent);
