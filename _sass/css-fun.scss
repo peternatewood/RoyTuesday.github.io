@@ -1,3 +1,11 @@
+@include keyframes(spin) {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 @include keyframes(pactop) {
   0% {
     transform: rotate(0deg);
@@ -25,7 +33,7 @@
 
 .museum-frame {
   position: relative;
-  display: block;
+  // display: block;
   color: transparent;
   font-size: 32px;
   line-height: 200px;
@@ -296,73 +304,13 @@
 }
 
 @media (min-width: 600px) {
-  .museum-frame {
-    display: inline-block;
-    margin-left: 4%;
-    margin-right: 4%;
-
-    &:nth-child(2n+1) {
-      margin-left: auto;
-    }
-    &:nth-child(2n) {
-      margin-right: auto;
-    }
+  .grid {
+    margin: 0 auto;
+    width: 600px;
   }
 }
-@media (min-width: 800px) {
-  .museum-frame {
-    &:nth-child(3n+1) {
-      margin-left: auto;
-      margin-right: 2%;
-    }
-    &:nth-child(3n+2) {
-      margin-left: 2%;
-      margin-right: 2%;
-    }
-    &:nth-child(3n) {
-      margin-left: 2%;
-      margin-right: auto;
-    }
-
-    &:last-child {
-      margin-right: auto;
-    }
-  }
-}
-@media (min-width: 1000px) {
-  .museum-frame {
-    &:nth-child(3n+1) {
-      margin-left: auto;
-      margin-right: 4%;
-    }
-    &:nth-child(3n+2) {
-      margin-left: 4%;
-      margin-right: 4%;
-    }
-    &:nth-child(3n) {
-      margin-left: 4%;
-      margin-right: auto;
-    }
-
-    &:last-child {
-      margin-right: auto;
-    }
-  }
-}
-@media (min-width: 1120px) {
-  .museum-frame {
-    &:nth-child(4n+1) {
-      margin-left: auto;
-      margin-right: 2%;
-    }
-    &:nth-child(4n+2),
-    &:nth-child(4n+3) {
-      margin-left: 2%;
-      margin-right: 2%;
-    }
-    &:nth-child(4n) {
-      margin-left: 2%;
-      margin-right: auto;
-    }
+@media (min-width: 1200px) {
+  .grid {
+    width: 1200px;
   }
 }

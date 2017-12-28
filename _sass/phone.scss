@@ -54,6 +54,7 @@ canvas {
 nav {
   position: fixed;
   display: flex;
+  z-index: 10;
   justify-content: space-around;
   background: $offwhite;
   width: 100%;
