@@ -1,0 +1,124 @@
+---
+layout: default
+title: Code Highlighter
+permalink: /projects/code-highlighter
+---
+<link rel="stylesheet" type="text/css" href="{{ '/css/code-highlighter.css' | prepend: site.baseurl }}">
+
+<article>
+  <h1 class="article-heading">Code Highlighter</h1>
+  <p class="article-body">
+    This uses my custom script for highlighting all the code snippets on my site. It only handles C, HTML, JavaScript, and Ruby for the moment, and it can't handle JS embedded in HTML.
+  </p>
+
+  <section class="grid">
+    <form action="/" id="code-highlighter-form" class="col-50">
+      <fieldset>
+        <label for="code-input">Type your code (C, HTML, JavaScript, or Ruby) here, choose what language it is, and submit to see it highlighted</label>
+        <textarea id="code-input" rows="24">
+// C++
+
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+
+#define MAXIMUM 5
+#define min(a, b) a &lt; b ? a : b
+
+int myNum = 0;
+char myCharacter = '!';
+std::string myWord = "world";
+
+int incrementNumber( int numIn ) {
+  return numIn++;
+}
+
+void sayHello() {
+  std::cout &lt;&lt; "Hello, " &lt;&lt; myWord &lt;&lt; myCharacter;
+  std::cout &lt;&lt; std::endl;
+  myNum = incrementNumber( myNum );
+  std::cout &lt;&lt; myNum &lt;&lt; " greeting.";
+  std::cout &lt;&lt; std::endl;
+}
+
+int main() {
+  int countInput = std::cin;
+  int count = min(countInput, MAXIMUM);
+
+  for (int i = 0; i < count; i++) {
+    sayHello();
+  }
+
+  return 0;
+}
+        </textarea>
+
+        <select id="code-language">
+          <option value="c" selected>C</option>
+          <option value="html">HTML</option>
+          <option value="javascript">JavaScript</option>
+          <option value="ruby">Ruby</option>
+        </select>
+
+        <input type="submit" value="Submit">
+      </fieldset>
+    </form>
+
+    <div class="col-50">
+      <p class="article-body">See your highlighted code here</p>
+      <pre id="code-output" class="code-c">
+// C++
+
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+
+#define MAXIMUM 5
+#define min(a, b) a &lt; b ? a : b
+
+int myNum = 0;
+char myCharacter = '!';
+std::string myWord = "world";
+
+int incrementNumber( int numIn ) {
+  return numIn++;
+}
+
+void sayHello() {
+  std::cout &lt;&lt; "Hello, " &lt;&lt; myWord &lt;&lt; myCharacter;
+  std::cout &lt;&lt; std::endl;
+  myNum = incrementNumber( myNum );
+  std::cout &lt;&lt; myNum &lt;&lt; " greeting.";
+  std::cout &lt;&lt; std::endl;
+}
+
+int main() {
+  int countInput = std::cin;
+  int count = min(countInput, MAXIMUM);
+
+  for (int i = 0; i < count; i++) {
+    sayHello();
+  }
+
+  return 0;
+}
+      </pre>
+    </div>
+  </section>
+</article>
+
+<script type="text/javascript">
+  function highlightFormCode(e) {
+    e.preventDefault();
+    var output = document.getElementById('code-output');
+    var source = document.getElementById('code-input').value;
+    var language = document.getElementById('code-language').value;
+
+    output.className = 'code-' + language;
+    output.innerHTML = source;
+    highlightPreTagsContent();
+
+    output = null;
+  }
+  document.getElementById('code-highlighter-form').addEventListener('submit', highlightFormCode);
+</script>

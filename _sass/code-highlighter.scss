@@ -1,0 +1,63 @@
+fieldset {
+  border: 0;
+}
+label {
+  display: block;
+  font: 20px $lato;
+  margin: 8px 0;
+}
+input[type="text"],
+input[type="number"],
+input[type="email"],
+textarea,
+select {
+  box-shadow: 0 0 4px 2px transparent;
+  transition: box-shadow 240ms;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 4px 2px #0AF;
+  }
+}
+textarea {
+  white-space: pre-wrap;
+  background: #332;
+  color: #F8FFFF;
+  border: 0;
+  font-family: $sharetech;
+  padding: 6px 12px;
+  margin: 8px 0;
+  width: 100%;
+}
+select {
+  font: 18px $lato;
+  padding: 6px 24px 8px 12px;
+  margin: 8px 0;
+}
+input[type="submit"] {
+  cursor: pointer;
+  display: block;
+  background: $light_blue;
+  font: 24px $lato;
+  border: 0;
+  padding: 8px 0;
+  margin: 8px 0;
+  width: 128px;
+  transition: background-color 240ms;
+
+  &:hover {
+    background: #AAE;
+  }
+}
+
+#code-output {
+  margin-top: 0;
+  min-height: 640px;
+}
+
+@media screen and (min-width: $bp_tablet) {
+  #code-output {
+    overflow-y: auto;
+    height: 640px;
+  }
+}
