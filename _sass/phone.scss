@@ -41,7 +41,7 @@ pre {
   font-family: $sharetech;
   padding: 6px 12px;
   margin: 1em auto;
-  width: 96%;
+  width: 98%;
 }
 canvas {
   margin: 0 auto;
@@ -80,31 +80,32 @@ nav {
 article {
   box-sizing: border-box;
   background: $offwhite;
-  padding-bottom: 8px;
+  padding: 8px 12px;
   margin: 12px auto;
   width: 94%;
 
   .col-50 {
     background: #FFF;
+    padding: 8px 12px;
     margin: 12px auto;
   }
 }
 .article-heading {
   font-size: 1.8em;
-  padding: 12px;
+  padding: 4px 0;
 }
 .article-title {
-  padding: 6px 12px;
+  padding: 4px 0;
 
   a {
     display: inline-block;
     border-bottom: 3px solid #8A2;
-    padding: 8px 4px;
+    padding: 0 4px 8px;
   }
 }
 .article-body {
   line-height: 1.4;
-  padding: 4px 14px 12px;
+  padding: 8px 2px;
   margin: 0;
 
   &.quote {
