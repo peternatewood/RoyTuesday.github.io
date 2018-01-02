@@ -8,13 +8,13 @@ permalink: /projects/code-highlighter
 <article>
   <h1 class="article-heading">Code Highlighter</h1>
   <p class="article-body">
-    This uses my custom script for highlighting all the code snippets on my site. It only handles C, HTML, JavaScript, and Ruby for the moment, and it can't handle JS embedded in HTML.
+    This uses my custom script for highlighting all the code snippets on my site. It only handles C, CSS, HTML, JavaScript, and Ruby for the moment, and it can't handle JS embedded in HTML.
   </p>
 
   <section class="grid">
     <form action="/" id="code-highlighter-form" class="col-50">
       <fieldset>
-        <label for="code-input">Type your code (C, HTML, JavaScript, or Ruby) here, choose what language it is, and submit to see it highlighted</label>
+        <label for="code-input">Type your code (C, CSS, HTML, JavaScript, or Ruby) here, choose what language it is, and submit to see it highlighted</label>
         <textarea id="code-input" rows="24">
 // C++
 
@@ -55,6 +55,7 @@ int main() {
 
         <select id="code-language">
           <option value="c" selected>C</option>
+          <option value="css">CSS</option>
           <option value="html">HTML</option>
           <option value="javascript">JavaScript</option>
           <option value="ruby">Ruby</option>
