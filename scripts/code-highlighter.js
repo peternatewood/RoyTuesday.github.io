@@ -1,3 +1,6 @@
+const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
+const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
+
 const CODE_RED = '#E58';
 const CODE_ORANGE = '#EA3';
 const CODE_YELLOW = '#EE8';
@@ -176,23 +179,23 @@ function highlightCSSCode(original) {
         flags.inRule = false;
       }
       else {
-        line = line.replace(/(^[ ]+[\w\-]+(?=\:))(.+(?=;))/, highlightCSSProperty);
+        line = line.replace(/(^ +[\w\-]+(?=\:))(.+(?=;))/, highlightCSSProperty);
       }
     }
     else {
       flags.inRule = line.indexOf('{') !== -1;
       if (flags.inRule || /\,$/.test(line)) {
-        if (line[0] === '#') {
+        if (/ *#/.test(line)) {
           // ID selector
-          line = line.replace(/^#[\w\-]+/, function(match) { return '<span style="color:' + CODE_PURPLE + ';">' + match + '</span>'; });
+          line = line.replace(/#[\w\-]+/, function(match) { return '<span style="color:' + CODE_PURPLE + ';">' + match + '</span>'; });
         }
-        else if (line[0] === '.') {
+        else if (/ *\./.test(line)) {
           // Class selector
-          line = line.replace(/^\.[\w\-]+/, function(match) { return '<span style="color:' + CODE_GREEN + ';">' + match + '</span>'; });
+          line = line.replace(/\.[\w\-]+/, function(match) { return '<span style="color:' + CODE_GREEN + ';">' + match + '</span>'; });
         }
         else {
           // Tag selector
-          line = line.replace(/^[\w\-]+/, function(match) { return '<span style="color:' + CODE_RED + ';">' + match + '</span>'; });
+          line = line.replace(/[\w\-]+/, function(match) { return '<span style="color:' + CODE_RED + ';">' + match + '</span>'; });
         }
       }
     }
@@ -237,25 +240,28 @@ function highlightRubyCode(match) {
 
 function highlightJSCode(match) {
   var replaced = ['<span style="color:', '', ';">', match, '</span>'];
-  match = match.trim();
+  // match = match.trim();
 
   if (!isNaN(parseInt(match))) {
     replaced[1] = CODE_PURPLE;
   }
-  else if (/\/\//.test(match)) {
+  else if (/ *\/\//.test(match)) {
     replaced[1] = CODE_GRAY;
   }
-  else if (/('.+'|".+")/.test(match)) {
+  else if (/ *('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
   }
-  else if (/[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|case|break|switch|default|return/.test(match)) {
+  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|case|break|switch|default|return/.test(match)) {
     replaced[1] = CODE_RED;
   }
-  else if (match.slice(0, 8) === 'function') {
+  else if (/ *function/.test(match)) {
     replaced[1] = CODE_BLUE + ';font-style:italic';
-    replaced[3] = 'function</span> <span style="color:' + CODE_GREEN + ';">' + match.replace('function ', '');
+    // If a function declaration
+    if (/function \w+/.test(match)) {
+      replaced[3] = match.match(/^ */)[0] + 'function</span> <span style="color:' + CODE_GREEN + ';">' + match.replace(/ *function /, '');
+    }
   }
-  else if (/^[A-Z]/.test(match)) {
+  else if (/^ *[A-Z]/.test(match)) {
     replaced[1] = CODE_BLUE + ';font-style:italic';
   }
   else {
@@ -301,15 +307,28 @@ function highlightHTMLCode(original) {
   var flags = {
     tag: false,
     tagName: false,
-    doubleQuotes: false
+    doubleQuotes: false,
+    styleTag: false,
+    scriptTag: false
   };
+
+  var stylesheet = '';
+  var javascript = '';
 
   var length = original.length;
   for (var i = 0; i < length; i++) {
     if (!flags.tag) {
       if (original.slice(i, i + 4) === '&lt;') {
         if (word) {
-          highlighted.push(word);
+          if (flags.styleTag) {
+            highlighted.push(highlightCSSCode(word));
+          }
+          else if (flags.scriptTag) {
+            highlighted.push(word.replace(JS_REGEX, highlightJSCode));
+          }
+          else {
+            highlighted.push(word);
+          }
         }
         if (original[i + 4] === '/') {
           highlighted.push('&lt;/<span style="color:' + CODE_RED + '">');
@@ -334,6 +353,13 @@ function highlightHTMLCode(original) {
           }
           else {
             highlighted.push(word + '</span>');
+          }
+          // Check whether this is a style or script tag
+          if (word === 'style') {
+            flags.styleTag = !flags.styleTag;
+          }
+          else if (word === 'script') {
+            flags.scriptTag = !flags.scriptTag;
           }
           word = '';
           flags.tagName = false;
@@ -366,7 +392,7 @@ function highlightHTMLCode(original) {
         }
       }
 
-      if (original.slice(i, i + 4) === '&gt;') {
+      if (flags.tag && original.slice(i, i + 4) === '&gt;') {
         flags.tag = false;
         highlighted.push('&gt;');
         i += 3;
@@ -381,9 +407,6 @@ function highlightHTMLCode(original) {
 }
 
 function highlightPreTagsContent() {
-  const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-  const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
-
   var preTags = document.getElementsByTagName('pre');
   var preTagsLength = preTags.length;
 
