@@ -4,10 +4,12 @@ ready(function() {
   rectangle.strokeStyle = '#CCC';
   rectangle.lineWidth = 2;
   rectangle.beginPath();
+  // Horizontal grid lines
   for (let y = 0; y < 450; y += 20) {
     rectangle.moveTo(0, y);
     rectangle.lineTo(800, y);
   }
+  // Vertical grid lines
   for (let x = 0; x < 800; x += 20) {
     rectangle.moveTo(x, 0);
     rectangle.lineTo(x, 450);
@@ -96,6 +98,22 @@ ready(function() {
 
   var threeLines = document.getElementById('three-lines').getContext('2d');
 
+  threeLines.strokeStyle = '#CCC';
+  threeLines.lineWidth = 2;
+  threeLines.beginPath();
+  // Horizontal grid lines
+  for (let y = 0; y < 450; y += 20) {
+    threeLines.moveTo(0, y);
+    threeLines.lineTo(800, y);
+  }
+  // Vertical grid lines
+  for (let x = 0; x < 800; x += 20) {
+    threeLines.moveTo(x, 0);
+    threeLines.lineTo(x, 450);
+  }
+  threeLines.stroke();
+  threeLines.closePath();
+
   threeLines.fillStyle = '#F90';
   // An isosceles triangle
   threeLines.beginPath();
@@ -147,6 +165,23 @@ ready(function() {
   threeLines.closePath();
 
   var triangles = document.getElementById('triangles').getContext('2d');
+
+
+  triangles.strokeStyle = '#CCC';
+  triangles.lineWidth = 2;
+  triangles.beginPath();
+  // Horizontal grid lines
+  for (let y = 0; y < 450; y += 20) {
+    triangles.moveTo(0, y);
+    triangles.lineTo(800, y);
+  }
+  // Vertical grid lines
+  for (let x = 0; x < 800; x += 20) {
+    triangles.moveTo(x, 0);
+    triangles.lineTo(x, 450);
+  }
+  triangles.stroke();
+  triangles.closePath();
 
   triangles.fillStyle = '#F00';
   triangles.beginPath();
