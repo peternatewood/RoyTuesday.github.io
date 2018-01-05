@@ -1,12 +1,12 @@
 const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
+const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|const|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
-const CODE_RED = '#E58';
-const CODE_ORANGE = '#EA3';
-const CODE_YELLOW = '#EE8';
+const CODE_RED = '#F37';
+const CODE_ORANGE = '#FA3';
+const CODE_YELLOW = '#FF7';
 const CODE_GREEN = '#AE4';
 const CODE_BLUE = '#6CE';
-const CODE_PURPLE = '#C6E';
+const CODE_PURPLE = '#A7E';
 const CODE_GRAY = '#999';
 
 function regexHighlightCCode(match) {
@@ -268,6 +268,7 @@ function highlightJSCode(match) {
     switch (match) {
       case "document":
       case "window":
+      case "const":
       case "var":
       case "Array":
       case "Boolean":
