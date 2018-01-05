@@ -23,10 +23,21 @@ permalink: /blog/canvas-basics
 
     Another great thing about the canvas API: it's supported by just about every modern browser, and doesn't require you to load any external libraries. Unless your using a really old version of Chrome or Firefox, or Internet Explorer older than 9 (which some people still do), the canvas should work just fine for you.<br/><br/>
 
-    First, you want to decide what size your canvas will be. You can use css to scale the element to any size you like, but the <span class="code">width</span> and <span class="code">height</span> attributes determine it's internal resolution (this is done automatically using a buffer that stays the same size). For games, I like to wrap my canvas in a table so that it's nice and centered. Also, any html contained in the canvas will render if the browser doesn't support the canvas element; I recommend something like the following table of browser requirements.
+    First, you want to decide what size your canvas will be. You can use css to scale the element to any size you like, but the <span class="code">width</span> and <span class="code">height</span> attributes determine it's internal resolution (this is done automatically using a buffer that stays the same size). For games, I like to center my canvas with a wrapping element as below; this makes it easy to scale the canvas if the browser window is too small for any reason. Also, if the user's browser doesn't support the canvas element any html contained in the canvas will be rendered instead; I recommend something like the following table of browser requirements.
   </p>
 <pre class="code-html">
-&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;
+&lt;style type="text/css"&gt;
+#canvas-wrapper {
+  position: fixed;
+  margin: -300px auto 0;
+  width: 800px;
+  height: 600px;
+  top: 50%;
+  left: 0;
+  right: 0;
+}
+&lt;/style&gt;
+&lt;main id="canvas-wrapper"&gt;
   &lt;canvas id="canvas" width="800" height="600"&gt;
     &lt;p&gt;
       Sorry, your browser doesn't meet the requirements for this game
@@ -43,7 +54,7 @@ permalink: /blog/canvas-basics
       &lt;/tbody&gt;
     &lt;/table&gt;
   &lt;/canvas&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/main&gt;
 </pre>
   <p class="article-body">
     Next, we need to get the rendering context from our canvas. If you use jQuery, you have to call <span class="code">getContext('2d')</span> on the DOMElement itself, not the special object jQuery gives you. jQuery isn't very useful for games, so I usually don't bother. We're specifying '2d' because the Canvas API also supports 3D rendering through WebGL.
