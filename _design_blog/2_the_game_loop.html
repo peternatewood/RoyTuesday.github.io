@@ -1,0 +1,250 @@
+---
+layout: default
+title: "2: The Game Loop"
+description: Learn the basics of handling framerate and regular updates to the game space
+preview: ""
+permalink: /blog/the-game-loop
+---
+
+<article>
+  <h1 class="article-heading">The Game Loop</h1>
+  <p class="article-body">
+    Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">1: Canvas Basics</a><br/>
+    <em>coming soon: Control Schemes</em><br/>
+    Last Updated: <strong>5 Jan, 2018</strong>
+  </p>
+</article>
+<article>
+  <p class="article-body">
+    At the core of any video game code is the game loop. Any game with movement needs to update its physics at a regular interval, and all games need to draw to the screen at the same rate that the monitor refreshes it's display. It's like a film reel, in that we draw still images in quick succession so that they appear to move. Unlike a film reel, we must construct each still image the moment before we draw it to the screen, or "render" it.<br/><br/>
+
+    Different monitors have different refresh rates, which is the number of times per second that the monitor refreshes all its pixels with whatever colors they're supposed to be at that moment. This is a major problem in game design, because different monitors have different refresh rates, and that rate doesn't always stay constant. Luckily we have good solutions for this problem.<br/><br/>
+
+    For JavaScript, we have <span class="code">window.requestAnimationFrame()</span> to help us. This function takes a callback to execute once the next frame is ready to be drawn. This way, we don't run our rendering code so infrequently that the game looks choppy, and we don't waste processing power doing it more often than we need to.
+  </p>
+<pre class="code-javascript">
+function frameStep(timestamp) {
+  if (!start) {
+    var start = timestamp;
+  }
+  if (timestamp - start < 2000) {
+    window.requestAnimationFrame(frameStep);
+  }
+}
+window.requestAnimationFrame(frameStep);
+</pre>
+  <p class="article-body">
+    In order to keep the game loop going, we need to be sure to call <span class="code">requestAnimationFrame</span> at the end of our callback function. It also helps to pause rendering if the user leaves the current browser tab; the recommended method is to only call <span class="code">requestAnimationFrame</span> if less than two seconds (2000 milliseconds) have passed since the last frame. For a more detailed explanation of this function <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" target="_blank">see the Mozilla documentation here</a>.<br/><br/>
+
+    This callback is where we want to put all of our code for rendering things in the game. Here's a simple example, with a ball bouncing around the edges of the canvas. First we define a few constants and an object to keep track of our ball's position and velocity.<br/><br/>
+
+    To update the ball's position, we just add the x velocity to the x position, and the y velocity to the y position. Then, we check whether the ball has collided with the edges of the canvas; the x and y coordinates of the ball tell us it's center, so we have to add the ball's size to each coordinate to check whether it's hit an edge. If the ball hits an edge, we can make it bounce by inverting the velocity in that direction.<br/><br/>
+
+    After we've updated the ball's position, we draw a circle centered on its coordinates.
+  </p>
+<pre class="code-javascript">
+// Canvas width and height
+const CANVAS_W = 800;
+const CANVAS_H = 450;
+// Size of the ball in pixels
+const BALL_SIZE = 16;
+// Ball with x/y coordinates defining the center, and x/y velocity
+var ball = {
+  x: 2 * BALL_SIZE,
+  y: 2 * BALL_SIZE,
+  xVel: 1,
+  yVel: 1
+};
+
+function updateBall() {
+  // Move the ball
+  ball.x += ball.xVel;
+  ball.y += ball.yVel;
+
+  // Check for collision with canvas bounds
+  if (ball.x + BALL_SIZE > CANVAS_W) {
+    ball.x = CANVAS_W - BALL_SIZE;
+    ball.xVel = -1;
+  }
+  else if (ball.x - BALL_SIZE < 0) {
+    ball.x = BALL_SIZE;
+    ball.xVel = 1;
+  }
+
+  if (ball.y + BALL_SIZE > CANVAS_H) {
+    ball.y = CANVAS_H - BALL_SIZE;
+    ball.yVel = -1;
+  }
+  else if (ball.y - BALL_SIZE < 0) {
+    ball.y = BALL_SIZE;
+    ball.yVel = 1;
+  }
+}
+// Render the ball
+function renderBall(context) {
+  context.beginPath();
+  context.arc(ball.x, ball.y, BALL_SIZE, 0, 6.28);
+  context.fillStyle = '#3AF';
+  context.fill();
+  context.closePath();
+}
+
+var context = document.getElementById('canvas').getContext('2d');
+
+function frameStep(timestamp) {
+  // Update first
+  updateBall();
+  // Then render
+  renderBall(context);
+
+  if (!start) {
+    var start = timestamp;
+  }
+  if (timestamp - start < 2000) {
+    window.requestAnimationFrame(frameStep);
+  }
+}
+
+window.requestAnimationFrame(frameStep);
+</pre>
+  <div class="canvas-wrapper">
+    <canvas id="ball-bounce-1" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+  </div>
+  <p class="article-body">
+    You'll notice we get this paintbrush effect, as if the ball is leaving a trail behind it. Each time we draw the ball, we're drawing over the existing image, without erasing what we drew before. Maybe you've seen glitches in 3D games where the player goes outside of the level boundaries, and everything looks like an overexposed camera shot. The same thing is going on there. Normally, everything in the level would get rendered and cover the last frame's image, but there's nothing to render beyond the level bounds, and no need to erase it since the player isn't supposed to be there.<br/><br/>
+
+    Usually, a game will have a background to render before everything else, so we can just render that first and avoid any issues. Let's fill the canvas with a solid color background.
+  </p>
+<pre class="code-javascript">
+function frameStep(timestamp) {
+  // Update first
+  updateBall();
+  // Render the background first
+  context.fillStyle = '#30A';
+  context.fillRect(0, 0, CANVAS_W, CANVAS_H);
+  // Then render
+  renderBall(context);
+
+  if (!start) {
+    var start = timestamp;
+  }
+  if (timestamp - start < 2000) {
+    window.requestAnimationFrame(frameStep);
+  }
+}
+</pre>
+  <div class="canvas-wrapper">
+    <canvas id="ball-bounce-2" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+  </div>
+  <p class="article-body">
+    Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
+
+    Luckily, there's a simple solution for this; completely dissociate your rendering logic from your physics logic. In most languages, this means calculating the time between the last and current frame, and applying a modifier to any physics calculations you make. In JavaScript, we can use <span class="code">setInterval()</span> to ensure our updates happen at a regular interval, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">more or less</a>.
+  </p>
+<pre class="code-javascript">
+const UPDATE_RATE = 10;
+
+function update() {
+  updateBall();
+  // Other stuff would also go in here
+  // like more balls
+}
+setInterval(update, UPDATE_RATE);
+</pre>
+  <div class="canvas-wrapper">
+    <canvas id="ball-bounce-3" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+  </div>
+  <p class="article-body">
+    So there's a basic game loop. Remember, <span class="code">setInterval()</span> will actually change the interval amount to 10 milliseconds if you try to give it less. We could use <span class="code">setInterval()</span> for our render loop too, but <span class="code">requestAnimationFrame()</span> will be much smoother and is designed for this exact purpose.<br/><br/>
+
+    <strong>&mdash; Peter Wood</strong><br/><br/>
+
+    Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">1: Canvas Basics</a><br/>
+    <em>coming soon: Control Schemes</em>
+  </p>
+</article>
+
+{% include canvas.html %}
+
+<script type="text/javascript">
+(function() {
+  const CANVAS_W = 800;
+  const CANVAS_H = 450;
+
+  const UPDATE_RATE = 1000 / 120;
+  const BALL_SIZE = 16;
+
+  var balls = [
+    { x: 2 * BALL_SIZE, y: 2 * BALL_SIZE, xVel: 1, yVel: 1 },
+    { x: 2 * BALL_SIZE, y: 2 * BALL_SIZE, xVel: 1, yVel: 1 },
+    { x: 2 * BALL_SIZE, y: 2 * BALL_SIZE, xVel: 1, yVel: 1 }
+  ];
+
+  function updateBall(ball) {
+    // Move the ball
+    ball.x += ball.xVel;
+    ball.y += ball.yVel;
+
+    // Check for collision with canvas bounds
+    if (ball.x + BALL_SIZE > CANVAS_W) {
+      ball.x = CANVAS_W - BALL_SIZE;
+      ball.xVel = -1;
+    }
+    else if (ball.x - BALL_SIZE < 0) {
+      ball.x = BALL_SIZE;
+      ball.xVel = 1;
+    }
+
+    if (ball.y + BALL_SIZE > CANVAS_H) {
+      ball.y = CANVAS_H - BALL_SIZE;
+      ball.yVel = -1;
+    }
+    else if (ball.y - BALL_SIZE < 0) {
+      ball.y = BALL_SIZE;
+      ball.yVel = 1;
+    }
+  }
+  // Render the ball
+  function renderBall(context, ball) {
+    context.beginPath();
+    context.arc(ball.x, ball.y, BALL_SIZE, 0, 6.28);
+    context.fillStyle = '#3AF';
+    context.fill();
+    context.closePath();
+  }
+
+  function update() {
+    updateBall(balls[2]);
+  }
+  setInterval(update, UPDATE_RATE);
+
+  var contexts = [
+    document.getElementById('ball-bounce-1').getContext('2d'),
+    document.getElementById('ball-bounce-2').getContext('2d'),
+    document.getElementById('ball-bounce-3').getContext('2d')
+  ];
+
+  function frameStep(timestamp) {
+    for (var i = 0; i < 3; i++) {
+      if (i < 2) {
+        updateBall(balls[i]);
+      }
+
+      if (i > 0) {
+        contexts[i].fillStyle = '#30A';
+        contexts[i].fillRect(0, 0, CANVAS_W, CANVAS_H);
+      }
+      renderBall(contexts[i], balls[i]);
+    }
+
+    if (!start) {
+      var start = timestamp;
+    }
+    if (timestamp - start < 2000) {
+      window.requestAnimationFrame(frameStep);
+    }
+  }
+
+  window.requestAnimationFrame(frameStep);
+}).call();
+</script>
