@@ -1,5 +1,5 @@
 const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|return|const|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
+const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|case|break|switch|default|typeof|instanceof|return|const|var|document|window|undefined|null|NaN|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
 const CODE_RED = '#F37';
 const CODE_ORANGE = '#FA3';
@@ -251,7 +251,7 @@ function highlightJSCode(match) {
   else if (/ *('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
   }
-  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|case|break|switch|default|return/.test(match)) {
+  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|case|break|switch|default|typeof|instanceof|return/.test(match)) {
     replaced[1] = CODE_RED;
   }
   else if (/ *function/.test(match)) {
