@@ -1,9 +1,9 @@
 ready(function() {
   var audio;
-  if (AudioContext) {
+  if (typeof AudioContext !== 'undefined') {
     audio = new AudioContext;
   }
-  else if (webkitAudioContext) {
+  else if (typeof webkitAudioContext !== 'undefined') {
     audio = new webkitAudioContext;
   }
 

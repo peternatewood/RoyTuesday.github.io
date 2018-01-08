@@ -11,7 +11,7 @@ permalink: /blog/webaudio-basics
   <hr/>
   <p class="article-body">
     Next <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">Step 1: Canvas Basics</a><br/>
-    Last Updated: <strong>9 Sep, 2017</strong><br/>
+    Last Updated: <strong>8 Jan, 2018</strong><br/>
   </p>
 </article>
 <article>
@@ -25,10 +25,10 @@ permalink: /blog/webaudio-basics
   <pre class="code-javascript">
 var audio;
 
-if (AudioContext) {
+if (typeof AudioContext !== 'undefined') {
   audio = new AudioContext;
 }
-else if (webkitAudioContext) {
+else if (typeof webkitAudioContext !== 'undefined') {
   audio = new webkitAudioContext;
 }</pre>
   <p class="article-body">
