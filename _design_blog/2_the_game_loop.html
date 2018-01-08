@@ -1,6 +1,7 @@
 ---
 layout: default
-title: "2: The Game Loop"
+title: "The Game Loop"
+step: 2
 description: Learn the basics of handling framerate and regular updates to the game space
 preview: ""
 permalink: /blog/the-game-loop
@@ -8,10 +9,11 @@ permalink: /blog/the-game-loop
 
 <article>
   <h1 class="article-heading">The Game Loop</h1>
+  <hr/>
   <p class="article-body">
-    Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">1: Canvas Basics</a><br/>
+    Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">Step 1: Canvas Basics</a><br/>
     <em>coming soon: Control Schemes</em><br/>
-    Last Updated: <strong>5 Jan, 2018</strong>
+    Last Updated: <strong>8 Jan, 2018</strong>
   </p>
 </article>
 <article>
@@ -38,7 +40,7 @@ window.requestAnimationFrame(frameStep);
 
     This callback is where we want to put all of our code for rendering things in the game. Here's a simple example, with a ball bouncing around the edges of the canvas. First we define a few constants and an object to keep track of our ball's position and velocity.<br/><br/>
 
-    To update the ball's position, we just add the x velocity to the x position, and the y velocity to the y position. Then, we check whether the ball has collided with the edges of the canvas; the x and y coordinates of the ball tell us it's center, so we have to add the ball's size to each coordinate to check whether it's hit an edge. If the ball hits an edge, we can make it bounce by inverting the velocity in that direction.<br/><br/>
+    To update the ball's position, we just add the x velocity to the x position, and the y velocity to the y position. Then, we check whether the ball has collided with the edges of the canvas; the x and y coordinates of the ball tell us it's center, so we have to add the ball's size to each coordinate to check whether it's hit an edge. If the ball hits an edge, we can make it bounce by inverting the velocity in that direction; E.G. if x velocity is 1, we change it to -1.<br/><br/>
 
     After we've updated the ball's position, we draw a circle centered on its coordinates.
   </p>
@@ -111,9 +113,11 @@ window.requestAnimationFrame(frameStep);
     <canvas id="ball-bounce-1" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
-    You'll notice we get this paintbrush effect, as if the ball is leaving a trail behind it. Each time we draw the ball, we're drawing over the existing image, without erasing what we drew before. Maybe you've seen glitches in 3D games where the player goes outside of the level boundaries, and everything looks like an overexposed camera shot. The same thing is going on there. Normally, everything in the level would get rendered and cover the last frame's image, but there's nothing to render beyond the level bounds, and no need to erase it since the player isn't supposed to be there.<br/><br/>
+    You'll notice we get this paintbrush effect, as if the ball is leaving a trail behind it. Each time we draw the ball, we're drawing over the existing image, without erasing what we drew before. Maybe you've seen glitches in 3D games where the player goes outside of the level boundaries, and everything looks like an overexposed timelapse. The same thing is going on there. Normally, everything in the level would get rendered and cover the last frame's image, but there's nothing to render beyond the level bounds. Erasing the entire screen is a waste of processing power since the player isn't supposed to go out of bounds.<br/><br/>
 
-    Usually, a game will have a background to render before everything else, so we can just render that first and avoid any issues. Let's fill the canvas with a solid color background.
+    Usually, a game will have a background to render before everything else, so we can just render that first and avoid any issues. If we just need a simple background color or image, we could use CSS styles to apply that to the canvas element, and erase the canvas every frame. We could even take that a step further and only erase the area of canvas where the ball was last frame: a common technique in older video games when limited memory and processing power was a big concern.<br/><br/>
+
+    Let's keep things simple and fill the canvas with a solid color background.
   </p>
 <pre class="code-javascript">
 function frameStep(timestamp) {
@@ -137,9 +141,9 @@ function frameStep(timestamp) {
     <canvas id="ball-bounce-2" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
-    Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
+    Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this, as the platform struggles to execute the game loop every frame. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
 
-    Luckily, there's a simple solution for this; completely dissociate your rendering logic from your physics logic. In most languages, this means calculating the time between the last and current frame, and applying a modifier to any physics calculations you make. In JavaScript, we can use <span class="code">setInterval()</span> to ensure our updates happen at a regular interval, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">more or less</a>.
+    Luckily, there's a simple solution for this: completely dissociate your rendering logic from your physics logic. In most languages, this means calculating the time between the last and current frame, and applying a modifier to any physics calculations you make. In JavaScript, we can use <span class="code">setInterval()</span> to ensure our updates happen at a regular interval, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">more or less</a>.
   </p>
 <pre class="code-javascript">
 const UPDATE_RATE = 10;
@@ -157,9 +161,11 @@ setInterval(update, UPDATE_RATE);
   <p class="article-body">
     So there's a basic game loop. Remember, <span class="code">setInterval()</span> will actually change the interval amount to 10 milliseconds if you try to give it less. We could use <span class="code">setInterval()</span> for our render loop too, but <span class="code">requestAnimationFrame()</span> will be much smoother and is designed for this exact purpose.<br/><br/>
 
+    Now that we have the basics of the game loop worked out, we can add some interactivity; an animated image is nice, but we can't call it a game if it plays itself, can we? Next up: keyboard, mouse, and touch controls.<br/><br/>
+
     <strong>&mdash; Peter Wood</strong><br/><br/>
 
-    Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">1: Canvas Basics</a><br/>
+    Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">Step 1: Canvas Basics</a><br/>
     <em>coming soon: Control Schemes</em>
   </p>
 </article>
