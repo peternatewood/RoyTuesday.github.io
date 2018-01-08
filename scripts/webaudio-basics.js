@@ -16,6 +16,9 @@ ready(function() {
       osc.start(audio.currentTime);
       osc.stop(audio.currentTime + 0.1);
     }
+    else {
+      alert("Sorry, your browser doesn't support the WebAudio API");
+    }
   }
   function playSawtooth(e) {
     e.preventDefault();
@@ -27,6 +30,9 @@ ready(function() {
       osc.connect(audio.destination);
       osc.start(audio.currentTime);
       osc.stop(audio.currentTime + 0.1);
+    }
+    else {
+      alert("Sorry, your browser doesn't support the WebAudio API");
     }
   }
   function playSofter(e) {
@@ -42,6 +48,9 @@ ready(function() {
 
       osc.start(audio.currentTime);
       osc.stop(audio.currentTime + 0.1);
+    }
+    else {
+      alert("Sorry, your browser doesn't support the WebAudio API");
     }
   }
   function playRamp(e) {
@@ -62,6 +71,9 @@ ready(function() {
 
       osc.start(audio.currentTime);
       osc.stop(audio.currentTime + 0.1);
+    }
+    else {
+      alert("Sorry, your browser doesn't support the WebAudio API");
     }
   }
 
