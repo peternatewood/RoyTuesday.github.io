@@ -4,7 +4,7 @@
 
 body {
   color: #333;
-  background: #000;
+  background: $dark_blue;
   font-family: $lato;
   padding-top: 2.5em;
 }
@@ -21,7 +21,7 @@ ul {
   list-style: none;
 }
 a {
-  color: #258;
+  color: $link_blue;
   text-decoration: none;
 
   &:hover {
@@ -33,6 +33,11 @@ label {
 }
 textarea {
   resize: vertical;
+}
+hr {
+  background: $green;
+  border: 0;
+  height: 3px;
 }
 pre {
   white-space: pre-wrap;
@@ -63,6 +68,7 @@ nav {
   z-index: 10;
   justify-content: space-around;
   background: $offwhite;
+  @include box-shadow(0 0 8px 0 #000);
   width: 100%;
   top: 0;
   left: 0;
@@ -91,6 +97,7 @@ article {
   }
 }
 .article-heading {
+  color: $dark_blue;
   font-size: 1.8em;
   padding: 4px 0;
 }
@@ -99,7 +106,7 @@ article {
 
   a {
     display: inline-block;
-    border-bottom: 3px solid #8A2;
+    border-bottom: 3px solid $green;
     padding: 0 4px 8px;
   }
 }
