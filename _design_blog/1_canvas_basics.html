@@ -59,7 +59,7 @@ permalink: /blog/canvas-basics
 &lt;/main&gt;
 </pre>
   <p class="article-body">
-    Next, we need to get the rendering context from our canvas. If you use jQuery, you have to call <span class="code">getContext('2d')</span> on the DOMElement itself, not the special object jQuery gives you. jQuery isn't very useful for games, so I usually don't bother. We're specifying '2d' because the Canvas API also supports 3D rendering through WebGL.
+    Next, we need to get the rendering context from our canvas. If you use jQuery, you have to call <span class="code">getContext('2d')</span> on the DOMElement itself, not the special object jQuery gives you. jQuery isn't very useful for games, so I usually don't bother. We're specifying &#8220;2d&#8221; because the Canvas API also supports 3D rendering through WebGL.
   </p>
 <pre class="code-javascript">
 var context = document.getElementById('canvas').getContext('2d');
@@ -71,7 +71,7 @@ var context = document.getElementById('canvas').getContext('2d');
 
     Now that we have the rendering context, we can start drawing stuff. We'll start with a simple rectangle. The context has a bunch of properties used to render things, including stroke and fill colors, so let's specify what colors we want to use first. Any color name, hex, or rgba value that's valid in css will work here too. Then we can call <span class="code">fillRect()</span> and <span class="code">strokeRect()</span> to draw a rectangle with an outline.<br/><br/>
 
-    I've added a grid to this canvas to better illustrate how things are positioned.<br/><br/>
+    I've added a grid to this canvas to better illustrate how things are positioned.
   </p>
 <pre class="code-javascript">
 context.fillStyle = '#4E4';
@@ -88,7 +88,7 @@ context.strokeRect(100, 40, 200, 120);
 
     It's important to note that every time you render, you're drawing over whatever you previously rendered as well as what's already on the canvas. That's why we draw the rectangle outline after the rectangle fill, so we can see it better.<br/><br/>
 
-    Now lets draw something more complicated. Our rendering context also lets us define a set of points to form a path. Like the rectangle, we can fill, stroke, or both after defining the path. We start with <span class="code">beginPath()</span> and <span class="code">moveTo(x, y)</span> to declare our first point, where "x" is the x coordinate, and "y" is the y coordinate. From there, we use <span class="code">lineTo(x, y)</span> to specify that we want the previous point and the new one to connect in a straight line. Note: if you don't explicitly close the path before you try to fill it, the path will act like you called <span class="code">closePath()</span>, connect the last point to the first, and fill that path.
+    Now lets draw something more complicated. Our rendering context also lets us define a set of points to form a path. Like the rectangle, we can fill, stroke, or both after defining the path. We start with <span class="code">beginPath()</span> and <span class="code">moveTo(x, y)</span> to declare our first point, where &#8220;x&#8221; is the x coordinate, and &#8220;y&#8221; is the y coordinate. From there, we use <span class="code">lineTo(x, y)</span> to specify that we want the previous point and the new one to connect in a straight line. Note: if you don't explicitly close the path before you try to fill it, the path will act like you called <span class="code">closePath()</span>, connect the last point to the first, and fill that path.
   </p>
 <pre class="code-javascript">
 context.fillStyle = '#FFF';
@@ -123,7 +123,7 @@ context.closePath();
   <p class="article-body">
     It's important to call <span class="code">closePath()</span> so that we clear out the path and don't draw it again by accident. As shown above, if we're just drawing lines, we can call <span class="code">moveTo()</span> to break up the line into several segments before we render. It's good for performance to call functions like <span class="code">fill()</span> and <span class="code">stroke()</span> as rarely as possible. We can do something similar if we want to fill several objects at once, as long as we make sure the last point of each shape is supposed to connect to the first.<br/><br/>
 
-    Let's also draw a circle. The <span class="code">arc(x, y, radius, startAngle, endAngle, anticlockwise)</span> function lets us draw a circular arc, where "startAngle" is the starting angle in radians (0 to 2 &times; pi), "endAngle" is the ending angle, and "anticlockwise" is an optional boolean that determines draw direction, which is clockwise by default.
+    Let's also draw a circle. The <span class="code">arc(x, y, radius, startAngle, endAngle, counterclockwise)</span> function lets us draw a circular arc, where &#8220;startAngle&#8221; is the starting angle in radians ( between 0 and 2&pi; ), &#8220;endAngle&#8221; is the ending angle, and &#8220;counterclockwise&#8221; is an optional boolean that determines draw direction, which is clockwise by default.
   </p>
 <pre class="code-javascript">
 // Two triangles
