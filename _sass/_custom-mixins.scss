@@ -32,9 +32,15 @@
   animation-delay: $delay;
 }
 
-@mixin border-radius($border-radius) {
-  -webkit-border-radius: $border-radius;
-  border-radius: $border-radius;
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
 }
 
 @mixin box-sizing($box-sizing) {
