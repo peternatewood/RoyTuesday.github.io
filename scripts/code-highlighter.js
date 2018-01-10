@@ -370,8 +370,8 @@ function highlightHTMLCode(original) {
         if (!flags.doubleQuotes) {
           if (original[i] === '"') {
             flags.doubleQuotes = true;
-            highlighted.push('="');
-            word = '';
+            highlighted.push('=');
+            word = '"';
             i++;
           }
           else if (original[i] === '=') {
@@ -386,7 +386,7 @@ function highlightHTMLCode(original) {
             flags.doubleQuotes = false;
             highlighted.push('<span style="color:' + CODE_YELLOW + '">');
             highlighted.push(word);
-            highlighted.push('</span>"');
+            highlighted.push('"</span>');
             word = '';
             i++;
           }
