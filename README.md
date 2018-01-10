@@ -18,3 +18,8 @@ Desigining a website to provide a pleasant user experience on every device is no
 **Body Text:** _#333333_<br/>
 **Navigation Background:** _#F8F8F8_<br/>
 **Link Color:** _#222288_<br/>
+
+## Planned Features
+
+- [ ] Blog search
+- [ ] Full website search
