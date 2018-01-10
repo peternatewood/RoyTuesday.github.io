@@ -1,0 +1,311 @@
+---
+layout: default
+title: "Control Schemes"
+step: 3
+description: Learn about adding keyboard and mouse controls to a game
+preview: "The one key feature of a video game is interactivity. Whether it&#8217;s a visual novel, puzzle game, or open-world sandbox we need to provide the user a way to influence the game we make. Front-end web developers will be familiar with event listeners, maybe in the form of attaching a listener for a click event to a link: that&#8217;s how we&#8217;ll handle user input to our game"
+permalink: /blog/control-schemes
+---
+<article>
+  <h1 class="article-heading">Control Schemes</h1>
+  <p class="article-body">by Peter N. Wood</p>
+  <hr/>
+  <p class="article-body">
+    Previous <a href="{{ '/blog/the-game-loop' | prepend: site.baseurl }}">Step 2: The Game Loop</a><br/>
+    <em>coming soon: Game State and The Scene</em><br/>
+    Last Updated: <strong>10 Jan, 2018</strong>
+  </p>
+</article>
+<article>
+  <p class="article-body">
+    The one key feature of a video game is interactivity. Whether it&#8217;s a visual novel, puzzle game, or open-world sandbox we need to provide the user a way to influence the game we make. Front-end web developers will be familiar with event listeners, maybe in the form of attaching a listener for a click event to a link: that&#8217;s how we&#8217;ll handle user input to our game.<br/><br/>
+
+    A really common way to attach event listeners is to use jQuery, but that&#8217;s a big library with lots of functionality we won&#8217;t need for a video game. It&#8217;ll increase the load time for our page as well. Instead, we&#8217;ll be using raw JavaScript methods like <span class="code">getElementById()</span> and <span class="code">addEventListener()</span>.<br/><br/>
+
+    First, a note on browser compatibility: in older browsers (namely Internet Explorer and Safari) some properties on the various event objects we&#8217;re using won&#8217;t be available. Some browsers won&#8217;t support the Canvas API at all, and we shouldn&#8217;t bother accounting for them; however, it&#8217;s worth including some measure of compatibility, and I&#8217;ll discuss that in a supplemental section at the end of this tutorial. For the purposes of this step in the tutorial, we&#8217;ll assume our users are using the latest version of Chrome, Firefox, or Opera.<br/><br/>
+
+    Let&#8217;s take a bigger step towards making Asteroids and create a player object that looks and moves like the ship from the arcade classic. We define the player object with x/y coordinates, x and y speed, a flag to indicate whether to apply acceleration in the ship&#8217;s facing direction &#8220;thrust&#8221;, a property for it&#8217;s direction in radians ( 0 to 2&pi; ), and radian acceleration to track whether the ship is rotating. We define the points that shape the ship and apply a rotation transform using its radians; this is all easy to do using our vector graphics rendering methods.
+  </p>
+<pre class="code-javascript">
+const CANVAS_W = 800;
+const CANVAS_H = 450;
+const MAX_SPEED = 6;
+
+var player = {
+  x: CANVAS_W / 2, y: CANVAS_H / 2,
+  xSpeed: 0, ySpeed: 0, thrust: false,
+  radians: 0, radAcc: 0
+};
+
+var context = document.getElementById('canvas');
+
+function frameStep(timestamp) {
+  // Fill the background
+  context.fillStyle = '#000';
+  context.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+  // Render points relative to the ship's center
+  const POINTS = [
+    { x:  16, y:  0 },
+    { x: -12, y: -9 },
+    { x:  -8, y:  0 },
+    { x: -12, y:  9 }
+  ];
+  // Calculate these now to save computing time
+  var sin = Math.sin(player.radians);
+  var cos = Math.cos(player.radians);
+
+  // Apply rotation transform for each point
+  context.beginPath();
+  for (var i = 0; i < 4; i++) {
+    var pointX = POINTS[i].x * cos + POINTS[i].y * sin;
+    var pointY = POINTS[i].x * sin - POINTS[i].y * cos;
+    // We need to "moveTo" the first point and "lineTo" the rest.
+    context[i === 0 ? 'moveTo' : 'lineTo'](player.x + pointX, player.y + pointY);
+  }
+  context.closePath();
+
+  context.lineWidth = 2;
+  context.strokeStyle = '#FFF';
+  context.stroke();
+
+  if (!start) {
+    var start = timestamp;
+  }
+  if (timestamp - start < 2000) {
+    window.requestAnimationFrame(frameStep);
+  }
+}
+window.requestAnimationFrame(frameStep);
+</pre>
+  <p class="article-body">
+    Now that we&#8217;ve got a ship object and a way to render it, let&#8217;s start with the easiest controls to code: keyboard controls. First, we attach a <span class="code">keydown</span> event listener to the <span class="code">document</span>, and check a few values on the event object. We should call <span class="code">preventDefault()</span> to prevent scrolling with the arrow keys and other behaviors, but still allow keyboard shortcuts (like ctrl/command + R for reloading the page); it would be really awkward to start scrolling up the page when you&#8217;re just trying to play the game. The event object provides flags for each of these modifier keys.<br/><br/>
+
+    Let&#8217;s use arrow keys to move the ship. Note that if a key is held down, it&#8217;ll keep triggering the keydown event at a rapid pace. That&#8217;s no good, so we check the <span class="code">repeat</span> flag and skip any further steps if it&#8217;s true. To move the ship, we set the ship&#8217;s thrust to true if the up arrow is pressed. For the left and right arrows, we either increment the player&#8217;s radian acceleration up by one to turn right, or down by one to turn left. Then we add a <span class="code">keyup</span> event that handles each key in the opposite way.<br/><br/>
+
+    This is a very simple way to ensure that neither the left or right arrow overrides the other: if they&#8217;re both pressed, they cancel out; if both are pressed and one is released, it&#8217;s as if we only pressed the other key. E.G. Press the left arrow and <span class="code">radAcc = -1</span>; press the right arrow and we add 1 so <span class="code">radAcc = 0</span>; release the left arrow and <span class="code">radAcc = 1</span> (as if we&#8217;re turning right); the right arrow is still held down so this feels normal and intuitive.
+  </p>
+<pre class="code-javascript">
+function handleKeydown(e) {
+  // ctrlKey refers to control on Apple computers, ctrl on Windows
+  // metaKey refers to command on Apple, the Windows key on Windows
+  if (!e.altKey &amp;&amp; !e.ctrlKey &amp;&amp; !e.metaKey) {
+    e.preventDefault();
+  }
+
+  if (!e.repeat) {
+    switch (e.key) {
+      case 'ArrowUp'    : player.thrust = true; break;
+      case 'ArrowLeft'  : player.radAcc--; break;
+      case 'ArrowRight' : player.radAcc++; break;
+    }
+  }
+}
+function handleKeyup(e) {
+  switch (e.key) {
+    case 'ArrowUp'    : player.thrust = false; break;
+    case 'ArrowLeft'  : player.radAcc++; break;
+    case 'ArrowRight' : player.radAcc--; break;
+  }
+}
+document.addEventListener('keydown', handleKeydown);
+document.addEventListener('keyup', handleKeyup);
+</pre>
+  <p class="article-body">
+    For the update loop, we need to do a few things: rotate the ship (unless the radian acceleration is 0), update the ship&#8217;s velocity if the player is applying thrust, limit the ship&#8217;s speed so it can&#8217;t keep increasing indefinitely, and move the ship to the opposite edge of the screen if they pass an edge. To rotate the ship, we add the current radian acceleration (divided by ten so we don&#8217;t rotate too fast) to the current radians: simple arithmetic.<br/><br/>
+
+    To update the ship&#8217;s speed, we have to use a little trigonometry and determine how much to move in the x and y directions; using the player&#8217;s radians, cosine will give us the x value, sine the y value. To make sure we don&#8217;t exceed our maximum speed, we have to calculate the combined speed in the x and y directions; we can treat the two speeds as if they&#8217;re sides of a right triangle and calculate the hypoteneuse to get the combined speed.<br/><br/>
+
+    Finally, if the player moves past one of the canvas edges, we either add or subtract the distance to the opposite edge from the player&#8217;s current position. Then the ship will appear to loop around the level.
+  </p>
+<pre class="code-javascript">
+// Get hypoteneuse of a right triangle given the two shorter sides
+function getHypoteneuse(x, y) {
+  return Math.sqrt(x * x + y * y);
+}
+
+// Restrict a value to a specified range
+function clamp(value, min, max) {
+  return value < min ? min : value > max ? max : value;
+}
+
+function update() {
+  if (player.radAcc) {
+    player.radians += player.radAcc / 10;
+  }
+  // Update the player's speed in the x and y directions
+  if (player.thrust) {
+    var cos = Math.cos(player.radians);
+    var sin = Math.sin(player.radians);
+
+    // Calculate the combined speed of both directions
+    player.xSpeed += cos;
+    player.ySpeed += sin;
+
+    var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+    if (speed < -MAX_SPEED || speed > MAX_SPEED) {
+      speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
+      player.xSpeed = speed * cos;
+      player.ySpeed = speed * sin;
+    }
+  }
+
+  player.x += player.xSpeed;
+  player.y += player.ySpeed;
+
+  // If the player passes an edge of the canvas, move it to the opposite edge
+  if (player.x < 0) {
+    player.x += CANVAS_W;
+  }
+  else if (player.x > CANVAS_W) {
+    player.x -= CANVAS_W;
+  }
+
+  if (player.y < 0) {
+    player.y += CANVAS_H;
+  }
+  else if (player.y > CANVAS_H) {
+    player.y -= CANVAS_H;
+  }
+}
+setInterval(update, 15);
+</pre>
+  <p class="article-body">
+    Now that our keyboard controls are complete, let&#8217;s try something more difficult: mouse and touch controls. Mouse controls aren&#8217;t too bad, but touch controls have all sorts of default behaviors built into the browser. The biggest issue for a game like this is the zoom feature, where a quick double-tap or long touch will change the zoom level on the webpage. The simplest solution, though a little extreme, is to include the following meta tag in the document head; this will totally prevent any zooming anywhere on the page, so this is only really suitable if your game is the only thing on, or primary focus of, the page.
+  </p>
+<pre class="code-html">
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"&gt;
+</pre>
+  <p class="article-body">
+    Our first step is to move our logic for updating the player&#8217;s thrust and rotation to a function that doesn&#8217;t rely on a specific type of input. That way, we keep the details of every input command in one place, while each event listener is only responsible for converting its input into the appropriate command. In fact, since buttons mostly behave the same way whether they receive a mouse or touch event, we can use one callback function to handle both touch and mouse events.<br/><br/>
+
+    We could track mouse input on the canvas element, and rotate the ship towards the cursor, but if we do the same with touch input the user&#8217;s finger will cover part of the screen, making it harder to play. We can keep things simple with some html buttons that emulate keyboard input. An easy way to do this is to wrap the buttons in an element and attach the event listener to that wrapper. We can add the desired action as a data attribute to each button, and we&#8217;re almost all set.<br/><br/>
+
+    Touch events are tricky, because certain gestures and long presses will change the page zoom, highlight the selected element, or something else we don&#8217;t want. We need to <span class="code">preventDefault()</span> for touch events, but not for mouse events: if we prevent the default action on a mouse event, the button element won&#8217;t respond to styles using the <span class="code">:active</span> pseudo selector, which we should use for a good user experience.
+  </p>
+<pre class="code-javascript">
+const KEY_MAP = {
+  'ArrowUp'     : 'up',
+  'ArrowLeft'   : 'left',
+  'ArrowRight'  : 'right'
+};
+
+function handleInput(action, isActivated) {
+  switch (action) {
+    case 'up'     : player.thrust = isActivated; break;
+    case 'left'   : player.radAcc += isActivated ? -1 :  1; break;
+    case 'right'  : player.radAcc += isActivated ?  1 : -1; break;
+  }
+}
+
+function handleKeydown(e) {
+  // Extra step to check whether the canvas is visible
+  var rect = context.canvas.getBoundingClientRect();
+
+  // ctrlKey refers to control on Apple computers, ctrl on Windows
+  // metaKey refers to command on Apple, the Windows key on Windows
+  if (rect.top < window.innerHeight &amp;&amp; !e.altKey &amp;&amp; !e.ctrlKey &amp;&amp; !e.metaKey) {
+    e.preventDefault();
+  }
+
+  var key = KEY_MAP[e.key];
+  if (!e.repeat &amp;&amp; key) {
+    handleInput(key, true);
+  }
+}
+function handleKeyup(e) {
+  var key = KEY_MAP[e.key];
+  if (key) {
+    handleInput(key);
+  }
+}
+
+// Track whether the mouse button is down for mouseout events
+var mouseDown = false;
+
+function handleButtonInput(e) {
+  // Prevents unwanted touch event behavior
+  if (e.type === 'touchstart') {
+    e.preventDefault();
+  }
+  e.stopPropagation();
+
+  // Ensure the mouse or touch event came from a button, is not a right click, and that the button has an "action" data attribute
+  if (e.target.tagName === 'BUTTON' &amp;&amp; e.button !== 2 &amp;&amp; e.target.dataset.action) {
+    mouseDown = e.type === 'mousedown';
+    // The touchstart event is the closest equivalent to mousedown among touch events
+    var isActivated = mouseDown || e.type === 'touchstart';
+    handleInput(e.target.dataset.action, isActivated);
+  }
+}
+// Our buttons' wrapping element. Events triggered by the buttons will bubble up to this element.
+var buttonControls = document.getElementById('button-wrapper');
+
+buttonControls.addEventListener('mousedown', handleButtonInput);
+buttonControls.addEventListener('mouseup', handleButtonInput);
+// buttonControls.addEventListener('mouseout', handleButtonInput);
+
+function handleButtonMouseout(e) {
+  // We only need to handleButtonInput if the mouse button was down when the mouse moved out
+  if (e.target.tagName === 'BUTTON' &amp;&amp; mouseDown) {
+    mouseDown = false;
+    handleButtonInput(e);
+  }
+}
+buttonControls.addEventListener('mouseout', handleButtonMouseout);
+
+buttonControls.addEventListener('touchstart', handleButtonInput);
+buttonControls.addEventListener('touchend', handleButtonInput);
+
+function preventEverything(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+buttonControls.addEventListener('touchmove', preventEverything);
+
+buttonControls = null;
+</pre>
+  <div class="canvas-wrapper">
+    <canvas id="canvas" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+    <div id="canvas-button-controls" style="text-align:left;">
+      <button id="left-arrow" class="arrow-button" data-action="left" style="float:left;">&larr;</button>
+      <button id="right-arrow" class="arrow-button" data-action="right" style="margin-left:40px;">&rarr;</button>
+      <button id="up-arrow" class="arrow-button" data-action="up" style="float:right;">&uarr;</button>
+    </div>
+  </div>
+  <p class="article-body">
+    And now we have options for keyboard, mouse, and touch controls to move our player object around the game space. Note our special mouseout callback; if the user moves the mouse away from the button we need to treat that like a mouseup event, but only if the mouse button was pressed down when leaving the button element. To do this, we track whether the mouse is currently pressed down with our own variable <span class="code">mouseDown</span>.<br/><br/>
+
+    Now that we have player input, we&#8217;re that much closer to a completed game. Next up: game state and scenes.<br/><br/>
+
+    <strong>&mdash; Peter N. Wood</strong><br/><br/>
+
+    Previous <a href="{{ '/blog/the-game-loop' | prepend: site.baseurl }}">Step 2: The Game Loop</a><br/>
+    <em>coming soon: Game State and The Scene</em>
+  </p>
+</article>
+
+{% include canvas.html %}
+
+<article>
+  <h2 class="article-heading">Compatibility Supplement</h2>
+  <hr/>
+  <p class="article-body">
+    Old versions of Safari don&#8217;t support the <span class="code">key</span> property of key events, and every version of Internet Explorer from IE 9 up through the latest Edge use non-standard values (as if to intentionally make things harder). Versions of IE older than 8 won&#8217;t support the canvas anyway, so at least we can avoid that headache. Firefox, Chrome, and Opera have supported this properly for a long time, and Safari has supported it since version 10.1, but if you want to ensure your game works on as many platforms as possible, you&#8217;ll need to adapt. <a href="https://caniuse.com/#feat=keyboardevent-key" target="_blank">Here&#8217;s a more comprehensive compatibility list.</a><br/><br/>
+
+    My solution makes use of an intermediary method between the key event listener and the <span class="code">handleInput()</span> method I introduced in the last code sample. Instead of running the key through a Map object, we write a function to return a valid &#8220;action&#8221; value for the <span class="code">handleInput()</span> method. The first step is easy: if the <span class="code">key</span> property is present, we run that through our <span class="code">KEY_MAP</span>. Otherwise, we can run the <span class="code">keyCode</span> property through a <span class="code">KEYCODE_MAP</span> first.<br/><br/>
+
+    Building the keymap is the hard part, but even if you setup key rebinding options in your game (something I&#8217;ll cover in a later post), you aren&#8217;t going to need to include all 200 or so key codes. If it&#8217;s something as simple as the Asteroids game we&#8217;re making, you&#8217;ll only need to look up a handful keyCodes: just be sure to actually test them in IE. MDN provides a <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode" target="_blank">comprehensive list of keyCodes here</a>. Here&#8217;s a compatibility keycode map that&#8217;ll work for the game we&#8217;re building in this tutorial.
+  </p>
+<pre class="code-javascript">
+const KEYCODE_MAP = {
+  '32': 'fire', // Spacebar
+  '38': 'up',
+  '37': 'left',
+  '39': 'right',
+  '40': 'down'
+}
+</pre>
+</article>
+
+<script type="text/javascript" src="{{ '/scripts/control-schemes.js' | prepend:site.baseurl }}"></script>

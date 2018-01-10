@@ -49,7 +49,7 @@ pre {
   background: #332;
   color: #F8FFFF;
   font-family: $sharetech;
-  padding: 6px 12px;
+  padding: 6px 12px 12px;
   margin: 1em auto;
   width: 98%;
 }
@@ -74,6 +74,74 @@ canvas {
 .canvas-wrapper {
   text-align: center;
   width: 100%;
+}
+
+#canvas-button-controls {
+  margin: 8px auto;
+  max-width: 768px;
+  height: 96px;
+}
+
+.arrow-button {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background: #FFF;
+  border: 1px solid #CCC;
+  @include border-radius(20px);
+  @include box-shadow(inset -4px -2px 4px 0 rgba(0,0,0,0.2));
+  text-indent: -999em;
+  width: 96px;
+  height: 96px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    border: {
+      color: transparent;
+      style: solid;
+    }
+    width: 0;
+    height: 0;
+    top: 50%;
+  }
+
+  &:hover {
+    background: #F0FFFF;
+    border-color: #AFF;
+  }
+  &:active,
+  &:focus {
+    @include box-shadow(inset 4px 2px 4px 0 rgba(0,0,0,0.1));
+  }
+}
+#up-arrow:after,
+#down-arrow:after {
+  border-width: 16px 12px;
+  margin: -24px auto 0;
+  left: 0;
+  right: 0;
+}
+#left-arrow:after,
+#right-arrow:after {
+  border-width: 12px 16px;
+  margin-top: -12px;
+}
+#up-arrow:after {
+  border-bottom-color: #000;
+}
+#down-arrow:after {
+  border-top-color: #000;
+}
+#left-arrow:after {
+  border-right-color: #000;
+  margin-left: -27px;
+  left: 50%;
+}
+#right-arrow:after {
+  border-left-color: #000;
+  margin-right: -27px;
+  right: 50%;
 }
 
 .only-tablet-up,
