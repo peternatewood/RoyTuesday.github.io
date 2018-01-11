@@ -1,6 +1,9 @@
 ready(function() {
   const CANVAS_W = 800;
   const CANVAS_H = 450;
+
+  const TAU = 2 * Math.PI;
+  const UPDATE_RATE = 15;
   const MAX_SPEED = 6;
 
   const KEY_MAP = {
@@ -101,9 +104,23 @@ ready(function() {
     return value < min ? min : value > max ? max : value;
   }
 
-  function update() {
+  var lastTimestamp = Date.now();
+
+  function frameStep(timestamp) {
+    // Update
+    var now = Date.now();
+    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    lastTimestamp = now;
+
     if (player.radAcc) {
-      player.radians += player.radAcc / 10;
+      var radians = player.radians + mod * player.radAcc / 10;
+      if (radians < 0) {
+        radians += TAU;
+      }
+      else if (radians >= TAU) {
+        radians -= TAU;
+      }
+      player.radians = radians;
     }
     // Update the player's speed in the x and y directions
     if (player.thrust) {
@@ -122,8 +139,8 @@ ready(function() {
       }
     }
 
-    player.x += player.xSpeed;
-    player.y += player.ySpeed;
+    player.x += mod * player.xSpeed;
+    player.y += mod * player.ySpeed;
 
     // If the player passes an edge of the canvas, move it to the opposite edge
     if (player.x < 0) {
@@ -139,10 +156,7 @@ ready(function() {
     else if (player.y > CANVAS_H) {
       player.y -= CANVAS_H;
     }
-  }
-  setInterval(update, 15);
 
-  function frameStep(timestamp) {
     // Fill the background
     context.fillStyle = '#000';
     context.fillRect(0, 0, CANVAS_W, CANVAS_H);

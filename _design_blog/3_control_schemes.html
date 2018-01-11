@@ -13,7 +13,7 @@ permalink: /blog/control-schemes
   <p class="article-body">
     Previous <a href="{{ '/blog/the-game-loop' | prepend: site.baseurl }}">Step 2: The Game Loop</a><br/>
     <em>coming soon: Game State and The Scene</em><br/>
-    Last Updated: <strong>10 Jan, 2018</strong>
+    Last Updated: <strong>11 Jan, 2018</strong>
   </p>
 </article>
 <article>
@@ -39,7 +39,14 @@ var player = {
 
 var context = document.getElementById('canvas');
 
+var lastTimestamp = Date.now();
+
 function frameStep(timestamp) {
+  // Update
+  var now = Date.now();
+  var mod = (now - lastTimestamp) / UPDATE_RATE;
+  lastTimestamp = now;
+
   // Fill the background
   context.fillStyle = '#000';
   context.fillRect(0, 0, CANVAS_W, CANVAS_H);
@@ -112,7 +119,11 @@ document.addEventListener('keydown', handleKeydown);
 document.addEventListener('keyup', handleKeyup);
 </pre>
   <p class="article-body">
-    For the update loop, we need to do a few things: rotate the ship (unless the radian acceleration is 0), update the ship&#8217;s velocity if the player is applying thrust, limit the ship&#8217;s speed so it can&#8217;t keep increasing indefinitely, and move the ship to the opposite edge of the screen if they pass an edge. To rotate the ship, we add the current radian acceleration (divided by ten so we don&#8217;t rotate too fast) to the current radians: simple arithmetic.<br/><br/>
+    For the update method, we need to do a few things: rotate the ship (unless the radian acceleration is 0), update the ship&#8217;s velocity if the player is applying thrust, limit the ship&#8217;s speed so it can&#8217;t keep increasing indefinitely, and move the ship to the opposite edge of the screen if they pass an edge. We also need to apply our physics modifier to every value we calculate.<br/><br/>
+
+    To rotate the ship, we add the current radian acceleration (divided by ten so we don&#8217;t rotate too fast) to the current radians. Then, we keep our radians in the range of 0 - 2&pi; (which I like to store in the constant <span class="code">TAU</span> for easy retrieval) by either adding 2&pi; if it&#8217;s less than 0, or subtracting 2&pi; if it&#8217;s greater than 2&pi;.<br/><br/>
+
+    Some programming languages will simply overflow if a value gets too big (E.G. an unsigned integer variable limited to one byte in size will loop around to 0 if the value would become greater than 255, or 255 if less than zero); in JavaScript, numbers get pegged at the maximum or minimum allowed value. You&#8217;re unlikely to encountere these types of values in our game, but if you did the ship would stop rotating in one direction, and that&#8217;s no good.<br/><br/>
 
     To update the ship&#8217;s speed, we have to use a little trigonometry and determine how much to move in the x and y directions; using the player&#8217;s radians, cosine will give us the x value, sine the y value. To make sure we don&#8217;t exceed our maximum speed, we have to calculate the combined speed in the x and y directions; we can treat the two speeds as if they&#8217;re sides of a right triangle and calculate the hypoteneuse to get the combined speed.<br/><br/>
 
@@ -129,9 +140,18 @@ function clamp(value, min, max) {
   return value < min ? min : value > max ? max : value;
 }
 
-function update() {
+function update(mod) {
+  const TAU = 2 * Math.PI;
+
   if (player.radAcc) {
-    player.radians += player.radAcc / 10;
+    var radians = player.radians + mod * player.radAcc / 10;
+    if (radians < 0) {
+      radians += TAU;
+    }
+    else if (radians >= TAU) {
+      radians -= TAU;
+    }
+    player.radians = radians;
   }
   // Update the player's speed in the x and y directions
   if (player.thrust) {
@@ -150,8 +170,8 @@ function update() {
     }
   }
 
-  player.x += player.xSpeed;
-  player.y += player.ySpeed;
+  player.x += mod * player.xSpeed;
+  player.y += mod * player.ySpeed;
 
   // If the player passes an edge of the canvas, move it to the opposite edge
   if (player.x < 0) {
@@ -168,7 +188,6 @@ function update() {
     player.y -= CANVAS_H;
   }
 }
-setInterval(update, 15);
 </pre>
   <p class="article-body">
     Now that our keyboard controls are complete, let&#8217;s try something more difficult: mouse and touch controls. Mouse controls aren&#8217;t too bad, but touch controls have all sorts of default behaviors built into the browser. The biggest issue for a game like this is the zoom feature, where a quick double-tap or long touch will change the zoom level on the webpage. The simplest solution, though a little extreme, is to include the following meta tag in the document head; this will totally prevent any zooming anywhere on the page, so this is only really suitable if your game is the only thing on, or primary focus of, the page.
