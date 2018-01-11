@@ -13,7 +13,7 @@ permalink: /blog/the-game-loop
   <hr/>
   <p class="article-body">
     Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">Step 1: Canvas Basics</a><br/>
-    <em>coming soon: Control Schemes</em><br/>
+    Next <a href="{{ '/blog/control-schemes' | prepend: site.baseurl }}">Step 3: Control Schemes</a><br/>
     Last Updated: <strong>8 Jan, 2018</strong>
   </p>
 </article>
@@ -144,30 +144,44 @@ function frameStep(timestamp) {
   <p class="article-body">
     Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this, as the platform struggles to execute the game loop every frame. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
 
-    Luckily, there's a simple solution for this: completely dissociate your rendering logic from your physics logic. In most languages, this means calculating the time between the last and current frame, and applying a modifier to any physics calculations you make. In JavaScript, we can use <span class="code">setInterval()</span> to ensure our updates happen at a regular interval, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">more or less</a>.
+    Luckily, there's a simple solution for this: completely dissociate your rendering logic from your physics logic. This means calculating the time between the last and current frame, and applying a modifier to any physics calculations you make. It&#8217;s tempting to use <span class="code">setInterval()</span>, so that we get a constant update rate, but in the long run <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">this is not reliable</a>.<br/><br/>
+
+    To get our modifier, we keep track of when the last frame was rendered in milliseconds, find the difference between it and the current time, and divide by the number of milliseconds between intended updates. In our case, let&#8217;s say we want to update the ball&#8217;s position every ten milliseconds.
   </p>
 <pre class="code-javascript">
 const UPDATE_RATE = 10;
 
-function update() {
-  updateBall();
-  // Other stuff would also go in here
-  // like more balls
+function updateBall(mod, ball) {
+  // Move the ball
+  ball.x += mod * ball.xVel;
+  ball.y += mod * ball.yVel;
+  // The rest of this function is the same...
 }
-setInterval(update, UPDATE_RATE);
+
+// Set the initial value in milliseconds
+var lastTimestamp = Date.now();
+
+function frameStep(timestamp) {
+  var now = Date.now();
+  // Physics modifier based on the number of milliseconds between this and the last frame
+  var mod = (now - lastTimestamp) / UPDATE_RATE;
+  // Don't forget to pdate this for the next frame
+  lastTimestamp = now;
+
+  updateBall(mod, ball);
+  // The rest of this function is the same...
+}
 </pre>
   <div class="canvas-wrapper">
     <canvas id="ball-bounce-3" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
-    So there's a basic game loop. Remember, <span class="code">setInterval()</span> will actually change the interval amount to 10 milliseconds if you try to give it less. We could use <span class="code">setInterval()</span> for our render loop too, but <span class="code">requestAnimationFrame()</span> will be much smoother and is designed for this exact purpose.<br/><br/>
-
     Now that we have the basics of the game loop worked out, we can add some interactivity; an animated image is nice, but we can't call it a game if it plays itself, can we? Next up: keyboard, mouse, and touch controls.<br/><br/>
 
     <strong>&mdash; Peter N. Wood</strong><br/><br/>
 
     Previous <a href="{{ '/blog/canvas-basics' | prepend: site.baseurl }}">Step 1: Canvas Basics</a><br/>
-    <em>coming soon: Control Schemes</em>
+    Next <a href="{{ '/blog/control-schemes' | prepend: site.baseurl }}">Step 3: Control Schemes</a>
   </p>
 </article>
 
@@ -187,10 +201,10 @@ setInterval(update, UPDATE_RATE);
     { x: 2 * BALL_SIZE, y: 2 * BALL_SIZE, xVel: 1, yVel: 1 }
   ];
 
-  function updateBall(ball) {
+  function updateBall(mod, ball) {
     // Move the ball
-    ball.x += ball.xVel;
-    ball.y += ball.yVel;
+    ball.x += mod * ball.xVel;
+    ball.y += mod * ball.yVel;
 
     // Check for collision with canvas bounds
     if (ball.x + BALL_SIZE > CANVAS_W) {
@@ -220,21 +234,26 @@ setInterval(update, UPDATE_RATE);
     context.closePath();
   }
 
-  function update() {
-    updateBall(balls[2]);
-  }
-  setInterval(update, UPDATE_RATE);
-
   var contexts = [
     document.getElementById('ball-bounce-1').getContext('2d'),
     document.getElementById('ball-bounce-2').getContext('2d'),
     document.getElementById('ball-bounce-3').getContext('2d')
   ];
 
+  var lastTimestamp = Date.now();
+
   function frameStep(timestamp) {
+    var now = Date.now();
+    // Physics modifier based on the number of milliseconds between this and the last frame
+    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    lastTimestamp = now;
+
     for (var i = 0; i < 3; i++) {
       if (i < 2) {
-        updateBall(balls[i]);
+        updateBall(1, balls[i]);
+      }
+      else {
+        updateBall(mod, balls[i]);
       }
 
       if (i > 0) {
