@@ -77,26 +77,43 @@ canvas {
 }
 
 #canvas-button-controls {
+  display: flex;
+  justify-content: space-between;
   margin: 8px auto;
   max-width: 768px;
   height: 96px;
+
+  button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid #CCC;
+    @include border-radius(20px);
+    @include box-shadow(inset -4px -2px 4px 0 rgba(0,0,0,0.2));
+    text-indent: -999em;
+    width: 96px;
+    height: 96px;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+    }
+
+    &:hover {
+      background: #F0FFFF;
+      border-color: #AFF;
+    }
+    &:active,
+    &:focus {
+      @include box-shadow(inset 4px 2px 4px 0 rgba(0,0,0,0.1));
+    }
+  }
 }
 
 .arrow-button {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  background: #FFF;
-  border: 1px solid #CCC;
-  @include border-radius(20px);
-  @include box-shadow(inset -4px -2px 4px 0 rgba(0,0,0,0.2));
-  text-indent: -999em;
-  width: 96px;
-  height: 96px;
-
   &:after {
-    content: '';
-    position: absolute;
     border: {
       color: transparent;
       style: solid;
@@ -104,15 +121,6 @@ canvas {
     width: 0;
     height: 0;
     top: 50%;
-  }
-
-  &:hover {
-    background: #F0FFFF;
-    border-color: #AFF;
-  }
-  &:active,
-  &:focus {
-    @include box-shadow(inset 4px 2px 4px 0 rgba(0,0,0,0.1));
   }
 }
 #up-arrow:after,
@@ -142,6 +150,32 @@ canvas {
   border-left-color: #000;
   margin-right: -27px;
   right: 50%;
+}
+#fire-button {
+  &:before,
+  &:after {
+    @include border-radius(100%);
+    margin: {
+      left: auto;
+      right: auto;
+    }
+    top: 50%;
+    left: 0;
+    right: 0;
+  }
+  &:before {
+    box-sizing: border-box;
+    border: 4px solid #000;
+    margin-top: -24px;
+    width: 48px;
+    height: 48px;
+  }
+  &:after {
+    background: #000;
+    margin-top: -8px;
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .only-tablet-up,

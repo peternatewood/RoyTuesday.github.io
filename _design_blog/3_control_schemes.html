@@ -12,7 +12,7 @@ permalink: /blog/control-schemes
   <hr/>
   <p class="article-body">
     Previous <a href="{{ '/blog/the-game-loop' | prepend: site.baseurl }}">Step 2: The Game Loop</a><br/>
-    <em>coming soon: Game State and The Scene</em><br/>
+    <em>coming soon: Collisions</em><br/>
     Last Updated: <strong>11 Jan, 2018</strong>
   </p>
 </article>
@@ -287,20 +287,24 @@ buttonControls = null;
   <div class="canvas-wrapper">
     <canvas id="canvas" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
     <div id="canvas-button-controls" style="text-align:left;">
-      <button id="left-arrow" class="arrow-button" data-action="left" style="float:left;">&larr;</button>
-      <button id="right-arrow" class="arrow-button" data-action="right" style="margin-left:40px;">&rarr;</button>
-      <button id="up-arrow" class="arrow-button" data-action="up" style="float:right;">&uarr;</button>
+      <div>
+        <button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;">&larr;</button>
+        <button id="right-arrow" class="arrow-button" data-action="right">&rarr;</button>
+      </div>
+      <div>
+        <button id="up-arrow" class="arrow-button" data-action="up">&uarr;</button>
+      </div>
     </div>
   </div>
   <p class="article-body">
     And now we have options for keyboard, mouse, and touch controls to move our player object around the game space. Note our special mouseout callback; if the user moves the mouse away from the button we need to treat that like a mouseup event, but only if the mouse button was pressed down when leaving the button element. To do this, we track whether the mouse is currently pressed down with our own variable <span class="code">mouseDown</span>.<br/><br/>
 
-    Now that we have player input, we&#8217;re that much closer to a completed game. Next up: game state and scenes.<br/><br/>
+    Now that we have player input, we&#8217;re that much closer to a completed game. Next up: collision detection.<br/><br/>
 
     <strong>&mdash; Peter N. Wood</strong><br/><br/>
 
     Previous <a href="{{ '/blog/the-game-loop' | prepend: site.baseurl }}">Step 2: The Game Loop</a><br/>
-    <em>coming soon: Game State and The Scene</em>
+    <em>coming soon: Collisions</em>
   </p>
 </article>
 
