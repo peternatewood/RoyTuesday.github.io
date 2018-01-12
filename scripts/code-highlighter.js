@@ -254,15 +254,15 @@ function highlightJSCode(match) {
   else if (/ *('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
   }
-  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|for|case|break|switch|default|typeof|instanceof|return/.test(match)) {
-    replaced[1] = CODE_RED;
-  }
   else if (/ *function/.test(match)) {
     replaced[1] = CODE_BLUE + ';font-style:italic';
     // If a function declaration
     if (/function \w+/.test(match)) {
       replaced[3] = match.match(/^ */)[0] + 'function</span> <span style="color:' + CODE_GREEN + ';">' + match.replace(/ *function /, '');
     }
+  }
+  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|for|case|break|switch|default|typeof|instanceof|return/.test(match)) {
+    replaced[1] = CODE_RED;
   }
   else if (/^ *[A-Z]/.test(match)) {
     replaced[1] = CODE_BLUE + ';font-style:italic';
