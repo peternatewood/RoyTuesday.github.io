@@ -19,7 +19,8 @@
     display: flex;
     flex-wrap: wrap;
   }
-  .grid > .col-50 {
+  .grid > .col-50,
+  .grid > .col-33 {
     margin: {
       left: 1%;
       right: 1%;

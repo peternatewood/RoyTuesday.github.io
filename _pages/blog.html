@@ -15,7 +15,7 @@ permalink: /blog/
   </p>
   <section class="grid">
     {% for blog in site.design_blog %}
-    <div class="col-50">
+    <div class="col-33">
       <h2 class="article-title">
         <a class="blog-link" href="{{ blog.url | prepend: site.baseurl }}" title="">
           Step {{ blog.step }}: {{ blog.title }}
@@ -37,7 +37,7 @@ permalink: /blog/
 
   <section class="grid">
     {% for post in site.posts %}
-    <div class="col-50">
+    <div class="col-33">
       <h2 class="article-title">
         <a class="blog-link" href="{{ post.url | prepend: site.baseurl }}" title="{{ post.title }}">
           {{ post.title }}
