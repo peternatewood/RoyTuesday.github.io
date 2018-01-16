@@ -285,8 +285,8 @@ buttonControls.addEventListener('touchmove', preventEverything);
 buttonControls = null;
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="canvas" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
-    <div id="canvas-button-controls" style="text-align:left;">
+    <canvas id="canvas" width="800" height="450" style="max-width:800px;"></canvas>
+    <div id="canvas-button-controls">
       <div>
         <button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;">&larr;</button>
         <button id="right-arrow" class="arrow-button" data-action="right">&rarr;</button>
@@ -295,7 +295,233 @@ buttonControls = null;
         <button id="up-arrow" class="arrow-button" data-action="up">&uarr;</button>
       </div>
     </div>
+    <a href="#" id="show-source">[show source]</a><br/><br/>
   </div>
+<pre id="source-code" class="code-html" style="display:none;">
+&lt;style&gt;
+  #canvas {
+    margin: 0 auto;
+    width: 100%;
+  }
+  .canvas-wrapper {
+    text-align: center;
+    width: 100%;
+  }
+&lt;/style&gt;
+&lt;div class="canvas-wrapper"&gt;
+  &lt;canvas id="canvas" width="800" height="450" style="max-width:800px;"&gt;&lt;/canvas&gt;
+  &lt;div id="canvas-button-controls" style="text-align:left;"&gt;
+    &lt;div&gt;
+      &lt;button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;"&gt;&larr;&lt;/button&gt;
+      &lt;button id="right-arrow" class="arrow-button" data-action="right"&gt;&rarr;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;button id="up-arrow" class="arrow-button" data-action="up"&gt;&uarr;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/script type="text/javascript"&gt;
+  const CANVAS_W = 800;
+  const CANVAS_H = 450;
+
+  const TAU = 2 * Math.PI;
+  const UPDATE_RATE = 15;
+  const MAX_SPEED = 6;
+
+  const KEY_MAP = {
+    'ArrowUp'     : 'up',
+    'ArrowLeft'   : 'left',
+    'ArrowRight'  : 'right'
+  };
+
+  var player = {
+    x: CANVAS_W / 2, y: CANVAS_H / 2,
+    xSpeed: 0, ySpeed: 0, thrust: false,
+    radians: 0, radAcc: 0
+  };
+
+  // Get hypoteneuse of a right triangle given the two shorter sides
+  function getHypoteneuse(x, y) {
+    return Math.sqrt(x * x + y * y);
+  }
+
+  // Restrict a value to a specified range
+  function clamp(value, min, max) {
+    return value &lt; min ? min : value &gt; max ? max : value;
+  }
+
+  function update(mod) {
+    if (player.radAcc) {
+      var radians = player.radians + mod * player.radAcc / 10;
+      if (radians &lt; 0) {
+        radians += TAU;
+      }
+      else if (radians &gt;= TAU) {
+        radians -= TAU;
+      }
+      player.radians = radians;
+    }
+    // Update the player's speed in the x and y directions
+    if (player.thrust) {
+      var cos = Math.cos(player.radians);
+      var sin = Math.sin(player.radians);
+
+      // Calculate the combined speed of both directions
+      player.xSpeed += cos;
+      player.ySpeed += sin;
+
+      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+      if (speed &lt; -MAX_SPEED || speed &gt; MAX_SPEED) {
+        speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
+        player.xSpeed = speed * cos;
+        player.ySpeed = speed * sin;
+      }
+    }
+
+    player.x += mod * player.xSpeed;
+    player.y += mod * player.ySpeed;
+
+    // If the player passes an edge of the canvas, move it to the opposite edge
+    if (player.x &lt; 0) {
+      player.x += CANVAS_W;
+    }
+    else if (player.x &gt; CANVAS_W) {
+      player.x -= CANVAS_W;
+    }
+
+    if (player.y &lt; 0) {
+      player.y += CANVAS_H;
+    }
+    else if (player.y &gt; CANVAS_H) {
+      player.y -= CANVAS_H;
+    }
+  }
+
+  function handleInput(action, isActivated) {
+    switch (action) {
+      case 'up'     : player.thrust = isActivated; break;
+      case 'left'   : player.radAcc += isActivated ? -1 :  1; break;
+      case 'right'  : player.radAcc += isActivated ?  1 : -1; break;
+    }
+  }
+
+  var context = document.getElementById('canvas').getContext('2d');
+
+  function handleKeydown(e) {
+    // Extra step to check whether the canvas is visible
+    var rect = context.canvas.getBoundingClientRect();
+
+    // ctrlKey refers to control on Apple computers, ctrl on Windows
+    // metaKey refers to command on Apple, the Windows key on Windows
+    if (rect.top &lt; window.innerHeight &amp;&amp; !e.altKey &amp;&amp; !e.ctrlKey &amp;&amp; !e.metaKey) {
+      e.preventDefault();
+    }
+
+    var key = KEY_MAP[e.key];
+    if (!e.repeat &amp;&amp; key) {
+      handleInput(key, true);
+    }
+  }
+  function handleKeyup(e) {
+    var key = KEY_MAP[e.key];
+    if (key) {
+      handleInput(key);
+    }
+  }
+  document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('keyup', handleKeyup);
+  // Track whether the mouse button is down for mouseout events
+  var mouseDown = false;
+
+  function handleButtonInput(e) {
+    // Prevents unwanted touch event behavior
+    if (e.type === 'touchstart') {
+      e.preventDefault();
+    }
+    e.stopPropagation();
+
+    // Ensure the mouse or touch event came from a button, is not a right click, and that the button has an "action" data attribute
+    if (e.target.tagName === 'BUTTON' &amp;&amp; e.button !== 2 &amp;&amp; e.target.dataset.action) {
+      mouseDown = e.type === 'mousedown';
+      var isActivated = mouseDown || e.type === 'touchstart';
+      handleInput(e.target.dataset.action, isActivated);
+    }
+  }
+  var buttonControls = document.getElementById('canvas-button-controls');
+
+  buttonControls.addEventListener('mousedown', handleButtonInput);
+  buttonControls.addEventListener('mouseup', handleButtonInput);
+  // buttonControls.addEventListener('mouseout', handleButtonInput);
+
+  function handleButtonMouseout(e) {
+    // We only need to handleButtonInput if the mouse button was down when the mouse moved out
+    if (e.target.tagName === 'BUTTON' &amp;&amp; mouseDown) {
+      mouseDown = false;
+      handleButtonInput(e);
+    }
+  }
+  buttonControls.addEventListener('mouseout', handleButtonMouseout);
+
+  buttonControls.addEventListener('touchstart', handleButtonInput);
+  buttonControls.addEventListener('touchend', handleButtonInput);
+
+  function preventEverything(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  buttonControls.addEventListener('touchmove', preventEverything);
+
+  buttonControls = null;
+
+  var lastTimestamp = Date.now();
+
+  function frameStep(timestamp) {
+    // Update
+    var now = Date.now();
+    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    lastTimestamp = now;
+    // Update player
+    update(mod);
+
+    // Fill the background
+    context.fillStyle = '#000';
+    context.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+    // Render points relative to the ship's center
+    const POINTS = [
+      { x:  16, y:  0 },
+      { x: -12, y: -9 },
+      { x:  -8, y:  0 },
+      { x: -12, y:  9 }
+    ];
+
+    var sin = Math.sin(player.radians);
+    var cos = Math.cos(player.radians);
+
+    // Apply rotation transform to each point
+    context.beginPath();
+    for (var i = 0; i < 4; i++) {
+      var pointX = POINTS[i].x * cos + POINTS[i].y * sin;
+      var pointY = POINTS[i].x * sin - POINTS[i].y * cos;
+
+      context[i === 0 ? 'moveTo' : 'lineTo'](player.x + pointX, player.y + pointY);
+    }
+    context.closePath();
+
+    context.lineWidth = 2;
+    context.strokeStyle = '#FFF';
+    context.stroke();
+
+    if (!start) {
+      var start = timestamp;
+    }
+    if (timestamp - start &lt; 2000) {
+      window.requestAnimationFrame(frameStep);
+    }
+  }
+  window.requestAnimationFrame(frameStep);
+&lt;/script&gt;
+</pre>
   <p class="article-body">
     And now we have options for keyboard, mouse, and touch controls to move our player object around the game space. Note our special mouseout callback; if the user moves the mouse away from the button we need to treat that like a mouseup event, but only if the mouse button was pressed down when leaving the button element. To do this, we track whether the mouse is currently pressed down with our own variable <span class="code">mouseDown</span>.<br/><br/>
 
@@ -331,4 +557,4 @@ const KEYCODE_MAP = {
 </pre>
 </article>
 
-<script type="text/javascript" src="{{ '/scripts/control-schemes.js' | prepend:site.baseurl }}"></script>
+<script type="text/javascript" src="{{ '/scripts/control-schemes.js' | prepend: site.baseurl }}"></script>

@@ -1,4 +1,11 @@
 ready(function() {
+  function handleSourceCodeClick(e) {
+    e.preventDefault();
+    var source = document.getElementById('source-code');
+    source.style.display = source.style.display === 'none' ? 'block' : 'none';
+  }
+  document.getElementById('show-source').addEventListener('click', handleSourceCodeClick);
+
   const CANVAS_W = 800;
   const CANVAS_H = 450;
 
@@ -17,6 +24,63 @@ ready(function() {
     xSpeed: 0, ySpeed: 0, thrust: false,
     radians: 0, radAcc: 0
   };
+
+  // Get hypoteneuse of a right triangle given the two shorter sides
+  function getHypoteneuse(x, y) {
+    return Math.sqrt(x * x + y * y);
+  }
+
+  // Restrict a value to a specified range
+  function clamp(value, min, max) {
+    return value < min ? min : value > max ? max : value;
+  }
+
+  function update(mod) {
+    if (player.radAcc) {
+      var radians = player.radians + mod * player.radAcc / 10;
+      if (radians < 0) {
+        radians += TAU;
+      }
+      else if (radians >= TAU) {
+        radians -= TAU;
+      }
+      player.radians = radians;
+    }
+    // Update the player's speed in the x and y directions
+    if (player.thrust) {
+      var cos = Math.cos(player.radians);
+      var sin = Math.sin(player.radians);
+
+      // Calculate the combined speed of both directions
+      player.xSpeed += cos;
+      player.ySpeed += sin;
+
+      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+      if (speed < -MAX_SPEED || speed > MAX_SPEED) {
+        speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
+        player.xSpeed = speed * cos;
+        player.ySpeed = speed * sin;
+      }
+    }
+
+    player.x += mod * player.xSpeed;
+    player.y += mod * player.ySpeed;
+
+    // If the player passes an edge of the canvas, move it to the opposite edge
+    if (player.x < 0) {
+      player.x += CANVAS_W;
+    }
+    else if (player.x > CANVAS_W) {
+      player.x -= CANVAS_W;
+    }
+
+    if (player.y < 0) {
+      player.y += CANVAS_H;
+    }
+    else if (player.y > CANVAS_H) {
+      player.y -= CANVAS_H;
+    }
+  }
 
   function handleInput(action, isActivated) {
     switch (action) {
@@ -94,16 +158,6 @@ ready(function() {
 
   buttonControls = null;
 
-  // Get hypoteneuse of a right triangle given the two shorter sides
-  function getHypoteneuse(x, y) {
-    return Math.sqrt(x * x + y * y);
-  }
-
-  // Restrict a value to a specified range
-  function clamp(value, min, max) {
-    return value < min ? min : value > max ? max : value;
-  }
-
   var lastTimestamp = Date.now();
 
   function frameStep(timestamp) {
@@ -111,51 +165,8 @@ ready(function() {
     var now = Date.now();
     var mod = (now - lastTimestamp) / UPDATE_RATE;
     lastTimestamp = now;
-
-    if (player.radAcc) {
-      var radians = player.radians + mod * player.radAcc / 10;
-      if (radians < 0) {
-        radians += TAU;
-      }
-      else if (radians >= TAU) {
-        radians -= TAU;
-      }
-      player.radians = radians;
-    }
-    // Update the player's speed in the x and y directions
-    if (player.thrust) {
-      var cos = Math.cos(player.radians);
-      var sin = Math.sin(player.radians);
-
-      // Calculate the combined speed of both directions
-      player.xSpeed += cos;
-      player.ySpeed += sin;
-
-      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
-      if (speed < -MAX_SPEED || speed > MAX_SPEED) {
-        speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
-        player.xSpeed = speed * cos;
-        player.ySpeed = speed * sin;
-      }
-    }
-
-    player.x += mod * player.xSpeed;
-    player.y += mod * player.ySpeed;
-
-    // If the player passes an edge of the canvas, move it to the opposite edge
-    if (player.x < 0) {
-      player.x += CANVAS_W;
-    }
-    else if (player.x > CANVAS_W) {
-      player.x -= CANVAS_W;
-    }
-
-    if (player.y < 0) {
-      player.y += CANVAS_H;
-    }
-    else if (player.y > CANVAS_H) {
-      player.y -= CANVAS_H;
-    }
+    // Update player
+    update(mod);
 
     // Fill the background
     context.fillStyle = '#000';
