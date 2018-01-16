@@ -1,5 +1,3 @@
-const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-
 const CODE_RED = '#F37';
 const CODE_ORANGE = '#FA3';
 const CODE_YELLOW = '#FF7';
@@ -148,7 +146,7 @@ function highlightCSSProperty(match, name, value) {
   for (var i = 0; i < words.length; i++) {
     var word = words[i];
     var replacedWord = ['<span style="color:', CODE_BLUE, ';">', word, '</span>', '<span>'];
-    if (/(#[0-9a-fA-F]+|(\d+|\d+\.\d+)(px|em|%)?)/.test(word)) {
+    if (/(\d+|\d+\.\d+)(px|em|%)?/.test(word)) {
       replacedWord[1] = CODE_PURPLE;
     }
     else if (/\'.+\'/.test(word)) {
@@ -186,7 +184,7 @@ function highlightCSSCode(original) {
       if (flags.inRule || /\,$/.test(line)) {
         if (/ *#/.test(line)) {
           // ID selector
-          line = line.replace(/#[\w\-]+/, function(match) { return '<span style="color:' + CODE_PURPLE + ';">' + match + '</span>'; });
+          line = line.replace(/#[\w\-]+/, function(match) { return '<span style="color:' + CODE_ORANGE + ';">' + match + '</span>'; });
         }
         else if (/ *\./.test(line)) {
           // Class selector
@@ -203,6 +201,8 @@ function highlightCSSCode(original) {
 
   return highlighted.join("\n");
 }
+
+const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
 
 function highlightRubyCode(match) {
   var replaced = ['<span style="color:', '', ';">', match, '</span>'];
@@ -329,7 +329,7 @@ function highlightHTMLCode(original) {
   var length = original.length;
   for (var i = 0; i < length; i++) {
     if (!flags.tag) {
-      if (original.slice(i, i + 4) === '&lt;') {
+      if (original.slice(i, i + 4) === '&lt;' && (!flags.scriptTag || original[i + 4] === '/')) {
         if (word) {
           if (flags.styleTag) {
             highlighted.push(highlightCSSCode(word));
