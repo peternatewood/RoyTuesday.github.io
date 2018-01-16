@@ -2,7 +2,8 @@ const CODE_RED = '#F37';
 const CODE_ORANGE = '#FA3';
 const CODE_YELLOW = '#FF7';
 const CODE_GREEN = '#AE4';
-const CODE_BLUE = '#6CE';
+const CODE_CYAN = '#7CF';
+const CODE_BLUE = '#48F';
 const CODE_PURPLE = '#A7E';
 const CODE_GRAY = '#999';
 
@@ -11,7 +12,7 @@ function regexHighlightCCode(match) {
     return '<span style="color: ' + CODE_PURPLE + ';">' + match + '</span>'
   }
   else if (/[\w]+/g.test(match)) {
-    return '<span style="color: ' + CODE_BLUE + ';">' + match + '</span>';
+    return '<span style="color: ' + CODE_CYAN + ';">' + match + '</span>';
   }
 }
 
@@ -76,7 +77,7 @@ function highlightCCode(original) {
     else {
       var type = getType(line);
       if (type) {
-        highlighted.push('<span style="color: ' + CODE_BLUE + ';font-style:italic;">' + type + '</span>');
+        highlighted.push('<span style="color: ' + CODE_CYAN + ';font-style:italic;">' + type + '</span>');
         line = line.slice(type.length);
 
         var sliceTo = line.indexOf('(');
@@ -92,7 +93,7 @@ function highlightCCode(original) {
         for (var l = 0; l < length; l++) {
           type = getType(line.slice(l));
           if (type) {
-            highlighted.push(word + '<span style="color: ' + CODE_BLUE + ';">' + type + '</span>');
+            highlighted.push(word + '<span style="color: ' + CODE_CYAN + ';">' + type + '</span>');
             line = line.slice(type.length);
             length -= type.length;
             word = '';
@@ -139,17 +140,17 @@ function highlightCCode(original) {
 }
 
 function highlightCSSProperty(match, name, value) {
-  var highlighted = ['<span style="color:', CODE_BLUE, ';">', name, '</span>', '<span>'];
+  var highlighted = ['<span style="color:', CODE_CYAN, ';">', name, '</span>', '<span>'];
 
   var words = value.split(' ');
   var replacedValue = [];
   for (var i = 0; i < words.length; i++) {
     var word = words[i];
-    var replacedWord = ['<span style="color:', CODE_BLUE, ';">', word, '</span>', '<span>'];
+    var replacedWord = ['<span style="color:', CODE_CYAN, ';">', word, '</span>', '<span>'];
     if (/(\d+|\d+\.\d+)(px|em|%)?/.test(word)) {
       replacedWord[1] = CODE_PURPLE;
     }
-    else if (/\'.+\'/.test(word)) {
+    else if (/\'.*\'/.test(word)) {
       replacedWord[1] = CODE_YELLOW;
     }
     replacedValue.push(replacedWord.join(''));
@@ -184,7 +185,7 @@ function highlightCSSCode(original) {
       if (flags.inRule || /\,$/.test(line)) {
         if (/ *#/.test(line)) {
           // ID selector
-          line = line.replace(/#[\w\-]+/, function(match) { return '<span style="color:' + CODE_ORANGE + ';">' + match + '</span>'; });
+          line = line.replace(/#[\w\-]+/, function(match) { return '<span style="color:' + CODE_BLUE + ';">' + match + '</span>'; });
         }
         else if (/ *\./.test(line)) {
           // Class selector
@@ -194,6 +195,7 @@ function highlightCSSCode(original) {
           // Tag selector
           line = line.replace(/[\w\-]+/, function(match) { return '<span style="color:' + CODE_RED + ';">' + match + '</span>'; });
         }
+        line = line.replace(/\:[\w]+/, function(match) { return '<span style="color:' + CODE_ORANGE + ';">' + match + '</span>'; });
       }
     }
     highlighted.push(line);
@@ -259,10 +261,10 @@ function highlightJSCode(match) {
     var name = match.match(/ [\w]+/);
 
     replaced[1] = CODE_GREEN;
-    replaced[3] = name[0] + '</span> <span style="color:' + CODE_RED + ';">=</span> <span style="color:' + CODE_BLUE + ';font-style:italic;">function';
+    replaced[3] = name[0] + '</span> <span style="color:' + CODE_RED + ';">=</span> <span style="color:' + CODE_CYAN + ';font-style:italic;">function';
   }
   else if (/ *function/.test(match)) {
-    replaced[1] = CODE_BLUE + ';font-style:italic';
+    replaced[1] = CODE_CYAN + ';font-style:italic';
     // If a function declaration
     if (/function \w+/.test(match)) {
       replaced[3] = match.match(/^ */)[0] + 'function</span> <span style="color:' + CODE_GREEN + ';">' + match.replace(/ *function /, '');
@@ -272,7 +274,7 @@ function highlightJSCode(match) {
     replaced[1] = CODE_RED;
   }
   else if (/^ *[A-Z]/.test(match)) {
-    replaced[1] = CODE_BLUE + ';font-style:italic';
+    replaced[1] = CODE_CYAN + ';font-style:italic';
   }
   else {
     switch (match) {
@@ -301,10 +303,10 @@ function highlightJSCode(match) {
       case "TypeError":
       case "URIError":
       case "WeakMap":
-        replaced[1] = CODE_BLUE + ';font-style:italic';
+        replaced[1] = CODE_CYAN + ';font-style:italic';
         break;
       default:
-        replaced[1] = CODE_BLUE;
+        replaced[1] = CODE_CYAN;
         break;
     }
   }
