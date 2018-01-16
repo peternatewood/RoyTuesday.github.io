@@ -1,0 +1,355 @@
+---
+layout: default
+title: "Collisions"
+step: 4
+description: ""
+preview: ""
+permalink: /blog/collisions
+---
+<article>
+  <h1 class="article-heading">Collisions</h1>
+  <p class="article-body">by Peter N. Wood</p>
+  <hr/>
+  <p class="article-body">
+    Previous <a href="{{ '/blog/control-schemes' | prepend: site.baseurl }}">Step 3: Control Schemes</a><br/>
+    <em>coming soon: State and the Scene</em><br/>
+    Last Updated: <strong>16 Jan, 2018</strong>
+  </p>
+</article>
+<article>
+  <p class="article-body">
+    Collision detection (sometimes called "hit detection") is a crucial part of any game with even the simplest physics simulations. In this step, we're going to update our physics engine a little. No, we aren't about to make the next Unreal engine here, but this is a physics engine; we have reusable functions that can simulate movement and physical interactions. Just because the term wasn't around when Asteroids was originally designed doesn't mean it doesn't apply.<br/><br/>
+
+    We'll need our engine to check whether the ship collides with an asteroid, or two asteroids collide with each other. Let's start with an Asteroid class so we can create multiple asteroids at a time. Our asteroids will have a few properties in common with the player object: x/y position, x/y speed, and facing direction in radians. I haven't used object orientation yet in this tutorial, because there isn't much use in writing a player class that only gets instantiated once (though there is a use for a class that only gets one use, I'll cover in a later step).<br/><br/>
+
+    I've set up a constructor that can generate two varieties of asteroids: big and small. The big asteroids turn up at random, at some point along the perimeter of the screen. When a big asteroid is destroyed, two small ones will appear to replace it. These asteroids have the same properties and behave nearly the same as big asteroids, so it makes sense to use the same constructor; we just give the constructor some parameters for the small asteroid.<br/><br/>
+
+    We could take advantage of the prototype system and assign our rendering function to the Asteroid class, but declaring it as a local function gives us a small performance boost (I think it has to do with lookup time rather than execution time). This is very similar to our <span class="code">renderPlayer()</span> function, except that we take the asteroid's size into account when rendering.
+  </p>
+<pre class="code-javascript">
+const MAX_ASTEROIDS = 6;
+const MAX_BIG_ASTEROIDS = 3;
+const ASTEROID_SPEED = 1;
+const ASTEROID_SIZE = 16;
+// Render points relative to center
+const ASTEROID_POINTS = [
+  { x:  6, y:-16 },
+  { x: 16, y: -6 },
+  { x: 16, y:  6 },
+  { x:  6, y: 18 },
+  { x:  2, y: 14 },
+  { x: -6, y: 16 },
+  { x:-16, y:  6 },
+  { x:-14, y: -6 },
+  { x: -8, y:-12 },
+  { x: -6, y:-16 },
+];
+
+/*
+  I use this declaration syntax so that "Asteroid" gets hoisted as a
+  function declaration rather than as an undefined variable declaration.
+*/
+function Asteroid(isSmall, astX, astY, xSpeed, ySpeed) {
+  // Get a random radian value for rendering
+  this.radians = Math.random() * TAU;
+
+  if (isSmall) {
+    this.size = 1;
+    this.x = astX;
+    this.y = astY;
+    this.xSpeed = xSpeed;
+    this.ySpeed = ySpeed;
+  }
+  else {
+    // New big asteroid
+    this.size = 2;
+    var x, y;
+    // Gets a random number along the perimeter of the canvas
+    var perimeterPoint = Math.random() * (2 * CANVAS_H + 2 * CANVAS_W);
+    if (perimeterPoint <= CANVAS_W) {
+      // This point is along the top edge of the canvas
+      x = perimeterPoint;
+      y = 0;
+    }
+    else if (perimeterPoint <= CANVAS_W + CANVAS_H) {
+      // This point is along the right edge of the canvas
+      x = CANVAS_W;
+      y = perimeterPoint - CANVAS_W;
+    }
+    else if (perimeterPoint <= 2 * CANVAS_W + CANVAS_H) {
+      // This point is along the bottom edge of the canvas
+      x = perimeterPoint - (CANVAS_W + CANVAS_H);
+      y = CANVAS_H;
+    }
+    else {
+      // This point is along the left edge of the canvas
+      x = 0;
+      y = perimeterPoint - (2 * CANVAS_W + CANVAS_H);
+    }
+
+    this.x = x;
+    this.y = y;
+    // Pick a random direction for the asteroid to move
+    // This way every asteroid moves at the same speed
+    var radians = Math.random() * TAU;
+    this.xSpeed = ASTEROID_SPEED * Math.cos(radians);
+    this.ySpeed = ASTEROID_SPEED * Math.sin(radians);
+  }
+
+  // I think it's good practice to explicitly return the instance
+  return this;
+}
+function renderAsteroid(asteroid) {
+  var cos = Math.cos(asteroid.radians);
+  var sin = Math.sin(asteroid.radians);
+
+  context.beginPath();
+  for (var i = 0; i < 10; i++) {
+    var pointX = asteroid.size * (ASTEROID_POINTS[i].x * cos + ASTEROID_POINTS[i].y * sin);
+    var pointY = asteroid.size * (ASTEROID_POINTS[i].x * sin - ASTEROID_POINTS[i].y * cos);
+
+    context[i === 0 ? 'moveTo' : 'lineTo'](asteroid.x + pointX, asteroid.y + pointY);
+  }
+  context.closePath();
+  context.strokeStyle = '#FFF';
+  context.stroke();
+}
+
+var asteroidCount = 0;
+var asteroids = new Array(MAX_ASTEROIDS);
+</pre>
+  <p class="article-body">
+    Now that we've got our asteroids, it's time to make them move. We can actually reuse part of our function for moving the player. Let's break up our <span class="code">updatePlayer()</span> function into one that is specific to the player object, and another that is common for any objects we want to move, which we can call "actors".
+  </p>
+<pre class="code-javascript">
+// Updates that are specific to the player actor
+function updatePlayer(mod) {
+  const TAU = 2 * Math.PI;
+
+  if (player.radAcc) {
+    var radians = player.radians + mod * player.radAcc / 10;
+    if (radians < 0) {
+      radians += TAU;
+    }
+    else if (radians >= TAU) {
+      radians -= TAU;
+    }
+    player.radians = radians;
+  }
+  // Update the player's speed in the x and y directions
+  if (player.thrust) {
+    var cos = Math.cos(player.radians);
+    var sin = Math.sin(player.radians);
+
+    // Calculate the combined speed of both directions
+    player.xSpeed += cos;
+    player.ySpeed += sin;
+
+    var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+    if (speed < -MAX_SPEED || speed > MAX_SPEED) {
+      speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
+      player.xSpeed = speed * cos;
+      player.ySpeed = speed * sin;
+    }
+  }
+}
+// Common updates for all actors
+function updateActor(mod, actor) {
+  actor.x += mod * actor.xSpeed;
+  actor.y += mod * actor.ySpeed;
+
+  // If the actor passes an edge of the canvas, move it to the opposite edge
+  if (actor.x < 0) {
+    actor.x += CANVAS_W;
+  }
+  else if (actor.x > CANVAS_W) {
+    actor.x -= CANVAS_W;
+  }
+
+  if (actor.y < 0) {
+    actor.y += CANVAS_H;
+  }
+  else if (actor.y > CANVAS_H) {
+    actor.y -= CANVAS_H;
+  }
+}
+</pre>
+  <p class="article-body">
+    Now that we've got our asteroids moving around the canvas, we can't just let them pass through each other like ghosts. Collision detection will be different depending on what game you're making: it could be based on looking for overlapping square hitboxes, or comparing two complex shapes. For Asteroids, all we need to do is check the distance between two actors. Our asteroids are fairly circular, so we can get away with that kind of collision detection.<br/><br/>
+
+    We can use <span class="code">getHypoteneuse()</span>, but that means we have to calculate the x and y distances between two asteroids first. Instead, let's write a new function to handle all of that for us. We'll be reusing this function for other collisions too. In our game loop, after we've updated the position of our asteroids, we loop through them again and compare their distance to their relative sizes to see if they collide.<br/><br/>
+
+    Breaking the asteroids gets a little more complicated. We want two small asteroids to burst out of any big asteroid we destroy, ideally moving in different directions so they don't immediately collide and destroy each other. Usually, JavaScript provides an easier way to do certain tasks at a small cost to performance; in this case I found it easier to follow a lower level approach.<br/><br/>
+
+    When two asteroids collide, we need to handle one after the other. If we splice out the old one and push in two new ones, the other asteroid we need to destroy will end up in a different position in the array, with a different index; it'll be very difficult to find. We could designate a name for each asteroid, but then we have to figure out a way to generate a new, unique name with each new asteroid. I have a much simpler solution, though it discards those JavaScript methods that often make our work easier: store our asteroids in a fixed-length array, and identify each asteroid by its index.<br/><br/>
+
+    To break an asteroid we first check its size; if it's small, we set it to <span class="code">null</span> and skip any further steps, otherwise we replace it with a new small one. We generate a random direction for it to move, and start it a short distance from the center of the old asteroid. Then we loop through the array and add the second small asteroid in the first null element we find. To ensure it doesn't collide with the first or loop around the screen and collide later, we add 3 to the radians of the first asteroid (a little less than 180 degrees).
+  </p>
+<pre class="code-javascript">
+// Get the distance between two actors
+function getDistance(a, b) {
+  return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+// We get the index so we can change the asteroids array in place
+function breakAsteroid(index) {
+  var ast = asteroids[index];
+  if (ast.size === 1) {
+    asteroidCount--;
+    asteroids[index] = null;
+  }
+  else {
+    // Big asteroids create two new small ones
+    asteroidCount++;
+    // Generate random direction to move
+    var radians = Math.random() * TAU;
+    var xSpeed = Math.cos(radians);
+    var ySpeed = Math.sin(radians);
+    // Ensure the asteroids start far apart enough to not collide with each other
+    var x = ASTEROID_SIZE * xSpeed;
+    var y = ASTEROID_SIZE * ySpeed;
+    // Create two new asteroids
+    for (var i = 0; i < MAX_ASTEROIDS; i++) {
+      if (i !== index &amp;&amp; !asteroids[i]) {
+        asteroids[i] = new Asteroid(true, ast.x + x, ast.y + y, xSpeed, ySpeed);
+        break;
+      }
+    }
+    // This astroid moves in nearly the total opposite direction; if it was 180 degrees the two would loop around and collide
+    radians += 3;
+    xSpeed = Math.cos(radians);
+    ySpeed = Math.sin(radians);
+    x = ASTEROID_SIZE * xSpeed;
+    y = ASTEROID_SIZE * ySpeed;
+    asteroids[index] = new Asteroid(true, ast.x + x, ast.y + y, xSpeed, ySpeed);
+  }
+}
+
+// Update asteroids
+for (var i = 0; i < MAX_ASTEROIDS; i++) {
+  if (asteroids[i]) {
+    updateActor(mod, asteroids[i]);
+  }
+  else {
+    // Only add new asteroids if there are fewer than the max big ones
+    if (asteroidCount < MAX_BIG_ASTEROIDS) {
+      asteroids[i] = new Asteroid();
+      asteroidCount++;
+    }
+  }
+}
+// Check for asteroids colliding with each other
+for (var i = 0; i < MAX_ASTEROIDS; i++) {
+  if (asteroids[i]) {
+    // Check for collision with other asteroids; starting with the next index so we don't repeat ourselves
+    for (var a = i + 1; a < MAX_ASTEROIDS; a++) {
+      if (asteroids[a]) {
+        // Add both asteroid's sizes together
+        if (getDistance(asteroids[i], asteroids[a]) < asteroids[i].size * ASTEROID_SIZE + asteroids[a].size * ASTEROID_SIZE) {
+          breakAsteroid(i);
+          breakAsteroid(a);
+          break;
+        }
+      }
+    }
+    // Render the asteroid if it still exists
+    if (asteroids[i]) {
+      renderAsteroid(asteroids[i]);
+    }
+  }
+}
+</pre>
+  <p class="article-body">
+    This involves a little more work, but the other asteroid in the collision has the same index in the array after the function call as it did before. We can apply the same function to the other asteroid using the index we already got when we found two that were colliding. In this way, we can use this one function to handle an asteroid colliding with another asteroid, the player, or anything else in the game for that matter.<br/><br/>
+
+    Speaking of which, asteroids still pass through our player; let's handle player collision too. First, we need to add a few properties to the player object: <span class="code">status</span> will indicate whether the player is alive, destroyed, or in a recovery period, and we'll use <span class="code">countdown</span> to determine how long to keep the player in the "destroyed" and "recovery" states.<br/><br/>
+
+    We also have to modify our <span class="code">updatePlayer()</span> function. We check in the asteroids update loop whether the player collides with any asteroids, change it's state to "destroyed" if it does, and set the countdown. When we get to updating the player, we count down based on our framerate modifier; once we reach zero we reset the player's position and change to "recovery" state. In this state, the player is invulnerable to asteroid collisions, so that we don't instantly destroy it again if there happens to be an asteroid in the center of the screen.<br/><br/>
+
+    We continue to count down to the end of the recovery period, and make the player vulnerable again. Note that I declare our delay variables by dividing the time in milliseconds by the update rate. Let's modify the player rendering as well, and use a light gray instead of white for when the player is in the recovery state.
+  </p>
+<pre class="code-javascript">
+const RESPAWN_DELAY = 1200 / UPDATE_RATE;
+const RECOVER_DELAY = 1800 / UPDATE_RATE;
+
+function resetPlayer() {
+  player.x = CANVAS_W / 2;
+  player.y = CANVAS_H / 2;
+  player.xSpeed = 0;
+  player.ySpeed = 0;
+  player.radians = 0;
+  player.state = 'recovery';
+  player.countdown = RECOVER_DELAY;
+}
+
+function updatePlayer(mod) {
+  const TAU = 2 * Math.PI;
+
+  if (player.countdown > 0) {
+    // Count down to either respawning or resetting the player
+    player.countdown -= 1 / mod;
+    if (player.countdown <= 0) {
+      player.countdown = 0;
+      // Update player state; change to recovery period if destroyed, or alive if already recovering
+      switch (player.state) {
+        case 'destroyed': resetPlayer(); break;
+        case 'recovery': player.state = 'alive'; break;
+      }
+    }
+  }
+  // Only update the player's position if it's not destroyed
+  if (player.state !== 'destroyed') {
+    // All the player updating here
+
+// Update asteroids
+for (var i = 0; i < MAX_ASTEROIDS; i++) {
+  if (asteroids[i]) {
+    updateActor(mod, asteroids[i]);
+    // Check for player collision if player is alive
+    if (player.state === 'alive') {
+      if (getDistance(asteroids[i], player) < asteroids[i].size * ASTEROID_SIZE) {
+        // Destroy player
+        player.state = 'destroyed';
+        player.countdown = RESPAWN_DELAY;
+      }
+    }
+  }
+  else {
+  // Etc...
+
+function frameStep(timestamp) {
+  // After transforming our player object's render points
+  context.closePath();
+
+  context.lineWidth = 2;
+  context.strokeStyle = player.state === 'alive' ? '#FFF' : '#AAA';
+  context.stroke();
+
+  // Etc...
+</pre>
+  <p class="article-body"></p>
+  <div class="canvas-wrapper">
+    <canvas id="canvas" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+    <div id="canvas-button-controls">
+      <div>
+        <button id="left-arrow" class="arrow-button" data-action="left" title="turn left (left arrow key)" style="margin-right: 40px">&larr;</button>
+        <button id="right-arrow" class="arrow-button" data-action="right" title="turn right (right arrow key)">&rarr;</button>
+      </div>
+      <div>
+        <button id="up-arrow" class="arrow-button" data-action="up" title="fire thrusters (up arrow key)" style="margin-right: 40px">&uarr;</button>
+      </div>
+    </div>
+  </div>
+  <p class="article-body">
+    With collisions our game is getting a little more dynamic, and we've provided a consequence for colliding with asteroids: a respawn delay. Next, we'll add win and lose states as well as different scenes such as the title screen.<br/><br/>
+
+    <strong>&mdash; Peter N. Wood</strong><br/><br/>
+
+    Previous <a href="{{ '/blog/control-schemes' | prepend: site.baseurl }}">Step 3: Control Schemes</a><br/>
+    <em>coming soon: State and the Scene</em>
+  </p>
+</article>
+
+{% include canvas.html %}
+
+<script type="text/javascript" src="{{ '/scripts/collisions.js' | prepend: site.baseurl }}"></script>

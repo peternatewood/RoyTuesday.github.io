@@ -1,5 +1,4 @@
 const RUBY_REGEX = /(\#.+(\r|\n|\r\n)|\|[\w]+\||(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} )|(\b| )(if|new|else|elsif|while|case|break|switch|do|end|default|return|def [a-z][\w]+\??|class [A-Z][\w]+)(\b| )|'[^']+'|"[^"]+")/g;
-const JS_REGEX = /(\/\/.+(\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|for|case|break|switch|default|typeof|instanceof|return|true|false|null|undefined|NaN|this|const|var|document|window|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|(function )?[a-z][\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
 
 const CODE_RED = '#F37';
 const CODE_ORANGE = '#FA3';
@@ -238,21 +237,29 @@ function highlightRubyCode(match) {
   return replaced.join('');
 }
 
+const JS_REGEX = /\/\/.+| *\/\*[\s\S]+\*\/|((\r|\n|\r\n)|(\d+\.\d+|0x[\dA-F]+|\d+|[!<>+\-*\/=]| [\&\|]{1,2} |&[lg]t;|&amp;{1,2})|(\b| )(if|new|else|while|for|case|break|switch|default|typeof|instanceof|return|true|false|null|undefined|NaN|this|const|var|document|window|Array|Boolean|Date|Error|EvalError|Function|Map|Math|Number|Object|Promise|Proxy|RangeError|ReferenceError|RegExp|Set|String|SyntaxError|TypeError|URIError|WeakMap|([A-Z][\w]+(?=\.))|(?=\.)[a-z][\w]+(?=\()|[\w]+ \= function|(function )?[\w]+(?=\())(\b| )|'[^']+'|"[^"]+")/g;
+
 function highlightJSCode(match) {
   var replaced = ['<span style="color:', '', ';">', match, '</span>'];
   // match = match.trim();
 
-  if (!isNaN(parseInt(match)) || /true|false|null|undefined|NaN/.test(match)) {
+  if (/( *\/\/| *\/\*[\s\S]+\*\/)/.test(match)) {
+    replaced[1] = CODE_GRAY;
+  }
+  else if (!isNaN(parseInt(match)) || /true|false|null|undefined|NaN/.test(match)) {
     replaced[1] = CODE_PURPLE;
   }
   else if (match.trim() === 'this') {
     replaced[1] = CODE_ORANGE + ';font-style:italic';
   }
-  else if (/ *\/\//.test(match)) {
-    replaced[1] = CODE_GRAY;
-  }
   else if (/ *('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
+  }
+  else if (/ [\w]+ \= function/.test(match)) {
+    var name = match.match(/ [\w]+/);
+
+    replaced[1] = CODE_GREEN;
+    replaced[3] = name[0] + '</span> <span style="color:' + CODE_RED + ';">=</span> <span style="color:' + CODE_BLUE + ';font-style:italic;">function';
   }
   else if (/ *function/.test(match)) {
     replaced[1] = CODE_BLUE + ';font-style:italic';
@@ -261,7 +268,7 @@ function highlightJSCode(match) {
       replaced[3] = match.match(/^ */)[0] + 'function</span> <span style="color:' + CODE_GREEN + ';">' + match.replace(/ *function /, '');
     }
   }
-  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|if|new|else|while|for|case|break|switch|default|typeof|instanceof|return/.test(match)) {
+  else if (/ *[!<>+\-*\/=]|[\&\|]{1,2}|(if|new|else|while|for|case|break|switch|default|typeof|instanceof|return)\b/.test(match)) {
     replaced[1] = CODE_RED;
   }
   else if (/^ *[A-Z]/.test(match)) {
