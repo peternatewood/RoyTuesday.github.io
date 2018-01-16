@@ -2,8 +2,8 @@
 layout: default
 title: "Collisions"
 step: 4
-description: ""
-preview: ""
+description: "Learn about collision detection"
+preview: "Collision detection (sometimes called &#8220;hit detection&#8221;) is a crucial part of any game with even the simplest physics simulations. In this step, we&#8217;re going to update our physics engine a little. No, we aren&#8217;t about to make the next Unreal engine here, but this is a physics engine; we have reusable functions that can simulate movement and physical interactions. Just because the term wasn&#8217;t around when Asteroids was originally designed doesn&#8217;t mean it doesn&#8217;t apply.<br/><br/>We&#8217;ll need our engine to check whether the ship collides with an asteroid, or two asteroids collide with each other"
 permalink: /blog/collisions
 ---
 <article>
@@ -18,13 +18,13 @@ permalink: /blog/collisions
 </article>
 <article>
   <p class="article-body">
-    Collision detection (sometimes called "hit detection") is a crucial part of any game with even the simplest physics simulations. In this step, we're going to update our physics engine a little. No, we aren't about to make the next Unreal engine here, but this is a physics engine; we have reusable functions that can simulate movement and physical interactions. Just because the term wasn't around when Asteroids was originally designed doesn't mean it doesn't apply.<br/><br/>
+    Collision detection (sometimes called &#8220;hit detection&#8221;) is a crucial part of any game with even the simplest physics simulations. In this step, we&#8217;re going to update our physics engine a little. No, we aren&#8217;t about to make the next Unreal engine here, but this is a physics engine; we have reusable functions that can simulate movement and physical interactions. Just because the term wasn&#8217;t around when Asteroids was originally designed doesn&#8217;t mean it doesn&#8217;t apply.<br/><br/>
 
-    We'll need our engine to check whether the ship collides with an asteroid, or two asteroids collide with each other. Let's start with an Asteroid class so we can create multiple asteroids at a time. Our asteroids will have a few properties in common with the player object: x/y position, x/y speed, and facing direction in radians. I haven't used object orientation yet in this tutorial, because there isn't much use in writing a player class that only gets instantiated once (though there is a use for a class that only gets one use, I'll cover in a later step).<br/><br/>
+    We&#8217;ll need our engine to check whether the ship collides with an asteroid, or two asteroids collide with each other. Let&#8217;s start with an Asteroid class so we can create multiple asteroids at a time. Our asteroids will have a few properties in common with the player object: x/y position, x/y speed, and facing direction in radians. I haven&#8217;t used object orientation yet in this tutorial, because there isn&#8217;t much use in writing a player class that only gets instantiated once (though there is a use for a class that only gets instantiated once, I&#8217;ll cover it in a later step).<br/><br/>
 
-    I've set up a constructor that can generate two varieties of asteroids: big and small. The big asteroids turn up at random, at some point along the perimeter of the screen. When a big asteroid is destroyed, two small ones will appear to replace it. These asteroids have the same properties and behave nearly the same as big asteroids, so it makes sense to use the same constructor; we just give the constructor some parameters for the small asteroid.<br/><br/>
+    I&#8217;ve set up a constructor that can generate two varieties of asteroids: big and small. The big asteroids turn up at random, at some point along the perimeter of the screen. When a big asteroid is destroyed, two small ones will appear to replace it. These asteroids have the same properties and behave nearly the same as big asteroids, so it makes sense to use the same constructor; we just give the constructor some parameters for the small asteroid.<br/><br/>
 
-    We could take advantage of the prototype system and assign our rendering function to the Asteroid class, but declaring it as a local function gives us a small performance boost (I think it has to do with lookup time rather than execution time). This is very similar to our <span class="code">renderPlayer()</span> function, except that we take the asteroid's size into account when rendering.
+    We could take advantage of the prototype system and assign our rendering function to the Asteroid class, but declaring it as a local function gives us a small performance boost (I think it has to do with lookup time rather than execution time). This is very similar to our <span class="code">renderPlayer()</span> function, except that we take the asteroid&#8217;s size into account when rendering.
   </p>
 <pre class="code-javascript">
 const MAX_ASTEROIDS = 6;
@@ -119,7 +119,7 @@ var asteroidCount = 0;
 var asteroids = new Array(MAX_ASTEROIDS);
 </pre>
   <p class="article-body">
-    Now that we've got our asteroids, it's time to make them move. We can actually reuse part of our function for moving the player. Let's break up our <span class="code">updatePlayer()</span> function into one that is specific to the player object, and another that is common for any objects we want to move, which we can call "actors".
+    Now that we&#8217;ve got our asteroids, it&#8217;s time to make them move. We can actually reuse part of our function for moving the player. Let&#8217;s break up our <span class="code">updatePlayer()</span> function into one that is specific to the player object, and another that is common for any objects we want to move, which we can call &#8220;actors&#8221;.
   </p>
 <pre class="code-javascript">
 // Updates that are specific to the player actor
@@ -175,15 +175,15 @@ function updateActor(mod, actor) {
 }
 </pre>
   <p class="article-body">
-    Now that we've got our asteroids moving around the canvas, we can't just let them pass through each other like ghosts. Collision detection will be different depending on what game you're making: it could be based on looking for overlapping square hitboxes, or comparing two complex shapes. For Asteroids, all we need to do is check the distance between two actors. Our asteroids are fairly circular, so we can get away with that kind of collision detection.<br/><br/>
+    Now that we&#8217;ve got our asteroids moving around the canvas, we can&#8217;t just let them pass through each other like ghosts. Collision detection will be different depending on what game you&#8217;re making: it could be based on looking for overlapping square hitboxes, or comparing two complex shapes. For Asteroids, all we need to do is check the distance between two actors. Our asteroids are fairly circular, so we can get away with that kind of collision detection.<br/><br/>
 
-    We can use <span class="code">getHypoteneuse()</span>, but that means we have to calculate the x and y distances between two asteroids first. Instead, let's write a new function to handle all of that for us. We'll be reusing this function for other collisions too. In our game loop, after we've updated the position of our asteroids, we loop through them again and compare their distance to their relative sizes to see if they collide.<br/><br/>
+    We can use <span class="code">getHypoteneuse()</span>, but that means we have to calculate the x and y distances between two asteroids first. Instead, let&#8217;s write a new function to handle all of that for us. We&#8217;ll be reusing this function for other collisions too. In our game loop, after we&#8217;ve updated the position of our asteroids, we loop through them again and compare their distance to their relative sizes to see if they collide.<br/><br/>
 
-    Breaking the asteroids gets a little more complicated. We want two small asteroids to burst out of any big asteroid we destroy, ideally moving in different directions so they don't immediately collide and destroy each other. Usually, JavaScript provides an easier way to do certain tasks at a small cost to performance; in this case I found it easier to follow a lower level approach.<br/><br/>
+    Breaking the asteroids gets a little more complicated. We want two small asteroids to burst out of any big asteroid we destroy, ideally moving in different directions so they don&#8217;t immediately collide and destroy each other. Usually, JavaScript provides an easier way to do certain tasks at a small cost to performance; in this case I found it easier to follow a lower level approach.<br/><br/>
 
-    When two asteroids collide, we need to handle one after the other. If we splice out the old one and push in two new ones, the other asteroid we need to destroy will end up in a different position in the array, with a different index; it'll be very difficult to find. We could designate a name for each asteroid, but then we have to figure out a way to generate a new, unique name with each new asteroid. I have a much simpler solution, though it discards those JavaScript methods that often make our work easier: store our asteroids in a fixed-length array, and identify each asteroid by its index.<br/><br/>
+    When two asteroids collide, we need to handle one after the other. If we splice out the old one and push in two new ones, the other asteroid we need to destroy will end up in a different position in the array, with a different index; it&#8217;ll be very difficult to find. We could designate a name for each asteroid, but then we have to figure out a way to generate a new, unique name with each new asteroid. I have a much simpler solution, though it discards those JavaScript methods that often make our work easier: store our asteroids in a fixed-length array, and identify each asteroid by its index.<br/><br/>
 
-    To break an asteroid we first check its size; if it's small, we set it to <span class="code">null</span> and skip any further steps, otherwise we replace it with a new small one. We generate a random direction for it to move, and start it a short distance from the center of the old asteroid. Then we loop through the array and add the second small asteroid in the first null element we find. To ensure it doesn't collide with the first or loop around the screen and collide later, we add 3 to the radians of the first asteroid (a little less than 180 degrees).
+    To break an asteroid we first check its size; if it&#8217;s small, we set it to <span class="code">null</span> and skip any further steps, otherwise we replace it with a new small one. We generate a random direction for it to move, and start it a short distance from the center of the old asteroid. Then we loop through the array and add the second small asteroid in the first null element we find. To ensure it doesn&#8217;t collide with the first or loop around the screen and collide later, we add 3 to the radians of the first asteroid (a little less than 180 degrees).
   </p>
 <pre class="code-javascript">
 // Get the distance between two actors
@@ -262,11 +262,11 @@ for (var i = 0; i < MAX_ASTEROIDS; i++) {
   <p class="article-body">
     This involves a little more work, but the other asteroid in the collision has the same index in the array after the function call as it did before. We can apply the same function to the other asteroid using the index we already got when we found two that were colliding. In this way, we can use this one function to handle an asteroid colliding with another asteroid, the player, or anything else in the game for that matter.<br/><br/>
 
-    Speaking of which, asteroids still pass through our player; let's handle player collision too. First, we need to add a few properties to the player object: <span class="code">status</span> will indicate whether the player is alive, destroyed, or in a recovery period, and we'll use <span class="code">countdown</span> to determine how long to keep the player in the "destroyed" and "recovery" states.<br/><br/>
+    Speaking of which, asteroids still pass through our player; let&#8217;s handle player collision too. First, we need to add a few properties to the player object: <span class="code">status</span> will indicate whether the player is alive, destroyed, or in a recovery period, and we&#8217;ll use <span class="code">countdown</span> to determine how long to keep the player in the &#8220;destroyed&#8221; and &#8220;recovery&#8221; states.<br/><br/>
 
-    We also have to modify our <span class="code">updatePlayer()</span> function. We check in the asteroids update loop whether the player collides with any asteroids, change it's state to "destroyed" if it does, and set the countdown. When we get to updating the player, we count down based on our framerate modifier; once we reach zero we reset the player's position and change to "recovery" state. In this state, the player is invulnerable to asteroid collisions, so that we don't instantly destroy it again if there happens to be an asteroid in the center of the screen.<br/><br/>
+    We also have to modify our <span class="code">updatePlayer()</span> function. We check in the asteroids update loop whether the player collides with any asteroids, change it&#8217;s state to &#8220;destroyed&#8221; if it does, and set the countdown. When we get to updating the player, we count down based on our framerate modifier; once we reach zero we reset the player&#8217;s position and change to &#8220;recovery&#8221; state. In this state, the player is invulnerable to asteroid collisions, so that we don&#8217;t instantly destroy it again if there happens to be an asteroid in the center of the screen.<br/><br/>
 
-    We continue to count down to the end of the recovery period, and make the player vulnerable again. Note that I declare our delay variables by dividing the time in milliseconds by the update rate. Let's modify the player rendering as well, and use a light gray instead of white for when the player is in the recovery state.
+    We continue to count down to the end of the recovery period, and make the player vulnerable again. Note that I declare our delay variables by dividing the time in milliseconds by the update rate. Let&#8217;s modify the player rendering as well, and use a light gray instead of white for when the player is in the recovery state.
   </p>
 <pre class="code-javascript">
 const RESPAWN_DELAY = 1200 / UPDATE_RATE;
@@ -341,7 +341,7 @@ function frameStep(timestamp) {
     </div>
   </div>
   <p class="article-body">
-    With collisions our game is getting a little more dynamic, and we've provided a consequence for colliding with asteroids: a respawn delay. Next, we'll add win and lose states as well as different scenes such as the title screen.<br/><br/>
+    With collisions our game is getting a little more dynamic, and we&#8217;ve provided a consequence for colliding with asteroids: a respawn delay. Next, we&#8217;ll add win and lose states as well as different scenes such as the title screen.<br/><br/>
 
     <strong>&mdash; Peter N. Wood</strong><br/><br/>
 
