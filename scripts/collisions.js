@@ -1,5 +1,4 @@
-// var Game = function() { return this; }
-// Game.prototype.start = function() {
+(function() {
 const CANVAS_W = 800;
 const CANVAS_H = 450;
 
@@ -50,6 +49,49 @@ var player = {
   radians: 0, radAcc: 0,
   state: 'alive', countdown: 0
 };
+function updatePlayer(mod) {
+  if (player.countdown > 0) {
+    // Destroyed/Recovery timer
+    player.countdown -= 1 / mod;
+    if (player.countdown <= 0) {
+      player.countdown = 0;
+      // Update player state
+      switch (player.state) {
+        case 'destroyed': resetPlayer(); break;
+        case 'recovery': player.state = 'alive'; break;
+      }
+    }
+  }
+
+  if (player.state !== 'destroyed') {
+    if (player.radAcc) {
+      var radians = player.radians + mod * player.radAcc / 10;
+      if (radians < 0) {
+        radians += TAU;
+      }
+      else if (radians >= TAU) {
+        radians -= TAU;
+      }
+      player.radians = radians;
+    }
+    // Update the player's speed in the x and y directions
+    if (player.thrust) {
+      var cos = Math.cos(player.radians);
+      var sin = Math.sin(player.radians);
+
+      // Calculate the combined speed of both directions
+      player.xSpeed += cos;
+      player.ySpeed += sin;
+
+      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+      if (speed < -MAX_SPEED || speed > MAX_SPEED) {
+        speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
+        player.xSpeed = speed * cos;
+        player.ySpeed = speed * sin;
+      }
+    }
+  }
+}
 function resetPlayer() {
   player.x = CANVAS_W / 2;
   player.y = CANVAS_H / 2;
@@ -284,47 +326,8 @@ function frameStep(timestamp) {
   lastTimestamp = now;
 
   // Update player
-  if (player.countdown > 0) {
-    // Destroyed timer
-    player.countdown -= 1 / mod;
-    if (player.countdown <= 0) {
-      player.countdown = 0;
-      // Update player state
-      switch (player.state) {
-        case 'destroyed': resetPlayer(); break;
-        case 'recovery': player.state = 'alive'; break;
-      }
-    }
-  }
-
+  updatePlayer(mod);
   if (player.state !== 'destroyed') {
-    if (player.radAcc) {
-      var radians = player.radians + mod * player.radAcc / 10;
-      if (radians < 0) {
-        radians += TAU;
-      }
-      else if (radians >= TAU) {
-        radians -= TAU;
-      }
-      player.radians = radians;
-    }
-    // Update the player's speed in the x and y directions
-    if (player.thrust) {
-      var cos = Math.cos(player.radians);
-      var sin = Math.sin(player.radians);
-
-      // Calculate the combined speed of both directions
-      player.xSpeed += cos;
-      player.ySpeed += sin;
-
-      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
-      if (speed < -MAX_SPEED || speed > MAX_SPEED) {
-        speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
-        player.xSpeed = speed * cos;
-        player.ySpeed = speed * sin;
-      }
-    }
-
     updateActor(mod, player);
 
     // Render player
@@ -397,7 +400,4 @@ function frameStep(timestamp) {
   }
 }
 window.requestAnimationFrame(frameStep);
-// };
-// game = new Game()
-// game.start()
-// }).call();
+}).call();
