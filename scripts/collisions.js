@@ -56,7 +56,7 @@ function resetPlayer() {
   player.xSpeed = 0;
   player.ySpeed = 0;
   player.radians = 0;
-  player.state = 'recover';
+  player.state = 'recovery';
   player.countdown = RECOVER_DELAY;
 }
 
@@ -292,7 +292,7 @@ function frameStep(timestamp) {
       // Update player state
       switch (player.state) {
         case 'destroyed': resetPlayer(); break;
-        case 'recover': player.state = 'alive'; break;
+        case 'recovery': player.state = 'alive'; break;
       }
     }
   }
