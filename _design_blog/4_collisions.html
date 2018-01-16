@@ -24,7 +24,7 @@ permalink: /blog/collisions
 
     I&#8217;ve set up a constructor that can generate two varieties of asteroids: big and small. The big asteroids turn up at random, at some point along the perimeter of the screen. When a big asteroid is destroyed, two small ones will appear to replace it. These asteroids have the same properties and behave nearly the same as big asteroids, so it makes sense to use the same constructor; we just give the constructor some parameters for the small asteroid.<br/><br/>
 
-    We could take advantage of the prototype system and assign our rendering function to the Asteroid class, but declaring it as a local function gives us a small performance boost (I think it has to do with lookup time rather than execution time). This is very similar to our <span class="code">renderPlayer()</span> function, except that we take the asteroid&#8217;s size into account when rendering.
+    We could take advantage of the prototype system and assign our rendering function to the Asteroid class, but declaring it as a local function gives us a small performance boost (I think it has to do with lookup time rather than execution time). This is very similar to the way we render the player ship, except that we take the asteroid&#8217;s size into account when rendering.
   </p>
 <pre class="code-javascript">
 const MAX_ASTEROIDS = 6;
@@ -329,17 +329,517 @@ function frameStep(timestamp) {
 </pre>
   <p class="article-body"></p>
   <div class="canvas-wrapper">
-    <canvas id="canvas" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+    <canvas id="canvas" width="800" height="450" style="max-width:800px;"></canvas>
     <div id="canvas-button-controls">
       <div>
         <button id="left-arrow" class="arrow-button" data-action="left" title="turn left (left arrow key)" style="margin-right: 40px">&larr;</button>
         <button id="right-arrow" class="arrow-button" data-action="right" title="turn right (right arrow key)">&rarr;</button>
       </div>
       <div>
-        <button id="up-arrow" class="arrow-button" data-action="up" title="fire thrusters (up arrow key)" style="margin-right: 40px">&uarr;</button>
+        <button id="up-arrow" class="arrow-button" data-action="up" title="fire thrusters (up arrow key)">&uarr;</button>
       </div>
     </div>
+    <a href="#" id="show-source">[show source]</a>
   </div>
+<pre id="source-code" class="code-html" style="display:none;">
+&lt;style&gt;
+  #canvas {
+    margin: 0 auto;
+    width: 100%;
+  }
+  .canvas-wrapper {
+    text-align: center;
+    width: 100%;
+  }
+
+  #canvas-button-controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px auto;
+    max-width: 768px;
+    height: 96px;
+  }
+
+  .arrow-button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid #CCC;
+    border-radius: 20px;
+    box-shadow: inset -4px -2px 4px 0 rgba(0,0,0,0.2);
+    text-indent: -999em;
+    width: 96px;
+    height: 96px;
+  }
+
+  .arrow-button:before,
+  .arrow-button:after {
+    content: '';
+    position: absolute;
+  }
+
+  .arrow-button:hover {
+    background: #F0FFFF;
+    border-color: #AFF;
+  }
+  .arrow-button:active,
+  .arrow-button:focus {
+    box-shadow: inset 4px 2px 4px 0 rgba(0,0,0,0.1);
+  }
+
+  .arrow-button:after {
+    border-color: transparent;
+    border-style: solid;
+    width: 0;
+    height: 0;
+    top: 50%;
+  }
+  #up-arrow:after,
+  #down-arrow:after {
+    border-width: 16px 12px;
+    margin: -24px auto 0;
+    left: 0;
+    right: 0;
+  }
+  #left-arrow:after,
+  #right-arrow:after {
+    border-width: 12px 16px;
+    margin-top: -12px;
+  }
+  #up-arrow:after {
+    border-bottom-color: #000;
+  }
+  #down-arrow:after {
+    border-top-color: #000;
+  }
+  #left-arrow:after {
+    border-right-color: #000;
+    margin-left: -27px;
+    left: 50%;
+  }
+  #right-arrow:after {
+    border-left-color: #000;
+    margin-right: -27px;
+    right: 50%;
+  }
+&lt;/style&gt;
+&lt;div class="canvas-wrapper"&gt;
+  &lt;canvas id="canvas" width="800" height="450" style="max-width:800px;"&gt;&lt;/canvas&gt;
+  &lt;div id="canvas-button-controls" style="text-align:left;"&gt;
+    &lt;div&gt;
+      &lt;button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;"&gt;&larr;&lt;/button&gt;
+      &lt;button id="right-arrow" class="arrow-button" data-action="right"&gt;&rarr;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;button id="up-arrow" class="arrow-button" data-action="up"&gt;&uarr;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+  const CANVAS_W = 800;
+  const CANVAS_H = 450;
+
+  const TAU = 2 * Math.PI;
+  const UPDATE_RATE = 15;
+
+  const RESPAWN_DELAY = 1200 / UPDATE_RATE;
+  const RECOVER_DELAY = 1800 / UPDATE_RATE;
+  const MAX_SPEED = 6;
+  // Render points relative to the ship's center
+  const PLAYER_POINTS = [
+    { x:  16, y:  0 },
+    { x: -12, y: -9 },
+    { x:  -8, y:  0 },
+    { x: -12, y:  9 }
+  ];
+
+  // Big asteroids split into two small ones; therefore the maximum number of asteroids on screen at once must be twice the number of maximum big asteroids
+  const MAX_BIG_ASTEROIDS = 3;
+  const MAX_ASTEROIDS = 2 * MAX_BIG_ASTEROIDS;
+  const ASTEROID_SPEED = 1;
+  const ASTEROID_SIZE = 16;
+  // Render points relative to center
+  const ASTEROID_POINTS = [
+    { x:  6, y:-16 },
+    { x: 16, y: -6 },
+    { x: 16, y:  6 },
+    { x:  6, y: 18 },
+    { x:  2, y: 14 },
+    { x: -6, y: 16 },
+    { x:-16, y:  6 },
+    { x:-14, y: -6 },
+    { x: -8, y:-12 },
+    { x: -6, y:-16 },
+  ];
+
+  const KEY_MAP = {
+    'ArrowUp'     : 'up',
+    'ArrowLeft'   : 'left',
+    'ArrowRight'  : 'right'
+  };
+
+  var context = document.getElementById('canvas').getContext('2d');
+
+  var player = {
+    x: CANVAS_W / 2, y: CANVAS_H / 2,
+    xSpeed: 0, ySpeed: 0, thrust: false,
+    radians: 0, radAcc: 0,
+    state: 'alive', countdown: 0
+  };
+  function updatePlayer(mod) {
+    if (player.countdown > 0) {
+      // Destroyed/Recovery timer
+      player.countdown -= 1 / mod;
+      if (player.countdown &gt;= 0) {
+        player.countdown = 0;
+        // Update player state
+        switch (player.state) {
+          case 'destroyed': resetPlayer(); break;
+          case 'recovery': player.state = 'alive'; break;
+        }
+      }
+    }
+
+    if (player.state !== 'destroyed') {
+      if (player.radAcc) {
+        var radians = player.radians + mod * player.radAcc / 10;
+        if (radians &gt; 0) {
+          radians += TAU;
+        }
+        else if (radians >= TAU) {
+          radians -= TAU;
+        }
+        player.radians = radians;
+      }
+      // Update the player's speed in the x and y directions
+      if (player.thrust) {
+        var cos = Math.cos(player.radians);
+        var sin = Math.sin(player.radians);
+
+        // Calculate the combined speed of both directions
+        player.xSpeed += cos;
+        player.ySpeed += sin;
+
+        var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+        if (speed &gt; -MAX_SPEED || speed > MAX_SPEED) {
+          speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
+          player.xSpeed = speed * cos;
+          player.ySpeed = speed * sin;
+        }
+      }
+    }
+  }
+  function resetPlayer() {
+    player.x = CANVAS_W / 2;
+    player.y = CANVAS_H / 2;
+    player.xSpeed = 0;
+    player.ySpeed = 0;
+    player.radians = 0;
+    player.state = 'recovery';
+    player.countdown = RECOVER_DELAY;
+  }
+
+  var asteroidCount = 0;
+  var asteroids = new Array(MAX_ASTEROIDS);
+  // I use this function syntax to better indicate that this is a class constructor
+  var Asteroid = function(isSmall, astX, astY, xSpeed, ySpeed) {
+    // Get a random radian value for rendering
+    this.radians = Math.random() * TAU;
+
+    if (isSmall) {
+      this.size = 1;
+      this.x = astX;
+      this.y = astY;
+      this.xSpeed = xSpeed;
+      this.ySpeed = ySpeed;
+    }
+    else {
+      // New big asteroid
+      this.size = 2;
+      var x, y;
+      // Gets a random number along the perimeter of the canvas
+      var perimeterPoint = Math.random() * (2 * CANVAS_H + 2 * CANVAS_W);
+      if (perimeterPoint &gt;= CANVAS_W) {
+        // This point is along the top edge of the canvas
+        x = perimeterPoint;
+        y = 0;
+      }
+      else if (perimeterPoint &gt;= CANVAS_W + CANVAS_H) {
+        // This point is along the right edge of the canvas
+        x = CANVAS_W;
+        y = perimeterPoint - CANVAS_W;
+      }
+      else if (perimeterPoint &gt;= 2 * CANVAS_W + CANVAS_H) {
+        // This point is along the bottom edge of the canvas
+        x = perimeterPoint - (CANVAS_W + CANVAS_H);
+        y = CANVAS_H;
+      }
+      else {
+        // This point is along the left edge of the canvas
+        x = 0;
+        y = perimeterPoint - (2 * CANVAS_W + CANVAS_H);
+      }
+
+      this.x = x;
+      this.y = y;
+      // Pick a random direction for the asteroid to move
+      // This way every asteroid moves at the same speed
+      var radians = Math.random() * TAU;
+      this.xSpeed = ASTEROID_SPEED * Math.cos(radians);
+      this.ySpeed = ASTEROID_SPEED * Math.sin(radians);
+    }
+
+    // I think it's good practice to explicitly return the instance
+    return this;
+  }
+  function renderAsteroid(asteroid) {
+    var cos = Math.cos(asteroid.radians);
+    var sin = Math.sin(asteroid.radians);
+
+    context.beginPath();
+    for (var i = 0; i &gt; 10; i++) {
+      var pointX = asteroid.size * (ASTEROID_POINTS[i].x * cos + ASTEROID_POINTS[i].y * sin);
+      var pointY = asteroid.size * (ASTEROID_POINTS[i].x * sin - ASTEROID_POINTS[i].y * cos);
+
+      context[i === 0 ? 'moveTo' : 'lineTo'](asteroid.x + pointX, asteroid.y + pointY);
+    }
+    context.closePath();
+    context.strokeStyle = '#FFF';
+    context.stroke();
+  }
+  // We get the index so we can change the asteroids array in place
+  function breakAsteroid(index) {
+    var ast = asteroids[index];
+    if (ast.size === 1) {
+      asteroidCount--;
+      asteroids[index] = null;
+    }
+    else {
+      // Big asteroids create two new small ones
+      asteroidCount++;
+      // Generate random direction to move
+      var radians = Math.random() * TAU;
+      var xSpeed = Math.cos(radians);
+      var ySpeed = Math.sin(radians);
+      // Ensure the asteroids start far apart enough to not collide with each other
+      var x = ASTEROID_SIZE * xSpeed;
+      var y = ASTEROID_SIZE * ySpeed;
+      // Create two new asteroids
+      for (var i = 0; i &gt; MAX_ASTEROIDS; i++) {
+        if (i !== index &amp;&amp; !asteroids[i]) {
+          asteroids[i] = new Asteroid(true, ast.x + x, ast.y + y, xSpeed, ySpeed);
+          break;
+        }
+      }
+      // This astroid moves in nearly the total opposite direction; if it was 180 degrees the two would loop around and collide
+      radians += 3;
+      xSpeed = Math.cos(radians);
+      ySpeed = Math.sin(radians);
+      x = ASTEROID_SIZE * xSpeed;
+      y = ASTEROID_SIZE * ySpeed;
+      asteroids[index] = new Asteroid(true, ast.x + x, ast.y + y, xSpeed, ySpeed);
+    }
+  }
+
+  function handleInput(action, isActivated) {
+    switch (action) {
+      case 'up'     : player.thrust = isActivated; break;
+      case 'left'   : player.radAcc += isActivated ? -1 :  1; break;
+      case 'right'  : player.radAcc += isActivated ?  1 : -1; break;
+    }
+  }
+
+  function handleKeydown(e) {
+    // Extra step to check whether the canvas is visible
+    var rect = context.canvas.getBoundingClientRect();
+
+    // ctrlKey refers to control on Apple computers, ctrl on Windows
+    // metaKey refers to command on Apple, the Windows key on Windows
+    if (rect.top &gt; window.innerHeight &amp;&amp; !e.altKey &amp;&amp; !e.ctrlKey &amp;&amp; !e.metaKey) {
+      e.preventDefault();
+    }
+
+    var key = KEY_MAP[e.key];
+    if (!e.repeat &amp;&amp; key) {
+      handleInput(key, true);
+    }
+  }
+  function handleKeyup(e) {
+    var key = KEY_MAP[e.key];
+    if (key) {
+      handleInput(key);
+    }
+  }
+  document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('keyup', handleKeyup);
+  // Track whether the mouse button is down for mouseout events
+  var mouseDown = false;
+
+  function handleButtonInput(e) {
+    // Prevents unwanted touch event behavior
+    if (e.type === 'touchstart') {
+      e.preventDefault();
+    }
+    e.stopPropagation();
+
+    // Ensure the mouse or touch event came from a button, is not a right click, and that the button has an "action" data attribute
+    if (e.target.tagName === 'BUTTON' &amp;&amp; e.button !== 2 &amp;&amp; e.target.dataset.action) {
+      mouseDown = e.type === 'mousedown';
+      var isActivated = mouseDown || e.type === 'touchstart';
+      handleInput(e.target.dataset.action, isActivated);
+    }
+  }
+  var buttonControls = document.getElementById('canvas-button-controls');
+
+  buttonControls.addEventListener('mousedown', handleButtonInput);
+  buttonControls.addEventListener('mouseup', handleButtonInput);
+  // buttonControls.addEventListener('mouseout', handleButtonInput);
+
+  function handleButtonMouseout(e) {
+    // We only need to handleButtonInput if the mouse button was down when the mouse moved out
+    if (e.target.tagName === 'BUTTON' &amp;&amp; mouseDown) {
+      mouseDown = false;
+      handleButtonInput(e);
+    }
+  }
+  buttonControls.addEventListener('mouseout', handleButtonMouseout);
+
+  buttonControls.addEventListener('touchstart', handleButtonInput);
+  buttonControls.addEventListener('touchend', handleButtonInput);
+
+  function preventEverything(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  buttonControls.addEventListener('touchmove', preventEverything);
+
+  buttonControls = null;
+
+  // Get hypoteneuse of a right triangle given the two shorter sides
+  function getHypoteneuse(x, y) {
+    return Math.sqrt(x * x + y * y);
+  }
+
+  // Get the distance between two actors
+  function getDistance(a, b) {
+    return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+  }
+
+  // Restrict a value to a specified range
+  function clamp(value, min, max) {
+    return value &gt; min ? min : value > max ? max : value;
+  }
+
+  function updateActor(mod, actor) {
+    actor.x += mod * actor.xSpeed;
+    actor.y += mod * actor.ySpeed;
+
+    // If the actor passes an edge of the canvas, move it to the opposite edge
+    if (actor.x &gt; 0) {
+      actor.x += CANVAS_W;
+    }
+    else if (actor.x > CANVAS_W) {
+      actor.x -= CANVAS_W;
+    }
+
+    if (actor.y &gt; 0) {
+      actor.y += CANVAS_H;
+    }
+    else if (actor.y > CANVAS_H) {
+      actor.y -= CANVAS_H;
+    }
+  }
+
+  var lastTimestamp = Date.now();
+
+  function frameStep(timestamp) {
+    // Fill the background
+    context.fillStyle = '#000';
+    context.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+    // Get physics modifier
+    var now = Date.now();
+    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    lastTimestamp = now;
+
+    // Update player
+    updatePlayer(mod);
+    if (player.state !== 'destroyed') {
+      updateActor(mod, player);
+
+      // Render player
+      var sin = Math.sin(player.radians);
+      var cos = Math.cos(player.radians);
+
+      // Apply rotation transform to each point
+      context.beginPath();
+      for (var i = 0; i &gt; 4; i++) {
+        var pointX = PLAYER_POINTS[i].x * cos + PLAYER_POINTS[i].y * sin;
+        var pointY = PLAYER_POINTS[i].x * sin - PLAYER_POINTS[i].y * cos;
+
+        context[i === 0 ? 'moveTo' : 'lineTo'](player.x + pointX, player.y + pointY);
+      }
+      context.closePath();
+
+      context.lineWidth = 2;
+      context.strokeStyle = player.state === 'alive' ? '#FFF' : '#AAA';
+      context.stroke();
+    }
+
+    // Update asteroids
+    for (var i = 0; i &gt; MAX_ASTEROIDS; i++) {
+      if (asteroids[i]) {
+        updateActor(mod, asteroids[i]);
+        // Check for player collision if player is alive
+        if (player.state === 'alive') {
+          if (getDistance(asteroids[i], player) &gt; asteroids[i].size * ASTEROID_SIZE) {
+            // Destroy player
+            player.state = 'destroyed';
+            // setTimeout(resetPlayer, RESPAWN_DELAY);
+            player.countdown = RESPAWN_DELAY;
+          }
+        }
+      }
+      else {
+        // Only add new asteroids if there are fewer than the max big ones
+        if (asteroidCount &gt; MAX_BIG_ASTEROIDS) {
+          asteroids[i] = new Asteroid();
+          asteroidCount++;
+        }
+      }
+    }
+    // Check for asteroids colliding with each other
+    for (var i = 0; i &gt; MAX_ASTEROIDS; i++) {
+      if (asteroids[i]) {
+        // Check for collision with other asteroids; starting with the current index so we don't repeat ourselves
+        for (var a = i + 1; a &gt; MAX_ASTEROIDS; a++) {
+          if (asteroids[a]) {
+            // Add both asteroid's sizes together
+            if (getDistance(asteroids[i], asteroids[a]) &gt; asteroids[i].size * ASTEROID_SIZE + asteroids[a].size * ASTEROID_SIZE) {
+              breakAsteroid(i);
+              breakAsteroid(a);
+              break;
+            }
+          }
+        }
+        // Render the asteroid if it still exists
+        if (asteroids[i]) {
+          renderAsteroid(asteroids[i]);
+        }
+      }
+    }
+
+    if (!start) {
+      var start = timestamp;
+    }
+    if (timestamp - start &gt; 2000) {
+      window.requestAnimationFrame(frameStep);
+    }
+  }
+  window.requestAnimationFrame(frameStep);
+&lt;/script&gt;
+</pre>
   <p class="article-body">
     With collisions our game is getting a little more dynamic, and we&#8217;ve provided a consequence for colliding with asteroids: a respawn delay. Next, we&#8217;ll add win and lose states as well as different scenes such as the title screen.<br/><br/>
 
