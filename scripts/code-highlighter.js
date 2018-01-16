@@ -242,14 +242,14 @@ function highlightJSCode(match) {
   var replaced = ['<span style="color:', '', ';">', match, '</span>'];
   // match = match.trim();
 
-  if (!isNaN(parseInt(match)) || /true|false|null|undefined|NaN/.test(match)) {
+  if (/ *\/\//.test(match)) {
+    replaced[1] = CODE_GRAY;
+  }
+  else if (!isNaN(parseInt(match)) || /true|false|null|undefined|NaN/.test(match)) {
     replaced[1] = CODE_PURPLE;
   }
   else if (match.trim() === 'this') {
     replaced[1] = CODE_ORANGE + ';font-style:italic';
-  }
-  else if (/ *\/\//.test(match)) {
-    replaced[1] = CODE_GRAY;
   }
   else if (/ *('.+'|".+")/.test(match)) {
     replaced[1] = CODE_YELLOW;
