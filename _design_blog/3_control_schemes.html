@@ -22,18 +22,32 @@ permalink: /blog/control-schemes
 
     A really common way to attach event listeners is to use jQuery, but that&#8217;s a big library with lots of functionality we won&#8217;t need for a video game. It&#8217;ll increase the load time for our page as well. Instead, we&#8217;ll be using raw JavaScript methods like <span class="code">getElementById()</span> and <span class="code">addEventListener()</span>.<br/><br/>
 
-    First, a note on browser compatibility: in older browsers (namely Internet Explorer and Safari) some properties on the various event objects we&#8217;re using won&#8217;t be available. Some browsers won&#8217;t support the Canvas API at all, and we shouldn&#8217;t bother accounting for them; however, it&#8217;s worth including some measure of compatibility, and I&#8217;ll discuss that in a supplemental section at the end of this tutorial. For the purposes of this step in the tutorial, we&#8217;ll assume our users are using the latest version of Chrome, Firefox, or Opera.<br/><br/>
+    First, a note on browser compatibility: in older browsers (namely Internet Explorer and Safari) some properties on the various event objects we&#8217;re using won&#8217;t be available. Some browsers won&#8217;t support the Canvas API at all, and we shouldn&#8217;t bother accounting for them except to include a message like &#8220;Sorry, your browser doesn&#8217;t meet the requirements for this game&#8221;; however, it&#8217;s worth including some measure of compatibility, and I&#8217;ll discuss that in a supplemental section at the end of this tutorial. For the purposes of this step in the tutorial, we&#8217;ll assume our users are using the latest version of Chrome, Firefox, Opera, or another browser with basic Canvas support.<br/><br/>
 
-    Let&#8217;s take a bigger step towards making Asteroids and create a player object that looks and moves like the ship from the arcade classic. We define the player object with x/y coordinates, x and y speed, a flag to indicate whether to apply acceleration in the ship&#8217;s facing direction &#8220;thrust&#8221;, a property for it&#8217;s direction in radians ( 0 to 2&pi; ), and radian acceleration to track whether the ship is rotating. We define the points that shape the ship and apply a rotation transform using its radians; this is all easy to do using our vector graphics rendering methods.
+    Let&#8217;s take a bigger step towards making Asteroids and create a player object that looks and moves like the ship from the arcade classic. We define the player object with x/y coordinates, x and y speed, a flag to indicate whether to apply acceleration in the ship&#8217;s facing direction &#8220;thrust&#8221;, a property for it&#8217;s direction in radians ( in the range 0 &mdash; &Tau;, otherwise known as 2&pi; ), and radian acceleration to track whether the ship is rotating. We define the points that shape the ship and apply a rotation transform using its radians; this is all easy to do using our vector graphics rendering methods.<br/><br/>
+
+    Just quick note on the rotation transform: we keep a fixed set of render points that represent the ship at a rotation of 0 radians, and every frame calculate where those points should be based on the ship&#8217;s current rotation. We set the points relative to the ship&#8217;s center, so we can apply a little trigonometry to rotate each point very easily: calculate sine and cosine for the ship&#8217;s rotation, each x-coordinate is <span class="code">playerX + ( pointX &times; cosine + pointY &times; sine )</span> and each y-coordinate is <span class="code">playerY + ( pointX &times; sine - pointY &times; cosine )</span>.
   </p>
 <pre class="code-javascript">
 const CANVAS_W = 800;
 const CANVAS_H = 450;
-const MAX_SPEED = 6;
+
+const TAU = 2 * Math.PI;
+const DELTA_TIME = 5;
+const MAX_SPEED = 5;
+const TURN_SPEED = 0.05;
+
+// Render points relative to the ship's center
+const POINTS = [
+  { x:  16, y:  0 },
+  { x: -12, y: -9 },
+  { x:  -8, y:  0 },
+  { x: -12, y:  9 }
+];
 
 var player = {
   x: CANVAS_W / 2, y: CANVAS_H / 2,
-  xSpeed: 0, ySpeed: 0, thrust: false,
+  xVel: 0, yVel: 0, thrust: false,
   radians: 0, radAcc: 0
 };
 
@@ -44,20 +58,13 @@ var lastTimestamp = Date.now();
 function frameStep(timestamp) {
   // Update
   var now = Date.now();
-  var mod = (now - lastTimestamp) / UPDATE_RATE;
+  accumulator += now - lastTimestamp;
   lastTimestamp = now;
 
   // Fill the background
   context.fillStyle = '#000';
   context.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
-  // Render points relative to the ship's center
-  const POINTS = [
-    { x:  16, y:  0 },
-    { x: -12, y: -9 },
-    { x:  -8, y:  0 },
-    { x: -12, y:  9 }
-  ];
   // Calculate these now to save computing time
   var sin = Math.sin(player.radians);
   var cos = Math.cos(player.radians);
@@ -86,9 +93,9 @@ function frameStep(timestamp) {
 window.requestAnimationFrame(frameStep);
 </pre>
   <p class="article-body">
-    Now that we&#8217;ve got a ship object and a way to render it, let&#8217;s start with the easiest controls to code: keyboard controls. First, we attach a <span class="code">keydown</span> event listener to the <span class="code">document</span>, and check a few values on the event object. We should call <span class="code">preventDefault()</span> to prevent scrolling with the arrow keys and other behaviors, but still allow keyboard shortcuts (like ctrl/command + R for reloading the page); it would be really awkward to start scrolling up the page when you&#8217;re just trying to play the game. The event object provides flags for each of these modifier keys.<br/><br/>
+    Now that we&#8217;ve got a ship object and a way to render it, let&#8217;s start with the easiest controls to code: keyboard controls. First, we attach a <span class="code">keydown</span> event listener to the <span class="code">document</span>, and check a few values on the event object. We should call <span class="code">preventDefault()</span> to prevent scrolling with the arrow keys and other behaviors, but still allow keyboard shortcuts (like ctrl/command + R for reloading the page); it would be really awkward to start scrolling up the page when you&#8217;re just trying to play the game. The <span class="code">event</span> object provides flags for each of these modifier keys.<br/><br/>
 
-    Let&#8217;s use arrow keys to move the ship. Note that if a key is held down, it&#8217;ll keep triggering the keydown event at a rapid pace. That&#8217;s no good, so we check the <span class="code">repeat</span> flag and skip any further steps if it&#8217;s true. To move the ship, we set the ship&#8217;s thrust to true if the up arrow is pressed. For the left and right arrows, we either increment the player&#8217;s radian acceleration up by one to turn right, or down by one to turn left. Then we add a <span class="code">keyup</span> event that handles each key in the opposite way.<br/><br/>
+    Let&#8217;s use arrow keys to move the ship. Note that if a key is held down, it&#8217;ll keep triggering the keydown event at a rapid pace. That&#8217;s no good, so we check the <span class="code">repeat</span> flag and skip any further steps if it&#8217;s true. To move the ship, we set the ship&#8217;s thrust to true if the up arrow is pressed. For the left and right arrows, we either increment the player&#8217;s radian acceleration up by one to turn right, or down by one to turn left. Then we add a <span class="code">keyup</span> event that reverses the effect of it&#8217;s associated keydown event.<br/><br/>
 
     This is a very simple way to ensure that neither the left or right arrow overrides the other: if they&#8217;re both pressed, they cancel out; if both are pressed and one is released, it&#8217;s as if we only pressed the other key. E.G. Press the left arrow and <span class="code">radAcc = -1</span>; press the right arrow and we add 1 so <span class="code">radAcc = 0</span>; release the left arrow and <span class="code">radAcc = 1</span> (as if we&#8217;re turning right); the right arrow is still held down so this feels normal and intuitive.
   </p>
@@ -119,15 +126,15 @@ document.addEventListener('keydown', handleKeydown);
 document.addEventListener('keyup', handleKeyup);
 </pre>
   <p class="article-body">
-    For the update method, we need to do a few things: rotate the ship (unless the radian acceleration is 0), update the ship&#8217;s velocity if the player is applying thrust, limit the ship&#8217;s speed so it can&#8217;t keep increasing indefinitely, and move the ship to the opposite edge of the screen if they pass an edge. We also need to apply our physics modifier to every value we calculate.<br/><br/>
+    For the update method, we need to do a few things: rotate the ship (unless the radian acceleration is 0), update the ship&#8217;s velocity if the player is applying thrust, limit the ship&#8217;s speed so it can&#8217;t keep increasing indefinitely, and move the ship to the opposite edge of the screen if it passes an edge.<br/><br/>
 
-    To rotate the ship, we add the current radian acceleration (divided by ten so we don&#8217;t rotate too fast) to the current radians. Then, we keep our radians in the range of 0 - 2&pi; (which I like to store in the constant <span class="code">TAU</span> for easy retrieval) by either adding 2&pi; if it&#8217;s less than 0, or subtracting 2&pi; if it&#8217;s greater than 2&pi;.<br/><br/>
+    To rotate the ship, we add the current radian acceleration (multiplied by our rotation speed) to the current radians. Then, we limit our radians in the range of 0 - &Tau; by either adding &Tau; if it&#8217;s less than 0, or subtracting &Tau; if it&#8217;s greater than &Tau;. Don&#8217;t clamp the value, or you&#8217;ll prevent your player from rotating left beyond 0 radians or right beyond &Tau; radians.<br/><br/>
 
-    Some programming languages will simply overflow if a value gets too big (E.G. an unsigned integer variable limited to one byte in size will loop around to 0 if the value would become greater than 255, or 255 if less than zero); in JavaScript, numbers get pegged at the maximum or minimum allowed value. You&#8217;re unlikely to encountere these types of values in our game, but if you did the ship would stop rotating in one direction, and that&#8217;s no good.<br/><br/>
+    In some programming languages, a value will simply overflow if it gets too big or small: meaning, the value will loop around to the smallest or largest value it can be. In JavaScript, numbers get clamped at the maximum or minimum allowed value: <span class="code">Number.MAX_VALUE</span> or <span class="code">Number.MIN_VALUE</span>. You&#8217;re unlikely to encounter these types of values in our game, but if you did the ship would stop rotating in one direction. Better to just limit the range of our radians.<br/><br/>
 
-    To update the ship&#8217;s speed, we have to use a little trigonometry and determine how much to move in the x and y directions; using the player&#8217;s radians, cosine will give us the x value, sine the y value. To make sure we don&#8217;t exceed our maximum speed, we have to calculate the combined speed in the x and y directions; we can treat the two speeds as if they&#8217;re sides of a right triangle and calculate the hypoteneuse to get the combined speed.<br/><br/>
+    To update the ship&#8217;s speed, we have to use a little trigonometry and determine how much to move in the x and y directions; using the player&#8217;s radians, cosine will give us the x value, sine the y value. To make sure we don&#8217;t exceed our maximum speed, we have to calculate the combined velocity in the x and y directions; we can treat the two velocities as if they&#8217;re sides of a right triangle and calculate the hypoteneuse to get the combined speed (this value will always be a positive number).<br/><br/>
 
-    Finally, if the player moves past one of the canvas edges, we either add or subtract the distance to the opposite edge from the player&#8217;s current position. Then the ship will appear to loop around the level.
+    Finally, if the player moves past one of the canvas edges, we either add or subtract the distance to the opposite edge from the player&#8217;s current position. Then the ship will appear to loop around the level. E.G. If the ship would be at x: -8, we add the canvas width so that it ends up 8 pixels to the left of the right edge of the canvas.
   </p>
 <pre class="code-javascript">
 // Get hypoteneuse of a right triangle given the two shorter sides
@@ -140,11 +147,9 @@ function clamp(value, min, max) {
   return value < min ? min : value > max ? max : value;
 }
 
-function update(mod) {
-  const TAU = 2 * Math.PI;
-
+function update() {
   if (player.radAcc) {
-    var radians = player.radians + mod * player.radAcc / 10;
+    var radians = player.radians + player.radAcc * TURN_SPEED;
     if (radians < 0) {
       radians += TAU;
     }
@@ -158,20 +163,20 @@ function update(mod) {
     var cos = Math.cos(player.radians);
     var sin = Math.sin(player.radians);
 
-    // Calculate the combined speed of both directions
-    player.xSpeed += cos;
-    player.ySpeed += sin;
+    // Calculate the combined speed of both directions; we divide by MAX_SPEED to keep from accelerating too quickly
+    player.xVel += cos / MAX_SPEED;
+    player.yVel += sin / MAX_SPEED;
 
-    var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+    var speed = getHypoteneuse(player.xVel, player.yVel);
     if (speed < -MAX_SPEED || speed > MAX_SPEED) {
       speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
-      player.xSpeed = speed * cos;
-      player.ySpeed = speed * sin;
+      player.xVel = speed * cos;
+      player.yVel = speed * sin;
     }
   }
 
-  player.x += mod * player.xSpeed;
-  player.y += mod * player.ySpeed;
+  player.x += player.xVel;
+  player.y += player.yVel;
 
   // If the player passes an edge of the canvas, move it to the opposite edge
   if (player.x < 0) {
@@ -288,11 +293,11 @@ buttonControls = null;
     <canvas id="canvas" width="800" height="450" style="max-width:800px;"></canvas>
     <div id="canvas-button-controls">
       <div>
-        <button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;">&larr;</button>
-        <button id="right-arrow" class="arrow-button" data-action="right">&rarr;</button>
+        <button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;" title="turn left">&larr;</button>
+        <button id="right-arrow" class="arrow-button" data-action="right" title="turn right">&rarr;</button>
       </div>
       <div>
-        <button id="up-arrow" class="arrow-button" data-action="up">&uarr;</button>
+        <button id="up-arrow" class="arrow-button" data-action="up" title="thrusters">&uarr;</button>
       </div>
     </div>
     <a href="#" id="show-source">[show source]</a>
@@ -384,11 +389,11 @@ buttonControls = null;
   &lt;canvas id="canvas" width="800" height="450" style="max-width:800px;"&gt;&lt;/canvas&gt;
   &lt;div id="canvas-button-controls" style="text-align:left;"&gt;
     &lt;div&gt;
-      &lt;button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;"&gt;&larr;&lt;/button&gt;
-      &lt;button id="right-arrow" class="arrow-button" data-action="right"&gt;&rarr;&lt;/button&gt;
+      &lt;button id="left-arrow" class="arrow-button" data-action="left" style="margin-right:40px;" title="turn left"&gt;&larr;&lt;/button&gt;
+      &lt;button id="right-arrow" class="arrow-button" data-action="right" title="turn right"&gt;&rarr;&lt;/button&gt;
     &lt;/div&gt;
     &lt;div&gt;
-      &lt;button id="up-arrow" class="arrow-button" data-action="up"&gt;&uarr;&lt;/button&gt;
+      &lt;button id="up-arrow" class="arrow-button" data-action="up" title="thrusters"&gt;&uarr;&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -397,8 +402,9 @@ buttonControls = null;
   const CANVAS_H = 450;
 
   const TAU = 2 * Math.PI;
-  const UPDATE_RATE = 15;
-  const MAX_SPEED = 6;
+  const DELTA_TIME = 5;
+  const MAX_SPEED = 8;
+  const TURN_SPEED = 0.05;
 
   const KEY_MAP = {
     'ArrowUp'     : 'up',
@@ -406,9 +412,17 @@ buttonControls = null;
     'ArrowRight'  : 'right'
   };
 
+  // Render points relative to the ship's center
+  const POINTS = [
+    { x:  16, y:  0 },
+    { x: -12, y: -9 },
+    { x:  -8, y:  0 },
+    { x: -12, y:  9 }
+  ];
+
   var player = {
     x: CANVAS_W / 2, y: CANVAS_H / 2,
-    xSpeed: 0, ySpeed: 0, thrust: false,
+    xVel: 0, yVel: 0, thrust: false,
     radians: 0, radAcc: 0
   };
 
@@ -422,9 +436,9 @@ buttonControls = null;
     return value &lt; min ? min : value &gt; max ? max : value;
   }
 
-  function update(mod) {
+  function update() {
     if (player.radAcc) {
-      var radians = player.radians + mod * player.radAcc / 10;
+      var radians = player.radians + player.radAcc * TURN_SPEED;
       if (radians &lt; 0) {
         radians += TAU;
       }
@@ -439,19 +453,19 @@ buttonControls = null;
       var sin = Math.sin(player.radians);
 
       // Calculate the combined speed of both directions
-      player.xSpeed += cos;
-      player.ySpeed += sin;
+      player.xVel += cos / MAX_SPEED;
+      player.yVel += sin / MAX_SPEED;
 
-      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+      var speed = getHypoteneuse(player.xVel, player.yVel);
       if (speed &lt; -MAX_SPEED || speed &gt; MAX_SPEED) {
         speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
-        player.xSpeed = speed * cos;
-        player.ySpeed = speed * sin;
+        player.xVel = speed * cos;
+        player.yVel = speed * sin;
       }
     }
 
-    player.x += mod * player.xSpeed;
-    player.y += mod * player.ySpeed;
+    player.x += player.xVel;
+    player.y += player.yVel;
 
     // If the player passes an edge of the canvas, move it to the opposite edge
     if (player.x &lt; 0) {
@@ -546,26 +560,22 @@ buttonControls = null;
   buttonControls = null;
 
   var lastTimestamp = Date.now();
+  var accumulator = DELTA_TIME;
 
   function frameStep(timestamp) {
     // Update
     var now = Date.now();
-    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    accumulator += now - lastTimestamp;
     lastTimestamp = now;
     // Update player
-    update(mod);
+    while (accumulator >= DELTA_TIME) {
+      update();
+      accumulator -= DELTA_TIME;
+    }
 
     // Fill the background
     context.fillStyle = '#000';
     context.fillRect(0, 0, CANVAS_W, CANVAS_H);
-
-    // Render points relative to the ship's center
-    const POINTS = [
-      { x:  16, y:  0 },
-      { x: -12, y: -9 },
-      { x:  -8, y:  0 },
-      { x: -12, y:  9 }
-    ];
 
     var sin = Math.sin(player.radians);
     var cos = Math.cos(player.radians);
