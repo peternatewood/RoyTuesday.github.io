@@ -114,7 +114,7 @@ window.requestAnimationFrame(frameStep);
     <canvas id="ball-bounce-1" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
-    You'll notice we get this paintbrush effect, as if the ball is leaving a trail behind it. Each time we draw the ball, we're drawing over the existing image, without erasing what we drew before. Maybe you've seen glitches in 3D games where the player goes outside of the level boundaries, and everything looks like an overexposed timelapse. The same thing is going on there. Normally, everything in the level would get rendered and cover the last frame's image, but there's nothing to render beyond the level bounds. Erasing the entire screen is a waste of processing power since the player isn't supposed to go out of bounds.<br/><br/>
+    You'll notice we get this paintbrush or smear effect, as if the ball is leaving a trail behind it. Each time we draw the ball, we're drawing over the existing image, without erasing what we drew before. Maybe you've seen glitches in 3D games where the player goes outside of the level boundaries, and everything looks like an overexposed timelapse. The same thing is going on there. Normally, everything in the level would get rendered and cover the last frame's image, but there's nothing to render beyond the level bounds. Erasing the entire screen is a waste of processing power since the player isn't supposed to go out of bounds.<br/><br/>
 
     Usually, a game will have a background to render before everything else, so we can just render that first and avoid any issues. If we just need a simple background color or image, we could use CSS styles to apply that to the canvas element, and erase the canvas every frame. We could even take that a step further and only erase the area of canvas where the ball was last frame: a common technique in older video games when limited memory and processing power was a big concern.<br/><br/>
 
@@ -142,33 +142,33 @@ function frameStep(timestamp) {
     <canvas id="ball-bounce-2" width="800" height="450" style="max-width:800px;"></canvas>
   </div>
   <p class="article-body">
-    Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this, as the platform struggles to execute the game loop every frame. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
+    Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower, and if the framerate isn't totally steady the game will stutter. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this, as the platform struggles to execute the game loop every frame. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
 
-    Luckily, there's a simple solution for this: completely dissociate your rendering logic from your physics logic. This means calculating the time between the last and current frame, and applying a modifier to any physics calculations you make. It&#8217;s tempting to use <span class="code">setInterval()</span>, so that we get a constant update rate, but in the long run <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">this is not reliable</a>.<br/><br/>
+    Luckily, there's a simple solution for this: completely dissociate your rendering logic from your physics logic. We can keep track of how many milliseconds have passed since the last frame was rendered, and execute our physics updates an appropriate number of times. It&#8217;s tempting to use <span class="code">setInterval()</span>, so that we get a constant update rate, but in the long run <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout#Reasons_for_delays_longer_than_specified" target="_blank">this is not reliable</a>.<br/><br/>
 
-    To get our modifier, we keep track of when the last frame was rendered in milliseconds, find the difference between it and the current time, and divide by the number of milliseconds between intended updates. In our case, let&#8217;s say we want to update the ball&#8217;s position every ten milliseconds.
+    First, we need to decide how often we want our updates to happen; if it&#8217;s too infrequent, the game will stutter, but too often and it&#8217;ll tax the processor and slow everything down. Let&#8217;s assume the maximum framerate our game will encounter is 144hz, at which a frame gets drawn roughly every seven milliseconds (ms). We ought to update at least once per frame, so let&#8217;s go with five since it's easy to work with mathematically; that&#8217;ll be our Delta Time (&Delta;t), meaning change in time.<br/><br/>
+
+    Then, every frame we'll accumulate the number of milliseconds since the last frame, and subtract our &Delta;t every time we run an update. At 60hz (the most common case), we&#8217;ll accumulate 16 2/3 milliseconds every frame on average (technically, the fraction carries over to the next frame, so we&#8217;d see a pattern of 16, 17, 17); so if we run our updates every five milliseconds, we&#8217;ll update three times the first frame, with 1 2/3 milliseconds left over. After a few more frames, those milliseconds will add up to another update, and in the long run the game will run smoothly.
   </p>
 <pre class="code-javascript">
-const UPDATE_RATE = 10;
-
-function updateBall(mod, ball) {
-  // Move the ball
-  ball.x += mod * ball.xVel;
-  ball.y += mod * ball.yVel;
-  // The rest of this function is the same...
-}
+const DELTA_TIME = 5;
+var accumulator = DELTA_TIME;
 
 // Set the initial value in milliseconds
 var lastTimestamp = Date.now();
 
 function frameStep(timestamp) {
   var now = Date.now();
-  // Physics modifier based on the number of milliseconds between this and the last frame
-  var mod = (now - lastTimestamp) / UPDATE_RATE;
-  // Don't forget to pdate this for the next frame
+  // Add the number of milliseconds since the last frame to the accumulator
+  accumulator += now - lastTimestamp;
+  // Don't forget to update this for the next frame
   lastTimestamp = now;
+  // Update once for every &Delta;t since the last frame was rendered
+  while (accumulator >= DELTA_TIME) {
+    updateBall(ball);
+    accumulator -= DELTA_TIME;
+  }
 
-  updateBall(mod, ball);
   // The rest of this function is the same...
 }
 </pre>
@@ -176,7 +176,7 @@ function frameStep(timestamp) {
     <canvas id="ball-bounce-3" width="800" height="450" style="max-width:800px;"></canvas>
   </div>
   <p class="article-body">
-    Now that we have the basics of the game loop worked out, we can add some interactivity; an animated image is nice, but we can't call it a game if it plays itself, can we? Next up: keyboard, mouse, and touch controls.<br/><br/>
+    Now that we have the basics of the game loop worked out, and our updates are decoupled from the framerate, we can add some interactivity; an animated image is nice, but we can't call it a game if it plays itself, can we? Next up: keyboard, mouse, and touch controls.<br/><br/>
 
     <strong>&mdash; Peter N. Wood</strong><br/><br/>
 
@@ -192,8 +192,9 @@ function frameStep(timestamp) {
   const CANVAS_W = 800;
   const CANVAS_H = 450;
 
-  const UPDATE_RATE = 1000 / 120;
   const BALL_SIZE = 16;
+  const DELTA_TIME = 5;
+  var accumulator = DELTA_TIME;
 
   var balls = [
     { x: 2 * BALL_SIZE, y: 2 * BALL_SIZE, xVel: 1, yVel: 1 },
@@ -201,10 +202,10 @@ function frameStep(timestamp) {
     { x: 2 * BALL_SIZE, y: 2 * BALL_SIZE, xVel: 1, yVel: 1 }
   ];
 
-  function updateBall(mod, ball) {
+  function updateBall(ball) {
     // Move the ball
-    ball.x += mod * ball.xVel;
-    ball.y += mod * ball.yVel;
+    ball.x += ball.xVel;
+    ball.y += ball.yVel;
 
     // Check for collision with canvas bounds
     if (ball.x + BALL_SIZE > CANVAS_W) {
@@ -225,6 +226,12 @@ function frameStep(timestamp) {
       ball.yVel = 1;
     }
   }
+  // Check whether canvas is visible in the window, so we don't bother rendering off-screen canvases
+  function isInView(canvas) {
+    var height = window.innerHeight;
+    var rect = canvas.getBoundingClientRect();
+    return rect.y + rect.height > 0 && rect.y < height;
+  }
   // Render the ball
   function renderBall(context, ball) {
     context.beginPath();
@@ -244,23 +251,27 @@ function frameStep(timestamp) {
 
   function frameStep(timestamp) {
     var now = Date.now();
-    // Physics modifier based on the number of milliseconds between this and the last frame
-    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    accumulator += now - lastTimestamp;
     lastTimestamp = now;
+    // Update the first ball every frame
+    updateBall(balls[0]);
+    // Update the other balls based on our delta time
+    while (accumulator >= DELTA_TIME) {
+      updateBall(balls[1]);
+      updateBall(balls[2]);
+      accumulator -= DELTA_TIME;
+    }
 
+    // Render each canvas
     for (var i = 0; i < 3; i++) {
-      if (i < 2) {
-        updateBall(1, balls[i]);
+      if (isInView(contexts[i].canvas)) {
+        // All but the first canvas has a background color
+        if (i > 0) {
+          contexts[i].fillStyle = '#30A';
+          contexts[i].fillRect(0, 0, CANVAS_W, CANVAS_H);
+        }
+        renderBall(contexts[i], balls[i]);
       }
-      else {
-        updateBall(mod, balls[i]);
-      }
-
-      if (i > 0) {
-        contexts[i].fillStyle = '#30A';
-        contexts[i].fillRect(0, 0, CANVAS_W, CANVAS_H);
-      }
-      renderBall(contexts[i], balls[i]);
     }
 
     if (!start) {

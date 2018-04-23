@@ -10,11 +10,12 @@
   const CANVAS_H = 450;
 
   const TAU = 2 * Math.PI;
-  const UPDATE_RATE = 15;
-
-  const RESPAWN_DELAY = 1200 / UPDATE_RATE;
-  const RECOVER_DELAY = 1800 / UPDATE_RATE;
-  const MAX_SPEED = 6;
+  const DELTA_TIME = 5;
+  // Delays in milliseconds
+  const RESPAWN_DELAY = 1200;
+  const RECOVER_DELAY = 1800;
+  const MAX_SPEED = 4;
+  const TURN_SPEED = 0.05;
   // Render points relative to the ship's center
   const PLAYER_POINTS = [
     { x:  16, y:  0 },
@@ -26,7 +27,7 @@
   // Big asteroids split into two small ones; therefore the maximum number of asteroids on screen at once must be twice the number of maximum big asteroids
   const MAX_BIG_ASTEROIDS = 3;
   const MAX_ASTEROIDS = 2 * MAX_BIG_ASTEROIDS;
-  const ASTEROID_SPEED = 1;
+  const ASTEROID_SPEED = 0.5;
   const ASTEROID_SIZE = 16;
   // Render points relative to center
   const ASTEROID_POINTS = [
@@ -52,14 +53,14 @@
 
   var player = {
     x: CANVAS_W / 2, y: CANVAS_H / 2,
-    xSpeed: 0, ySpeed: 0, thrust: false,
+    xVel: 0, yVel: 0, thrust: false,
     radians: 0, radAcc: 0,
     state: 'alive', countdown: 0
   };
-  function updatePlayer(mod) {
+  function updatePlayer() {
     if (player.countdown > 0) {
       // Destroyed/Recovery timer
-      player.countdown -= 1 / mod;
+      player.countdown -= DELTA_TIME;
       if (player.countdown <= 0) {
         player.countdown = 0;
         // Update player state
@@ -72,7 +73,7 @@
 
     if (player.state !== 'destroyed') {
       if (player.radAcc) {
-        var radians = player.radians + mod * player.radAcc / 10;
+        var radians = player.radians + player.radAcc * TURN_SPEED;
         if (radians < 0) {
           radians += TAU;
         }
@@ -87,14 +88,14 @@
         var sin = Math.sin(player.radians);
 
         // Calculate the combined speed of both directions
-        player.xSpeed += cos;
-        player.ySpeed += sin;
+        player.xVel += cos / MAX_SPEED;
+        player.yVel += sin / MAX_SPEED;
 
-        var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+        var speed = getHypoteneuse(player.xVel, player.yVel);
         if (speed < -MAX_SPEED || speed > MAX_SPEED) {
           speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
-          player.xSpeed = speed * cos;
-          player.ySpeed = speed * sin;
+          player.xVel = speed * cos;
+          player.yVel = speed * sin;
         }
       }
     }
@@ -102,8 +103,8 @@
   function resetPlayer() {
     player.x = CANVAS_W / 2;
     player.y = CANVAS_H / 2;
-    player.xSpeed = 0;
-    player.ySpeed = 0;
+    player.xVel = 0;
+    player.yVel = 0;
     player.radians = 0;
     player.state = 'recovery';
     player.countdown = RECOVER_DELAY;
@@ -112,7 +113,7 @@
   var asteroidCount = 0;
   var asteroids = new Array(MAX_ASTEROIDS);
   // I use this function syntax to better indicate that this is a class constructor
-  var Asteroid = function(isSmall, astX, astY, xSpeed, ySpeed) {
+  var Asteroid = function(isSmall, astX, astY, xVel, yVel) {
     // Get a random radian value for rendering
     this.radians = Math.random() * TAU;
 
@@ -120,8 +121,8 @@
       this.size = 1;
       this.x = astX;
       this.y = astY;
-      this.xSpeed = xSpeed;
-      this.ySpeed = ySpeed;
+      this.xVel = xVel;
+      this.yVel = yVel;
     }
     else {
       // New big asteroid
@@ -155,8 +156,8 @@
       // Pick a random direction for the asteroid to move
       // This way every asteroid moves at the same speed
       var radians = Math.random() * TAU;
-      this.xSpeed = ASTEROID_SPEED * Math.cos(radians);
-      this.ySpeed = ASTEROID_SPEED * Math.sin(radians);
+      this.xVel = ASTEROID_SPEED * Math.cos(radians);
+      this.yVel = ASTEROID_SPEED * Math.sin(radians);
     }
 
     // I think it's good practice to explicitly return the instance
@@ -189,25 +190,25 @@
       asteroidCount++;
       // Generate random direction to move
       var radians = Math.random() * TAU;
-      var xSpeed = Math.cos(radians);
-      var ySpeed = Math.sin(radians);
+      var xVel = Math.cos(radians);
+      var yVel = Math.sin(radians);
       // Ensure the asteroids start far apart enough to not collide with each other
-      var x = ASTEROID_SIZE * xSpeed;
-      var y = ASTEROID_SIZE * ySpeed;
+      var x = ASTEROID_SIZE * xVel;
+      var y = ASTEROID_SIZE * yVel;
       // Create two new asteroids
       for (var i = 0; i < MAX_ASTEROIDS; i++) {
         if (i !== index && !asteroids[i]) {
-          asteroids[i] = new Asteroid(true, ast.x + x, ast.y + y, xSpeed, ySpeed);
+          asteroids[i] = new Asteroid(true, ast.x + x, ast.y + y, xVel, yVel);
           break;
         }
       }
       // This astroid moves in nearly the total opposite direction; if it was 180 degrees the two would loop around and collide
       radians += 3;
-      xSpeed = Math.cos(radians);
-      ySpeed = Math.sin(radians);
-      x = ASTEROID_SIZE * xSpeed;
-      y = ASTEROID_SIZE * ySpeed;
-      asteroids[index] = new Asteroid(true, ast.x + x, ast.y + y, xSpeed, ySpeed);
+      xVel = Math.cos(radians);
+      yVel = Math.sin(radians);
+      x = ASTEROID_SIZE * xVel;
+      y = ASTEROID_SIZE * yVel;
+      asteroids[index] = new Asteroid(true, ast.x + x, ast.y + y, xVel, yVel);
     }
   }
 
@@ -300,9 +301,9 @@
     return value < min ? min : value > max ? max : value;
   }
 
-  function updateActor(mod, actor) {
-    actor.x += mod * actor.xSpeed;
-    actor.y += mod * actor.ySpeed;
+  function updateActor(actor) {
+    actor.x += actor.xVel;
+    actor.y += actor.yVel;
 
     // If the actor passes an edge of the canvas, move it to the opposite edge
     if (actor.x < 0) {
@@ -319,7 +320,8 @@
       actor.y -= CANVAS_H;
     }
   }
-
+  // Initialize accumulator with DELTA_TIME so we run at least one update the first frame
+  var accumulator = DELTA_TIME;
   var lastTimestamp = Date.now();
 
   function frameStep(timestamp) {
@@ -327,16 +329,67 @@
     context.fillStyle = '#000';
     context.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
-    // Get physics modifier
+    // Update milliseconds accumulator
     var now = Date.now();
-    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    accumulator += now - lastTimestamp;
     lastTimestamp = now;
+    // Run updates
+    while (accumulator >= DELTA_TIME) {
+      accumulator -= DELTA_TIME;
+      // Update player
+      updatePlayer();
+      if (player.state !== 'destroyed') {
+        updateActor(player);
+      }
 
-    // Update player
-    updatePlayer(mod);
+      // Update asteroids
+      for (var i = 0; i < MAX_ASTEROIDS; i++) {
+        if (asteroids[i]) {
+          updateActor(asteroids[i]);
+          // Check for player collision if player is alive
+          if (player.state === 'alive') {
+            if (getDistance(asteroids[i], player) < asteroids[i].size * ASTEROID_SIZE) {
+              // Destroy player
+              player.state = 'destroyed';
+              // setTimeout(resetPlayer, RESPAWN_DELAY);
+              player.countdown = RESPAWN_DELAY;
+            }
+          }
+        }
+        else {
+          // Only add new asteroids if there are fewer than the max big ones
+          if (asteroidCount < MAX_BIG_ASTEROIDS) {
+            asteroids[i] = new Asteroid();
+            asteroidCount++;
+          }
+        }
+      }
+      // Check for asteroids colliding with each other
+      for (var i = 0; i < MAX_ASTEROIDS; i++) {
+        if (asteroids[i]) {
+          // Check for collision with other asteroids; starting with the current index so we don't repeat ourselves
+          for (var a = i + 1; a < MAX_ASTEROIDS; a++) {
+            if (asteroids[a]) {
+              // Add both asteroid's sizes together
+              if (getDistance(asteroids[i], asteroids[a]) < asteroids[i].size * ASTEROID_SIZE + asteroids[a].size * ASTEROID_SIZE) {
+                breakAsteroid(i);
+                breakAsteroid(a);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Render asteroids
+    for (var i = 0; i < MAX_ASTEROIDS; i++) {
+      if (asteroids[i]) {
+        renderAsteroid(asteroids[i]);
+      }
+    }
+
     if (player.state !== 'destroyed') {
-      updateActor(mod, player);
-
       // Render player
       var sin = Math.sin(player.radians);
       var cos = Math.cos(player.radians);
@@ -354,49 +407,6 @@
       context.lineWidth = 2;
       context.strokeStyle = player.state === 'alive' ? '#FFF' : '#AAA';
       context.stroke();
-    }
-
-    // Update asteroids
-    for (var i = 0; i < MAX_ASTEROIDS; i++) {
-      if (asteroids[i]) {
-        updateActor(mod, asteroids[i]);
-        // Check for player collision if player is alive
-        if (player.state === 'alive') {
-          if (getDistance(asteroids[i], player) < asteroids[i].size * ASTEROID_SIZE) {
-            // Destroy player
-            player.state = 'destroyed';
-            // setTimeout(resetPlayer, RESPAWN_DELAY);
-            player.countdown = RESPAWN_DELAY;
-          }
-        }
-      }
-      else {
-        // Only add new asteroids if there are fewer than the max big ones
-        if (asteroidCount < MAX_BIG_ASTEROIDS) {
-          asteroids[i] = new Asteroid();
-          asteroidCount++;
-        }
-      }
-    }
-    // Check for asteroids colliding with each other
-    for (var i = 0; i < MAX_ASTEROIDS; i++) {
-      if (asteroids[i]) {
-        // Check for collision with other asteroids; starting with the current index so we don't repeat ourselves
-        for (var a = i + 1; a < MAX_ASTEROIDS; a++) {
-          if (asteroids[a]) {
-            // Add both asteroid's sizes together
-            if (getDistance(asteroids[i], asteroids[a]) < asteroids[i].size * ASTEROID_SIZE + asteroids[a].size * ASTEROID_SIZE) {
-              breakAsteroid(i);
-              breakAsteroid(a);
-              break;
-            }
-          }
-        }
-        // Render the asteroid if it still exists
-        if (asteroids[i]) {
-          renderAsteroid(asteroids[i]);
-        }
-      }
     }
 
     if (!start) {

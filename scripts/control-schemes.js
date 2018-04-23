@@ -10,8 +10,9 @@ ready(function() {
   const CANVAS_H = 450;
 
   const TAU = 2 * Math.PI;
-  const UPDATE_RATE = 15;
-  const MAX_SPEED = 6;
+  const DELTA_TIME = 5;
+  const MAX_SPEED = 4;
+  const TURN_SPEED = 0.05;
 
   const KEY_MAP = {
     'ArrowUp'     : 'up',
@@ -19,9 +20,17 @@ ready(function() {
     'ArrowRight'  : 'right'
   };
 
+  // Render points relative to the ship's center
+  const POINTS = [
+    { x:  16, y:  0 },
+    { x: -12, y: -9 },
+    { x:  -8, y:  0 },
+    { x: -12, y:  9 }
+  ];
+
   var player = {
     x: CANVAS_W / 2, y: CANVAS_H / 2,
-    xSpeed: 0, ySpeed: 0, thrust: false,
+    xVel: 0, yVel: 0, thrust: false,
     radians: 0, radAcc: 0
   };
 
@@ -35,9 +44,9 @@ ready(function() {
     return value < min ? min : value > max ? max : value;
   }
 
-  function update(mod) {
+  function update() {
     if (player.radAcc) {
-      var radians = player.radians + mod * player.radAcc / 10;
+      var radians = player.radians + player.radAcc * TURN_SPEED;
       if (radians < 0) {
         radians += TAU;
       }
@@ -52,19 +61,19 @@ ready(function() {
       var sin = Math.sin(player.radians);
 
       // Calculate the combined speed of both directions
-      player.xSpeed += cos;
-      player.ySpeed += sin;
+      player.xVel += cos / MAX_SPEED;
+      player.yVel += sin / MAX_SPEED;
 
-      var speed = getHypoteneuse(player.xSpeed, player.ySpeed);
+      var speed = getHypoteneuse(player.xVel, player.yVel);
       if (speed < -MAX_SPEED || speed > MAX_SPEED) {
         speed = clamp(speed, -MAX_SPEED, MAX_SPEED);
-        player.xSpeed = speed * cos;
-        player.ySpeed = speed * sin;
+        player.xVel = speed * cos;
+        player.yVel = speed * sin;
       }
     }
 
-    player.x += mod * player.xSpeed;
-    player.y += mod * player.ySpeed;
+    player.x += player.xVel;
+    player.y += player.yVel;
 
     // If the player passes an edge of the canvas, move it to the opposite edge
     if (player.x < 0) {
@@ -159,26 +168,22 @@ ready(function() {
   buttonControls = null;
 
   var lastTimestamp = Date.now();
+  var accumulator = DELTA_TIME;
 
   function frameStep(timestamp) {
     // Update
     var now = Date.now();
-    var mod = (now - lastTimestamp) / UPDATE_RATE;
+    accumulator += now - lastTimestamp;
     lastTimestamp = now;
     // Update player
-    update(mod);
+    while (accumulator >= DELTA_TIME) {
+      update();
+      accumulator -= DELTA_TIME;
+    }
 
     // Fill the background
     context.fillStyle = '#000';
     context.fillRect(0, 0, CANVAS_W, CANVAS_H);
-
-    // Render points relative to the ship's center
-    const POINTS = [
-      { x:  16, y:  0 },
-      { x: -12, y: -9 },
-      { x:  -8, y:  0 },
-      { x: -12, y:  9 }
-    ];
 
     var sin = Math.sin(player.radians);
     var cos = Math.cos(player.radians);
