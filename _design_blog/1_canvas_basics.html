@@ -82,7 +82,7 @@ context.fillRect(100, 40, 200, 120);
 context.strokeRect(100, 40, 200, 120);
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="rectangle" width="800" height="450" style="max-width:800px;"></canvas>
+    <canvas id="rectangle" width="800" height="450" style="background:#eee;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
     The canvas uses a coordinate system where the x- and y-axes are centered on the upper left corner of the element; x increases from left to right, y increases from top to bottom, and the upper left corner is at x = 0, y = 0. Our rectangle will be 200 pixels wide, 120 pixels high, with it's upper left corner at 100 pixels from the left edge of the canvas, and 40 pixels from the top.<br/><br/>
@@ -119,7 +119,7 @@ context.stroke();
 context.closePath();
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="three-lines" width="800" height="450" style="max-width:800px;"></canvas>
+    <canvas id="three-lines" width="800" height="450" style="background:#eee;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
     It's important to call <span class="code">closePath()</span> so that we clear out the path and don't draw it again by accident. As shown above, if we're just drawing lines, we can call <span class="code">moveTo()</span> to break up the line into several segments before we render. It's good for performance to call functions like <span class="code">fill()</span> and <span class="code">stroke()</span> as rarely as possible. We can do something similar if we want to fill several objects at once, as long as we make sure the last point of each shape is supposed to connect to the first.<br/><br/>
@@ -164,7 +164,7 @@ context.fill();
 context.closePath();
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="triangles" width="800" height="450" style="max-width: 800px;"></canvas>
+    <canvas id="triangles" width="800" height="450" style="background:#eee;max-width: 800px;"></canvas>
   </div>
   <p class="article-body">
     Notice how you can use <span class="code">moveTo()</span> together with <span class="code">arc()</span> for more complex shapes. All the functions that draw a path can be used in tandem; Check out the MDN documentation below for more details.<br/><br/>

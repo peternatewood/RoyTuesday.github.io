@@ -83,11 +83,11 @@ ready(function() {
   document.getElementById('ramp').addEventListener('click', playRamp);
 
   var waveStep = 0;
+  var waveforms = document.getElementById('waveforms').getContext('2d');
 
   function step(t) {
-    var waveforms = document.getElementById('waveforms').getContext('2d');
-
-    waveforms.clearRect(0, 0, 1200, 800);
+    waveforms.fillStyle = "#eee"
+    waveforms.fillRect(0, 0, 1200, 800);
 
     waveforms.lineWidth = 6;
     waveforms.strokeStyle = '#333';
@@ -131,11 +131,12 @@ ready(function() {
     waveforms.stroke();
     waveforms.closePath();
 
+    waveforms.fillRect(900, 0, 300, 800);
+
     waveforms.fillStyle = '#333';
     waveforms.font = '64px Share Tech Mono';
     waveforms.textBaseline = 'middle';
 
-    waveforms.clearRect(900, 0, 300, 800);
     waveforms.fillText('Sine', 915, 100);
     waveforms.fillText('Triangle', 915, 300);
     waveforms.fillText('Sawtooth', 915, 500);
