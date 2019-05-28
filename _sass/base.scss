@@ -8,8 +8,25 @@ $link_blue: #37A;
 $offwhite: #F0F3F3;
 $green: #6A3;
 
+$near_black: #222;
+$term_green: #9d4;
+$dark_gray: #333;
+
 $lato: 'Lato', helvetica, sans-serif;
 $roboto: 'Roboto Slab', Georgia, serif;
 $monospace: 'Ubuntu Mono', monospace;
 
 @import 'custom-mixins';
+
+@include keyframes(fade_in) {
+    0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@include keyframes(flicker) {
+    0% { opacity: 0; }
+   20% { opacity: 1; }
+   24% { opacity: 0.25; }
+   28% { opacity: 1; }
+   32% { opacity: 0; }
+  100% { opacity: 1; }
+}
