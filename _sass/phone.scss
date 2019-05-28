@@ -25,12 +25,12 @@ ul {
   list-style: none;
 }
 a {
-  color: $term_green;
+  color: $term_color;
   text-decoration: none;
   @include transition(200ms color);
 
   &:hover {
-    color: #ffa;
+    color: #cfefff;
   }
 }
 label {
@@ -40,7 +40,7 @@ textarea {
   resize: vertical;
 }
 hr {
-  background: $term_green;
+  background: $term_color;
   border: 0;
   height: 3px;
 }
@@ -191,7 +191,7 @@ nav {
   justify-content: space-around;
   background: $near_black;
   border: {
-    color: $term_green;
+    color: $term_color;
     radius: 0 0 8px 0;
     style: solid;
     width: 0 3px 3px 0;
@@ -225,7 +225,7 @@ article {
   opacity: 0;
   box-sizing: border-box;
   border-radius: 8px;
-  @include box-shadow(2px 2px 6px 0 $term_green);
+  @include box-shadow(2px 2px 6px 0 $term_color);
   padding: 8px 12px;
   margin: 12px auto;
   width: 94%;
@@ -245,7 +245,7 @@ article {
   }
 }
 .article-heading {
-  color: $term_green;
+  color: $term_color;
   font-size: 1.8em;
   padding: 4px 0;
 }
