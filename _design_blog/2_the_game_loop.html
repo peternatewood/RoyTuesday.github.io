@@ -111,7 +111,7 @@ function frameStep(timestamp) {
 window.requestAnimationFrame(frameStep);
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="ball-bounce-1" width="800" height="450" style="border:1px solid #000;max-width:800px;"></canvas>
+    <canvas id="ball-bounce-1" width="800" height="450" style="background:#eee;border:1px solid #000;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
     You'll notice we get this paintbrush or smear effect, as if the ball is leaving a trail behind it. Each time we draw the ball, we're drawing over the existing image, without erasing what we drew before. Maybe you've seen glitches in 3D games where the player goes outside of the level boundaries, and everything looks like an overexposed timelapse. The same thing is going on there. Normally, everything in the level would get rendered and cover the last frame's image, but there's nothing to render beyond the level bounds. Erasing the entire screen is a waste of processing power since the player isn't supposed to go out of bounds.<br/><br/>
@@ -139,7 +139,7 @@ function frameStep(timestamp) {
 }
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="ball-bounce-2" width="800" height="450" style="max-width:800px;"></canvas>
+    <canvas id="ball-bounce-2" width="800" height="450" style="background:#eee;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
     Now that looks pretty good, but we still have a problem: our ball's logic only updates with the framerate. Depending on what monitor you're using, the ball will move faster or slower, and if the framerate isn't totally steady the game will stutter. In a bigger, more processor-intensive game, you might see the game speed change wildly with a setup like this, as the platform struggles to execute the game loop every frame. It's common to see mobile and console games designed this way, because the developers only have to worry about one platform with one set of specifications; it only becomes a problem if they want to port the game to PC.<br/><br/>
@@ -173,7 +173,7 @@ function frameStep(timestamp) {
 }
 </pre>
   <div class="canvas-wrapper">
-    <canvas id="ball-bounce-3" width="800" height="450" style="max-width:800px;"></canvas>
+    <canvas id="ball-bounce-3" width="800" height="450" style="background:#eee;max-width:800px;"></canvas>
   </div>
   <p class="article-body">
     Now that we have the basics of the game loop worked out, and our updates are decoupled from the framerate, we can add some interactivity; an animated image is nice, but we can't call it a game if it plays itself, can we? Next up: keyboard, mouse, and touch controls.<br/><br/>

@@ -22,10 +22,10 @@
   .grid > .col-50,
   .grid > .col-33 {
     margin: {
-      left: 1%;
-      right: 1%;
+      left: 2%;
+      right: 2%;
     }
-    width: 48%;
+    width: 46%;
   }
 
   .article-title {
@@ -38,12 +38,16 @@
 
   .article-preview {
     display: block;
-    background: #FFF;
+    background: $dark_gray;
     padding: 4px 8px;
     margin: 8px 0 4px;
   }
 
-  article .grid .article-preview {
-    background: $offwhite;
+  article {
+    margin: {
+      top: 24px;
+      bottom: 24px;
+    }
+    width: 96%;
   }
 }
