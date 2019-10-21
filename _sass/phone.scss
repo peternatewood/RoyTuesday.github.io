@@ -270,7 +270,8 @@ article {
 .article-preview {
   display: none;
 }
-.image-wrapper {
+.image-wrapper,
+.youtube-embed-wrapper {
   display: block;
   margin: 0 auto;
   width: 94%;
@@ -278,6 +279,11 @@ article {
 
   &.thumbnail {
     max-width: 320px;
+  }
+}
+.youtube-embed-wrapper {
+  iframe {
+    width: 100%;
   }
 }
 .code {
