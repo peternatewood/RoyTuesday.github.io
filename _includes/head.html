@@ -18,11 +18,8 @@
   <meta property="og:url" content="{% if page.permalink %}{{ page.permalink | prepend: site.url }}{% else %}{{ site.url }}{% endif %}">
   <meta property="og:type" content="website">
 
-  <!-- Load google fonts asynchronously to improve page loading speed, especially for mobile -->
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-  <script type="text/javascript">
-    WebFont.load({ google: { families: ['Lato', 'Roboto Slab', 'Ubuntu Mono'] } });
-  </script>
+  <link rel="preconnect" href="https://fonts.gstatic.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Ubuntu+Mono&display=swap" rel="stylesheet"/>
 
   <script type="text/javascript" src="{{ '/scripts/ready.js' | prepend: site.baseurl }}"></script>
   <script type="text/javascript" src="{{ '/scripts/global.js' | prepend: site.baseurl }}"></script>
