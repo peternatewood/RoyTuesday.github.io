@@ -12,7 +12,7 @@ input[type="email"],
 textarea,
 select {
   box-shadow: 0 0 4px 2px transparent;
-  transition: box-shadow 240ms;
+  @include transition(box-shadow 240ms);
 
   &:hover,
   &:focus {
@@ -43,7 +43,7 @@ input[type="submit"] {
   padding: 8px 0;
   margin: 8px 0;
   width: 128px;
-  transition: background-color 240ms;
+  @include transition(background-color 240ms);
 
   &:hover {
     background: #AAE;

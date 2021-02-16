@@ -3,7 +3,7 @@
 }
 
 body {
-  color: #eee;
+  color: $offwhite;
   background: $near_black;
   font-family: $lato;
   padding-top: 3.5rem;
@@ -25,12 +25,12 @@ ul {
   list-style: none;
 }
 a {
-  color: $term_color;
+  color: $offwhite;
   text-decoration: none;
   @include transition(200ms color);
 
   &:hover {
-    color: #cfefff;
+    color: #8df;
   }
 }
 label {
@@ -40,7 +40,7 @@ textarea {
   resize: vertical;
 }
 hr {
-  background: $term_color;
+  background: $offwhite;
   border: 0;
   height: 0.1875rem;
 }
@@ -90,8 +90,8 @@ canvas {
     overflow: hidden;
     background: #fff;
     border: 0.0625rem solid #CCC;
-    @include border-radius(1.25rem);
-    @include box-shadow(inset -0.25rem -0.125rem 0.25rem 0 rgba(0,0,0,0.2));
+    border-radius: 1.25rem;
+    box-shadow: inset -0.25rem -0.125rem 0.25rem 0 rgba(0,0,0,0.2);
     text-indent: -999em;
     width: 6rem;
     height: 6rem;
@@ -108,7 +108,7 @@ canvas {
     }
     &:active,
     &:focus {
-      @include box-shadow(inset 0.25rem 0.125rem 0.25rem 0 rgba(0,0,0,0.1));
+      box-shadow: inset 0.25rem 0.125rem 0.25rem 0 rgba(0,0,0,0.1);
     }
   }
 }
@@ -155,7 +155,7 @@ canvas {
 #fire-button {
   &:before,
   &:after {
-    @include border-radius(100%);
+    border-radius: 100%;
     margin: {
       left: auto;
       right: auto;
@@ -186,21 +186,13 @@ canvas {
 
 nav {
   position: fixed;
-  display: flex;
+  @include display-flex;
   z-index: 10;
   justify-content: space-around;
   background: $near_black;
-  border: {
-    color: $term_color;
-    radius: 0 0 0.5rem 0;
-    style: solid;
-    width: 0 0.1875rem 0.1875rem 0;
-  };
-  margin: 0 auto;
-  width: 98%;
+  box-shadow: 0 0 12px 0 rgba(255,255,255,0.1);
   top: 0;
   left: 0;
-  right: 0;
 }
 .nav-link {
   opacity: 0;
@@ -222,20 +214,10 @@ nav {
 }
 
 article {
-  opacity: 0;
   box-sizing: border-box;
-  border-radius: 0.5rem;
-  @include box-shadow(0.125rem 0.125rem 0.375rem 0 $term_color);
   padding: 0.5rem 0.75rem;
   margin: 0.75rem auto;
   width: 94%;
-  @include animation(1800ms fade_in);
-
-  @for $i from 1 through 4 {
-    &:nth-child(#{$i}) {
-      @include animation-delay($i * 300ms);
-    }
-  }
 
   .col-50,
   .col-33 {
@@ -245,7 +227,6 @@ article {
   }
 }
 .article-heading {
-  color: $term_color;
   font-size: 1.8rem;
   padding: 0.25rem 0;
 }
