@@ -1,18 +1,21 @@
 @media screen and (min-width: $bp_tablet) {
   body {
-    padding-top: 3em;
+    padding-top: 3rem;
   }
 
+  .only-mobile {
+    display: none;
+  }
   .only-tablet-up {
     display: block;
   }
 
   .nav-link {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
   .nav-name {
     display: inline;
-    font: 16px $roboto;
+    font: 1rem $roboto;
   }
 
   .grid {
@@ -22,32 +25,62 @@
   .grid > .col-50,
   .grid > .col-33 {
     margin: {
-      left: 2%;
-      right: 2%;
+      top: 1rem;
+      bottom: 1rem;
     }
-    width: 46%;
+    width: 49%;
+  }
+  .grid > .col-50:nth-child(2n + 1),
+  .grid > .col-33:nth-child(2n + 1) {
+    margin: {
+      left: 0;
+      right: 1%;
+    }
+  }
+  .grid > .col-50:nth-child(2n),
+  .grid > .col-33:nth-child(2n) {
+    margin: {
+      left: 1%;
+      right: 0;
+    }
   }
 
   .article-title {
-    font-size: 1.6em;
+    font-size: 1.6rem;
   }
   .article-body {
-    font-size: 1.25em;
+    font-size: 1.25rem;
     line-height: 1.5;
   }
 
   .article-preview {
     display: block;
     background: $dark_gray;
-    padding: 4px 8px;
-    margin: 8px 0 4px;
+    padding: 0.25rem 0.5rem;
+    margin: 0.5rem 0 0.25rem;
   }
 
   article {
     margin: {
-      top: 24px;
-      bottom: 24px;
+      top: 1.5rem;
+      bottom: 1.5rem;
     }
     width: 96%;
+  }
+
+  header {
+    margin: 0 auto;
+    width: 96%;
+  }
+
+  .headshot-container.only-tablet-up {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 12.5rem;
+  }
+  .name-and-title {
+    display: inline-block;
+    vertical-align: bottom;
+    width: calc(100% - 13rem);
   }
 }

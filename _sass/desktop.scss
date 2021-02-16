@@ -1,59 +1,74 @@
 @media screen and (min-width: $bp_desktop) {
-  nav {
-    width: 97%;
-  }
-
   .only-desktop-up {
     display: block;
   }
 
+  main {
+    margin: 0 auto;
+    max-width: 75rem;
+  }
+
   .nav-link {
     text-align: center;
-    padding: 8px 0;
+    padding: 0.5rem 0;
   }
 
   .grid > .col-33 {
+    width: 32%;
+  }
+  .grid > .col-33:nth-child(3n + 1) {
+    margin: {
+      left: 0;
+      right: 1%;
+    }
+  }
+  .grid > .col-33:nth-child(3n + 2) {
     margin: {
       left: 1%;
       right: 1%;
-    };
-    width: 31.333333%;
+    }
+  }
+  .grid > .col-33:nth-child(3n) {
+    margin: {
+      left: 1%;
+      right: 0;
+    }
   }
 
   .image-wrapper {
     margin: 0;
 
     &.thumbnail {
-      max-width: 480px;
+      max-width: 30rem;
     }
   }
 }
 
 @media screen and (min-width: $bp_desktop_big) {
   body {
-    padding-top: 4em;
+    padding-top: 4rem;
   }
 
   .nav-link {
-    font-size: 24px;
+    font-size: 1.5rem;
     padding: {
-      top: 14px;
-      bottom: 14px;
+      top: 0.875rem;
+      bottom: 0.875rem;
     }
   }
   .nav-name {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
   footer {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   .footer-links a {
     padding: {
-      top: 18px;
-      bottom: 18px;
+      top: 1.125rem;
+      bottom: 1.125rem;
     }
   }
   .mail-link {
-    padding-bottom: 18px;
+    padding-bottom: 1.125rem;
   }
 }
