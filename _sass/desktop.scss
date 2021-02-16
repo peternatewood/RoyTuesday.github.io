@@ -14,11 +14,25 @@
   }
 
   .grid > .col-33 {
+    width: 32%;
+  }
+  .grid > .col-33:nth-child(3n + 1) {
+    margin: {
+      left: 0;
+      right: 1%;
+    }
+  }
+  .grid > .col-33:nth-child(3n + 2) {
     margin: {
       left: 1%;
       right: 1%;
-    };
-    width: 31.333333%;
+    }
+  }
+  .grid > .col-33:nth-child(3n) {
+    margin: {
+      left: 1%;
+      right: 0;
+    }
   }
 
   .image-wrapper {

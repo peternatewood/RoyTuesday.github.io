@@ -21,8 +21,25 @@
   }
   .grid > .col-50,
   .grid > .col-33 {
-    margin: 1rem 0.5%;
+    margin: {
+      top: 1rem;
+      bottom: 1rem;
+    }
     width: 49%;
+  }
+  .grid > .col-50:nth-child(2n + 1),
+  .grid > .col-33:nth-child(2n + 1) {
+    margin: {
+      left: 0;
+      right: 1%;
+    }
+  }
+  .grid > .col-50:nth-child(2n),
+  .grid > .col-33:nth-child(2n) {
+    margin: {
+      left: 1%;
+      right: 0;
+    }
   }
 
   .article-title {
