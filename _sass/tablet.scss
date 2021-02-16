@@ -3,6 +3,9 @@
     padding-top: 3rem;
   }
 
+  .only-mobile {
+    display: none;
+  }
   .only-tablet-up {
     display: block;
   }
@@ -63,5 +66,21 @@
       bottom: 1.5rem;
     }
     width: 96%;
+  }
+
+  header {
+    margin: 0 auto;
+    width: 96%;
+  }
+
+  .headshot-container.only-tablet-up {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 12.5rem;
+  }
+  .name-and-title {
+    display: inline-block;
+    vertical-align: bottom;
+    width: calc(100% - 13rem);
   }
 }
