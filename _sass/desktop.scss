@@ -1,10 +1,11 @@
 @media screen and (min-width: $bp_desktop) {
-  nav {
-    width: 97%;
-  }
-
   .only-desktop-up {
     display: block;
+  }
+
+  main {
+    margin: 0 auto;
+    max-width: 75rem;
   }
 
   .nav-link {
